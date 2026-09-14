@@ -240,8 +240,7 @@
             <p style="font-size:15px;color:var(--color-neutral-800);max-width:520px">Подключите прайс по XML, API или Excel — цены и остатки обновляются автоматически, заказы приходят готовыми, отгрузка идёт напрямую клиенту.</p>
             <button onClick="{{ goSupplier }}" class="btn btn-primary" style="padding:11px 20px;margin-top:6px">Подключить прайс</button>
           </div>
-          <div class="ph duotone" style="border-left:1px solid var(--color-divider);display:flex;align-items:flex-end;padding:14px">
-            <span class="mono" style="font-size:12px;background:var(--color-bg);padding:5px 9px">фото · склад</span>
+          <div class="ph duotone" style="background:url(img/warehouse.jpg) center/cover no-repeat;border-left:1px solid var(--color-divider);display:flex;align-items:flex-end;padding:14px" data-photo="1">
           </div>
         </div>
       </div>
@@ -301,7 +300,7 @@
           <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
             <div class="card blueprint" style="padding:0;gap:0">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="ph" style="height:164px;border-bottom:1px solid var(--color-divider);position:relative">
+              <div class="ph" style="background:{{ p.bgc }};height:164px;border-bottom:1px solid var(--color-divider);position:relative" data-photo="1">
                 <span class="mono" style="position:absolute;top:10px;left:10px;font-size:11px;background:var(--color-bg);padding:4px 8px">{{ p.stock }}</span>
               </div>
               <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1">
@@ -342,9 +341,8 @@
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
           <span>Артикул 96122802</span><span>Grundfos · Дания</span><span>Гарантия 24 мес.</span>
         </div>
-        <figure class="blueprint duotone ph" style="height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:28px">
+        <figure class="blueprint duotone ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:28px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:12px;background:var(--color-bg);padding:5px 9px">фото · насос CR 32-4</span>
         </figure>
         <h3>Характеристики</h3>
         <table class="table">
@@ -451,9 +449,8 @@
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
           <span>Артикул KSN-LGCY-75-10</span><span>Kaishan</span><span>Срок поставки от 21 дня</span>
         </div>
-        <figure class="blueprint duotone ph" style="height:340px;display:flex;align-items:flex-end;padding:16px;margin-bottom:26px">
+        <figure class="blueprint duotone ph" style="background:url(img/p-lgcy75.jpg) center/cover no-repeat;height:340px;display:flex;align-items:flex-end;padding:16px;margin-bottom:26px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:12px;background:var(--color-bg);padding:5px 9px">фото · компрессорная установка</span>
         </figure>
         <h3>Что входит в предложение</h3>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:10px">
@@ -515,7 +512,7 @@
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Распознано · 0,8 с</div>
           <div class="blueprint" style="display:grid;grid-template-columns:120px minmax(0,1fr)">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="ph duotone" style="border-right:1px solid var(--color-divider)"></div>
+            <div class="ph duotone" style="background:url(img/p-cr32.jpg) center/cover no-repeat;border-right:1px solid var(--color-divider)" data-photo="1"></div>
             <div style="padding:16px 18px;display:flex;flex-direction:column;gap:6px">
               <span class="mono" style="font-size:12px;color:var(--color-neutral-600)">GRUNDFOS · 96122802</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">CR 32-4 A-F-A-E-HQQE</span>
@@ -771,7 +768,7 @@
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <sc-for list="{{ cart }}" as="c" hint-placeholder-count="2">
               <div class="cartrow">
-                <div class="ph duotone" style="height:76px"></div>
+                <div class="ph duotone" style="background:{{ c.bg }};height:76px" data-photo="1"></div>
                 <div style="display:flex;flex-direction:column;gap:3px">
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ c.sku }}</span>
                   <span style="font-family:var(--font-heading);font-weight:600;font-size:18px">{{ c.name }}</span>
@@ -2318,9 +2315,8 @@
             </sc-for>
           </div>
         </div>
-        <figure class="blueprint duotone ph" style="height:260px;display:flex;align-items:flex-end;padding:14px;margin:0">
+        <figure class="blueprint duotone ph" style="background:url(img/brand.jpg) center/cover no-repeat;height:260px;display:flex;align-items:flex-end;padding:14px;margin:0" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:11px;background:var(--color-bg);padding:5px 9px">фото · логотип и оборудование бренда</span>
         </figure>
       </div>
 
@@ -2557,7 +2553,7 @@
             <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);padding:8px 14px;display:flex;justify-content:space-between;font-size:11px">
               <span class="mono">09:42</span><span class="mono">Камера</span>
             </div>
-            <div class="ph duotone" style="height:230px;position:relative;display:grid;place-items:center">
+            <div class="ph duotone" style="background:url(img/nameplate.jpg) center/cover no-repeat;height:230px;position:relative;display:grid;place-items:center" data-photo="1">
               <span style="width:180px;height:96px;border:2px solid var(--color-accent);display:block"></span>
               <span class="mono" style="position:absolute;bottom:12px;left:12px;font-size:11px;background:var(--color-bg);padding:4px 8px">наведите на табличку</span>
             </div>
@@ -2653,7 +2649,7 @@
             <div style="padding:12px 14px;display:flex;flex-direction:column;gap:12px">
               <sc-for list="{{ mobileCatalog }}" as="p" hint-placeholder-count="3">
                 <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;border-bottom:1px solid var(--color-divider);padding-bottom:12px">
-                  <div class="ph duotone" style="height:84px"></div>
+                  <div class="ph duotone" style="background:{{ p.bg }};height:84px" data-photo="1"></div>
                   <div style="display:flex;flex-direction:column;gap:4px">
                     <span class="mono" style="font-size:10px;color:var(--color-neutral-600)">{{ p.sku }}</span>
                     <span style="font-size:15px;font-weight:500;line-height:1.25">{{ p.name }}</span>
@@ -2679,7 +2675,7 @@
             <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);padding:8px 14px;display:flex;justify-content:space-between;font-size:11px">
               <span class="mono">09:48</span><span class="mono">CR 32-4</span>
             </div>
-            <div class="ph duotone" style="height:180px"></div>
+            <div class="ph duotone" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4;height:180px" data-photo="1"></div>
             <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
               <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">Артикул 96122802 · Grundfos</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.2">Насос Grundfos CR 32-4</span>
@@ -3156,9 +3152,8 @@
             </sc-for>
           </div>
         </div>
-        <figure class="blueprint duotone ph" style="height:300px;display:flex;align-items:flex-end;padding:14px;margin:0">
+        <figure class="blueprint duotone ph" style="background:url(img/dir-pumps.jpg) center/cover no-repeat;height:300px;display:flex;align-items:flex-end;padding:14px;margin:0" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:11px;background:var(--color-bg);padding:5px 9px">фото · насосная станция</span>
         </figure>
       </div>
 
@@ -3425,8 +3420,7 @@
 
       <div class="blueprint" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-bottom:22px">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-        <div class="ph duotone" style="min-height:300px;display:flex;align-items:flex-end;padding:14px">
-          <span class="mono" style="font-size:11px;background:var(--color-bg);padding:5px 9px">фото · насосная группа в котельной</span>
+        <div class="ph duotone" style="background:url(img/blog-boiler.jpg) center/cover no-repeat;min-height:300px;display:flex;align-items:flex-end;padding:14px" data-photo="1">
         </div>
         <div style="padding:26px 28px;display:flex;flex-direction:column;gap:10px;border-left:1px solid var(--color-divider)">
           <span class="tag tag-accent" style="align-self:flex-start">Разбор · Насосы</span>
@@ -3444,8 +3438,7 @@
         <sc-for list="{{ articles }}" as="a" hint-placeholder-count="9">
           <a href="#" onClick="{{ goArticle }}" class="blueprint" style="display:flex;flex-direction:column;text-decoration:none;color:inherit">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="ph duotone" style="height:160px;border-bottom:1px solid var(--color-divider);display:flex;align-items:flex-end;padding:10px">
-              <span class="mono" style="font-size:10px;background:var(--color-bg);padding:4px 7px">{{ a.photo }}</span>
+            <div class="ph duotone" style="background:{{ a.bg }};height:160px;border-bottom:1px solid var(--color-divider);display:flex;align-items:flex-end;padding:10px" data-photo="1">
             </div>
             <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:7px;flex:1">
               <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700)">{{ a.section }}</span>
@@ -3472,9 +3465,8 @@
         <div class="mono" style="font-size:12px;color:var(--color-neutral-700);display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px">
           <span>14 сентября 2026</span><span>9 мин чтения</span><span>Проверено инженером сервиса</span>
         </div>
-        <figure class="blueprint duotone ph" style="height:340px;display:flex;align-items:flex-end;padding:14px;margin:0 0 22px">
+        <figure class="blueprint duotone ph" style="background:url(img/art-hero.jpg) center/cover no-repeat;height:340px;display:flex;align-items:flex-end;padding:14px;margin:0 0 22px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:11px;background:var(--color-bg);padding:5px 9px">фото · насосная группа, манометры на нагнетании</span>
         </figure>
 
         <sc-for list="{{ articleBody }}" as="b" hint-placeholder-count="6">
@@ -3506,9 +3498,8 @@
           </table>
         </div>
 
-        <figure class="blueprint duotone ph" style="height:260px;display:flex;align-items:flex-end;padding:14px;margin:22px 0">
+        <figure class="blueprint duotone ph" style="background:url(img/art-vfd.jpg) center/cover no-repeat;height:260px;display:flex;align-items:flex-end;padding:14px;margin:22px 0" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="mono" style="font-size:11px;background:var(--color-bg);padding:5px 9px">фото · шкаф с частотным преобразователем</span>
         </figure>
         <p style="font-size:16px;line-height:1.65;color:var(--color-neutral-800);margin:0;max-width:820px">Если система работает с переменным водопотреблением, вместо подбора «с запасом» ставят частотное регулирование: насос держит заданное давление, а не гонит лишний напор в дроссель. Экономия достигает 30% по электроэнергии и заметно продлевает ресурс уплотнений.</p>
       </article>
@@ -4502,12 +4493,12 @@ class Component extends DCLogic {
     }));
 
     const catalogProducts = [
-      { sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
-      { sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
-      { sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
-      { sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
-      { sku: "INV-VR-15", name: "INNOVERT VR 15 kW", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
-      { sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
+      { bg: "url(img/p-cr32.jpg) center/cover no-repeat", bgc: "url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4", sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #c2c2c4", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #c2c2c4", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #c2c2c4", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
+      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #c2c2c4", sku: "INV-VR-15", name: "INNOVERT VR 15 kW", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c2c2c4", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go(p.cta === "Запросить КП" ? "quote" : "product") }));
 
     const seo = {
@@ -5648,9 +5639,9 @@ class Component extends DCLogic {
         { who: "Робот", text: "«Оформляю. Счёт придёт в MAX за 15 минут, резерв поставил. Добавить ответные фланцы?»", bar: "var(--color-accent)" }
       ],
       mobileCatalog: [
-        { sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
-        { sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
-        { sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
+        { bg: "url(img/p-cr32.jpg) center/cover no-repeat", sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
+        { bg: "url(img/p-nis80.jpg) center/cover no-repeat", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
+        { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
       ],
       mobileCart: [
         { name: "Grundfos CR 32-4", qty: "2 шт. × 104 900 ₽", sum: "209 800 ₽" },
@@ -5893,15 +5884,15 @@ class Component extends DCLogic {
         { id: "ЗВ-4760", date: "2 сентября", items: "Комплект прокладок · 12 шт.", sum: "14 800 ₽", lead: "доставлено", status: "Оплачена", tagClass: "tag-neutral", action: "Открыть" }
       ],
       articles: [
-        { section: "Сравнение · Компрессоры", title: "Винтовой или поршневой компрессор для цеха", lead: "Сравнение по удельному расходу энергии, ресурсу и стоимости владения на горизонте пяти лет.", meta: "12 сентября · 7 мин · 96 позиций", photo: "фото · винтовой компрессор" },
-        { section: "Регламент · Подшипники", title: "Признаки износа подшипника: что слышно и что видно", lead: "Шум, вибрация, нагрев и следы на дорожках — как поставить диагноз до аварийной остановки.", meta: "11 сентября · 6 мин · 340 позиций", photo: "фото · подшипниковый узел" },
-        { section: "Подбор · Электродвигатели", title: "Как выбрать электродвигатель по мощности и исполнению", lead: "Число полюсов, монтажное исполнение IM, класс защиты IP и когда нужна взрывозащита Ex.", meta: "10 сентября · 8 мин · 188 позиций", photo: "фото · асинхронный двигатель" },
-        { section: "Разбор · Частотники", title: "Частотный преобразователь: когда он окупается", lead: "Расчёт экономии на насосах и вентиляторах с переменной нагрузкой, типовые ошибки настройки.", meta: "9 сентября · 7 мин · 74 позиции", photo: "фото · шкаф управления" },
-        { section: "Инструкция · Арматура", title: "Задвижка, клапан или затвор: что ставить на линию", lead: "Различия по потерям давления, ресурсу и цене обслуживания для воды, пара и агрессивных сред.", meta: "8 сентября · 6 мин · 260 позиций", photo: "фото · трубопроводный узел" },
-        { section: "Регламент · Пневматика", title: "Подготовка воздуха: фильтр, осушитель, ресивер", lead: "Почему обводнение линии останавливает производство и как считать точку росы под задачу.", meta: "7 сентября · 5 мин · 112 позиций", photo: "фото · блок подготовки воздуха" },
-        { section: "Сравнение · Теплообменники", title: "Пластинчатый или кожухотрубный теплообменник", lead: "Теплосъём, габариты, обслуживание и поведение на загрязнённых средах.", meta: "5 сентября · 6 мин · 48 позиций", photo: "фото · пластинчатый теплообменник" },
-        { section: "Подбор · Водоподготовка", title: "Умягчение или обратный осмос для котельной", lead: "Жёсткость, солесодержание и расход реагентов: как выбрать схему и не разрушить котёл.", meta: "4 сентября · 8 мин · 62 позиции", photo: "фото · установка водоподготовки" },
-        { section: "Импорт · Поставки", title: "Поставка оборудования из Китая: сроки и документы", lead: "От заказа на площадке до сертификата ЕАЭС: этапы, риски и что входит в цену каталога.", meta: "2 сентября · 9 мин · 1 240 позиций", photo: "фото · контейнерная площадка" }
+        { bg: "url(img/a-compressor.jpg) center/cover no-repeat", section: "Сравнение · Компрессоры", title: "Винтовой или поршневой компрессор для цеха", lead: "Сравнение по удельному расходу энергии, ресурсу и стоимости владения на горизонте пяти лет.", meta: "12 сентября · 7 мин · 96 позиций", photo: "фото · винтовой компрессор" },
+        { bg: "url(img/a-bearing.jpg) center/cover no-repeat", section: "Регламент · Подшипники", title: "Признаки износа подшипника: что слышно и что видно", lead: "Шум, вибрация, нагрев и следы на дорожках — как поставить диагноз до аварийной остановки.", meta: "11 сентября · 6 мин · 340 позиций", photo: "фото · подшипниковый узел" },
+        { bg: "url(img/a-motor.jpg) center/cover no-repeat", section: "Подбор · Электродвигатели", title: "Как выбрать электродвигатель по мощности и исполнению", lead: "Число полюсов, монтажное исполнение IM, класс защиты IP и когда нужна взрывозащита Ex.", meta: "10 сентября · 8 мин · 188 позиций", photo: "фото · асинхронный двигатель" },
+        { bg: "url(img/a-vfd.jpg) center/cover no-repeat", section: "Разбор · Частотники", title: "Частотный преобразователь: когда он окупается", lead: "Расчёт экономии на насосах и вентиляторах с переменной нагрузкой, типовые ошибки настройки.", meta: "9 сентября · 7 мин · 74 позиции", photo: "фото · шкаф управления" },
+        { bg: "url(img/a-valves.jpg) center/cover no-repeat", section: "Инструкция · Арматура", title: "Задвижка, клапан или затвор: что ставить на линию", lead: "Различия по потерям давления, ресурсу и цене обслуживания для воды, пара и агрессивных сред.", meta: "8 сентября · 6 мин · 260 позиций", photo: "фото · трубопроводный узел" },
+        { bg: "url(img/a-air.jpg) center/cover no-repeat", section: "Регламент · Пневматика", title: "Подготовка воздуха: фильтр, осушитель, ресивер", lead: "Почему обводнение линии останавливает производство и как считать точку росы под задачу.", meta: "7 сентября · 5 мин · 112 позиций", photo: "фото · блок подготовки воздуха" },
+        { bg: "url(img/a-hex.jpg) center/cover no-repeat", section: "Сравнение · Теплообменники", title: "Пластинчатый или кожухотрубный теплообменник", lead: "Теплосъём, габариты, обслуживание и поведение на загрязнённых средах.", meta: "5 сентября · 6 мин · 48 позиций", photo: "фото · пластинчатый теплообменник" },
+        { bg: "url(img/a-water.jpg) center/cover no-repeat", section: "Подбор · Водоподготовка", title: "Умягчение или обратный осмос для котельной", lead: "Жёсткость, солесодержание и расход реагентов: как выбрать схему и не разрушить котёл.", meta: "4 сентября · 8 мин · 62 позиции", photo: "фото · установка водоподготовки" },
+        { bg: "url(img/a-containers.jpg) center/cover no-repeat", section: "Импорт · Поставки", title: "Поставка оборудования из Китая: сроки и документы", lead: "От заказа на площадке до сертификата ЕАЭС: этапы, риски и что входит в цену каталога.", meta: "2 сентября · 9 мин · 1 240 позиций", photo: "фото · контейнерная площадка" }
       ],
       articleBody: [
         { isText: true, isHead: false, text: "Рабочая точка насоса — это пересечение характеристики насоса и характеристики сети. Если она смещена вправо или влево от оптимума, насос работает с перегрузкой двигателя или в зоне низкого КПД. Именно это, а не «слабая модель», чаще всего стоит за перегревом и течью по уплотнению." },
@@ -6401,9 +6392,9 @@ class Component extends DCLogic {
         { id: "КП-2198", items: "Водоподготовка, комплект", status: "КП получено", tagClass: "tag-accent", date: "—", sum: "684 000 ₽" }
       ],
       cart: [
-        { sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
-        { sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
-        { sku: "INV-VR-15", name: "INNOVERT VR 15 kW", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/cover no-repeat", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
+        { bg: "url(img/p-6205.jpg) center/cover no-repeat", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
+        { bg: "url(img/p-vr15.jpg) center/cover no-repeat", sku: "INV-VR-15", name: "INNOVERT VR 15 kW", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
       ],
       footerCols: [
         { title: "Каталог", links: [
