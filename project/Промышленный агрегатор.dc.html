@@ -13,7 +13,10 @@
 <style>
   body { margin:0; }
   .ph { background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 9px, var(--color-neutral-100) 9px 18px); }
-  .mono { font-family:"Barlow Condensed", system-ui, sans-serif; letter-spacing:0.06em; }
+  .mono { font-family:"IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif; letter-spacing:0.06em; }
+  .radio input[type="checkbox"] + .dot { border-radius:0; position:relative; }
+  .radio input[type="checkbox"]:checked + .dot { box-shadow:none; }
+  .radio input[type="checkbox"]:checked + .dot::after { content:""; position:absolute; left:4px; top:1px; width:5px; height:9px; border:solid var(--color-bg); border-width:0 2px 2px 0; transform:rotate(45deg); }
   .row-hover:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
   .screen-pick option { background: var(--color-accent-900); color: #fff; }
   @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
@@ -31,6 +34,32 @@
   @media (max-width:820px) {
     .cartrow { grid-template-columns:92px minmax(0,1fr); }
     .cartrow > :last-child { grid-column:2; justify-content:space-between; }
+  }
+
+  /* ── адаптив под телефон (доработка 14.09.26). Движок макета нормализует style
+     с пробелами: «minmax(0px, 1fr)», поэтому селекторы пишутся в этом виде. ── */
+  @media (max-width:760px) {
+    [style*="grid-template-columns: 1fr 1fr"],
+    [style*="grid-template-columns: minmax(0px, 1"],
+    [style*="grid-template-columns: 1"][style*="px minmax"],
+    [style*="grid-template-columns: 2"],
+    [style*="grid-template-columns: 3"],
+    [style*="grid-template-columns: repeat(2,"],
+    [style*="grid-template-columns: repeat(3,"],
+    [style*="minmax(250px"],[style*="minmax(260px"],[style*="minmax(280px"],[style*="minmax(290px"],
+    [style*="minmax(300px"],[style*="minmax(320px"],[style*="minmax(330px"],[style*="minmax(340px"],
+    [style*="minmax(380px"],[style*="minmax(420px"],[style*="minmax(430px"] { grid-template-columns:minmax(0,1fr) !important; }
+    [style*="grid-template-columns: repeat(4,"],[style*="grid-template-columns: repeat(5,"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [style*="grid-template-columns: minmax(0px, 1"] > [style*="border-left"],
+    [style*="grid-template-columns: 1fr 1fr"] > [style*="border-left"] { border-left:0 !important; border-top:1px solid var(--color-divider); }
+    [style*="grid-template-columns: 2"] > [style*="border-right"] { border-right:0 !important; border-bottom:1px solid var(--color-divider); }
+    [style*="position: sticky"]:not([style*="z-index"]) { position:static !important; }
+    [style*="max-width: 1360px"], [style*="max-width: 1200px"], [style*="max-width: 1100px"], [style*="max-width: 960px"] { padding-left:16px !important; padding-right:16px !important; }
+    [style*="justify-content: space-between"], [style*="gap: 20px; max-width: 1360px"] { flex-wrap:wrap; row-gap:8px; }
+    table.table { display:block; overflow-x:auto; max-width:100%; }
+    h1 { font-size:clamp(26px, 7.4vw, 34px) !important; line-height:1.15 !important; }
+    h2 { font-size:clamp(22px, 6vw, 26px) !important; }
+    .btn { white-space:normal; }
   }
 </style>
 </helmet>
@@ -297,7 +326,7 @@
           <span style="margin-left:auto;font-size:13px;color:var(--color-neutral-600)">Найдено 1 128</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px">
-          <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+          <sc-for list="{{ pumpProducts }}" as="p" hint-placeholder-count="6">
             <div class="card blueprint" style="padding:0;gap:0">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="ph" style="background:{{ p.bgc }};height:164px;border-bottom:1px solid var(--color-divider);position:relative" data-photo="1">
@@ -805,14 +834,14 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h4>Итого</h4>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">Оборудование, 3 поз.</span><span class="mono">243 700 ₽</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">Оборудование, 3 поз.</span><span class="mono">299 100 ₽</span></div>
             <div style="display:flex;justify-content:space-between"><span class="text-muted">Доставка до Тулы</span><span class="mono">включена</span></div>
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">НДС 20%</span><span class="mono">40 616 ₽</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">в т. ч. НДС 22%</span><span class="mono">53 937 ₽</span></div>
           </div>
           <div class="hr" style="margin:12px 0"></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
             <span style="font-family:var(--font-heading);font-weight:600;font-size:18px">К оплате</span>
-            <span class="mono" style="font-size:28px">243 700 ₽</span>
+            <span class="mono" style="font-size:28px">299 100 ₽</span>
           </div>
           <button class="btn btn-primary btn-block" style="min-height:44px;font-size:15px">Оформить и выставить счёт</button>
           <span style="font-size:12px;color:var(--color-neutral-600)">Счёт придёт на почту в течение 15 минут. Отгрузка со склада поставщика напрямую на ваш адрес.</span>
@@ -968,9 +997,7 @@
             <h3 style="margin:0 0 4px">Продолжить в мессенджере MAX</h3>
             <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Тот же подбор, история и спецификации — в MAX. Уведомления о счёте, отгрузке и ответе на запрос КП приходят туда же.</p>
             <div style="display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;align-items:center">
-              <div class="ph" style="height:104px;border:1px solid var(--color-divider);display:grid;place-items:center">
-                <span class="mono" style="font-size:10px;color:var(--color-neutral-600);background:var(--color-bg);padding:3px 6px">QR</span>
-              </div>
+              <div style="height:104px;border:1px solid var(--color-divider);background:#fff url(img/qr-max.svg) center/92px no-repeat" role="img" aria-label="QR-код бота в MAX"></div>
               <div style="display:flex;flex-direction:column;gap:8px">
                 <span class="mono" style="font-size:13px">@promkontur_bot</span>
                 <button class="btn btn-primary" style="align-self:flex-start">Открыть в MAX</button>
@@ -1069,7 +1096,7 @@
           <h3 style="margin:0 0 4px">Окупаемость направлений</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Вклад в маржу за вычетом затрат на обработку и контент. Отрицательные — не всегда плохо: они приводят клиента.</p>
           <div style="overflow-x:auto">
-            <table class="table" style="width:100%;min-width:640px">
+            <table class="table" style="width:100%">
               <thead><tr><th>Направление</th><th>Оборот</th><th>Маржа</th><th>Затраты</th><th>Итог</th></tr></thead>
               <tbody>
                 <sc-for list="{{ unitDirs }}" as="d" hint-placeholder-count="6">
@@ -1078,7 +1105,7 @@
                     <td class="mono" style="font-size:13px">{{ d.turnover }}</td>
                     <td class="mono" style="font-size:13px">{{ d.margin }}</td>
                     <td class="mono" style="font-size:13px">{{ d.cost }}</td>
-                    <td class="mono" style="font-size:14px;color: {{ d.color }}">{{ d.total }}</td>
+                    <td class="mono" style="font-size:14px;white-space:nowrap;color: {{ d.color }}">{{ d.total }}</td>
                   </tr>
                 </sc-for>
               </tbody>
@@ -1315,7 +1342,7 @@
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 56px;display:flex;flex-direction:column;gap:22px">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
         <div>
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Сотрудники сервиса · 14 человек</div>
+          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Сотрудники сервиса · 6 человек</div>
           <h1 style="font-size:34px;margin:2px 0 0">Права и роли</h1>
           <p style="font-size:15px;color:var(--color-neutral-700);margin:4px 0 0;max-width:820px">Наценка, отключение автопилота и маржа — не для всех. Каждое действие в этих зонах попадает в журнал изменений с автором.</p>
         </div>
@@ -1451,7 +1478,7 @@
           <h3 style="margin:0 0 4px">Сценарий первого визита</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Что показываем и что скрываем на каждом шаге. Ничего не требуем до момента, когда нужен счёт.</p>
           <div style="overflow-x:auto">
-            <table class="table" style="width:100%;min-width:700px">
+            <table class="table" style="width:100%">
               <thead><tr><th>Шаг</th><th>Что видит клиент</th><th>Что не просим</th><th>Доходит</th></tr></thead>
               <tbody>
                 <sc-for list="{{ onbSteps }}" as="s" hint-placeholder-count="6">
@@ -1459,7 +1486,7 @@
                     <td style="font-size:14px;font-weight:500">{{ s.step }}</td>
                     <td style="font-size:13px;color:var(--color-neutral-700)">{{ s.see }}</td>
                     <td style="font-size:13px;color:var(--color-neutral-700)">{{ s.skip }}</td>
-                    <td class="mono" style="font-size:13px">{{ s.rate }}</td>
+                    <td class="mono" style="font-size:13px;white-space:nowrap">{{ s.rate }}</td>
                   </tr>
                 </sc-for>
               </tbody>
@@ -1546,7 +1573,7 @@
             <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">По вашей рабочей точке 40 м³/ч при 46 м насос CR 32-4 работает на пределе. Правильная модель — CR 45-3, она дороже на 28 000 ₽. Разницу берём на себя: цена для вас остаётся прежней, отгрузка 16 сентября.</p>
             <div style="border:1px solid var(--color-divider);padding:12px 14px;margin-bottom:12px;display:flex;flex-direction:column;gap:5px">
               <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Было в заказе</span><span>CR 32-4 · 104 900 ₽</span></div>
-              <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Правильно</span><span>CR 45-3 · 132 900 ₽</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Правильно</span><span>CR 45-3 · 156 700 ₽</span></div>
               <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Доплата</span><span class="mono">0 ₽</span></div>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -1569,7 +1596,7 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
             <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Сообщать до того, как клиент заметил</label>
-            <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Считать разницу в свою пользу ошибкой в пользу клиента</label>
+            <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Ошибку в нашу пользу возвращать клиенту</label>
             <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Отключать сценарий после трёх ошибок одного типа</label>
             <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Заводить правило в обучении после каждого случая</label>
           </div>
@@ -1613,7 +1640,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px">
             <div>
-              <h3 style="margin:0">Расшифровка входящего · 09:12, 2 мин 40 с</h3>
+              <h3 style="margin:0">Расшифровка входящего · 09:12, 1 мин 32 с</h3>
               <p style="font-size:14px;color:var(--color-neutral-700);margin:2px 0 0">+7 910 ХХХ-ХХ-14 · ООО «Тепломаш» определён по номеру</p>
             </div>
             <span class="tag tag-accent" style="font-size:12px">Закрыт без человека</span>
@@ -1648,7 +1675,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <div class="field"><label>Голос</label><select class="input"><option>Женский, нейтральный</option><option>Мужской, спокойный</option></select></div>
               <div class="field"><label>Темп речи</label><input class="input mono" onChange="{{ noop }}" value="0,95×"></div>
-              <div class="field"><label>Ответ после</label><input class="input mono" onChange="{{ noop }}" value="2 гудка"></div>
+              <div class="field"><label>Ответ после</label><input class="input mono" onChange="{{ noop }}" value="второго гудка"></div>
               <div class="field"><label>Пауза перед перехватом</label><input class="input mono" onChange="{{ noop }}" value="1,2 с"></div>
             </div>
             <div class="field"><label>Токен телефонии</label><input class="input mono" onChange="{{ noop }}" value="tel_live_••••••••4f21"></div>
@@ -1884,7 +1911,7 @@
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px">
-            <h3 style="margin:0">Ждёт человека · 9</h3>
+            <h3 style="margin:0">Ждёт человека · 6</h3>
             <span style="font-size:13px;color:var(--color-neutral-700)">Отсортировано по деньгам и времени ожидания</span>
           </div>
           <div style="display:flex;flex-direction:column">
@@ -2119,7 +2146,7 @@
             <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">{{ s.label }}</div>
             <div class="blueprint" style="padding:26px 22px;min-height:230px;display:flex;flex-direction:column;gap:10px;justify-content:center;text-align: {{ s.align }}">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <span style="width:34px;height:34px;border:1.5px solid {{ s.iconColor }};display:block;align-self: {{ s.iconAlign }}"></span>
+              <span style="width:40px;height:40px;display:block;align-self: {{ s.iconAlign }};background: {{ s.iconColor }};-webkit-mask: {{ s.icon }};mask: {{ s.icon }}"></span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:21px;line-height:1.2">{{ s.title }}</span>
               <span style="font-size:14px;line-height:1.55;color:var(--color-neutral-700)">{{ s.text }}</span>
               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;justify-content: {{ s.justify }}">
@@ -2366,7 +2393,7 @@
     <section style="background:var(--color-accent-900);color:var(--color-neutral-100)">
       <div style="max-width:1360px;margin:0 auto;padding:48px 28px 42px">
         <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:12px">О сервисе · как это работает</div>
-        <h1 style="color:#fff;font-size:42px;max-width:820px;margin:0 0 12px">Мы не склад и не магазин. Мы контур закупки</h1>
+        <h1 style="color:#fff;font-size:42px;max-width:820px;margin:0 0 12px">Мы не склад и не магазин. Мы — контур закупки</h1>
         <p style="font-size:17px;color:var(--color-accent-200);max-width:760px;margin:0">Снабженец не сравнивает условия пятнадцати поставщиков и не ведёт переписку с каждым. Система собирает прайсы, выбирает предложение по цене, наличию и сроку, показывает одну цену и оформляет сделку. Оборудование едет напрямую со склада поставщика.</p>
       </div>
     </section>
@@ -2697,7 +2724,7 @@
             <div style="border-top:1px solid var(--color-divider);padding:12px 14px;display:flex;align-items:center;gap:12px;position:sticky;bottom:0;background:var(--color-bg)">
               <div>
                 <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">К оплате</div>
-                <div class="mono" style="font-size:20px">243 700 ₽</div>
+                <div class="mono" style="font-size:20px">299 100 ₽</div>
               </div>
               <button class="btn btn-primary" style="flex:1;min-height:50px;font-size:15px">Оформить</button>
             </div>
@@ -2920,8 +2947,8 @@
           </div>
           <div class="hr" style="margin:12px 0"></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline">
-            <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">Оплачено</span>
-            <span class="mono" style="font-size:24px">209 800 ₽</span>
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">К оплате</span>
+            <span class="mono" style="font-size:24px">222 600 ₽</span>
           </div>
           <span style="font-size:12px;color:var(--color-neutral-600)">Отсрочка 30 дней, срок оплаты — 12 октября</span>
         </div>
@@ -2996,7 +3023,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 8px">Итог по заявке</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">Распознано и в наличии</span><span class="mono">14 позиций · 386 400 ₽</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">Распознано и в наличии</span><span class="mono">14 позиций · 812 600 ₽</span></div>
             <div style="display:flex;justify-content:space-between"><span class="text-muted">Под заказ</span><span class="mono">3 позиции · 214 000 ₽</span></div>
             <div style="display:flex;justify-content:space-between"><span class="text-muted">На запрос КП</span><span class="mono">1 позиция</span></div>
             <div style="display:flex;justify-content:space-between"><span class="text-muted">Нераспознано</span><span class="mono">2 строки</span></div>
@@ -3004,7 +3031,7 @@
           <div class="hr" style="margin:12px 0"></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline">
             <span style="font-family:var(--font-heading);font-weight:600;font-size:18px">К оформлению</span>
-            <span class="mono" style="font-size:26px">600 400 ₽</span>
+            <span class="mono" style="font-size:26px">1 026 600 ₽</span>
           </div>
           <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
             <button onClick="{{ goCart }}" class="btn btn-primary">В корзину</button>
@@ -3021,7 +3048,7 @@
   <div data-screen-label="Оплата и документы">
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 48px">
       <h1 style="font-size:36px;margin:0 0 8px">Оплата, доставка и документы</h1>
-      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 24px;max-width:760px">Работаем с юридическими лицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой, счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО.</p>
+      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 24px;max-width:760px">Работаем с юридическими лицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой (кроме габаритных грузов и удалённых регионов — там расчёт в КП), счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО.</p>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
         <sc-for list="{{ paymentWays }}" as="p" hint-placeholder-count="4">
@@ -3083,7 +3110,7 @@
   <div data-screen-label="Ничего не найдено">
     <div style="max-width:1100px;margin:0 auto;padding:40px 28px 48px">
       <div class="mono" style="font-size:12px;color:var(--color-neutral-600)">Поиск: «grunfos cr32 4»</div>
-      <h1 style="font-size:34px;margin:6px 0 10px">Точных совпадений нет</h1>
+      <h1 style="font-size:34px;margin:6px 0 10px">Показаны результаты по «Grundfos CR 32-4»</h1>
       <p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 22px;max-width:680px">Похоже на опечатку в названии производителя. Мы исправили запрос и подобрали позиции по модели — проверьте варианты ниже или пришлите фото шильдика.</p>
 
       <div class="blueprint" style="padding:16px 18px;margin-bottom:20px">
@@ -3226,7 +3253,7 @@
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Насосы · 4 позиции</div>
           <h1 style="font-size:32px;margin:2px 0 0">Сравнение моделей</h1>
-          <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:680px">Рабочая точка 40 м³/ч / 35 м, техническая вода до +60 °C, фланец DN65 PN16. Отличия от лучшего значения в строке выделены.</p>
+          <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:680px">Рабочая точка 40 м³/ч / 35 м, техническая вода до +60 °C, фланец DN65 PN16. Лучшее значение в строке выделено.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Только различия</label>
@@ -3273,7 +3300,7 @@
       <div class="blueprint" style="padding:18px 20px;margin-top:20px">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <h3 style="margin:0 0 6px">Вывод по подбору</h3>
-        <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0;max-width:900px">Под заданную рабочую точку ближе всего CNP CDLF 42-30: КПД в точке 74%, запас по напору 3%, цена ниже на 28% при сопоставимых характеристиках. Grundfos CR 45-3 даёт ресурс уплотнения выше и более доступные запчасти — оправдан для круглосуточной линии. Wilo Helix V 4204 — компромисс по цене и сервису, но срок отгрузки на два дня дольше.</p>
+        <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0;max-width:900px">Под заданную рабочую точку ближе всего CNP CDLF 42-30: КПД в точке 74%, запас по напору 3%, цена на 22% ниже Wilo Helix V при сопоставимых характеристиках. Grundfos CR 45-3 даёт ресурс уплотнения выше и более доступные запчасти — оправдан для круглосуточной линии. Wilo Helix V 4204 — компромисс по цене и сервису, но срок отгрузки на два дня дольше.</p>
         <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
           <button onClick="{{ goChat }}" class="btn btn-secondary">Уточнить подбор в чате</button>
           <button onClick="{{ goProduct }}" class="btn btn-secondary">Открыть рекомендованную</button>
@@ -3434,7 +3461,7 @@
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
         <sc-for list="{{ articles }}" as="a" hint-placeholder-count="9">
           <a href="#" onClick="{{ goArticle }}" class="blueprint" style="display:flex;flex-direction:column;text-decoration:none;color:inherit">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -3689,9 +3716,9 @@
         <div class="blueprint" style="padding:20px 22px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 4px">Наценка</h3>
-          <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 14px">Базовая наценка применяется ко всем позициям, правила ниже её переопределяют.</p>
+          <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 14px">Базовая наценка применяется, если не сработало ни одно правило ниже.</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
-            <div class="field"><label>Базовая наценка, %</label><input class="input mono" onChange="{{ noop }}" value="20"></div>
+            <div class="field"><label>Базовая наценка, %</label><input class="input mono" onChange="{{ noop }}" value="18"></div>
             <div class="field"><label>Минимальная наценка, ₽</label><input class="input mono" onChange="{{ noop }}" value="500"></div>
             <div class="field"><label>Округление цены</label>
               <select class="input"><option>до 100 ₽</option><option>до 10 ₽</option><option>до 1 000 ₽</option><option>без округления</option></select>
@@ -4501,6 +4528,16 @@ class Component extends DCLogic {
       { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c2c2c4", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go(p.cta === "Запросить КП" ? "quote" : "product") }));
 
+    const pb = n => ({ bg: "url(img/" + n + ".jpg) center/cover no-repeat", bgc: "url(img/" + n + ".jpg) center/contain no-repeat #bfbfc1" });
+    const pumpProducts = [
+      { ...pb("p-cr32"), sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-nb40"), sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-cr32"), sku: "96122804", name: "Grundfos CR 45-3", spec: "Подача 45 м³/ч · напор 40 м · 7,5 кВт", price: "156 700 ₽", lead: "Отгрузка 2–4 дня", stock: "5 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-cr32"), sku: "96511845", name: "Grundfos CR 20-5", spec: "Подача 21 м³/ч · напор 52 м · 4 кВт", price: "86 300 ₽", lead: "Отгрузка 2 дня", stock: "11 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-nb40"), sku: "97760170", name: "Grundfos NBG 65-50-160", spec: "Подача 60 м³/ч · напор 32 м · 7,5 кВт", price: "173 900 ₽", lead: "Отгрузка 3–5 дней", stock: "3 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-nis80"), sku: "98124543", name: "Grundfos TP 65-230/2", spec: "Подача 38 м³/ч · напор 20 м · 4 кВт", price: "142 600 ₽", lead: "Отгрузка 4–6 дней", stock: "2 шт. в наличии", cta: "В корзину" }
+    ].map(p => ({ ...p, open: this.go("product") }));
+
     const seo = {
       terms: {
         heading: "Условия работы для поставщиков промышленного оборудования",
@@ -4688,7 +4725,7 @@ class Component extends DCLogic {
       },
       payment: {
         heading: "Оплата, доставка и документы для юридических лиц",
-        intro: "Сервис работает с юрлицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой, счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО. Отгрузка идёт напрямую со склада поставщика на ваш адрес.",
+        intro: "Сервис работает с юрлицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой (кроме габаритных грузов и удалённых регионов — там расчёт в КП), счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО. Отгрузка идёт напрямую со склада поставщика на ваш адрес.",
         paras: [
           "Для позиций до 500 000 ₽ доступны счёт и оплата картой, для проектных поставок — поэтапная оплата под график объекта. Отсрочка до 30 дней открывается после проверки контрагента, лимит виден в кабинете и зависит от оборота и истории закупок.",
           "Доставка включена в цену для большинства направлений: по Москве и области 1–2 дня, по городам-миллионникам 2–5 дней, по регионам 3–9 дней. Габаритный груз свыше 500 кг и такелаж считаются отдельно и входят в КП."
@@ -5290,10 +5327,10 @@ class Component extends DCLogic {
         ] }
       ],
       vendorWeights: [
-        { k: "Цена с доставкой", v: "45%", pct: "100%" },
-        { k: "Наличие и точность остатка", v: "25%", pct: "56%" },
-        { k: "Срок отгрузки", v: "20%", pct: "44%" },
-        { k: "Рейтинг поставщика", v: "10%", pct: "22%" },
+        { k: "Цена с доставкой", v: "45%", pct: "45%" },
+        { k: "Наличие и точность остатка", v: "25%", pct: "25%" },
+        { k: "Срок отгрузки", v: "20%", pct: "20%" },
+        { k: "Рейтинг поставщика", v: "10%", pct: "10%" },
         { k: "Платное продвижение", v: "0%", pct: "0%" }
       ],
       vendorReq: [
@@ -5408,7 +5445,7 @@ class Component extends DCLogic {
         { title: "Входящие", count: "14", sum: "1,9 млн", deals: [
           { channel: "Почта", age: "2 мин", title: "Фото шильдика, насос на замену", last: "Робот: распознано 94%, подбор оригинала и 2 аналогов", sum: "≈104 900 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
           { channel: "MAX", age: "6 мин", title: "«Нужен редуктор на конвейер, момент 400 Нм»", last: "Робот: уточняет передаточное число и вал", sum: "—", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
-          { channel: "Сайт", age: "11 мин", title: "Заявка списком, 20 строк", last: "Робот: разобрано 17/20, 3 без аналога", sum: "600 400 ₽", owner: "закупщик", tagClass: "tag-outline", bar: "var(--color-accent-700)" }
+          { channel: "Сайт", age: "11 мин", title: "Заявка списком, 20 строк", last: "Робот: разобрано 18/20, 2 строки инженеру", sum: "1 026 600 ₽", owner: "закупщик", tagClass: "tag-outline", bar: "var(--color-accent-700)" }
         ] },
         { title: "Подбор", count: "9", sum: "2,4 млн", deals: [
           { channel: "MAX", age: "18 мин", title: "Компрессор 10 бар, 75 кВт", last: "Робот: сравнение Kaishan / Remeza / Atlas отправлено", sum: "1,28 млн ₽", owner: "инженер", tagClass: "tag-outline", bar: "var(--color-accent-700)" },
@@ -5477,7 +5514,7 @@ class Component extends DCLogic {
         { wait: "2 ч 10 м", waitColor: "var(--color-accent-700)", what: "КП на компрессорную станцию, ООО «Метизный завод»", why: "сумма выше 500 000 ₽ · проект · агрессивная среда не указана", sum: "684 000 ₽", cta: "Собрать КП", go: this.go("quote") },
         { wait: "1 ч 40 м", waitColor: "var(--color-accent-700)", what: "Фид «Подшипник-Трейд» — 12 строк не распарсились дважды", why: "самолечение исчерпано, поставщик не ответил в MAX", sum: "318 позиций", cta: "Открыть", go: this.go("admin") },
         { wait: "55 м", waitColor: "var(--color-neutral-700)", what: "Шильдик распознан на 61%: «CNP NIS 80-65-1?0»", why: "уверенность ниже порога 85%, клиент новый", sum: "≈96 000 ₽", cta: "Уточнить", go: this.go("photo") },
-        { wait: "40 м", waitColor: "var(--color-neutral-700)", what: "Заявка на 20 строк: 3 позиции без аналога в базе", why: "пробел ассортимента — редукторы Bonfiglioli", sum: "600 400 ₽", cta: "Разобрать", go: this.go("upload") },
+        { wait: "40 м", waitColor: "var(--color-neutral-700)", what: "Заявка на 20 строк: 2 строки не распознаны", why: "фильтр по чертежу цеха и шланг без параметров", sum: "1 026 600 ₽", cta: "Разобрать", go: this.go("upload") },
         { wait: "25 м", waitColor: "var(--color-neutral-700)", what: "Отзыв с оценкой 2 — SKF 6205, АО «Агропром-Т»", why: "низкая оценка → обращение инженеру", sum: "—", cta: "Читать", go: this.go("client") },
         { wait: "12 м", waitColor: "var(--color-neutral-700)", what: "Регистрация ООО «Гидросети»: скоринг отсрочки 54 из 100", why: "серая зона 50–60 — решение за оператором", sum: "лимит 300 000 ₽", cta: "Решить", go: this.go("auth") }
       ],
@@ -5489,7 +5526,7 @@ class Component extends DCLogic {
         { t: "КП собрано до 500 000 ₽", v: "18" },
         { t: "Напоминаний о повторной закупке", v: "34" },
         { t: "Цен пересчитано", v: "12 480" },
-        { t: "Статей опубликовано", v: "58" },
+        { t: "Статей опубликовано", v: "3" },
         { t: "Отзывов собрано", v: "9" },
         { t: "Фидов вылечено", v: "2" }
       ],
@@ -5541,12 +5578,12 @@ class Component extends DCLogic {
         { event: "Срок оплаты по отсрочке", note: "напоминание о платеже", max: true, mail: true, sms: true, when: "за 3 дня" }
       ],
       states: [
-        { label: "Корзина", title: "В корзине пока ничего нет", text: "Найдите позицию по артикулу, сфотографируйте шильдик или загрузите заявку списком — соберём спецификацию за вас.", cta: "Загрузить заявку", alt: "Открыть каталог", go: this.go("upload"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
-        { label: "Новый кабинет", title: "Здесь появится история закупок", text: "После первого заказа мы посчитаем периодичность по каждой позиции и будем напоминать о повторной закупке.", cta: "Найти оборудование", alt: "Подобрать в чате", go: this.go("catalog"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
-        { label: "Ошибка синхронизации", title: "Фид поставщика недоступен", text: "«Подшипник-Трейд»: 12 строк с ошибкой формата, последняя удачная выгрузка 4 часа назад. Позиции показываются по прошлым данным и помечены как требующие проверки.", cta: "Повторить выгрузку", alt: "Открыть журнал", go: this.go("admin"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
-        { label: "Отсрочка отклонена", title: "Лимит пока не открыт", text: "Компания зарегистрирована меньше года, истории закупок недостаточно. Работаем по счёту или с частичным авансом; повторная проверка — после трёх закрытых сделок.", cta: "Оформить по счёту", alt: "Спросить в чате", go: this.go("cart"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
-        { label: "Нет связи", title: "Соединение потеряно", text: "Черновик заявки сохранён локально. Как только связь появится, спецификация отправится сама — повторять ввод не нужно.", cta: "Повторить", alt: "Сохранить в файл", go: this.go("upload"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-neutral-600)" },
-        { label: "Позиция снята", title: "Модель снята с производства", text: "Grundfos CR 32-4 в этом исполнении больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
+        { label: "Корзина", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M3 4h2l2.4 11h10.2L20 7H6.2'/%3E%3Ccircle cx='9' cy='19' r='1.5'/%3E%3Ccircle cx='17' cy='19' r='1.5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "В корзине пока ничего нет", text: "Найдите позицию по артикулу, сфотографируйте шильдик или загрузите заявку списком — соберём спецификацию за вас.", cta: "Загрузить заявку", alt: "Открыть каталог", go: this.go("upload"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
+        { label: "Новый кабинет", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Здесь появится история закупок", text: "После первого заказа мы посчитаем периодичность по каждой позиции и будем напоминать о повторной закупке.", cta: "Найти оборудование", alt: "Подобрать в чате", go: this.go("catalog"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
+        { label: "Ошибка синхронизации", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M4.5 12a7.5 7.5 0 0 1 13-5.1L20 9M20 4v5h-5M19.5 12a7.5 7.5 0 0 1-13 5.1L4 15m0 5v-5h5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Фид поставщика недоступен", text: "«Подшипник-Трейд»: 12 строк с ошибкой формата, последняя удачная выгрузка 4 часа назад. Позиции показываются по прошлым данным и помечены как требующие проверки.", cta: "Повторить выгрузку", alt: "Открыть журнал", go: this.go("admin"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
+        { label: "Отсрочка отклонена", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='5' y='10.5' width='14' height='10'/%3E%3Cpath d='M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Лимит пока не открыт", text: "Компания зарегистрирована меньше года, истории закупок недостаточно. Работаем по счёту или с частичным авансом; повторная проверка — после трёх закрытых сделок.", cta: "Оформить по счёту", alt: "Спросить в чате", go: this.go("cart"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
+        { label: "Нет связи", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M2.5 8.5a14 14 0 0 1 19 0M5.5 12a9.5 9.5 0 0 1 13 0M8.8 15.4a5 5 0 0 1 6.4 0'/%3E%3Ccircle cx='12' cy='19' r='1'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Соединение потеряно", text: "Черновик заявки сохранён локально. Как только связь появится, спецификация отправится сама — повторять ввод не нужно.", cta: "Повторить", alt: "Сохранить в файл", go: this.go("upload"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-neutral-600)" },
+        { label: "Позиция снята", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='3.5' y='4' width='17' height='5'/%3E%3Cpath d='M5 9v11h14V9M10 15l4-4m0 4-4-4'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Модель снята с производства", text: "Grundfos CR 32-4 в этом исполнении больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
       ],
       warrantyCases: [
         { kicker: "24 месяца", title: "Гарантия производителя", text: "Срок указан в карточке. Обращение оформляется в кабинете, переписку с заводом ведёт сервис." },
@@ -5702,7 +5739,7 @@ class Component extends DCLogic {
       ],
       clientTimeline: [
         { date: "14 сент", channel: "MAX", what: "Подбор насоса на оборотную воду, спецификация собрана", sum: "168 640 ₽" },
-        { date: "13 сент", channel: "Почта", what: "Заявка цеха №4 списком, 20 строк — разобрана автоматом", sum: "600 400 ₽" },
+        { date: "13 сент", channel: "Почта", what: "Заявка цеха №4 списком, 20 строк — разобрана автоматом", sum: "1 026 600 ₽" },
         { date: "12 сент", channel: "Сайт", what: "Заказ ПК-10428 оформлен, счёт выставлен", sum: "209 800 ₽" },
         { date: "9 сент", channel: "MAX", what: "Фото шильдика: SKF 6205-2RS, повтор прошлой закупки", sum: "27 000 ₽" },
         { date: "5 сент", channel: "Телефон", what: "Уточнение по отсрочке, лимит поднят до 600 000 ₽", sum: "—" },
@@ -5909,7 +5946,7 @@ class Component extends DCLogic {
         { isText: true, isHead: false, text: "Ограничение одно: на многоступенчатых насосах нельзя снижать обороты произвольно. Ниже определённого порога падает подача смазки на подшипники скольжения и нарушается охлаждение двигателя. Минимальную частоту берут из руководства производителя, обычно это 25–30 Гц, и закладывают в настройки шкафа управления." },
         { isText: false, isHead: true, text: "Материалы: где нержавейка обязательна, а где переплата" },
         { isText: true, isHead: false, text: "Чугунный корпус подходит для чистой воды, отопления и оборотных контуров с нормальным pH. Нержавеющая сталь AISI 304 нужна при слабоагрессивной среде и требованиях по чистоте, AISI 316 — при хлоридах, морской воде и пищевом производстве. Для кислот и щелочей корпус подбирается по таблице химической стойкости, и здесь ошибка стоит дороже всего: насос выходит из строя за недели, а не годы." },
-        { isText: true, isHead: false, text: "Отдельно смотрят на уплотнение. Стандартное графит-керамика работает на чистой воде, для абразива нужен карбид кремния, для горячей среды — усиленное с охлаждением. На запрос «почему потекло через полгода» в половине случаев ответ именно в уплотнении, подобранном под чистую воду при фактически загрязнённой." },
+        { isText: true, isHead: false, text: "Отдельно смотрят на уплотнение. Стандартная пара графит — керамика работает на чистой воде, для абразива нужен карбид кремния, для горячей среды — усиленное с охлаждением. На запрос «почему потекло через полгода» в половине случаев ответ именно в уплотнении, подобранном под чистую воду при фактически загрязнённой." },
         { isText: false, isHead: true, text: "Что проверить перед заказом" },
         { isText: true, isHead: false, text: "Фактический расход и напор в рабочем режиме, кавитационный запас, температуру и загрязнённость среды, присоединительные размеры и монтажную длину, напряжение и схему пуска, наличие места под обслуживание. Этих семи пунктов достаточно, чтобы подбор был закрыт с первого раза. Если данных нет, начните с манометров и счётчика — измерение обойдётся дешевле, чем неподходящий насос." }
       ],
@@ -5992,7 +6029,6 @@ class Component extends DCLogic {
             { name: "Редукторы и мотор-редукторы", sub: "цилиндрические, червячные, планетарные, мотор-редукторы, вариаторы", count: "3 480" },
             { name: "Подшипники и комплектующие", sub: "подшипники, манжеты, сальники, ремни, цепи, муфты", count: "12 600" },
             { name: "Запчасти для производства", sub: "ремкомплекты, уплотнения, расходники", count: "7 420" },
-            { name: "Редукторы и мотор-редукторы", sub: "червячные, цилиндрические, планетарные, вариаторы, мотор-редукторы", count: "3 480" },
             { name: "Конвейерное оборудование", sub: "ролики, ленты, мотор-барабаны, барабаны, цепи", count: "2 860" },
             { name: "Подъёмное оборудование", sub: "тали, лебёдки, краны, электротельферы", count: "1 380" },
             { name: "Промышленная химия", sub: "масла, смазки, очистители, СОЖ", count: "2 240" },
@@ -6222,15 +6258,15 @@ class Component extends DCLogic {
         { v: "18", k: "подключённых источников" },
         { v: "218 430", k: "позиций в публикации" },
         { v: "12", k: "ошибок в последнем обмене" },
-        { v: "20%", k: "базовая наценка" }
+        { v: "18%", k: "базовая наценка" }
       ],
       priceRules: [
-        { cat: "Все категории (базовое)", range: "любая", markup: "+20%", round: "до 100 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Подшипники", range: "до 5 000 ₽", markup: "+35%", round: "до 10 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Насосы", range: "5 000 – 300 000 ₽", markup: "+18%", round: "до 100 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Насосы", range: "от 300 000 ₽", markup: "+12%", round: "до 1 000 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Компрессоры", range: "от 500 000 ₽", markup: "по КП", round: "—", status: "Только КП", tagClass: "tag-outline" },
-        { cat: "Частотные преобразователи", range: "любая", markup: "+22%", round: "до 100 ₽", status: "Черновик", tagClass: "tag-neutral" }
+        { cat: "Частотные преобразователи", range: "любая", markup: "+22%", round: "до 100 ₽", status: "Черновик", tagClass: "tag-neutral" },
+        { cat: "Все категории (базовое)", range: "любая", markup: "+18%", round: "до 100 ₽", status: "Активно", tagClass: "tag-accent" }
       ],
       feeds: [
         { name: "Гидромаш", url: "gidromash.ru/export/price.xml", format: "XML", schedule: "каждые 2 ч", last: "14 сентября, 06:00", count: "12 480", status: "Успешно", tagClass: "tag-accent" },
@@ -6283,6 +6319,7 @@ class Component extends DCLogic {
         { name: "Поставщик В", price: "89 500 ₽", color: "var(--color-neutral-700)" }
       ],
       products: catalogProducts,
+      pumpProducts,
       filters: [
         { name: "Производитель", options: ["Grundfos", "Wilo", "CNP", "Pedrollo", "Ebara"] },
         { name: "Тип насоса", options: ["Центробежный", "Консольный", "Скважинный", "Дозирующий"] },
@@ -6381,7 +6418,7 @@ class Component extends DCLogic {
         { t: "Спецификации", c: "6" }, { t: "Сотрудники", c: "4" }, { t: "Реквизиты", c: "" }
       ],
       accountStats: [
-        { v: "3", k: "запроса КП в работе" }, { v: "2", k: "заказа в пути" },
+        { v: "3", k: "запроса КП в работе" }, { v: "1", k: "заказ в пути" },
         { v: "1 240 800 ₽", k: "закуплено за квартал" }, { v: "30 дней", k: "доступная отсрочка" }
       ],
       orders: [

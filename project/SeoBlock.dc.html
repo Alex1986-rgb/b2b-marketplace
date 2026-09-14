@@ -10,7 +10,7 @@
 <helmet>
 <link rel="stylesheet" href="_ds/industry-2cf29483-63c2-42c2-a32d-4823edc25b26/styles.css">
 <style>
-  .seo-mono { font-family:"Barlow Condensed", system-ui, sans-serif; letter-spacing:0.06em; }
+  .seo-mono { font-family:"IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif; letter-spacing:0.06em; }
   .seo-p { font-size:15px; line-height:1.6; color:var(--color-neutral-800); margin:0 0 12px; max-width:920px; }
 </style>
 </helmet>
@@ -103,7 +103,7 @@
           <sc-for list="{{ carousel }}" as="a" hint-placeholder-count="8">
             <a href="#" class="blueprint" style="flex:0 0 300px;padding:0;display:flex;flex-direction:column;text-decoration:none;color:inherit">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div style="height:132px;background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 9px, var(--color-neutral-100) 9px 18px);border-bottom:1px solid var(--color-divider)"></div>
+              <div class="duotone" style="height:132px;background:{{ a.bg }};border-bottom:1px solid var(--color-divider)"></div>
               <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;flex:1">
                 <span class="seo-mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700)">{{ a.section }}</span>
                 <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.25">{{ a.title }}</span>
@@ -132,16 +132,17 @@ class Component extends DCLogic {
     const d = this.props.data || {};
     const t = d.table || {};
     const fallback = [
-      { section: "Подбор · Насосы", title: "Как подобрать насос по рабочей точке", lead: "Расход, напор и запас: почему «с запасом» дороже в эксплуатации.", meta: "14 сентября · 9 мин" },
-      { section: "Регламент · Насосы", title: "Торцевое уплотнение: признаки износа", lead: "Подтёки, шум и нагрев — когда менять, а когда уже поздно.", meta: "12 сентября · 5 мин" },
-      { section: "Сравнение · Приводы", title: "Мотор-редуктор или редуктор с двигателем", lead: "Когда моноблок выгоднее сборки по частям.", meta: "11 сентября · 7 мин" },
-      { section: "Расчёт · Компрессоры", title: "Сколько воздуха нужно цеху", lead: "Считаем расход по потребителям и коэффициенту загрузки.", meta: "9 сентября · 8 мин" },
-      { section: "Подбор · Частотники", title: "Частотник к насосу: когда окупается", lead: "Экономия на переменном расходе и срок возврата вложений.", meta: "6 сентября · 6 мин" },
-      { section: "Материалы · Арматура", title: "Чугун, нержавейка или пластик", lead: "Выбор корпуса под среду, температуру и давление.", meta: "4 сентября · 6 мин" },
-      { section: "Сервис · Подшипники", title: "Как продлить ресурс подшипника", lead: "Смазка, посадка и центровка: три причины ранних отказов.", meta: "2 сентября · 5 мин" },
-      { section: "Импорт · Поставки", title: "Аналог из Китая: на что смотреть", lead: "Сертификация ЕАЭС, срок и доступность запчастей.", meta: "29 августа · 7 мин" }
+      { img: "c-cavitation", section: "Регламент · Насосы", title: "Кавитация: почему разрушается рабочее колесо", lead: "Подпор на всасывании, NPSH и шум — как поймать проблему до замены колеса.", meta: "13 сентября · 6 мин" },
+      { img: "c-seal", section: "Регламент · Насосы", title: "Торцевое уплотнение: признаки износа", lead: "Подтёки, шум и нагрев — когда менять, а когда уже поздно.", meta: "12 сентября · 5 мин" },
+      { img: "c-gearmotor", section: "Сравнение · Приводы", title: "Мотор-редуктор или редуктор с двигателем", lead: "Когда моноблок выгоднее сборки по частям.", meta: "11 сентября · 7 мин" },
+      { img: "a-air", section: "Расчёт · Компрессоры", title: "Сколько воздуха нужно цеху", lead: "Считаем расход по потребителям и коэффициенту загрузки.", meta: "9 сентября · 8 мин" },
+      { img: "art-vfd", section: "Подбор · Частотники", title: "Частотник к насосу: когда окупается", lead: "Экономия на переменном расходе и срок возврата вложений.", meta: "6 сентября · 6 мин" },
+      { img: "c-materials", section: "Материалы · Арматура", title: "Чугун, нержавейка или пластик", lead: "Выбор корпуса под среду, температуру и давление.", meta: "4 сентября · 6 мин" },
+      { img: "a-bearing", section: "Сервис · Подшипники", title: "Как продлить ресурс подшипника", lead: "Смазка, посадка и центровка: три причины ранних отказов.", meta: "2 сентября · 5 мин" },
+      { img: "a-containers", section: "Импорт · Поставки", title: "Аналог из Китая: на что смотреть", lead: "Сертификация ЕАЭС, срок и доступность запчастей.", meta: "29 августа · 7 мин" }
     ];
-    const carousel = (d.articles && d.articles.length ? d.articles : fallback);
+    const carousel = (d.articles && d.articles.length ? d.articles : fallback)
+      .map(x => ({ ...x, bg: "url(img/" + (x.img || "art-hero") + ".jpg) center/cover no-repeat" }));
     const perPage = 4;
     const pages = Math.max(1, Math.ceil(carousel.length / perPage));
     const slide = Math.min(this.state.slide, pages - 1);

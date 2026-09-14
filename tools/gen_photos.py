@@ -36,6 +36,10 @@ T = {  # name: (size, prompt)
  "art-hero": ("1536x1024", "Pump group in a technical room, focus on pressure gauges mounted on the discharge pipes of centrifugal pumps, red and silver painted piping, shallow depth of field."),
  "art-vfd": ("1536x1024", "Wall-mounted electrical cabinet with a frequency inverter controlling a pump, cabinet door open, cables and labels without readable text, industrial pump in background."),
  "nameplate": ("1024x1024", "Close-up phone camera view of a worn metal nameplate riveted to a blue pump motor housing, engraved rows of technical parameters (unreadable small text), slight glare, shallow depth of field."),
+ "c-seal": ("1536x1024", "Close-up of a pump mechanical seal assembly on a workbench: carbon and ceramic seal faces, springs and O-rings, next to a disassembled pump shaft, oily fingerprints."),
+ "c-gearmotor": ("1536x1024", "Industrial helical gear motor, grey painted cast housing with foot mounting and output shaft with key, next to a separate gearbox and electric motor coupled on a steel frame, workshop."),
+ "c-materials": ("1536x1024", "Three industrial ball valves side by side on a steel table: grey cast iron flanged valve, polished stainless steel valve, grey PVC plastic valve, neutral workshop background."),
+ "c-cavitation": ("1536x1024", "Close-up of a worn bronze centrifugal pump impeller with cavitation pitting damage on the vanes, held on a workshop bench next to calipers."),
 }
 
 def job(name):
