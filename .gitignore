@@ -1,0 +1,5 @@
+.DS_Store
+.thumbnail
+project/img/src/
+docs/reports/_gen.log
+__pycache__/
