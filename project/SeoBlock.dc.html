@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-2cf29483-63c2-42c2-a32d-4823edc25b26/styles.css">
+<style>
+  .seo-mono { font-family:"Barlow Condensed", system-ui, sans-serif; letter-spacing:0.06em; }
+  .seo-p { font-size:15px; line-height:1.6; color:var(--color-neutral-800); margin:0 0 12px; max-width:920px; }
+</style>
+</helmet>
+
+<section style="border-top:1px solid var(--color-divider);background:var(--color-bg)">
+  <div style="max-width:1360px;margin:0 auto;padding:40px 28px 48px;display:flex;flex-direction:column;gap:36px">
+
+    <div>
+      <div class="seo-mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">Информация о разделе</div>
+      <h2 style="font-size:28px;margin:0 0 12px">{{ heading }}</h2>
+      <p class="seo-p">{{ intro }}</p>
+
+      <sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <sc-for list="{{ paras }}" as="p" hint-placeholder-count="3">
+            <p class="seo-p">{{ p }}</p>
+          </sc-for>
+
+          <h3 style="font-size:20px;margin:22px 0 10px">{{ tableTitle }}</h3>
+          <div class="blueprint" style="padding:6px 14px 10px;overflow-x:auto;max-width:920px">
+            <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <table class="table" style="width:100%">
+              <thead>
+                <tr>
+                  <sc-for list="{{ tableHead }}" as="h" hint-placeholder-count="4">
+                    <th>{{ h }}</th>
+                  </sc-for>
+                </tr>
+              </thead>
+              <tbody>
+                <sc-for list="{{ tableRows }}" as="r" hint-placeholder-count="4">
+                  <tr>
+                    <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="4">
+                      <td style="font-size:14px">{{ c }}</td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+
+          <sc-for list="{{ tail }}" as="p" hint-placeholder-count="1">
+            <p class="seo-p" style="margin-top:14px">{{ p }}</p>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <button onClick="{{ toggle }}" class="btn btn-secondary" style="display:inline-flex;align-items:center;gap:10px;margin-top:4px">
+        {{ toggleLabel }}
+        <span style="display:inline-block;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid currentColor;transition:transform 0.18s;transform: {{ arrow }}"></span>
+      </button>
+    </div>
+
+    <div>
+      <div class="seo-mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">Частые вопросы</div>
+      <h2 style="font-size:24px;margin:0 0 16px">{{ faqHeading }}</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start">
+        <sc-for list="{{ faqColumns }}" as="col" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ col.items }}" as="f" hint-placeholder-count="4">
+              <div class="blueprint" style="padding:14px 16px">
+                <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+                <button onClick="{{ f.toggle }}" style="all:unset;display:flex;width:100%;gap:12px;align-items:flex-start;justify-content:space-between;cursor:pointer;font-family:var(--font-heading);font-weight:600;font-size:17px;line-height:1.3;color:var(--color-text)">
+                  <span>{{ f.q }}</span>
+                  <span style="flex:none;margin-top:6px;display:inline-block;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--color-accent);transition:transform 0.18s;transform: {{ f.arrow }}"></span>
+                </button>
+                <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                  <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:10px 0 0">{{ f.a }}</p>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px">
+        <div>
+          <div class="seo-mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">База знаний</div>
+          <h2 style="font-size:24px;margin:0">Статьи по теме</h2>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button onClick="{{ prev }}" class="btn btn-secondary" style="min-width:44px;min-height:44px;padding:0">←</button>
+          <button onClick="{{ next }}" class="btn btn-secondary" style="min-width:44px;min-height:44px;padding:0">→</button>
+        </div>
+      </div>
+      <div style="overflow:hidden">
+        <div style="display:flex;gap:18px;transition:transform 0.32s ease;transform: {{ shift }}">
+          <sc-for list="{{ carousel }}" as="a" hint-placeholder-count="8">
+            <a href="#" class="blueprint" style="flex:0 0 300px;padding:0;display:flex;flex-direction:column;text-decoration:none;color:inherit">
+              <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div style="height:132px;background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 9px, var(--color-neutral-100) 9px 18px);border-bottom:1px solid var(--color-divider)"></div>
+              <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;flex:1">
+                <span class="seo-mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700)">{{ a.section }}</span>
+                <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.25">{{ a.title }}</span>
+                <span style="font-size:13px;line-height:1.45;color:var(--color-neutral-700)">{{ a.lead }}</span>
+                <span class="seo-mono" style="font-size:11px;color:var(--color-neutral-600);margin-top:auto;padding-top:8px">{{ a.meta }}</span>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:12px">
+        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+          <span style="width:22px;height:3px;background: {{ d.bg }};display:block"></span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;data&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{heading:string,intro:string,paras:string[],table:{title:string,head:string[],rows:string[][]},tail?:string[],faqHeading?:string,faq:{q:string,a:string}[]}&quot;}}">
+class Component extends DCLogic {
+  state = { open: false, faqOpen: 0, slide: 0 };
+
+  renderVals() {
+    const d = this.props.data || {};
+    const t = d.table || {};
+    const fallback = [
+      { section: "Подбор · Насосы", title: "Как подобрать насос по рабочей точке", lead: "Расход, напор и запас: почему «с запасом» дороже в эксплуатации.", meta: "14 сентября · 9 мин" },
+      { section: "Регламент · Насосы", title: "Торцевое уплотнение: признаки износа", lead: "Подтёки, шум и нагрев — когда менять, а когда уже поздно.", meta: "12 сентября · 5 мин" },
+      { section: "Сравнение · Приводы", title: "Мотор-редуктор или редуктор с двигателем", lead: "Когда моноблок выгоднее сборки по частям.", meta: "11 сентября · 7 мин" },
+      { section: "Расчёт · Компрессоры", title: "Сколько воздуха нужно цеху", lead: "Считаем расход по потребителям и коэффициенту загрузки.", meta: "9 сентября · 8 мин" },
+      { section: "Подбор · Частотники", title: "Частотник к насосу: когда окупается", lead: "Экономия на переменном расходе и срок возврата вложений.", meta: "6 сентября · 6 мин" },
+      { section: "Материалы · Арматура", title: "Чугун, нержавейка или пластик", lead: "Выбор корпуса под среду, температуру и давление.", meta: "4 сентября · 6 мин" },
+      { section: "Сервис · Подшипники", title: "Как продлить ресурс подшипника", lead: "Смазка, посадка и центровка: три причины ранних отказов.", meta: "2 сентября · 5 мин" },
+      { section: "Импорт · Поставки", title: "Аналог из Китая: на что смотреть", lead: "Сертификация ЕАЭС, срок и доступность запчастей.", meta: "29 августа · 7 мин" }
+    ];
+    const carousel = (d.articles && d.articles.length ? d.articles : fallback);
+    const perPage = 4;
+    const pages = Math.max(1, Math.ceil(carousel.length / perPage));
+    const slide = Math.min(this.state.slide, pages - 1);
+    return {
+      carousel,
+      shift: "translateX(-" + (slide * perPage * 318) + "px)",
+      prev: () => this.setState({ slide: (slide - 1 + pages) % pages }),
+      next: () => this.setState({ slide: (slide + 1) % pages }),
+      dots: Array.from({ length: pages }, (_, i) => ({
+        bg: i === slide ? "var(--color-accent)" : "var(--color-neutral-300)"
+      })),
+      heading: d.heading,
+      intro: d.intro,
+      paras: this.state.open ? (d.paras || []) : [],
+      tail: this.state.open ? (d.tail || []) : [],
+      tableTitle: t.title,
+      tableHead: t.head || [],
+      tableRows: (t.rows || []).map(cells => ({ cells })),
+      open: this.state.open,
+      toggle: () => this.setState(s => ({ open: !s.open })),
+      toggleLabel: this.state.open ? "Свернуть текст" : "Читать полностью",
+      arrow: this.state.open ? "rotate(180deg)" : "rotate(0deg)",
+      faqHeading: d.faqHeading || "Вопросы и ответы",
+      faqColumns: [0, 1].map(col => ({
+        items: (d.faq || []).slice(col * 4, col * 4 + 4).map((f, j) => {
+          const i = col * 4 + j;
+          return {
+            q: f.q, a: f.a,
+            open: this.state.faqOpen === i,
+            arrow: this.state.faqOpen === i ? "rotate(180deg)" : "rotate(0deg)",
+            toggle: () => this.setState(s => ({ faqOpen: s.faqOpen === i ? null : i }))
+          };
+        })
+      })).filter(c => c.items.length)
+    };
+  }
+}
+</script>
+</body>
+</html>
