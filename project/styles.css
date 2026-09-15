@@ -1,5 +1,5 @@
 /* Industry — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md. */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Fira+Sans+Condensed:wght@400;500;600&display=swap');
 
 :root {
   --color-bg: #f2f2f3;
@@ -41,9 +41,9 @@
   --color-accent-2-800: #314457;
   --color-accent-2-900: #1f2d3a;
 
-  --font-heading: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-heading: "Fira Sans Condensed", "Arial Narrow", system-ui, sans-serif;
   --font-heading-weight: 600;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "Fira Sans", system-ui, sans-serif;
 
   --space-1: 3.4px;
   --space-2: 6.8px;

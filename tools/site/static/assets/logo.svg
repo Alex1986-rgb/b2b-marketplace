@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 64" role="img" aria-label="ПРОМКОНТУР">
+  <g>
+  <rect width="64" height="64" fill="#5980a6"/>
+  <path d="M12 22V12h10M42 12h10v10M52 42v10H42M22 52H12V42" fill="none" stroke="#fff" stroke-width="4"/>
+  <rect x="24" y="24" width="16" height="16" fill="#fff"/>
+</g>
+  <text x="80" y="43" font-family="Fira Sans Condensed, Arial Narrow, sans-serif" font-weight="600" font-size="34" letter-spacing="0.5" fill="#1d2d3d">ПРОМКОНТУР</text>
+</svg>

@@ -1,0 +1,2979 @@
+{
+ "photos": [
+  {
+   "id": "warehouse",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "блок «Стать поставщиком», правая колонка (уже стоит: .ph duotone url(img/warehouse.jpg))",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Поставщику",
+     "where": "мобильная версия: полоса 100% × 160px под hero, если фон hero скрыт",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "p-cr32",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Каталог",
+     "where": "карточки catalogProducts / pumpProducts, поле bgc — packshot на сером фоне",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Товар",
+     "where": "главная фигура figure.blueprint.duotone.ph (url(img/p-cr32.jpg)) — снять duotone, товар в реальном цвете",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Главная",
+     "where": "таблица «Часто заказывают» — миниатюра 48×48 слева от наименования (новая колонка перед «Наименование»)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Сравнение",
+     "where": "шапка колонок compareModels[0..2] — миниатюра 96×96 над name (временно, до packshot из фида поставщика)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "карточка распознанной позиции (уже стоит 120px слева) — снять duotone",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Поиск пуст",
+     "where": "таблица «Возможно, вы искали» — миниатюра 40×40 в колонке «Модель»",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Умный чат",
+     "where": "строки предложенных позиций внутри сообщения чата (CNP CDLF / Wilo Helix / Grundfos CR) — миниатюра 44×44",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Статья",
+     "where": "сайдбар «Позиции из статьи» articleProducts — миниатюра 48×48",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Корзина",
+     "where": "cart[].bg — уже стоит, снять duotone",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Статус заказа",
+     "where": "таблица orderItems — миниатюра 40×40 в колонке «Позиция»",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "таблица accountRepeat «Что вы закупаете регулярно» — миниатюра 40×40",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "mobileCatalog / mobileCart — уже стоят",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-nb40",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Каталог",
+     "where": "catalogProducts[1] / pumpProducts, поле bgc",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Главная",
+     "where": "«Часто заказывают», строка Grundfos NB 40-200/219 — миниатюра 48×48",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-nis80",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Каталог",
+     "where": "catalogProducts[2], pumpProducts[5] (bgc)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Сравнение",
+     "where": "compareModels[3] Ebara 3M 65-160 — миниатюра 96×96 (консольный тип)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Главная",
+     "where": "«Часто заказывают», строка CNP NIS 80-65-160",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-lgcy75",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Запрос КП",
+     "where": "главная фигура figure.blueprint.duotone.ph url(img/p-lgcy75.jpg) — оставить duotone (проектная позиция, атмосфера важнее цвета)",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Главная",
+     "where": "«Часто заказывают», строка Kaishan LGCY-75",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "mobileCatalog[2] — уже стоит",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-vr15",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Каталог",
+     "where": "catalogProducts[4] (bgc)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Главная",
+     "where": "«Часто заказывают», строка INNOVERT VR 15 kW",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountRepeat INNOVERT VR 15 kW — миниатюра 40×40",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-6205",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Каталог",
+     "where": "catalogProducts[5] (bgc)",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Главная",
+     "where": "«Часто заказывают», строка Подшипник SKF 6205-2RS",
+     "fit": "contain",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountRepeat / autoBuy SKF 6205-2RS — миниатюра 40×40",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "brand",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Производитель",
+     "where": "hero справа figure.blueprint.duotone.ph url(img/brand.jpg) — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-pumps",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "hero справа figure url(img/dir-pumps.jpg) — уже стоит (шаблон для «Насосы»)",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[1] «Перекачка, трубопровод, вода» (по эталону — «Гидравлика и насосы») — фото-плитка шапки кластера",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectKits[0] «Насосная станция повышения давления» — фото 16:9 в верх карточки",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "blog-boiler",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "лид-статья слева (уже стоит min-height:300px)",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Котельное оборудование»",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направления",
+     "where": "запасная плитка кластера, если по эталону появится «Инженерные системы»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-compressor",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[0].bg — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[2] «Воздух, климат и очистка» (по эталону — «Пневматика и компрессоры») — фото-плитка шапки",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Компрессоры»",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectKits[1] «Компрессорная станция» — фото 16:9 в верх карточки",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-bearing",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[1].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Подшипники и комплектующие»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-motor",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[2].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Электродвигатели»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-vfd",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[3].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[0] «Привод, электрика и КИПиА» (по эталону — «Электрика и автоматика») — фото-плитка шапки",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Частотники и автоматика»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-valves",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[4].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Промышленная арматура»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-air",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[5].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Пневматика»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-hex",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[6].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Теплообменное оборудование»",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectKits[2] «ИТП с автоматикой» — фото 16:9 в верх карточки",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-water",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[7].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Водоподготовка» и «Очистные сооружения»",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectKits[3] «Комплекс очистки воды» — фото 16:9 в верх карточки",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "a-containers",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Блог",
+     "where": "articles[8].bg",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» (SeoBlock.dc.html, fallback[7] img: \"a-containers\") — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "art-hero",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Статья",
+     "where": "обложка figure.blueprint.duotone.ph url(img/art-hero.jpg) — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "art-vfd",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Статья",
+     "where": "иллюстрация перед разделом о частотном регулировании (уже стоит)",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» в SeoBlock.dc.html, fallback[4] img: \"art-vfd\"",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "nameplate",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Мобильные",
+     "where": "снабженец · поиск по фото, .ph url(img/nameplate.jpg) — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "зона загрузки: вместо пустого квадрата 46×46 (span border:1.5px solid var(--color-accent)) — пример «вот так снимать», 160×110",
+     "fit": "cover",
+     "treatment": "plain"
+    },
+    {
+     "screen": "Поиск пуст",
+     "where": "карточка emptyActions[0] «Поиск по фото шильдика» — фото-полоса 100% × 90px сверху",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "c-cavitation",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» (SeoBlock.dc.html, fallback[0] img: \"c-cavitation\", «Кавитация») — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "c-seal",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» (SeoBlock.dc.html, fallback[1] img: \"c-seal\", «Торцевое уплотнение») — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Запчасти для производства»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "c-gearmotor",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» (SeoBlock.dc.html, fallback[2] img: \"c-gearmotor\", «Мотор-редуктор») — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Редукторы и мотор-редукторы»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "c-materials",
+   "status": "existing",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "карусель «Статьи по теме» (SeoBlock.dc.html, fallback[5] img: \"c-materials\", «Чугун, нержавейка или пластик») — уже стоит",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "hero-pump-hall",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Wide interior of a large industrial pumping and compressor hall seen from a raised walkway: rows of blue centrifugal pumps on concrete plinths, painted steel pipelines with gate valves, an electric control cabinet row along the wall, a screw compressor in the far end. Deep perspective, cool daylight from high windows mixed with LED high-bay lights, no people. Left third of the frame calm and darker for text overlay. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "тёмный hero (section background:var(--color-accent-900), h1 «Промышленное оборудование…») — правые ~40% ширины, фото с градиентом в accent-900 слева; на мобиле скрыть",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Все витринные",
+     "where": "og:image по умолчанию 1200×630 (кроп)",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "cl-mechanics",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Workshop bench in a plant repair shop: an opened helical gearbox with visible gears, a pile of roller and ball bearings, V-belts, a roller chain, lip seals and couplings laid out neatly on a steel bench, overhead fluorescent light, slightly oily surfaces. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[3] «Механика, привод, запчасти» (по эталону — «Приводы и редукторы») — фото-плитка шапки кластера",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "cl-production",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Metalworking shop floor: a CNC turning centre with its sliding door open and coolant on a turned steel part, a robotic welding cell with a yellow articulated arm behind a safety fence in the background, sparks subtle, cool machine lighting, no people. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[4] «Производство и обработка» (по эталону — «Металлообработка и инструмент») — фото-плитка шапки",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Станки и ЧПУ» и «Промышленные роботы»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "cl-logistics",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Food and packaging production line: stainless steel conveyor with shrink-wrapped cartons moving to an automatic stretch-wrapping machine, a pallet with finished goods and a pallet stacker nearby, bright clean hall, cool white light, no people. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "кластер directionGroups[5] «Логистика, упаковка, пищевые линии» — фото-плитка шапки",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Упаковочное оборудование» и «Пищевое оборудование»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-electrical",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Open low-voltage distribution switchboard in a factory electrical room: rows of grey modular circuit breakers, contactors and relays on DIN rails, copper busbars, neat blue and black wiring in ducts, cabinet doors open, cool light. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Электротехника» (9 640 позиций)",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-instruments",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Close view of process instrumentation on a stainless steel pipeline in a plant: pressure transmitter with a small blank display, analog pressure gauge, temperature sensor in a thermowell and an electromagnetic flow meter between flanges, shallow depth of field. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «КИПиА»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-hydraulics",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Industrial hydraulic power unit on a steel tank: gear pump with electric motor, directional control valve stack, pressure gauges, braided high-pressure hoses running to a large chrome hydraulic cylinder on a press frame, workshop light, slight oil sheen. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Гидравлика»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-tooling",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Metalworking tooling on a grey steel tool cart next to a lathe: three-jaw lathe chuck, carbide cutting inserts in open trays, end mills and drills in holders, a digital caliper, cool workshop light, shallow depth of field. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Оборудование для металлообработки»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-power-tools",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Industrial power tools laid on a plywood workbench in a maintenance shop: pneumatic impact wrench with air hose, heavy angle grinder, cordless drill, hydraulic torque wrench and a socket set, dust and wear marks, practical overhead light. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Промышленный инструмент»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-cable",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Perforated galvanized cable trays running under a factory ceiling with thick black and grey armoured power cables neatly tied, cable glands entering an electrical cabinet at the end of the run, perspective view, cool light. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Кабель и кабеленесущие системы»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-conveyor",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Industrial belt conveyor in a bulk materials plant: black rubber belt on steel idler rollers, a drum motor at the head end, a section of spare rollers stacked on the floor, dusty environment, directional daylight. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Конвейерное оборудование»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-welding",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Welding bay in a fabrication shop: MIG/MAG welding inverter on a trolley with gas cylinder, welding torch hanging on the hook, steel workpiece with a fresh weld bead on a welding table, welding curtain in the background, warm spark glow against cool light, no people. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Сварочное оборудование»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-safety",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Industrial safety equipment on a steel shelf in a plant: white hard hats, safety glasses, hearing protection, high-visibility vest, a portable gas detector and a wall-mounted red beacon siren, clean composition, cool light. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Средства безопасности»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-lubricants",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Lubrication station in a maintenance workshop: unlabeled steel oil drums with hand pumps, grease guns, plain metal and plastic canisters of lubricants and coolant on a rack, drip tray, slightly oily floor, practical light. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Промышленная химия»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-ventilation",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Rooftop plant of a factory: large air handling unit with open service door showing a centrifugal fan, galvanized rectangular ducts with flexible connectors, a chiller unit behind, overcast daylight. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Вентиляция и климат» и «Промышленный холод»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "dir-lighting",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Large warehouse-workshop hall lit by rows of industrial LED high-bay luminaires, one explosion-proof fixture mounted low on a column in the foreground in focus, clean concrete floor, evening with lights on, no people. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Направление",
+     "where": "шаблон hero для «Промышленное освещение»",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "about-engineer",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Over-the-shoulder view of a procurement engineer in a dark work jacket holding a tablet next to a running pump unit in a plant, face not visible, the tablet screen shows abstract table rows without readable text, pipes and gauges softly out of focus. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "О сервисе",
+     "where": "тёмный hero (h1 «Мы не склад и не магазин…») — правые ~40%, фото с градиентом в accent-900; на мобиле скрыть",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "payment-dispatch",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Loading dock of a supplier warehouse: a centrifugal pump crated in a wooden frame and a wrapped pallet of boxes being loaded into a box truck by a pallet jack, dock leveller, overcast daylight mixed with warehouse light, no faces. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "справа от заголовка «Оплата, доставка и документы» (сейчас пустое поле справа от абзаца max-width:760px) — фото 420×260 в .blueprint",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "warranty-inspection",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Service technician's gloved hand holding a handheld vibration analyzer probe against the bearing housing of an electric motor driving a pump, blank analyzer screen, plant background softly blurred, focused practical light, face not visible. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Гарантия",
+     "where": "справа от заголовка «Гарантия, возврат и рекламации» (пустое поле справа от абзаца max-width:760px) — фото 420×260 в .blueprint",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "project-commissioning",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Newly installed booster pumping station on a skid in a plant: three vertical multistage pumps, stainless manifolds, a control cabinet with variable frequency drives, fresh paint, protective film on the cabinet door, commissioning tools on the floor, bright work light, no people. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Проекты",
+     "where": "фон тёмного hero (section background:var(--color-accent-900) с формой «Запрос на комплектацию») — фото на весь блок с сильной тонировкой accent-900 ~80%, текст остаётся читаемым",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "nameplate-phone",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Hand holding a smartphone in front of a worn blue electric pump motor in a plant, phone camera view framing the riveted metal nameplate with a rectangular focus frame on screen, nameplate engraving unreadable, shallow depth of field. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Мобильные",
+     "where": "снабженец · главная: промо-полоса «Найти по фото шильдика» 100% × 120px под кнопками «По фото / Чат в MAX»",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "SEO-блок «Поиск оборудования по фото шильдика» — иллюстрация «как снимать» справа от текста, 16:9",
+     "fit": "cover",
+     "treatment": "duotone"
+    },
+    {
+     "screen": "Первый визит",
+     "where": "карточка «03 · Первое сообщение в чате» — полоса 100% × 100px сверху",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "supplier-dock",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Distributor warehouse with a truck at the loading dock, pallets of boxed industrial valves and electric motors being staged, a worker with a handheld barcode scanner seen from behind, high racks, LED light, deep perspective. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Поставщику",
+     "where": "фон тёмного hero (h1 «Загрузите прайс — заказы придут готовыми», форма справа) — тонировка accent-900 ~80%",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "supplier-stock-count",
+   "status": "new",
+   "size": "1536x1024",
+   "prompt": "Close view of a warehouse rack aisle: a gloved hand scanning a blank barcode label on a box containing a gear motor with a rugged handheld terminal, shelves with boxed bearings and pumps behind, cool light, shallow depth of field. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Условия поставщикам",
+     "where": "блок «Что требуется от поставщика» (точность остатков) — фото-полоса 100% × 160px над списком требований",
+     "fit": "cover",
+     "treatment": "duotone"
+    }
+   ]
+  },
+  {
+   "id": "p-cr32-flange",
+   "status": "new",
+   "size": "1024x1024",
+   "prompt": "Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left: close-up of the blue cast iron base of a vertical multistage pump showing the inline flanged inlet and outlet ports with bolt holes and the stainless steel sleeve above. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Товар",
+     "where": "галерея под главным фото — миниатюра 2 из 3 (80×80), по клику в главную фигуру",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  },
+  {
+   "id": "p-cr32-motor",
+   "status": "new",
+   "size": "1024x1024",
+   "prompt": "Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left: upper part of a vertical multistage pump, blue electric motor with cooling fins, terminal box and a blank riveted metal nameplate, coupling guard below. No logos, no brand names, no readable text; blank nameplates.",
+   "placements": [
+    {
+     "screen": "Товар",
+     "where": "галерея под главным фото — миниатюра 3 из 3 (80×80)",
+     "fit": "contain",
+     "treatment": "plain"
+    }
+   ]
+  }
+ ],
+ "icons": [
+  {
+   "id": "cluster-electric",
+   "lucide": "zap",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[0] (рядом с g.n «01 · Привод, электрика и КИПиА / эталон: Электрика и автоматика») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 01"
+    }
+   ]
+  },
+  {
+   "id": "cluster-pumping",
+   "lucide": "droplets",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[1] (рядом с g.n «02 · Перекачка, трубопровод, вода / эталон: Гидравлика и насосы») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 02"
+    }
+   ]
+  },
+  {
+   "id": "cluster-air",
+   "lucide": "wind",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[2] (рядом с g.n «03 · Воздух, климат и очистка / эталон: Пневматика и компрессоры») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 03"
+    }
+   ]
+  },
+  {
+   "id": "cluster-mechanics",
+   "lucide": "cog",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[3] (рядом с g.n «04 · Механика, привод, запчасти / эталон: Приводы и редукторы») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 04"
+    }
+   ]
+  },
+  {
+   "id": "cluster-production",
+   "lucide": "factory",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[4] (рядом с g.n «05 · Производство и обработка / эталон: Металлообработка и инструмент») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 05"
+    }
+   ]
+  },
+  {
+   "id": "cluster-logistics",
+   "lucide": "warehouse",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "шапка кластера directionGroups[5] (рядом с g.n «06 · Логистика, упаковка, пищевые линии») — 28px; в рубрикаторе Главной — 16px у заголовка группы"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор, заголовок группы 06"
+    }
+   ]
+  },
+  {
+   "id": "cluster-engineering",
+   "lucide": "heater",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "резерв: кластер «Инженерные системы» из эталона spec-screens.md, если структура будет перестроена"
+    }
+   ]
+  },
+  {
+   "id": "dir-motors",
+   "lucide": "cog",
+   "custom": true,
+   "draw": "Асинхронный двигатель сбоку: прямоугольный корпус с 3 вертикальными рёбрами, клеммная коробка сверху, вал вправо, лапы снизу. Lucide-замена — cog.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Электродвигатели» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Электродвигатели» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-vfd",
+   "lucide": "circuit-board",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Частотники и автоматика» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Частотники и автоматика» — 16px"
+    },
+    {
+     "screen": "Каталог",
+     "where": "категории footerCols «Частотники»"
+    }
+   ]
+  },
+  {
+   "id": "dir-kipia",
+   "lucide": "gauge",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «КИПиА» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «КИПиА» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-electrical",
+   "lucide": "toggle-right",
+   "custom": true,
+   "draw": "Модульный автомат на DIN-рейке: вертикальный прямоугольник, рычажок посередине, рейка горизонтальной линией. Lucide-замена — toggle-right.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Электротехника» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Электротехника» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-cable",
+   "lucide": "cable",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Кабель и кабеленесущие системы» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Кабель и кабеленесущие системы» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-ups",
+   "lucide": "battery-charging",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «ИБП и электропитание» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «ИБП и электропитание» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-generators",
+   "lucide": "fuel",
+   "custom": true,
+   "draw": "ДГУ: вытянутый прямоугольник на раме, решётка радиатора слева (3 штриха), выхлопная труба сверху справа. Lucide-замена — fuel.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Дизель-генераторы» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Дизель-генераторы» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-lighting",
+   "lucide": "lamp-ceiling",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Промышленное освещение» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленное освещение» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-energy",
+   "lucide": "leaf",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[0].items name «Энергосбережение» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Энергосбережение» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-pumps",
+   "lucide": "droplets",
+   "custom": true,
+   "draw": "Центробежный насос: круг-улитка с патрубком вверх и патрубком влево, короткий вал вправо к прямоугольнику двигателя. Lucide-замена — droplets (занята кластером, поэтому нужна своя).",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Насосы» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Насосы» — 16px"
+    },
+    {
+     "screen": "Направление",
+     "where": "hero «Насосы для промышленности и ЖКХ» — 32px перед h1 или в хлебных крошках"
+    },
+    {
+     "screen": "Главная",
+     "where": "categories «Насосы»"
+    }
+   ]
+  },
+  {
+   "id": "dir-valves",
+   "lucide": "git-commit-horizontal",
+   "custom": true,
+   "draw": "Задвижка на трубе: горизонтальная линия трубы, два треугольника-бабочки вершинами друг к другу, шток вверх с маховиком (короткая перекладина). Lucide-замена — git-commit-horizontal.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Промышленная арматура» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленная арматура» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-hydraulics",
+   "lucide": "cylinder",
+   "custom": true,
+   "draw": "Гидроцилиндр: длинный прямоугольник-гильза, шток вправо с проушиной, два штуцера сверху. Lucide-замена — cylinder.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Гидравлика» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Гидравлика» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-pneumatics",
+   "lucide": "air-vent",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Пневматика» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Пневматика» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-heat-exchangers",
+   "lucide": "layers",
+   "custom": true,
+   "draw": "Пластинчатый теплообменник: 5 вертикальных пластин между двумя плитами, стяжные шпильки сверху и снизу, стрелки вход/выход. Lucide-замена — layers.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Теплообменное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Теплообменное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-boilers",
+   "lucide": "flame",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Котельное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Котельное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-water",
+   "lucide": "droplet",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Водоподготовка» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Водоподготовка» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-sewage",
+   "lucide": "recycle",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Очистные сооружения» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Очистные сооружения» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-fire",
+   "lucide": "fire-extinguisher",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[1].items name «Пожарное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Пожарное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-compressors",
+   "lucide": "circle-gauge",
+   "custom": true,
+   "draw": "Компрессор на ресивере: горизонтальный цилиндр-ресивер на опорах, над ним блок с манометром (круг со стрелкой). Lucide-замена — circle-gauge.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Компрессоры» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Компрессоры» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-ventilation",
+   "lucide": "fan",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Вентиляция и климат» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Вентиляция и климат» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-cooling",
+   "lucide": "snowflake",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Промышленный холод» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленный холод» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-filters",
+   "lucide": "filter",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Промышленные фильтры» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленные фильтры» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-dust",
+   "lucide": "tornado",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Пылеулавливание и аспирация» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Пылеулавливание и аспирация» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-gas-cleaning",
+   "lucide": "cloud-fog",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Очистка воздуха и газов» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Очистка воздуха и газов» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-furnaces",
+   "lucide": "heater",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[2].items name «Промышленные печи и сушильные камеры» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленные печи и сушильные камеры» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-gearboxes",
+   "lucide": "cog",
+   "custom": true,
+   "draw": "Две зацеплённые шестерни разного диаметра (большая слева, малая справа выше). Lucide-замена — cog (совпадает с кластером — лучше свой рисунок).",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Редукторы и мотор-редукторы» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Редукторы и мотор-редукторы» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-bearings",
+   "lucide": "circle-dot",
+   "custom": true,
+   "draw": "Шарикоподшипник в фас: два концентрических кольца, между ними 8 маленьких кружков-шариков. Lucide-замена — circle-dot.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Подшипники и комплектующие» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Подшипники и комплектующие» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-spares",
+   "lucide": "nut",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Запчасти для производства» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Запчасти для производства» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-conveyors",
+   "lucide": "briefcase-conveyor-belt",
+   "custom": true,
+   "draw": "Лента конвейера: скруглённый вытянутый контур на двух барабанах-кругах, сверху два прямоугольника-груза. Lucide-замена — briefcase-conveyor-belt (с чемоданом, аэропортовая).",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Конвейерное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Конвейерное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-lifting",
+   "lucide": "arrow-big-up-dash",
+   "custom": true,
+   "draw": "Таль: балка сверху, корпус тали (прямоугольник), цепь вниз и крюк J-формы. Lucide-замена — arrow-big-up-dash.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Подъёмное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Подъёмное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-chemistry",
+   "lucide": "flask-conical",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Промышленная химия» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленная химия» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-metalworking",
+   "lucide": "drill",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Оборудование для металлообработки» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Оборудование для металлообработки» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-tools",
+   "lucide": "toolbox",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[3].items name «Промышленный инструмент» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленный инструмент» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-cnc",
+   "lucide": "monitor-cog",
+   "custom": true,
+   "draw": "Токарный станок: станина-линия, передняя бабка прямоугольником слева, патрон с деталью, задняя бабка справа. Lucide-замена — monitor-cog.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Станки и ЧПУ» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Станки и ЧПУ» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-welding",
+   "lucide": "sparkles",
+   "custom": true,
+   "draw": "Сварочная горелка по диагонали, из сопла — искра из 4 коротких лучей. Lucide-замена — sparkles.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Сварочное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Сварочное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-robots",
+   "lucide": "bot",
+   "custom": true,
+   "draw": "Манипулятор: круглое основание, два звена ломаной линией, захват-вилка на конце. Lucide-замена — bot (это чат-бот, путается с чатом — лучше свой).",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Промышленные роботы» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Промышленные роботы» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-vision",
+   "lucide": "scan-eye",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Системы машинного зрения» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Системы машинного зрения» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-3d-print",
+   "lucide": "box",
+   "custom": true,
+   "draw": "3D-принтер: П-образная рама, сопло-треугольник над кубиком детали на столе. Lucide-замена — box.",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «3D-печать для производства» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «3D-печать для производства» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-lab",
+   "lucide": "microscope",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Лабораторное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Лабораторное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-separators",
+   "lucide": "orbit",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[4].items name «Сепараторы и центрифуги» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Сепараторы и центрифуги» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-warehouse",
+   "lucide": "forklift",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[5].items name «Складская техника» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Складская техника» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-packaging",
+   "lucide": "package",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[5].items name «Упаковочное оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Упаковочное оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-weighing",
+   "lucide": "weight",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[5].items name «Весовое оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Весовое оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-food",
+   "lucide": "cooking-pot",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[5].items name «Пищевое оборудование» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Пищевое оборудование» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "dir-safety",
+   "lucide": "hard-hat",
+   "placements": [
+    {
+     "screen": "Направления",
+     "where": "directionGroups[5].items name «Средства безопасности» — иконка 24px слева от d.name в карточке .blueprint; тот же значок 16px в рубрикаторе слева"
+    },
+    {
+     "screen": "Главная",
+     "where": "рубрикатор направлений слева, пункт «Средства безопасности» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "step-request",
+   "lucide": "clipboard-list",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "steps[0] «Заявка» — 24px над title в карточке шага"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[0] «Заявка»"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectSteps «01 · Запрос» — 16px в первой колонке"
+    }
+   ]
+  },
+  {
+   "id": "step-supplier-pick",
+   "lucide": "scale",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "steps[1] «Подбор поставщика»"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[1] «Подбор поставщика»"
+    },
+    {
+     "screen": "Условия поставщикам",
+     "where": "заголовок блока «Как система выбирает поставщика»"
+    }
+   ]
+  },
+  {
+   "id": "step-one-price",
+   "lucide": "badge-russian-ruble",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "steps[2] «Одна цена»; блок «Одна цена вместо десятков продавцов» — 28px у заголовка"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[2] «Одна цена»"
+    }
+   ]
+  },
+  {
+   "id": "step-deal",
+   "lucide": "file-signature",
+   "placements": [
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[3] «Сделка»"
+    },
+    {
+     "screen": "Поставщику",
+     "where": "supplierSteps[0] «Договор и доступ»"
+    }
+   ]
+  },
+  {
+   "id": "step-direct-ship",
+   "lucide": "truck",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "steps[3] «Прямая отгрузка»"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[4] «Прямая отгрузка»"
+    },
+    {
+     "screen": "Запрос КП",
+     "where": "quoteIncludes «Расчёт доставки»"
+    },
+    {
+     "screen": "Товар",
+     "where": "блок покупки, строка «Отгрузка»"
+    },
+    {
+     "screen": "Оплата",
+     "where": "заголовок «Доставка и сроки»"
+    }
+   ]
+  },
+  {
+   "id": "about-earn",
+   "lucide": "percent",
+   "placements": [
+    {
+     "screen": "О сервисе",
+     "where": "блок «На чём мы зарабатываем» — 24px у заголовка"
+    }
+   ]
+  },
+  {
+   "id": "price-upload",
+   "lucide": "file-up",
+   "placements": [
+    {
+     "screen": "Поставщику",
+     "where": "supplierSteps[1] «Выгрузка прайса»"
+    },
+    {
+     "screen": "Кабинет поставщика",
+     "where": "кнопка «Загрузить прайс»"
+    }
+   ]
+  },
+  {
+   "id": "orders-inbox",
+   "lucide": "inbox",
+   "placements": [
+    {
+     "screen": "Поставщику",
+     "where": "supplierSteps[2] «Заказы»"
+    },
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Заявки»"
+    }
+   ]
+  },
+  {
+   "id": "payout",
+   "lucide": "hand-coins",
+   "placements": [
+    {
+     "screen": "Поставщику",
+     "where": "supplierSteps[3] «Отгрузка и расчёты»; supplierStats «до 5 дней»"
+    },
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Расчёты»"
+    }
+   ]
+  },
+  {
+   "id": "tier-file",
+   "lucide": "file-spreadsheet",
+   "placements": [
+    {
+     "screen": "Условия поставщикам",
+     "where": "vendorTiers «Базовое» (прайс файлом) — 28px над kicker"
+    },
+    {
+     "screen": "Поставщику",
+     "where": "чип «Excel / CSV» в hero — 14px"
+    }
+   ]
+  },
+  {
+   "id": "tier-sync",
+   "lucide": "refresh-cw",
+   "placements": [
+    {
+     "screen": "Условия поставщикам",
+     "where": "vendorTiers «Стандарт» (XML/YML, автообмен)"
+    },
+    {
+     "screen": "Кабинет поставщика",
+     "where": "«Состояние выгрузки», последний обмен"
+    }
+   ]
+  },
+  {
+   "id": "tier-api",
+   "lucide": "workflow",
+   "placements": [
+    {
+     "screen": "Условия поставщикам",
+     "where": "vendorTiers «Партнёр» (API + 1С)"
+    },
+    {
+     "screen": "Поставщику",
+     "where": "чипы «REST API», «Обмен с 1С» — 14px"
+    }
+   ]
+  },
+  {
+   "id": "pay-invoice",
+   "lucide": "receipt-text",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "paymentWays[0] «Счёт для юрлиц и ИП» — 28px над kicker"
+    },
+    {
+     "screen": "Вход",
+     "where": "authPerks[0] «Счёт на юрлицо за 15 минут» — вместо квадратного маркера"
+    },
+    {
+     "screen": "Корзина",
+     "where": "радио «Счёт для юрлица»"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Счета и УПД»"
+    }
+   ]
+  },
+  {
+   "id": "pay-card",
+   "lucide": "credit-card",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "paymentWays[1] «Оплата картой»"
+    },
+    {
+     "screen": "Корзина",
+     "where": "радио «Карта»"
+    },
+    {
+     "screen": "Товар",
+     "where": "строка «Оплата» в блоке покупки"
+    }
+   ]
+  },
+  {
+   "id": "pay-deferral",
+   "lucide": "calendar-clock",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "paymentWays[2] «Отсрочка до 30 дней»; блок «Отсрочка платежа»"
+    },
+    {
+     "screen": "Вход",
+     "where": "authPerks[1] «Отсрочка платежа до 30 дней»"
+    },
+    {
+     "screen": "Корзина",
+     "where": "радио «Отсрочка 30 дней»"
+    },
+    {
+     "screen": "Главная",
+     "where": "верхняя полоса «Оплата по счёту · отсрочка 30 дней» — 14px"
+    }
+   ]
+  },
+  {
+   "id": "pay-stages",
+   "lucide": "chart-gantt",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "paymentWays[3] «Поэтапная оплата»"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectStats «до 45% аванс по графику»"
+    }
+   ]
+  },
+  {
+   "id": "doc-generic",
+   "lucide": "file-text",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "docsList «Счёт на оплату», «Договор…», «УПД…», «Транспортная накладная» — 16px слева"
+    },
+    {
+     "screen": "Статус заказа",
+     "where": "список «Документы по заказу» — 16px"
+    },
+    {
+     "screen": "Проекты",
+     "where": "блок «Документы для тендера» — 24px у заголовка"
+    }
+   ]
+  },
+  {
+   "id": "doc-certificates",
+   "lucide": "badge-check",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "docsList «Паспорта, сертификаты, гарантийные талоны»"
+    },
+    {
+     "screen": "Статус заказа",
+     "where": "«Паспорта и сертификаты»"
+    },
+    {
+     "screen": "Товар",
+     "where": "отзывы: метка «Покупка подтверждена» — 12px"
+    }
+   ]
+  },
+  {
+   "id": "warranty-maker",
+   "lucide": "shield-check",
+   "placements": [
+    {
+     "screen": "Гарантия",
+     "where": "warrantyCases[0] «Гарантия производителя» — 28px над kicker"
+    },
+    {
+     "screen": "Товар",
+     "where": "мета под h1 «Гарантия 24 мес.» — 14px"
+    },
+    {
+     "screen": "Производитель",
+     "where": "brandStats «24 мес. гарантия»"
+    }
+   ]
+  },
+  {
+   "id": "warranty-return",
+   "lucide": "undo-2",
+   "placements": [
+    {
+     "screen": "Гарантия",
+     "where": "warrantyCases[1] «Возврат без причины»; tab «Возврат» формы"
+    }
+   ]
+  },
+  {
+   "id": "warranty-damage",
+   "lucide": "package-x",
+   "placements": [
+    {
+     "screen": "Гарантия",
+     "where": "warrantyCases[2] «Недостача и бой»; tab «Недостача»"
+    }
+   ]
+  },
+  {
+   "id": "warranty-excluded",
+   "lucide": "ban",
+   "placements": [
+    {
+     "screen": "Гарантия",
+     "where": "warrantyCases[3] «Что не возвращается»; заголовок «Что не покрывает гарантия»"
+    }
+   ]
+  },
+  {
+   "id": "delivery-region",
+   "lucide": "map-pin",
+   "placements": [
+    {
+     "screen": "Оплата",
+     "where": "шапка таблицы deliveryRows, колонка «Направление доставки» — 14px"
+    },
+    {
+     "screen": "Главная",
+     "where": "верхняя полоса «Москва» — вместо квадратика 7×7"
+    }
+   ]
+  },
+  {
+   "id": "order-created",
+   "lucide": "file-check",
+   "placements": [
+    {
+     "screen": "Статус заказа",
+     "where": "orderSteps[0] «Оформлен» — 20px в шаге таймлайна"
+    }
+   ]
+  },
+  {
+   "id": "order-paid",
+   "lucide": "wallet",
+   "placements": [
+    {
+     "screen": "Статус заказа",
+     "where": "orderSteps[1] «Оплачен»"
+    },
+    {
+     "screen": "Запрос КП",
+     "where": "quoteIncludes «Условия оплаты»"
+    }
+   ]
+  },
+  {
+   "id": "order-handed",
+   "lucide": "handshake",
+   "placements": [
+    {
+     "screen": "Статус заказа",
+     "where": "orderSteps[2] «Передан поставщику»"
+    }
+   ]
+  },
+  {
+   "id": "order-shipped",
+   "lucide": "package-check",
+   "placements": [
+    {
+     "screen": "Статус заказа",
+     "where": "orderSteps[3] «Отгружен»"
+    },
+    {
+     "screen": "Товар",
+     "where": "строка «Наличие»"
+    },
+    {
+     "screen": "Каталог",
+     "where": "бейдж «N шт. в наличии» на фото — 12px"
+    }
+   ]
+  },
+  {
+   "id": "order-delivery",
+   "lucide": "map-pin-check",
+   "placements": [
+    {
+     "screen": "Статус заказа",
+     "where": "orderSteps[4] «Доставка»"
+    }
+   ]
+  },
+  {
+   "id": "log-consolidated",
+   "lucide": "boxes",
+   "placements": [
+    {
+     "screen": "Логистика",
+     "where": "logOptions «Сборный груз» — 16px в колонке «Вариант»"
+    }
+   ]
+  },
+  {
+   "id": "log-direct",
+   "lucide": "route",
+   "placements": [
+    {
+     "screen": "Логистика",
+     "where": "logOptions «Прямые отгрузки»"
+    }
+   ]
+  },
+  {
+   "id": "log-urgent",
+   "lucide": "timer",
+   "placements": [
+    {
+     "screen": "Логистика",
+     "where": "logOptions «Срочная доставка»"
+    }
+   ]
+  },
+  {
+   "id": "log-pickup",
+   "lucide": "warehouse",
+   "placements": [
+    {
+     "screen": "Логистика",
+     "where": "logOptions «Самовывоз с терминала»"
+    }
+   ]
+  },
+  {
+   "id": "quote-engineering",
+   "lucide": "pencil-ruler",
+   "placements": [
+    {
+     "screen": "Запрос КП",
+     "where": "quoteIncludes «Инженерный подбор» — 24px слева от t"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectSteps «02 · Инженерный подбор»"
+    }
+   ]
+  },
+  {
+   "id": "quote-install",
+   "lucide": "wrench",
+   "placements": [
+    {
+     "screen": "Запрос КП",
+     "where": "quoteIncludes «Монтаж и ПНР»"
+    },
+    {
+     "screen": "Проекты",
+     "where": "projectSteps «05 · Монтаж и ПНР»"
+    },
+    {
+     "screen": "Производитель",
+     "where": "блок «Запчасти и сервис» — 24px у заголовка"
+    }
+   ]
+  },
+  {
+   "id": "engineer",
+   "lucide": "user-round-cog",
+   "placements": [
+    {
+     "screen": "Поиск пуст",
+     "where": "emptyActions[3] «Запрос инженеру» — 28px над t"
+    },
+    {
+     "screen": "Умный чат",
+     "where": "chatSkills «Передаёт инженеру»"
+    },
+    {
+     "screen": "Товар",
+     "where": "блок «Нужен аналог дешевле?» — 20px"
+    }
+   ]
+  },
+  {
+   "id": "analog",
+   "lucide": "replace",
+   "placements": [
+    {
+     "screen": "Умный чат",
+     "where": "chatSkills «Предлагает аналоги»"
+    },
+    {
+     "screen": "Производитель",
+     "where": "блок «Аналоги дешевле» — 24px"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "подзаголовок «Аналоги»"
+    }
+   ]
+  },
+  {
+   "id": "entry-catalog",
+   "lucide": "layout-grid",
+   "placements": [
+    {
+     "screen": "О сервисе",
+     "where": "aboutSteps[0].d — ряд из 5 входов (каталог/чат/фото/список/письмо) 20px под текстом шага"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "таббар mobileTabbar «Каталог»"
+    },
+    {
+     "screen": "Главная",
+     "where": "кнопка шапки «Каталог · 45 направлений» — 18px слева"
+    }
+   ]
+  },
+  {
+   "id": "entry-chat",
+   "lucide": "message-square-text",
+   "placements": [
+    {
+     "screen": "Поиск пуст",
+     "where": "emptyActions[1] «Подбор в умном чате» — 28px над t"
+    },
+    {
+     "screen": "Первый визит",
+     "where": "карточка «03 · Первое сообщение в чате» — 20px"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "таббар «Чат»"
+    },
+    {
+     "screen": "Главная",
+     "where": "шапка: ссылка «Чат» (сейчас mono «MAX») — 20px"
+    },
+    {
+     "screen": "Статья",
+     "where": "блок «Спросить у чата»"
+    }
+   ]
+  },
+  {
+   "id": "entry-photo",
+   "lucide": "camera",
+   "placements": [
+    {
+     "screen": "Поиск пуст",
+     "where": "emptyActions[0] «Поиск по фото шильдика»"
+    },
+    {
+     "screen": "Главная",
+     "where": "кнопка «По фото шильдика» в строке поиска hero и «По фото» в шапке — 18px слева от подписи"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "зона загрузки, кнопка «Снять камерой»"
+    },
+    {
+     "screen": "Умный чат",
+     "where": "кнопка «Фото шильдика»"
+    }
+   ]
+  },
+  {
+   "id": "entry-list",
+   "lucide": "file-spreadsheet",
+   "placements": [
+    {
+     "screen": "Поиск пуст",
+     "where": "emptyActions[2] «Заявка списком»"
+    },
+    {
+     "screen": "Умный чат",
+     "where": "кнопка «Загрузить заявку XLSX»; chatSkills «Читает заявку списком»"
+    },
+    {
+     "screen": "Разбор заявки",
+     "where": "кнопка «Загрузить другой файл» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "entry-upload",
+   "lucide": "image-up",
+   "placements": [
+    {
+     "screen": "Поиск по фото",
+     "where": "зона «Перетащите фото шильдика», если фото-пример nameplate не ставят — 40px вместо пустого квадрата"
+    }
+   ]
+  },
+  {
+   "id": "channel-max",
+   "lucide": "message-circle-more",
+   "placements": [
+    {
+     "screen": "Умный чат",
+     "where": "блок «Продолжить в мессенджере MAX» — 24px у заголовка; кнопка «Чат в MAX»"
+    },
+    {
+     "screen": "Вход",
+     "where": "кнопка «Войти через MAX»"
+    },
+    {
+     "screen": "Уведомления",
+     "where": "шапка колонки «MAX» матрицы notifyRows — 16px"
+    },
+    {
+     "screen": "Админка",
+     "where": "channels «Мессенджер MAX»"
+    },
+    {
+     "screen": "CRM",
+     "where": "метка канала «MAX» на карточках канбана — 12px"
+    },
+    {
+     "screen": "Все витринные",
+     "where": "подвал: кнопка «Чат в MAX»"
+    }
+   ]
+  },
+  {
+   "id": "channel-mail",
+   "lucide": "mail",
+   "placements": [
+    {
+     "screen": "Уведомления",
+     "where": "колонка «Почта»"
+    },
+    {
+     "screen": "Админка",
+     "where": "channels «Почта снабжения»"
+    },
+    {
+     "screen": "CRM",
+     "where": "метка «ПОЧТА» на карточке"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "Контакты: строки «Снабжение», «Поставщикам»"
+    },
+    {
+     "screen": "Все витринные",
+     "where": "подвал: zakupki@ и кнопка «Почта снабжения»"
+    }
+   ]
+  },
+  {
+   "id": "channel-phone",
+   "lucide": "phone",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "верхняя полоса: номер 8 800 — 14px"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "Контакты «Телефон»"
+    },
+    {
+     "screen": "Админка",
+     "where": "channels «Телефония»"
+    },
+    {
+     "screen": "Голосовой робот",
+     "where": "заголовок экрана / метка входящего звонка"
+    },
+    {
+     "screen": "CRM",
+     "where": "метка «ЗВОНОК»"
+    }
+   ]
+  },
+  {
+   "id": "channel-web",
+   "lucide": "globe",
+   "placements": [
+    {
+     "screen": "Админка",
+     "where": "channels «Чат на сайте»"
+    },
+    {
+     "screen": "CRM",
+     "where": "метка «САЙТ» на карточке"
+    },
+    {
+     "screen": "О сервисе",
+     "where": "Контакты — сайт"
+    }
+   ]
+  },
+  {
+   "id": "channel-sms",
+   "lucide": "smartphone",
+   "placements": [
+    {
+     "screen": "Уведомления",
+     "where": "колонка «SMS»"
+    }
+   ]
+  },
+  {
+   "id": "channel-vendor",
+   "lucide": "store",
+   "placements": [
+    {
+     "screen": "Админка",
+     "where": "channels «Кабинет поставщика»"
+    },
+    {
+     "screen": "Главная",
+     "where": "верхняя полоса «Кабинет поставщика» — 14px"
+    }
+   ]
+  },
+  {
+   "id": "ui-search",
+   "lucide": "search",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "кнопка «Найти» в hero и шапке — лупа 18px (на мобиле только иконка)"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "поле «Модель или артикул»"
+    }
+   ]
+  },
+  {
+   "id": "ui-cart",
+   "lucide": "shopping-cart",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "шапка: «Корзина» — 22px над счётчиком вместо mono-цифры, цифра — бейдж"
+    },
+    {
+     "screen": "Каталог",
+     "where": "кнопка «В корзину» — 16px (только на мобиле)"
+    },
+    {
+     "screen": "Состояния",
+     "where": "states[0] «Корзина» — заменить data-URI на lucide shopping-cart"
+    }
+   ]
+  },
+  {
+   "id": "ui-compare",
+   "lucide": "git-compare-arrows",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "шапка: «Сравнение» — 22px + бейдж"
+    },
+    {
+     "screen": "Производитель",
+     "where": "кнопка «Сравнить серии»"
+    },
+    {
+     "screen": "Каталог",
+     "where": "переключатель «к сравнению» на карточке — 16px"
+    }
+   ]
+  },
+  {
+   "id": "ui-quote",
+   "lucide": "file-pen-line",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "шапка: «Запросы КП» — 22px + бейдж"
+    },
+    {
+     "screen": "Каталог",
+     "where": "кнопка «Запросить КП»"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Запросы КП»"
+    }
+   ]
+  },
+  {
+   "id": "ui-account",
+   "lucide": "user",
+   "placements": [
+    {
+     "screen": "Главная",
+     "where": "верхняя полоса «Войти» — 14px"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "шапка сайдбара с названием компании"
+    }
+   ]
+  },
+  {
+   "id": "ui-login",
+   "lucide": "log-in",
+   "placements": [
+    {
+     "screen": "Вход",
+     "where": "заголовок колонки «Вход»; кнопка «Войти»"
+    }
+   ]
+  },
+  {
+   "id": "ui-register",
+   "lucide": "building-2",
+   "placements": [
+    {
+     "screen": "Вход",
+     "where": "заголовок «Регистрация компании»; поле ИНН"
+    }
+   ]
+  },
+  {
+   "id": "ui-home",
+   "lucide": "house",
+   "placements": [
+    {
+     "screen": "Мобильные",
+     "where": "таббар mobileTabbar «Главная»"
+    }
+   ]
+  },
+  {
+   "id": "ui-orders",
+   "lucide": "package",
+   "placements": [
+    {
+     "screen": "Мобильные",
+     "where": "таббар mobileTabbar «Заказы»"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Заказы»"
+    }
+   ]
+  },
+  {
+   "id": "ui-menu",
+   "lucide": "menu",
+   "placements": [
+    {
+     "screen": "Мобильные",
+     "where": "шапка снабженца, «гамбургер» справа"
+    }
+   ]
+  },
+  {
+   "id": "ui-notify",
+   "lucide": "bell",
+   "placements": [
+    {
+     "screen": "Кабинет",
+     "where": "ссылка на «Уведомления» в сайдбаре"
+    },
+    {
+     "screen": "Уведомления",
+     "where": "h1 «Уведомления» — 28px"
+    }
+   ]
+  },
+  {
+   "id": "ui-download",
+   "lucide": "download",
+   "placements": [
+    {
+     "screen": "Сравнение",
+     "where": "кнопка «Выгрузить в XLSX»"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "кнопка «Выгрузить реестр»"
+    },
+    {
+     "screen": "Умный чат",
+     "where": "кнопка «Выгрузить в XLSX»"
+    }
+   ]
+  },
+  {
+   "id": "ui-repeat",
+   "lucide": "repeat",
+   "placements": [
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Регулярные закупки»; кнопки «Повторить»"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "«Ваши регулярные закупки», кнопка «Повторить»"
+    }
+   ]
+  },
+  {
+   "id": "ui-approval",
+   "lucide": "list-checks",
+   "placements": [
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Согласование»; блок «Согласование заявок»"
+    },
+    {
+     "screen": "Вход",
+     "where": "authPerks[4] «Согласование заявок внутри компании»"
+    }
+   ]
+  },
+  {
+   "id": "ui-history",
+   "lucide": "history",
+   "placements": [
+    {
+     "screen": "Вход",
+     "where": "authPerks[2] «История закупок»"
+    },
+    {
+     "screen": "Состояния",
+     "where": "states[1] «Новый кабинет» — заменить data-URI на lucide history"
+    }
+   ]
+  },
+  {
+   "id": "ui-specs",
+   "lucide": "clipboard-list",
+   "placements": [
+    {
+     "screen": "Вход",
+     "where": "authPerks[3] «Сохранённые спецификации»"
+    },
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Спецификации»"
+    }
+   ]
+  },
+  {
+   "id": "ui-users",
+   "lucide": "users",
+   "placements": [
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Сотрудники»"
+    },
+    {
+     "screen": "Права и роли",
+     "where": "заголовки ролей в матрице — 16px"
+    }
+   ]
+  },
+  {
+   "id": "ui-requisites",
+   "lucide": "landmark",
+   "placements": [
+    {
+     "screen": "Кабинет",
+     "where": "accountNav «Реквизиты»"
+    },
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Договор и реквизиты»"
+    }
+   ]
+  },
+  {
+   "id": "ui-kyc",
+   "lucide": "shield-check",
+   "placements": [
+    {
+     "screen": "Вход",
+     "where": "блок «Найдено по ИНН · проверено за 4 секунды» — 16px; строки kycChecks без иконок"
+    }
+   ]
+  },
+  {
+   "id": "ui-faq-toggle",
+   "lucide": "chevron-down",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "SeoBlock: FAQ-аккордеон — вместо треугольника ▼ (сохранить поворот 180° при открытии)"
+    }
+   ]
+  },
+  {
+   "id": "ui-arrow-left",
+   "lucide": "arrow-left",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "SeoBlock: карусель «Статьи по теме», кнопка ←"
+    }
+   ]
+  },
+  {
+   "id": "ui-arrow-right",
+   "lucide": "arrow-right",
+   "placements": [
+    {
+     "screen": "Все витринные",
+     "where": "SeoBlock: карусель, кнопка →"
+    }
+   ]
+  },
+  {
+   "id": "state-sync-error",
+   "lucide": "refresh-cw-off",
+   "placements": [
+    {
+     "screen": "Состояния",
+     "where": "states[2] «Ошибка синхронизации» — заменить data-URI"
+    }
+   ]
+  },
+  {
+   "id": "state-deferral-denied",
+   "lucide": "lock",
+   "placements": [
+    {
+     "screen": "Состояния",
+     "where": "states[3] «Отсрочка отклонена»"
+    }
+   ]
+  },
+  {
+   "id": "state-offline",
+   "lucide": "wifi-off",
+   "placements": [
+    {
+     "screen": "Состояния",
+     "where": "states[4] «Нет связи»"
+    }
+   ]
+  },
+  {
+   "id": "state-discontinued",
+   "lucide": "archive-x",
+   "placements": [
+    {
+     "screen": "Состояния",
+     "where": "states[5] «Позиция снята»"
+    },
+    {
+     "screen": "Поиск по фото",
+     "where": "метка «снята с производства» у аналога"
+    }
+   ]
+  },
+  {
+   "id": "state-warning",
+   "lucide": "triangle-alert",
+   "placements": [
+    {
+     "screen": "Разбор заявки",
+     "where": "блок «Требуют решения» — 16px у каждой проблемной строки"
+    },
+    {
+     "screen": "Ошибки",
+     "where": "incTypes — 16px в первой колонке"
+    },
+    {
+     "screen": "Автопилот",
+     "where": "очередь «ждёт человека», причина эскалации"
+    }
+   ]
+  },
+  {
+   "id": "op-crm",
+   "lucide": "kanban",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация оператора «CRM» — 16px"
+    }
+   ]
+  },
+  {
+   "id": "op-client",
+   "lucide": "id-card",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Карточка клиента»"
+    },
+    {
+     "screen": "Карточка клиента",
+     "where": "h1 — 24px"
+    }
+   ]
+  },
+  {
+   "id": "op-autopilot",
+   "lucide": "bot",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Автопилот»; кнопка «Автопилот»"
+    },
+    {
+     "screen": "CRM",
+     "where": "метка «робот» на карточках канбана — 12px"
+    }
+   ]
+  },
+  {
+   "id": "op-voice",
+   "lucide": "audio-waveform",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Голосовой робот»"
+    },
+    {
+     "screen": "Мобильные",
+     "where": "оператор · «Робот говорит» — 14px"
+    }
+   ]
+  },
+  {
+   "id": "op-logistics",
+   "lucide": "truck",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Логистика»"
+    }
+   ]
+  },
+  {
+   "id": "op-errors",
+   "lucide": "octagon-alert",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Ошибки»"
+    }
+   ]
+  },
+  {
+   "id": "op-economy",
+   "lucide": "chart-column",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Экономика»"
+    }
+   ]
+  },
+  {
+   "id": "op-roles",
+   "lucide": "key-round",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Права»"
+    }
+   ]
+  },
+  {
+   "id": "op-admin",
+   "lucide": "settings",
+   "placements": [
+    {
+     "screen": "CRM",
+     "where": "навигация «Админка»"
+    },
+    {
+     "screen": "Админка",
+     "where": "adminSections — 16px слева от каждого раздела (якорная навигация)"
+    }
+   ]
+  },
+  {
+   "id": "vendor-price",
+   "lucide": "sheet",
+   "placements": [
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Прайс и остатки»; блок «Прайс и остатки»"
+    }
+   ]
+  },
+  {
+   "id": "vendor-shipments",
+   "lucide": "truck",
+   "placements": [
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Отгрузки»"
+    }
+   ]
+  },
+  {
+   "id": "vendor-directions",
+   "lucide": "layout-grid",
+   "placements": [
+    {
+     "screen": "Кабинет поставщика",
+     "where": "vendorNav «Направления»"
+    }
+   ]
+  }
+ ],
+ "logo": {
+  "description": "Знак ПРОМКОНТУР: квадрат акцентного цвета --color-accent (#5980a6) — тот же квадрат, что уже стоит перед словом в шапке. Внутри белый контур буквы «П» (открытый снизу контур = «контур закупки»), пером 3/32, и четыре чертёжных уголка цветом --color-accent-200 (#d6ebff) — отсылка к рамкам .blueprint. Словесная часть: ПРОМКОНТУР, IBM Plex Sans Condensed 600, --color-text (#1d1f20) на светлом, #fff на --color-accent-900 (#1d2d3d). Фавикон 16px: только квадрат и «П» без уголков (уголки на 16px сливаются). Иконки набора: Lucide, 24×24, stroke 1.6, round caps, цвет --color-accent-700 (#416180) на светлом и --color-accent-300 (#b5d9fd) на тёмном; 16px в таблицах и навигации, 28px в карточках.",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" fill=\"#5980a6\"/><path d=\"M4 9V4h5M23 4h5v5M28 23v5h-5M9 28H4v-5\" fill=\"none\" stroke=\"#d6ebff\" stroke-width=\"1.5\"/><path d=\"M10.5 23.5V9.5h11v14\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"3\" stroke-linecap=\"square\"/></svg>",
+  "faviconSvg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><rect width=\"16\" height=\"16\" fill=\"#5980a6\"/><path d=\"M4.5 12.5V4h7v8.5\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"square\"/></svg>",
+  "tokens": {
+   "accent": "#5980a6",
+   "accent-200": "#d6ebff",
+   "accent-700": "#416180",
+   "accent-900": "#1d2d3d",
+   "text": "#1d1f20",
+   "bg": "#f2f2f3"
+  }
+ }
+}

@@ -13,7 +13,7 @@
 <style>
   body { margin:0; }
   .ph { background:repeating-linear-gradient(135deg, var(--color-neutral-200) 0 9px, var(--color-neutral-100) 9px 18px); }
-  .mono { font-family:"IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif; letter-spacing:0.06em; }
+  .mono { font-family:"Fira Sans Condensed", "Arial Narrow", system-ui, sans-serif; letter-spacing:0.06em; }
   .radio input[type="checkbox"] + .dot { border-radius:0; position:relative; }
   .radio input[type="checkbox"]:checked + .dot { box-shadow:none; }
   .radio input[type="checkbox"]:checked + .dot::after { content:""; position:absolute; left:4px; top:1px; width:5px; height:9px; border:solid var(--color-bg); border-width:0 2px 2px 0; transform:rotate(45deg); }
@@ -86,16 +86,17 @@
     </div>
   </div>
 
+  <sc-if value="{{ isStorefront }}" hint-placeholder-val="{{ true }}">
   <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);font-size:13px">
     <div style="max-width:1360px;margin:0 auto;padding:0 28px;min-height:36px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
       <span style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:var(--color-accent);display:block"></span>Москва</span>
       <span>Доставка по всей России</span>
-      <span>Оплата по счёту · отсрочка 30 дней</span>
+      <span>Оплата по счёту · отсрочка до 30 дней</span>
       <a href="#" onClick="{{ goVendor }}" style="margin-left:auto;color:var(--color-neutral-300)">Кабинет поставщика</a>
       <a href="#" onClick="{{ goSupplier }}" style="color:var(--color-neutral-300)">Стать поставщиком</a>
       <a href="#" onClick="{{ goAbout }}" style="color:var(--color-neutral-300)">О сервисе</a>
-      <a href="#" onClick="{{ goAuth }}" style="color:var(--color-neutral-300)">Войти</a>
-      <span class="mono" style="color:#fff;font-size:15px">8 800 000-00-00</span>
+      <a href="#" onClick="{{ goAuthOrAccount }}" style="color:var(--color-neutral-300)">{{ loginLabel }}</a>
+      <a href="#" onClick="{{ goChat }}" class="mono" style="color:#fff;font-size:15px">Чат в MAX</a>
     </div>
   </div>
 
@@ -125,13 +126,34 @@
       <span style="margin-left:auto;font-size:13px;color:var(--color-neutral-700)">Ответ на запрос КП — 2 рабочих часа</span>
     </nav>
   </header>
+  </sc-if>
+
+  <sc-if value="{{ isStaff }}" hint-placeholder-val="{{ false }}">
+  <header style="background:var(--color-neutral-900);color:var(--color-neutral-300);border-bottom:1px solid #000">
+    <div style="max-width:1360px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff">
+        <span style="width:18px;height:18px;background:var(--color-accent);display:block"></span>
+        <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ПРОМКОНТУР</span>
+      </a>
+      <span class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300)">{{ staffTitle }}</span>
+      <nav style="display:flex;gap:4px;flex-wrap:wrap;margin-left:12px">
+        <sc-for list="{{ staffNav }}" as="n" hint-placeholder-count="6">
+          <a href="#" onClick="{{ n.go }}" style="{{ n.style }}">{{ n.t }}</a>
+        </sc-for>
+      </nav>
+      <span style="margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px">
+        <span style="width:28px;height:28px;background:var(--color-accent-700);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:600">{{ staffInitials }}</span>{{ staffUser }}
+      </span>
+    </div>
+  </header>
+  </sc-if>
 
   <sc-if value="{{ isHomeB }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Главная — вариант Б">
     <section style="background:var(--color-accent-900);color:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)">
       <div style="max-width:1360px;margin:0 auto;padding:44px 28px 40px">
         <h1 style="color:#fff;font-size:44px;max-width:900px;text-wrap:pretty">Промышленное оборудование от производителей и поставщиков в одном месте</h1>
-        <p style="font-size:17px;color:var(--color-accent-200);max-width:720px">Более 300 000 моделей. Подбор по характеристикам, артикулу или фотографии. Доставка по России.</p>
+        <p style="font-size:17px;color:var(--color-accent-200);max-width:720px">Более 115 000 моделей. Подбор по характеристикам, артикулу или фотографии. Доставка по России.</p>
         <div style="display:flex;margin-top:22px;max-width:900px">
           <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:54px;font-size:16px;background:#fff;border-right:0">
           <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:54px;background:#fff;border-right:0;white-space:nowrap">По фото шильдика</button>
@@ -155,7 +177,7 @@
 
     <div class="marquee-wrap" style="border-bottom:1px solid var(--color-divider);background:var(--color-bg);overflow:hidden;padding:12px 0">
       <div style="display:flex;align-items:center;gap:20px;max-width:1360px;margin:0 auto;padding:0 28px 10px">
-        <span class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);white-space:nowrap">Прайсы подключены · 18 поставщиков · 340 брендов</span>
+        <span class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);white-space:nowrap">Бренды в каталоге · поставки через независимых поставщиков</span>
         <span style="flex:1;height:1px;background:var(--color-divider);display:block"></span>
         <a href="#" onClick="{{ goSupplier }}" style="font-size:13px;white-space:nowrap">Добавить свой прайс</a>
       </div>
@@ -303,9 +325,9 @@
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
           <div style="padding:14px 16px;border-bottom:1px solid var(--color-divider);display:flex;flex-direction:column;gap:8px">
             <span class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">{{ f.name }}</span>
-            <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+            <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="3">
               <label style="display:flex;align-items:center;gap:9px;font-size:14px;cursor:pointer">
-                <span style="width:14px;height:14px;border:1.5px solid var(--color-divider);flex:none;display:block"></span>{{ o }}
+                <span style="width:14px;height:14px;border:1.5px solid {{ o.border }};background: {{ o.fill }};flex:none;display:block"></span>{{ o.t }}
               </label>
             </sc-for>
           </div>
@@ -368,7 +390,7 @@
       <div>
         <h1 style="font-size:36px;margin-bottom:8px">Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE</h1>
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
-          <span>Артикул 96122802</span><span>Grundfos · Дания</span><span>Гарантия 24 мес.</span>
+          <span>Артикул 96122802</span><span>Grundfos · Дания</span><span>Гарантия 24 мес. (условия поставщика)</span>
         </div>
         <figure class="blueprint duotone ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:28px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -438,14 +460,14 @@
         <div class="card blueprint" style="padding:22px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div class="mono" style="font-size:38px;line-height:1">104 900 ₽</div>
-          <div style="font-size:13px;color:var(--color-neutral-700);margin-top:-4px">Цена с НДС, доставка по РФ включена</div>
+          <div style="font-size:13px;color:var(--color-neutral-700);margin-top:-4px">Цена с НДС, доставка по РФ включена (кроме Дальнего Востока и грузов > 500 кг)</div>
           <div style="display:flex;gap:10px;margin-top:10px">
             <div class="seg" style="align-items:stretch">
               <span class="seg-opt">−</span><span class="seg-opt mono" style="min-width:44px;justify-content:center">1</span><span class="seg-opt">+</span>
             </div>
             <button class="btn btn-primary" style="flex:1;min-height:42px;font-size:15px">В корзину</button>
           </div>
-          <button class="btn btn-secondary btn-block" style="min-height:40px">Купить в 1 клик</button>
+          <button class="btn btn-secondary btn-block" style="min-height:40px">Быстрый счёт</button>
           <div class="hr" style="margin:12px 0"></div>
           <sc-if value="{{ true }}" hint-placeholder-val="{{ true }}">
             <div style="display:flex;flex-direction:column;gap:7px;font-size:14px">
@@ -636,7 +658,7 @@
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="padding:10px 16px 12px;border-bottom:1px solid var(--color-divider)">
           <div style="font-family:var(--font-heading);font-weight:600;font-size:17px">ООО «Метизный завод»</div>
-          <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">ИНН 7701234567</div>
+          <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">ИНН 7105012345</div>
         </div>
         <sc-for list="{{ accountNav }}" as="n" hint-placeholder-count="6">
           <a href="#" class="row-hover" style="display:flex;justify-content:space-between;padding:9px 16px;font-size:14px;color:inherit;text-decoration:none">
@@ -697,7 +719,7 @@
               </tbody>
             </table>
           </div>
-          <div class="mono" style="font-size:12px;color:var(--color-neutral-700);margin-top:10px">За квартал автозакупка оформила 11 счетов на 214 600 ₽ · 0 отмен · сэкономлено около 6 часов снабженца</div>
+          <div class="mono" style="font-size:12px;color:var(--color-neutral-700);margin-top:10px">За квартал автозакупка оформила 9 счетов на 509 300 ₽ · 0 отмен · сэкономлено около 6 часов снабженца</div>
         </div>
 
         <div class="blueprint" style="padding:18px 20px">
@@ -816,7 +838,7 @@
             <h3>Оформление</h3>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
               <div class="field"><label>Плательщик</label><input class="input" placeholder="ООО «Метизный завод»"></div>
-              <div class="field"><label>ИНН</label><input class="input mono" placeholder="7701234567"></div>
+              <div class="field"><label>ИНН</label><input class="input mono" placeholder="7105012345"></div>
               <div class="field"><label>Адрес доставки</label><input class="input" placeholder="г. Тула, ул. Заводская, 14"></div>
               <div class="field"><label>Контакт на объекте</label><input class="input" placeholder="Имя, телефон"></div>
             </div>
@@ -1087,7 +1109,7 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:12px 0 0;max-width:880px">Автоматическая сделка стоит 118 ₽ против 870 ₽ у сделки с оператором. При этом ручные сделки крупнее: средний чек 412 000 ₽ против 31 400 ₽, и отказываться от людей на проектных поставках нельзя — там затраты окупаются маржой в абсолюте.</p>
+        <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:12px 0 0;max-width:880px">Автоматическая сделка стоит 118 ₽ против 870 ₽ у сделки с оператором. При этом ручные сделки крупнее: средний чек 72 000 ₽ против 12 400 ₽, и отказываться от людей на проектных поставках нельзя — там затраты окупаются маржой в абсолюте.</p>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:22px;align-items:start">
@@ -1399,7 +1421,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div class="field"><label>Наценка за раз не более</label><input class="input mono" onChange="{{ noop }}" value="±5%"></div>
             <div class="field"><label>Массовая правка от</label><input class="input mono" onChange="{{ noop }}" value="500 поз. · 2 подписи"></div>
-            <div class="field"><label>Отключение автопилота</label><input class="input mono" onChange="{{ noop }}" value="max 4 часа"></div>
+            <div class="field"><label>Отключение автопилота</label><input class="input mono" onChange="{{ noop }}" value="не более 4 часов"></div>
             <div class="field"><label>Компенсация без согласования</label><input class="input mono" onChange="{{ noop }}" value="до 30 000 ₽"></div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
@@ -1440,7 +1462,7 @@
           <div class="blueprint" style="padding:16px 18px;border-left:3px solid var(--color-accent)">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:6px">Почему цена одна</div>
-            <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 10px">По этой позиции есть 3 поставщика: 91 000, 89 500 и 86 000 ₽. Выбрали третьего — есть остаток и отгрузка за 2 дня. Вы видите 104 900 ₽ с НДС, доставкой и гарантией.</p>
+            <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 10px">По этой позиции есть 3 поставщика: 91 000, 88 500 и 86 000 ₽. Выбрали третьего — есть остаток и отгрузка за 2 дня. Вы видите 104 900 ₽ с НДС, доставкой и гарантией.</p>
             <span class="mono" style="font-size:12px;color:var(--color-neutral-600)">Показывается один раз, дальше — по ссылке «почему цена одна»</span>
           </div>
         </div>
@@ -1570,7 +1592,7 @@
           <div class="blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div style="font-family:var(--font-heading);font-weight:600;font-size:21px;margin-bottom:8px">Мы ошиблись в подборе</div>
-            <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">По вашей рабочей точке 40 м³/ч при 46 м насос CR 32-4 работает на пределе. Правильная модель — CR 45-3, она дороже на 28 000 ₽. Разницу берём на себя: цена для вас остаётся прежней, отгрузка 16 сентября.</p>
+            <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">По вашей рабочей точке 40 м³/ч при 35 м насос CR 32-4 работает на пределе. Правильная модель — CR 45-3, она дороже на 51 800 ₽. Разницу согласовал оператор, её берёт на себя сервис: цена для вас остаётся прежней, отгрузка 16 сентября.</p>
             <div style="border:1px solid var(--color-divider);padding:12px 14px;margin-bottom:12px;display:flex;flex-direction:column;gap:5px">
               <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Было в заказе</span><span>CR 32-4 · 104 900 ₽</span></div>
               <div style="display:flex;justify-content:space-between;font-size:13px"><span class="text-muted">Правильно</span><span>CR 45-3 · 156 700 ₽</span></div>
@@ -1580,7 +1602,7 @@
               <button class="btn btn-primary" style="min-height:44px">Согласен на замену</button>
               <button class="btn btn-secondary" style="min-height:44px">Вернуть деньги</button>
             </div>
-            <span style="font-size:12px;color:var(--color-neutral-600);display:block;margin-top:8px">Инженер Сергей на связи: разбор занял 40 минут после обнаружения</span>
+            <span style="font-size:12px;color:var(--color-neutral-600);display:block;margin-top:8px">Инженер Игорь на связи: разбор занял 40 минут после обнаружения</span>
           </div>
         </div>
 
@@ -1790,13 +1812,13 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px">
             <div>
-              <h3 style="margin:0">Сделка КП-2207 · лента без участия человека</h3>
+              <h3 style="margin:0">Сделка КП-2211 · лента без участия человека</h3>
               <p style="font-size:14px;color:var(--color-neutral-700);margin:2px 0 0">ООО «Тепломаш» · письмо с фото шильдика → подбор → торг → счёт</p>
             </div>
-            <span class="tag tag-accent" style="font-size:12px">Автопилот · 7 шагов · 41 минута</span>
+            <span class="tag tag-accent" style="font-size:12px">Автопилот · 8 шагов · 41 минута</span>
           </div>
           <div style="display:flex;flex-direction:column">
-            <sc-for list="{{ crmTimeline }}" as="t" hint-placeholder-count="7">
+            <sc-for list="{{ crmTimeline }}" as="t" hint-placeholder-count="8">
               <div style="display:grid;grid-template-columns:56px 20px minmax(0,1fr);gap:12px;border-top:1px solid var(--color-divider);padding:10px 0">
                 <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ t.time }}</span>
                 <span style="width:10px;height:10px;margin-top:3px;background: {{ t.dot }};display:block"></span>
@@ -1835,7 +1857,7 @@
           <div class="blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <h3 style="margin:0 0 4px">Переговоры с поставщиком</h3>
-            <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Робот торгуется и на закупочной стороне: резерв, запрос лучшей цены, срок. Та же сделка КП-2207.</p>
+            <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Робот торгуется и на закупочной стороне: резерв, запрос лучшей цены, срок. Та же сделка КП-2211.</p>
             <div style="display:flex;flex-direction:column">
               <sc-for list="{{ crmSupplierTalk }}" as="s" hint-placeholder-count="4">
                 <div style="display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;border-top:1px solid var(--color-divider);padding:8px 0">
@@ -1911,11 +1933,11 @@
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px">
-            <h3 style="margin:0">Ждёт человека · 6</h3>
+            <h3 style="margin:0">Ждёт человека · 9</h3>
             <span style="font-size:13px;color:var(--color-neutral-700)">Отсортировано по деньгам и времени ожидания</span>
           </div>
           <div style="display:flex;flex-direction:column">
-            <sc-for list="{{ apQueue }}" as="q" hint-placeholder-count="6">
+            <sc-for list="{{ apQueue }}" as="q" hint-placeholder-count="9">
               <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;border-top:1px solid var(--color-divider);padding:10px 0">
                 <span class="mono" style="font-size:11px;color: {{ q.waitColor }};min-width:52px">{{ q.wait }}</span>
                 <div>
@@ -2108,7 +2130,7 @@
           <div class="blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <h3 style="margin:0 0 10px">Куда отправлять</h3>
-            <div class="field"><label>Мессенджер MAX</label><input class="input mono" onChange="{{ noop }}" value="+7 900 000-00-00"></div>
+            <div class="field"><label>Мессенджер MAX</label><input class="input mono" onChange="{{ noop }}" value="привязан через @promkontur_bot"></div>
             <div class="field"><label>Рабочая почта</label><input class="input mono" onChange="{{ noop }}" value="zakupki@metiz-zavod.ru"></div>
             <div class="field"><label>Копия бухгалтерии</label><input class="input mono" onChange="{{ noop }}" value="buh@metiz-zavod.ru"></div>
             <div class="field"><label>Тихие часы</label><input class="input mono" onChange="{{ noop }}" value="20:00–08:00"></div>
@@ -2264,7 +2286,7 @@
             </div>
           </div>
           <button class="btn btn-primary btn-block" style="min-height:44px">Отправить на расчёт</button>
-          <span style="font-size:12px;color:var(--color-neutral-600)">Предварительный расчёт — 2 рабочих часа, полное КП с монтажом — до 3 дней</span>
+          <span style="font-size:12px;color:var(--color-neutral-600)">Предварительный расчёт — 2 рабочих часа, полное КП с монтажом — до 6 рабочих дней</span>
         </div>
       </div>
     </section>
@@ -2327,7 +2349,7 @@
       <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,0.7fr);gap:32px;align-items:start">
         <div>
           <h1 style="font-size:40px;margin:0 0 10px">Grundfos: насосы и насосное оборудование</h1>
-          <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 18px;max-width:680px">Дания, производство с 1945 года. В каталоге 1 840 моделей: многоступенчатые CR, консольные NB и NK, циркуляционные MAGNA и ALPHA, дренажные и канализационные. Официальные поставки, гарантия 24 месяца, запчасти со склада в России.</p>
+          <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 18px;max-width:680px">Дания, производство с 1945 года. В каталоге 1 440 моделей: многоступенчатые CR, консольные NB и NK, циркуляционные MAGNA3, дренажные и канализационные. Поставки через проверенных поставщиков в РФ; срок и условия гарантии — в карточке товара.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button onClick="{{ goCatalog }}" class="btn btn-primary" style="padding:12px 20px">Все модели Grundfos</button>
             <button onClick="{{ goCompare }}" class="btn btn-secondary" style="padding:12px 20px">Сравнить серии</button>
@@ -2394,7 +2416,7 @@
       <div style="max-width:1360px;margin:0 auto;padding:48px 28px 42px">
         <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:12px">О сервисе · как это работает</div>
         <h1 style="color:#fff;font-size:42px;max-width:820px;margin:0 0 12px">Мы не склад и не магазин. Мы — контур закупки</h1>
-        <p style="font-size:17px;color:var(--color-accent-200);max-width:760px;margin:0">Снабженец не сравнивает условия пятнадцати поставщиков и не ведёт переписку с каждым. Система собирает прайсы, выбирает предложение по цене, наличию и сроку, показывает одну цену и оформляет сделку. Оборудование едет напрямую со склада поставщика.</p>
+        <p style="font-size:17px;color:var(--color-accent-200);max-width:760px;margin:0">Снабженец не сравнивает условия 18 поставщиков и не ведёт переписку с каждым. Система собирает прайсы, выбирает предложение по цене, наличию и сроку, показывает одну цену и оформляет сделку. Оборудование едет напрямую со склада поставщика.</p>
       </div>
     </section>
 
@@ -2433,9 +2455,9 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 10px">Контакты</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Телефон</span><span class="mono">8 800 000-00-00</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Снабжение</span><span class="mono">zakupki@promkontur.ru</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Поставщикам</span><span class="mono">partner@promkontur.ru</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Мессенджер</span><a href="#" onClick="{{ goChat }}" class="mono">Чат в MAX</a></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Снабжение</span><span class="mono">zakaz@promkontur.example</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Поставщикам</span><span class="mono">partner@promkontur.example</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Часы работы</span><span>пн–пт 08:00–19:00 МСК</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Юрлицо</span><span>ООО «Промконтур», ИНН 7701234567</span></div>
           </div>
@@ -2472,11 +2494,11 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 4px">Регистрация компании</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 14px">Достаточно ИНН — реквизиты подтянутся автоматически.</p>
-          <div class="field"><label>ИНН компании или ИП</label><input class="input mono" placeholder="10 или 12 цифр"></div>
+          <div class="field"><label>ИНН компании или ИП</label><input class="input mono" onChange="{{ noop }}" value="5003123456" placeholder="10 или 12 цифр"></div>
           <div style="border:1px solid var(--color-divider);padding:12px 14px;margin-bottom:12px">
             <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Найдено по ИНН · проверено за 4 секунды</div>
-            <div style="font-size:15px;font-weight:500">ООО «Метизный завод»</div>
-            <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:10px">г. Тула, ул. Заводская, 14 · действующая, с 2009 года</div>
+            <div style="font-size:15px;font-weight:500">ООО «Энергомаш-Сервис»</div>
+            <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:10px">Московская обл., г. Видное · действующая, с 2011 года</div>
             <div style="display:flex;flex-direction:column;gap:5px">
               <sc-for list="{{ kycChecks }}" as="k" hint-placeholder-count="5">
                 <div style="display:flex;justify-content:space-between;gap:10px;font-size:13px">
@@ -2487,7 +2509,7 @@
             </div>
             <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--color-divider);margin-top:10px;padding-top:10px">
               <span style="font-size:13px;font-weight:500">Скоринг 82 из 100</span>
-              <span class="tag tag-accent" style="font-size:12px">Отсрочка 30 дней · лимит 400 000 ₽</span>
+              <span class="tag tag-accent" style="font-size:12px">Отсрочка 30 дней одобрена автоматически · лимит 400 000 ₽</span>
             </div>
           </div>
           <div class="field"><label>Контактное лицо</label><input class="input" placeholder="Имя, должность"></div>
@@ -2525,7 +2547,7 @@
   <div data-screen-label="Мобильные экраны">
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 48px">
       <h1 style="font-size:32px;margin:0 0 6px">Мобильные экраны</h1>
-      <p style="font-size:16px;color:var(--color-neutral-700);margin:0 0 24px;max-width:720px">С телефона работают обе стороны: снабженец в цехе снимает шильдик, подбирает в MAX и повторяет закупку, а оператор разбирает очередь CRM и слушает звонки робота в дороге. Хит-таргеты не меньше 44 px.</p>
+      <p style="font-size:16px;color:var(--color-neutral-700);margin:0 0 24px;max-width:720px">С телефона работают обе стороны: снабженец в цехе снимает шильдик, подбирает в MAX и повторяет закупку, а оператор разбирает очередь CRM и слушает звонки робота в дороге. Зоны нажатия не меньше 44 px.</p>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:26px;align-items:start">
 
@@ -2651,7 +2673,7 @@
               <div style="border:1px solid var(--color-divider);padding:10px 12px;display:flex;flex-direction:column;gap:3px">
                 <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-neutral-600)">Итог звонка</span>
                 <span style="font-size:13px">Сделка ПК-10432 · CR 45-3 × 2 + фланцы</span>
-                <span class="mono" style="font-size:15px">274 200 ₽</span>
+                <span class="mono" style="font-size:15px">321 800 ₽</span>
               </div>
             </div>
             <div style="border-top:1px solid var(--color-divider);padding:12px 14px;display:flex;gap:10px">
@@ -2773,7 +2795,7 @@
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Клиент · оператор сервиса</div>
           <h1 style="font-size:32px;margin:2px 0 0">ООО «Метизный завод»</h1>
-          <div class="mono" style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">ИНН 7701234567 · Тула · снабжение, 4 сотрудника · с марта 2024</div>
+          <div class="mono" style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">ИНН 7105012345 · Тула · снабжение, 4 сотрудника · с марта 2024</div>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button onClick="{{ goChat }}" class="btn btn-secondary">Открыть диалог</button>
@@ -2841,12 +2863,12 @@
             <h3 style="margin:0 0 10px">Расчёты и лимит</h3>
             <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
               <div style="display:flex;justify-content:space-between"><span class="text-muted">Лимит отсрочки</span><span class="mono">600 000 ₽</span></div>
-              <div style="display:flex;justify-content:space-between"><span class="text-muted">Использовано</span><span class="mono">243 700 ₽</span></div>
+              <div style="display:flex;justify-content:space-between"><span class="text-muted">Использовано</span><span class="mono">222 600 ₽</span></div>
               <div style="display:flex;justify-content:space-between"><span class="text-muted">Срок отсрочки</span><span class="mono">30 дней</span></div>
               <div style="display:flex;justify-content:space-between"><span class="text-muted">Просрочек</span><span class="mono">нет</span></div>
             </div>
             <span style="height:6px;background:var(--color-neutral-200);display:block;position:relative;margin-top:12px">
-              <span style="position:absolute;inset:0 auto 0 0;width:41%;background:var(--color-accent);display:block"></span>
+              <span style="position:absolute;inset:0 auto 0 0;width:37%;background:var(--color-accent);display:block"></span>
             </span>
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
               <button class="btn btn-secondary" style="font-size:13px">Изменить лимит</button>
@@ -2950,7 +2972,7 @@
             <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">К оплате</span>
             <span class="mono" style="font-size:24px">222 600 ₽</span>
           </div>
-          <span style="font-size:12px;color:var(--color-neutral-600)">Отсрочка 30 дней, срок оплаты — 12 октября</span>
+          <span style="font-size:12px;color:var(--color-neutral-600)">Отсрочка 30 дней, срок оплаты — 15 октября</span>
         </div>
       </div>
     </div>
@@ -2964,7 +2986,7 @@
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Заявка · zayavka_cex4_sentyabr.xlsx</div>
           <h1 style="font-size:32px;margin:2px 0 0">Разбор заявки</h1>
-          <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:720px">Строки сопоставлены с артикулами в базе. Позиции с точным совпадением уходят в корзину, спорные — на подтверждение, нераспознанные — инженеру.</p>
+          <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:720px">Строки сопоставлены с артикулами в базе. Позиции с точным совпадением уходят в корзину, спорные — на подтверждение, строки без аналога уходят закупщику как пробел ассортимента.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn btn-secondary">Загрузить другой файл</button>
@@ -2984,10 +3006,11 @@
 
       <div class="blueprint" style="padding:6px 14px 12px;overflow-x:auto">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);padding:8px 0 2px">Показаны 9 из 20 строк</div>
         <table class="table" style="width:100%;min-width:800px">
           <thead><tr><th style="width:30px"></th><th>Строка из заявки</th><th>Найдено в базе</th><th>Кол-во</th><th>Наличие и срок</th><th style="text-align:right">Цена</th><th>Статус</th></tr></thead>
           <tbody>
-            <sc-for list="{{ uploadRows }}" as="r" hint-placeholder-count="8">
+            <sc-for list="{{ uploadRows }}" as="r" hint-placeholder-count="9">
               <tr>
                 <td><span style="width:14px;height:14px;border:1.5px solid var(--color-divider);background: {{ r.check }};display:block"></span></td>
                 <td style="font-size:13px;color:var(--color-neutral-700)">{{ r.source }}</td>
@@ -3024,9 +3047,9 @@
           <h3 style="margin:0 0 8px">Итог по заявке</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
             <div style="display:flex;justify-content:space-between"><span class="text-muted">Распознано и в наличии</span><span class="mono">14 позиций · 812 600 ₽</span></div>
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">Под заказ</span><span class="mono">3 позиции · 214 000 ₽</span></div>
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">На запрос КП</span><span class="mono">1 позиция</span></div>
-            <div style="display:flex;justify-content:space-between"><span class="text-muted">Нераспознано</span><span class="mono">2 строки</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">После подтверждения</span><span class="mono">3 позиции · 214 000 ₽</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">Из них на запрос КП</span><span class="mono">1 позиция</span></div>
+            <div style="display:flex;justify-content:space-between"><span class="text-muted">Без аналога</span><span class="mono">3 строки</span></div>
           </div>
           <div class="hr" style="margin:12px 0"></div>
           <div style="display:flex;justify-content:space-between;align-items:baseline">
@@ -3122,7 +3145,7 @@
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px">
         <sc-for list="{{ emptyActions }}" as="a" hint-placeholder-count="4">
           <div class="card blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -3186,7 +3209,7 @@
 
       <div>
         <h2 style="font-size:26px;margin:0 0 12px">Подкатегории</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px">
           <sc-for list="{{ dirSubcats }}" as="c" hint-placeholder-count="8">
             <a href="#" onClick="{{ goCatalog }}" class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:baseline;text-decoration:none;color:inherit">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -3450,7 +3473,7 @@
         <div class="ph duotone" style="background:url(img/blog-boiler.jpg) center/cover no-repeat;min-height:300px;display:flex;align-items:flex-end;padding:14px" data-photo="1">
         </div>
         <div style="padding:26px 28px;display:flex;flex-direction:column;gap:10px;border-left:1px solid var(--color-divider)">
-          <span class="tag tag-accent" style="align-self:flex-start">Разбор · Насосы</span>
+          <span class="tag tag-accent" style="align-self:flex-start">Подбор · Насосы</span>
           <h2 style="font-size:30px;margin:0">Как подобрать насос по рабочей точке и не переплатить за напор</h2>
           <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0">Запас по напору свыше 20% выводит насос из рабочей зоны характеристики: растёт потребление, греются подшипники, быстрее изнашивается торцевое уплотнение. Разбираем, как считать точку по факту, когда нужен частотник, а когда достаточно сменить число ступеней.</p>
           <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">14 сентября · 9 мин · связано с 214 позициями в наличии</div>
@@ -3487,7 +3510,7 @@
     </div>
     <div style="max-width:1360px;margin:0 auto;padding:0 28px 48px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:36px;align-items:start">
       <article>
-        <span class="tag tag-accent" style="margin-bottom:10px">Разбор · Насосы</span>
+        <span class="tag tag-accent" style="margin-bottom:10px">Подбор · Насосы</span>
         <h1 style="font-size:38px;margin:0 0 10px;text-wrap:pretty">Как подобрать насос по рабочей точке и не переплатить за напор</h1>
         <div class="mono" style="font-size:12px;color:var(--color-neutral-700);display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px">
           <span>14 сентября 2026</span><span>9 мин чтения</span><span>Проверено инженером сервиса</span>
@@ -3857,7 +3880,7 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
               <div class="field"><label>Тихие часы</label><input class="input mono" onChange="{{ noop }}" value="21:00–08:00"></div>
               <div class="field"><label>Автоответ, сек</label><input class="input mono" onChange="{{ noop }}" value="4"></div>
-              <div class="field"><label>Передача человеку после</label><input class="input mono" onChange="{{ noop }}" value="2 уточнений"></div>
+              <div class="field"><label>Передача человеку после</label><input class="input mono" onChange="{{ noop }}" value="2 уточнения"></div>
             </div>
           </div>
         </div>
@@ -4248,7 +4271,7 @@
             </table>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-            <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Публиковать только проверенных поставщиков (Gold / Verified)</label>
+            <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Публиковать только проверенных поставщиков (золотые / проверенные)</label>
             <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Переводить названия и характеристики в карточку</label>
             <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Помечать позиции «импорт под заказ»</label>
             <label class="radio"><input type="checkbox"><span class="dot"></span>Публиковать позиции без сертификатов ЕАЭС</label>
@@ -4289,7 +4312,7 @@
           <div class="field"><label>Модель для чата и распознавания</label><select class="input"><option>Встроенная (подбор + OCR)</option><option>Только OCR шильдиков</option><option>Отключить</option></select></div>
           <div class="field"><label>Автоответ в чате, сек</label><input class="input mono" onChange="{{ noop }}" value="4"></div>
           <div class="field"><label>Автозапрос КП поставщикам</label><select class="input"><option>3 поставщика</option><option>5 поставщиков</option><option>все по категории</option></select></div>
-          <div class="field"><label>Доля заявок без оператора</label><input class="input mono" onChange="{{ noop }}" value="72%"></div>
+          <div class="field"><label>Доля заявок без оператора</label><input class="input mono" onChange="{{ noop }}" value="74%"></div>
         </div>
         <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin:18px 0 8px">Качество автоматики по направлениям</div>
         <div style="overflow-x:auto">
@@ -4405,10 +4428,10 @@
           <span style="width:18px;height:18px;background:var(--color-accent);display:block"></span>
           <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ПРОМКОНТУР</span>
         </div>
-        <p style="font-size:14px;margin:10px 0 0;max-width:330px;line-height:1.55">Промышленное оборудование от поставщиков по всей России. 45 направлений снабжения, 300 000 моделей, прямые отгрузки со складов поставщиков.</p>
+        <p style="font-size:14px;margin:10px 0 0;max-width:330px;line-height:1.55">Промышленное оборудование от поставщиков по всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
         <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px">
-          <span class="mono" style="color:#fff;font-size:19px;white-space:nowrap">8 800 000-00-00</span>
-          <span style="font-size:13px">zakupki@promkontur.ru · пн–пт 08:00–19:00 МСК</span>
+          <a href="#" onClick="{{ goChat }}" class="mono" style="color:#fff;font-size:19px;white-space:nowrap">Чат в MAX</a>
+          <span style="font-size:13px">zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
         </div>
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
           <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap">Чат в MAX</span>
@@ -4426,7 +4449,7 @@
     </div>
     <div style="border-top:1px solid var(--color-neutral-800)">
       <div style="max-width:1360px;margin:0 auto;padding:16px 28px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--color-neutral-500)">
-        <span>© 2026 ООО «Промконтур» · ИНН 7701234567 · ОГРН 1157746000000</span>
+        <span>© 2026 ООО «Промконтур» · ИНН 7701234567 · ОГРН — после регистрации</span>
         <span>Оплата: счёт для юрлиц, карта, отсрочка до 30 дней</span>
         <a href="#" style="margin-left:auto;color:var(--color-neutral-500)">Политика конфиденциальности</a>
         <a href="#" style="color:var(--color-neutral-500)">Условия использования</a>
@@ -4524,7 +4547,7 @@ class Component extends DCLogic {
       { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #c2c2c4", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
       { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #c2c2c4", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
       { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #c2c2c4", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
-      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #c2c2c4", sku: "INV-VR-15", name: "INNOVERT VR 15 kW", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #c2c2c4", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
       { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c2c2c4", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go(p.cta === "Запросить КП" ? "quote" : "product") }));
 
@@ -4561,11 +4584,11 @@ class Component extends DCLogic {
           { q: "Сколько стоит размещение?", a: "Ноль на всех уровнях. Ни абонентской платы, ни платы за заявки, ни платного продвижения в подборе." },
           { q: "Как система выбирает между поставщиками?", a: "Цена с доставкой 45%, наличие и точность остатка 25%, срок отгрузки 20%, рейтинг 10%. Платное продвижение — 0%." },
           { q: "Можно ли поднять позицию в выдаче за деньги?", a: "Нет. Единственный способ — точные остатки, короткий срок и конкурентная цена." },
-          { q: "Когда приходят деньги?", a: "От 3 до 7 дней после отгрузки в зависимости от уровня подключения и подтверждения документов." },
+          { q: "Когда приходят деньги?", a: "От 3 до 7 рабочих дней после отгрузки и загрузки документов — по уровню подключения." },
           { q: "Кто общается с клиентом?", a: "Сервис. Вы получаете готовую заявку с оплатой и адресом, переписка и претензии — наша зона." },
           { q: "Что если остатка не оказалось?", a: "Это снижает рейтинг. Мы предлагаем клиенту аналог, а с вами разбираем причину расхождения." },
           { q: "Нужен ли НДС?", a: "Работаем и с НДС, и без — режим указывается в прайсе и учитывается при расчёте цены." },
-          { q: "Как быстро подключение?", a: "Выгрузка настраивается за один рабочий день, договор подписывается по ЭДО." }
+          { q: "Как быстро подключение?", a: "От 1 до 5 рабочих дней в зависимости от формата выгрузки, договор подписывается по ЭДО." }
         ]
       },
       warranty: {
@@ -4603,7 +4626,7 @@ class Component extends DCLogic {
         heading: "Проектные закупки, тендеры и комплектация объектов",
         intro: "Проектная поставка отличается от складской закупки тем, что оборудование подбирается под объект: рабочие точки сети, режим работы, габариты помещения, требования по монтажу и сертификации. Мы принимаем спецификацию или опросный лист, делаем инженерный подбор и собираем комплект от нескольких поставщиков в одну поставку.",
         paras: [
-          "Предварительный расчёт по спецификации приходит за два рабочих часа, полное КП с доставкой, монтажом и пусконаладкой — до трёх дней. Цена фиксируется на 14 календарных дней, для импортных позиций срок короче и указывается в предложении: курс и логистика меняются быстрее.",
+          "Предварительный расчёт по спецификации приходит за два рабочих часа, полное КП с доставкой, монтажом и пусконаладкой — до 6 рабочих дней. Цена фиксируется на 14 календарных дней, для импортных позиций срок короче и указывается в предложении: курс и логистика меняются быстрее.",
           "Оплата разносится по этапам объекта: аванс 30–45% на закупку, остаток после поставки или после пусконаладки. Для тендеров и бюджетных процедур готовим пакет с сертификатами ЕАЭС, паспортами, справками об опыте и материально-технических ресурсах."
         ],
         table: {
@@ -4627,12 +4650,12 @@ class Component extends DCLogic {
           { q: "Работаете с тендерами?", a: "Да, готовим пакет документов: сертификаты ЕАЭС, паспорта, справки об опыте и ресурсах, КП на бланке." },
           { q: "Можно ли заменить позиции в спецификации?", a: "Да, предложим аналоги с обоснованием по рабочей точке — это часто снижает бюджет на 15–25%." },
           { q: "Кто контролирует сроки поставщиков?", a: "Сервис. Комплект собирается в одну поставку, отклонения по срокам согласуем заранее." },
-          { q: "Есть ли шефмонтаж производителя?", a: "Для компрессорных, котельных и холодильных установок — да, включается в КП по требованию." }
+          { q: "Есть ли шеф-монтаж производителя?", a: "Для компрессорных, котельных и холодильных установок — да, включается в КП по требованию." }
         ]
       },
       brand: {
         heading: "Насосы Grundfos: серии, цены и подбор аналогов",
-        intro: "Grundfos — датский производитель насосного оборудования, работающий с 1945 года. В каталоге 1 840 моделей: многоступенчатые CR и CRN, консольные NB и NK, циркуляционные MAGNA3, скважинные SP, дозировочные DDA и канализационные SEG. Поставки официальные, гарантия 24 месяца, запчасти со склада в России.",
+        intro: "Grundfos — датский производитель насосного оборудования, работающий с 1945 года. В каталоге 1 440 моделей: многоступенчатые CR и CRN, консольные NB и NK, циркуляционные MAGNA3, скважинные SP, дозировочные DDA и канализационные SEG. Поставки через проверенных поставщиков в РФ; срок и условия гарантии — в карточке товара.",
         paras: [
           "Серия выбирается по задаче: CR для повышения давления и водоснабжения, NB и NK для отопления и оборотной воды, MAGNA3 для ИТП с переменным расходом, SP для скважин. Внутри серии модель подбирается по рабочей точке — расходу и напору в конкретной сети, а не по паспортному максимуму.",
           "Если бюджет ограничен, по каждой модели подбираем аналог CNP, Wilo, Ebara или отечественного производства с той же рабочей точкой и присоединительными размерами. Разница в цене обычно 20–30%, отличия по материалам, уплотнениям и доступности сервиса показываем в сравнении."
@@ -4651,7 +4674,7 @@ class Component extends DCLogic {
         tail: ["Модель снята с производства — пришлите фото шильдика: подберём актуальную замену в линейке или аналог другого производителя."],
         faqHeading: "О поставках Grundfos",
         faq: [
-          { q: "Поставки официальные?", a: "Да, через авторизованных дистрибьюторов с гарантией производителя 24 месяца и полным пакетом документов." },
+          { q: "Кто поставляет оборудование?", a: "Проверенные поставщики в РФ с полным пакетом документов. Срок и условия гарантии указаны в карточке товара." },
           { q: "Чем CR отличается от NB?", a: "CR — вертикальный многоступенчатый, даёт высокий напор при умеренном расходе. NB — консольный, наоборот: большой расход при меньшем напоре." },
           { q: "Есть ли запчасти?", a: "Торцевые уплотнения, рабочие колёса, комплекты прокладок и клеммные коробки — по артикулам производителя, отгрузка 1–3 дня." },
           { q: "Какой аналог дешевле?", a: "CNP и Ebara дают экономию 20–30% при сопоставимой рабочей точке. Отличия по ресурсу уплотнения и сервису показываем в сравнении." },
@@ -4666,7 +4689,7 @@ class Component extends DCLogic {
         intro: "ПРОМКОНТУР — агрегатор промышленного оборудования, который берёт на себя подбор поставщика и оформление сделки. Мы не держим склад: прайсы и остатки приходят от 18 поставщиков, система выбирает предложение по цене, наличию и сроку и показывает одну итоговую цену с НДС и доставкой.",
         paras: [
           "Зарабатываем на наценке к цене поставщика, заложенной в ту цену, которую видит клиент. Платных размещений и приоритетов в выдаче за деньги нет: поставщик выигрывает подбор ценой, остатком и сроком отгрузки, а не бюджетом на продвижение. Для закупщика и для поставщика сервис бесплатный.",
-          "Основная часть работы автоматическая: 72% заявок закрывается без оператора — подбор в чате, распознавание шильдиков, разбор заявок списком, автоответы на письма, счёт и документы. Проектные поставки, агрессивные среды и позиции дороже 500 000 ₽ ведёт инженер с историей диалога."
+          "Основная часть работы автоматическая: 74% заявок закрывается без оператора — подбор в чате, распознавание шильдиков, разбор заявок списком, автоответы на письма, счёт и документы. Проектные поставки, агрессивные среды и позиции дороже 500 000 ₽ ведёт инженер с историей диалога."
         ],
         table: {
           title: "Что делает сервис и что остаётся у вас",
@@ -4683,11 +4706,11 @@ class Component extends DCLogic {
         faqHeading: "О сервисе",
         faq: [
           { q: "Вы производитель или посредник?", a: "Агрегатор. Мы подбираем поставщика и оформляем сделку, отгрузка идёт напрямую с его склада." },
-          { q: "Почему цена одна, а поставщиков много?", a: "Система выбирает лучшее предложение по цене, наличию и сроку и показывает итог — сравнивать пятнадцать прайсов вам не нужно." },
+          { q: "Почему цена одна, а поставщиков много?", a: "Система выбирает лучшее предложение по цене, наличию и сроку и показывает итог — сравнивать 18 прайсов вам не нужно." },
           { q: "Сервис платный?", a: "Нет, ни для закупщика, ни для поставщика. Мы зарабатываем на наценке, заложенной в цену." },
           { q: "Можно ли купить дешевле напрямую у поставщика?", a: "Иногда да, если у вас свой договор и объём. Сервис экономит время на подборе, проверке остатков и документах." },
           { q: "Кто отвечает за качество?", a: "Гарантию даёт производитель, обращение ведём мы — вам не нужно переписываться с заводом." },
-          { q: "Работаете с бюджетными организациями?", a: "Да, предоставляем документы для тендерной и проектной документации, работаем по 223-ФЗ с коммерческими закупками." },
+          { q: "Работаете с бюджетными организациями?", a: "Да, предоставляем документы для тендерной и проектной документации, работаем по 44-ФЗ и 223-ФЗ." },
           { q: "Есть ли обмен с 1С?", a: "Да, в пилотном режиме: заказы и документы выгружаются в вашу учётную систему." },
           { q: "Как стать поставщиком?", a: "Подключить прайс по XML, API, Excel или через обмен с 1С — размещение бесплатное, заявки приходят готовыми." }
         ]
@@ -4757,7 +4780,7 @@ class Component extends DCLogic {
         heading: "Разбор заявки из Excel: как это работает",
         intro: "Заявка от цеха приходит в свободной форме: сокращения, опечатки, размеры вперемешку с артикулами. Система сопоставляет строки с номенклатурой поставщиков, показывает совпадения с ценой и сроком, отдельно выносит позиции, где нужно решение, и строки, которые требуют инженера.",
         paras: [
-          "Совпадение считается точным, когда сходятся производитель и артикул или полный набор параметров модели. Если параметров не хватает — например не указан материал головки дозирующего насоса — строка помечается «уточнить» и предлагаются варианты исполнения с разницей в цене и сроке.",
+          "Совпадение считается точным, когда сходятся производитель и артикул или полный набор параметров модели. Если параметров не хватает — например не указан материал головки дозировочного насоса — строка помечается «уточнить» и предлагаются варианты исполнения с разницей в цене и сроке.",
           "Распознанные позиции переносятся в корзину одним действием, проектные уходят в запрос КП, нераспознанные — инженеру вместе с исходной строкой заявки. Разобранную заявку можно сохранить как шаблон: при повторной закупке она повторяется одной кнопкой."
         ],
         table: {
@@ -4882,7 +4905,7 @@ class Component extends DCLogic {
         intro: "Кабинет — рабочее место поставщика в сервисе: новые заявки с подтверждённой оплатой, состояние выгрузки прайса, отгрузки и расчёты. Розничная переписка, тендерные процедуры и рекламации первой линии остаются на стороне сервиса.",
         paras: [
           "Выгрузка настраивается один раз: формат (XML, API, Excel по FTP или обмен с 1С), частота и минимальная сумма заказа. По складским позициям рекомендуем обновление каждые 2–4 часа: чем достовернее остаток, тем чаще ваше предложение выигрывает во внутреннем подборе.",
-          "Заявка приходит готовой — позиции, количество, адрес доставки и подтверждённая оплата. После отгрузки и загрузки документов расчёт проходит в течение пяти рабочих дней, для постоянных партнёров — по факту подтверждения заказа."
+          "Заявка приходит готовой — позиции, количество, адрес доставки и подтверждённая оплата. После отгрузки и загрузки документов расчёт проходит от 3 до 7 рабочих дней по уровню подключения."
         ],
         table: {
           title: "Статусы заявки в кабинете",
@@ -4892,7 +4915,7 @@ class Component extends DCLogic {
             ["Подтверждена", "собрать и отгрузить", "по сроку в заявке"],
             ["Отгружена", "загрузить документы", "1 день"],
             ["К расчёту", "сверка по отгрузке", "1–2 дня"],
-            ["Оплачена", "—", "до 5 дней после отгрузки"]
+            ["Оплачена", "—", "3–7 рабочих дней после отгрузки"]
           ]
         },
         tail: ["Настройки направлений, регионов отгрузки и минимальной суммы заказа меняются в кабинете без обращения к менеджеру."],
@@ -4901,7 +4924,7 @@ class Component extends DCLogic {
           { q: "Как часто обновлять прайс?", a: "Складские позиции — каждые 2–4 часа, остальные — раз в сутки. Частота настраивается в кабинете." },
           { q: "Что видит клиент?", a: "Только итоговую цену сервиса. Ваши цены и остатки используются внутри системы подбора." },
           { q: "Как быстро нужно отвечать на заявку?", a: "Подтверждение наличия и срока — в течение двух часов, иначе заявка уходит следующему поставщику по правилам подбора." },
-          { q: "Когда приходит оплата?", a: "В течение пяти рабочих дней после отгрузки и загрузки документов; для постоянных партнёров — по подтверждению заказа." },
+          { q: "Когда приходит оплата?", a: "От 3 до 7 рабочих дней после отгрузки и загрузки документов — по уровню подключения." },
           { q: "Можно ли ограничить регионы отгрузки?", a: "Да, в настройках кабинета: регионы, направления и минимальная сумма заказа." },
           { q: "Что если позиции нет в наличии?", a: "Отметьте в заявке — система автоматически предложит клиенту аналог или передаст заявку другому поставщику." },
           { q: "Как формируется приоритет в подборе?", a: "По весам: цена 45%, наличие 25%, срок отгрузки 20%, рейтинг поставщика 10%." },
@@ -4983,10 +5006,10 @@ class Component extends DCLogic {
           rows: [
             ["Привод, электрика и КИПиА", "9", "Заводы, энергетики", "Корзина и КП"],
             ["Перекачка, трубопровод, вода", "9", "ЖКХ, производства", "Корзина и КП"],
-            ["Воздух, климат и очистка", "7", "Производства, пищёвка", "Преимущественно КП"],
+            ["Воздух, климат и очистка", "7", "Производства, пищевые производства", "Преимущественно КП"],
             ["Механика, привод, запчасти", "8", "Ремонтные службы", "Корзина"],
             ["Производство и обработка", "7", "Машиностроение", "КП"],
-            ["Логистика, упаковка, пищевые линии", "5", "Склады, пищёвка", "Корзина и КП"]
+            ["Логистика, упаковка, пищевые линии", "5", "Склады, пищевые производства", "Корзина и КП"]
           ]
         },
         tail: ["Нужного направления нет в списке — напишите, какие позиции закупаете регулярно: категории открываются под подтверждённый спрос."],
@@ -4998,13 +5021,13 @@ class Component extends DCLogic {
           { q: "Как открывается новое направление?", a: "По подтверждённому спросу: три и более запроса в месяц плюс минимум два поставщика с электронной выгрузкой." },
           { q: "Есть ли взрывозащищённое исполнение?", a: "Да, по электродвигателям, освещению, КИПиА и вентиляции доступны Ex-исполнения — указывайте маркировку в запросе." },
           { q: "Работаете ли с импортом и параллельным ввозом?", a: "Да, по части брендов через партнёров. Срок и курс фиксируются в КП на момент подтверждения." },
-          { q: "Есть ли шефмонтаж по проектным направлениям?", a: "По компрессорам, котельному, холодильному и очистному оборудованию — да, работы считаются отдельной строкой в КП." },
+          { q: "Есть ли шеф-монтаж по проектным направлениям?", a: "По компрессорам, котельному, холодильному и очистному оборудованию — да, работы считаются отдельной строкой в КП." },
           { q: "Можно ли закрепить цены на год?", a: "Для регулярной номенклатуры заключаем рамочный договор с прайс-листом и фиксацией наценки." }
         ]
       },
       chat: {
         heading: "Умный чат: автоматический подбор оборудования",
-        intro: "Чат заменяет переписку с менеджером на типовых задачах снабжения. Он принимает запрос словами, файл заявки или фото шильдика, уточняет недостающие параметры, проверяет остатки у поставщиков и собирает спецификацию со счётом. Около 72% заявок закрываются без участия оператора.",
+        intro: "Чат заменяет переписку с менеджером на типовых задачах снабжения. Он принимает запрос словами, файл заявки или фото шильдика, уточняет недостающие параметры, проверяет остатки у поставщиков и собирает спецификацию со счётом. Около 74% заявок закрываются без участия оператора.",
         paras: [
           "Подбор идёт по рабочей точке, а не по названию: для насоса это расход, напор, среда и присоединение, для компрессора — расход воздуха, давление и режим работы, для электродвигателя — мощность, число полюсов, монтажное исполнение и класс защиты. Если данных не хватает, чат задаёт минимум вопросов, без которых подбор неоднозначен.",
           "Всё, что выходит за пороги, уходит инженеру вместе с историей диалога: проектные комплекты, позиции дороже 500 000 ₽, агрессивные и взрывоопасные среды, нестандартные исполнения. Человек не начинает разговор с нуля — он видит уже собранные параметры и предложенные варианты."
@@ -5035,9 +5058,9 @@ class Component extends DCLogic {
       },
       homeB: {
         heading: "Промышленное оборудование от поставщиков по всей России",
-        intro: "ПРОМКОНТУР — агрегатор промышленного оборудования: насосы, компрессоры, подшипники, частотные преобразователи, трубопроводная арматура и пневматика от производителей и официальных дистрибьюторов. Мы собираем прайсы поставщиков в одну базу, сравниваем цену, остаток и срок отгрузки и показываем одну итоговую цену с доставкой.",
+        intro: "ПРОМКОНТУР — агрегатор промышленного оборудования: насосы, компрессоры, подшипники, частотные преобразователи, трубопроводная арматура и пневматика от производителей и поставщиков. Мы собираем прайсы поставщиков в одну базу, сравниваем цену, остаток и срок отгрузки и показываем одну итоговую цену с доставкой.",
         paras: [
-          "Снабженцу не нужно обзванивать десять компаний и сводить предложения в таблицу. Поиск работает по названию, артикулу производителя и по фотографии шильдика: система распознаёт модель на табличке и находит точное совпадение или аналог с сопоставимыми характеристиками.",
+          "Снабженцу не нужно обзванивать 18 компаний и сводить предложения в таблицу. Поиск работает по названию, артикулу производителя и по фотографии шильдика: система распознаёт модель на табличке и находит точное совпадение или аналог с сопоставимыми характеристиками.",
           "Позиции до 500 000 ₽ покупаются прямо из корзины — цена, наличие и срок доставки видны без регистрации. Оборудование дороже 500 000 ₽ и проектные комплекты идут через запрос коммерческого предложения: инженер проверяет подбор по расходу, давлению и режиму работы, считает доставку, монтаж и пусконаладку. Отгрузка всегда прямая — со склада поставщика на ваш объект, без промежуточного склада и лишнего плеча в цене."
         ],
         table: {
@@ -5066,7 +5089,7 @@ class Component extends DCLogic {
       },
       catalog: {
         heading: "Насосы промышленные: подбор по характеристикам",
-        intro: "В разделе собрано 4 218 моделей насосов от 37 производителей: центробежные, консольно-моноблочные, скважинные, дозирующие и самовсасывающие. Фильтры позволяют отобрать модель по подаче, напору, мощности двигателя, материалу корпуса и типу присоединения, а также оставить только позиции в наличии.",
+        intro: "В разделе собрано 4 218 моделей насосов от 37 производителей: центробежные, консольно-моноблочные, скважинные, дозировочные и самовсасывающие. Фильтры позволяют отобрать модель по подаче, напору, мощности двигателя, материалу корпуса и типу присоединения, а также оставить только позиции в наличии.",
         paras: [
           "Для подбора достаточно трёх параметров: требуемая подача в м³/ч, напор в метрах и характер перекачиваемой среды. Если напор выбран с запасом более 20%, насос будет работать вне рабочей точки — растёт потребление энергии и износ уплотнений. В таких случаях инженер предложит модель с другим числом ступеней или частотное регулирование.",
           "Цены в каталоге указаны с НДС и доставкой по России. Позиции с пометкой «в наличии» отгружаются со склада поставщика в течение 2–5 рабочих дней, позиции под заказ — по сроку производителя. На аналоги снятых с производства моделей система предлагает замену с сопоставимыми расходом, напором и присоединительными размерами."
@@ -5078,7 +5101,7 @@ class Component extends DCLogic {
             ["Вертикальный многоступенчатый", "1–120", "20–250", "Водоснабжение, повышение давления"],
             ["Консольно-моноблочный", "10–400", "10–100", "Отопление, циркуляция, оборотная вода"],
             ["Скважинный", "1–60", "30–300", "Водозабор из скважин"],
-            ["Дозирующий", "0,01–1", "до 100", "Реагенты, водоподготовка"],
+            ["Дозировочный", "0,01–1", "до 100", "Реагенты, водоподготовка"],
             ["Самовсасывающий", "5–90", "10–60", "Стоки, загрязнённые среды"]
           ]
         },
@@ -5088,7 +5111,7 @@ class Component extends DCLogic {
           { q: "Как подобрать насос по расходу и напору?", a: "Задайте в фильтрах требуемую подачу и напор с запасом не более 10–15%. Система отберёт модели, у которых рабочая точка попадает в середину характеристики — это самый экономичный режим." },
           { q: "Чем отличаются насосы из чугуна и нержавеющей стали?", a: "Чугун дешевле и подходит для чистой воды и отопления. Нержавеющая сталь AISI 304/316 нужна для питьевой воды, пищевых производств и агрессивных сред." },
           { q: "Что значит «под заказ»?", a: "Позиции нет на складе поставщика, срок отгрузки считается по графику производителя и указывается в карточке. Цена фиксируется на момент выставления счёта." },
-          { q: "Можно ли получить аналог дешевле?", a: "Да. Нажмите «Запросить подбор» в карточке — инженер пришлёт 2–3 аналога с сравнением характеристик и цен в течение двух часов." },
+          { q: "Можно ли получить аналог дешевле?", a: "Да. Нажмите «Запросить подбор» в карточке — инженер пришлёт 2–3 аналога со сравнением характеристик и цен в течение двух часов." },
           { q: "Нужен ли частотный преобразователь к насосу?", a: "При переменном водопотреблении он экономит до 30% электроэнергии и снижает гидроудары. Совместимые модели есть в разделе «Частотники»." },
           { q: "Входит ли доставка в цену каталога?", a: "Да, цены указаны с НДС и доставкой по России. Для габаритных позиций и доставки до объекта вне города стоимость уточняется в КП." },
           { q: "Как часто обновляются цены и остатки?", a: "Складские позиции обновляются каждые 2–4 часа, остальные — раз в сутки по выгрузкам поставщиков." },
@@ -5097,7 +5120,7 @@ class Component extends DCLogic {
       },
       product: {
         heading: "Насос Grundfos CR 32-4: характеристики и применение",
-        intro: "Grundfos CR 32-4 — вертикальный многоступенчатый центробежный насос с подачей 32 м³/ч и напором 46 м, мощность двигателя 5,5 кВт, корпус из нержавеющей стали AISI 304, присоединение фланцевое DN65 PN16. Применяется в системах водоснабжения, повышения давления, промышленной промывки и оборотного водоснабжения.",
+        intro: "Grundfos CR 32-4 — вертикальный многоступенчатый центробежный насос с подачей 32 м³/ч и напором 46 м, мощность двигателя 5,5 кВт, корпус из чугуна, проточная часть из AISI 304, присоединение фланцевое DN65 PN16. Применяется в системах водоснабжения, повышения давления, промышленной промывки и оборотного водоснабжения.",
         paras: [
           "Насос рассчитан на среду температурой от −20 до +120 °C и непрерывный режим работы. Четыре ступени обеспечивают ровную характеристику: при отклонении расхода на ±20% напор меняется плавно, что удобно для систем с переменным водопотреблением. В паре с частотным преобразователем модель работает в режиме поддержания постоянного давления.",
           "Для монтажа нужна ровная площадка или виброопоры, обратный клапан на нагнетании и запорная арматура с обеих сторон. При содержании твёрдых частиц более 50 мг/л устанавливается фильтр на всасывании — иначе сокращается срок службы торцевого уплотнения HQQE."
@@ -5112,14 +5135,14 @@ class Component extends DCLogic {
             ["CR 45-3", "45", "40", "7,5", "156 700 ₽"]
           ]
         },
-        tail: ["В комплект поставки входят паспорт, руководство по монтажу и сертификат соответствия. Гарантия производителя — 24 месяца."],
+        tail: ["В комплект поставки входят паспорт, руководство по монтажу и сертификат соответствия. Гарантия 24 месяца (условия поставщика)."],
         faqHeading: "Вопросы по модели",
         faq: [
           { q: "Что означает индекс A-F-A-E-HQQE?", a: "Это код исполнения: тип присоединения, материал уплотнений и конструкция торцевого уплотнения. HQQE — карбид кремния с EPDM, подходит для воды и слабоагрессивных сред." },
-          { q: "Подходит ли насос для питьевой воды?", a: "Да, корпус из AISI 304 и уплотнения EPDM допускают контакт с питьевой водой. Для пищевых производств уточните требования по сертификации — подберём исполнение из AISI 316." },
+          { q: "Подходит ли насос для питьевой воды?", a: "Да, проточная часть из AISI 304 и уплотнения EPDM допускают контакт с питьевой водой. Для пищевых производств уточните требования по сертификации — подберём исполнение из AISI 316." },
           { q: "Нужен ли частотный преобразователь?", a: "Не обязателен, но при переменном водопотреблении он экономит до 30% электроэнергии и снижает гидроудары. Совместимую модель можно добавить в корзину из раздела «Частотники»." },
           { q: "Есть ли в наличии и когда отгрузка?", a: "8 шт. на складе поставщика, отгрузка 2–4 рабочих дня после оплаты счёта или оплаты картой." },
-          { q: "Какая гарантия на насос?", a: "24 месяца от производителя. Гарантийные обращения ведём за вас: заявка оформляется через личный кабинет." },
+          { q: "Какая гарантия на насос?", a: "Гарантия 24 месяца (условия поставщика). Гарантийные обращения ведём за вас: заявка оформляется через личный кабинет." },
           { q: "Нужен ли фильтр на всасывании?", a: "Да, если содержание твёрдых частиц выше 50 мг/л. Иначе сокращается срок службы торцевого уплотнения." },
           { q: "Можно ли купить запчасти и ЗИП?", a: "Торцевые уплотнения, рабочие колёса и комплекты прокладок поставляются по артикулам производителя — отправьте запрос с моделью насоса." },
           { q: "Как заказать несколько единиц?", a: "Укажите количество в корзине. При партии от 5 штук система пересчитывает цену по оптовому уровню поставщика." }
@@ -5191,8 +5214,8 @@ class Component extends DCLogic {
         heading: "Сотрудничество с поставщиками промышленного оборудования",
         intro: "Мы не держим склад и не конкурируем с поставщиком за клиента. Вы подключаете прайс с ценами и остатками, мы приводим закупщика, оформляем сделку и документы, вы отгружаете напрямую со своего склада. Размещение прайса бесплатное, вознаграждение сервиса заложено в цену для клиента.",
         paras: [
-          "Подключение занимает один рабочий день: подписываем агентский договор, открываем кабинет, настраиваем выгрузку в удобном формате — XML/YML, REST API, Excel/CSV или обмен с 1С. Цены и остатки обновляются по расписанию, минимальная частота — раз в сутки, для складских позиций рекомендуем каждые 2–4 часа.",
-          "Заказ приходит готовым: позиции, количество, адрес доставки и подтверждённая оплата. От вас нужна отгрузка и отгрузочные документы. Расчёт — в течение пяти рабочих дней после отгрузки. Розничную переписку, тендерные процедуры и рекламации первой линии сервис берёт на себя."
+          "Подключение занимает от 1 до 5 рабочих дней: подписываем агентский договор, открываем кабинет, настраиваем выгрузку в удобном формате — XML/YML, REST API, Excel/CSV или обмен с 1С. Цены и остатки обновляются по расписанию, минимальная частота — раз в сутки, для складских позиций рекомендуем каждые 2–4 часа.",
+          "Заказ приходит готовым: позиции, количество, адрес доставки и подтверждённая оплата. От вас нужна отгрузка и отгрузочные документы. Расчёт — от 3 до 7 рабочих дней после отгрузки по уровню подключения. Розничную переписку, тендерные процедуры и рекламации первой линии сервис берёт на себя."
         ],
         table: {
           title: "Форматы подключения прайса",
@@ -5209,7 +5232,7 @@ class Component extends DCLogic {
         faq: [
           { q: "Сколько стоит размещение?", a: "Размещение прайса и ведение кабинета — 0 ₽. Сервис зарабатывает на наценке к вашей цене, ваша отгрузочная цена остаётся неизменной." },
           { q: "Будут ли мои цены видны конкурентам?", a: "Нет. Клиент видит только итоговую цену сервиса. Ваши цены и остатки используются внутри системы подбора." },
-          { q: "Когда приходит оплата?", a: "В течение пяти рабочих дней после отгрузки и получения отгрузочных документов. Для постоянных партнёров возможна оплата по факту подтверждения заказа." },
+          { q: "Когда приходит оплата?", a: "От 3 до 7 рабочих дней после отгрузки и получения отгрузочных документов — по уровню подключения." },
           { q: "Можно ли ограничить регионы или категории?", a: "Да. В кабинете настраиваются регионы отгрузки, минимальная сумма заказа и категории, по которым вы принимаете заявки." },
           { q: "Что если у нас нет электронного прайса?", a: "Поможем привести номенклатуру к структуре каталога и сопоставить артикулы — достаточно файла в любом виде." },
           { q: "Кто общается с клиентом?", a: "Сервис: розничная переписка, тендерные процедуры и рекламации первой линии — наша зона. Вам приходит готовый заказ." },
@@ -5227,6 +5250,23 @@ class Component extends DCLogic {
       nextScreen: this.go(order[(idx + 1) % order.length]),
       noop: () => {},
       hasSeo: !!seo[cur],
+      ...(() => {
+        const ops = ["crm", "voice", "autopilot", "logistics", "unit", "incident", "roles", "admin", "client"];
+        const isOps = ops.includes(cur), isVend = cur === "vendor";
+        const buyer = ["account", "order", "notify", "cart"].includes(cur);
+        const navOps = [["CRM", "crm"], ["Карточка клиента", "client"], ["Автопилот", "autopilot"], ["Голосовой робот", "voice"], ["Логистика", "logistics"], ["Ошибки", "incident"], ["Экономика", "unit"], ["Права", "roles"], ["Админка", "admin"]];
+        const navVend = [["Заявки и прайс", "vendor"], ["Условия работы", "terms"], ["Витрина", "homeB"]];
+        return {
+          isStorefront: !isOps && !isVend, isStaff: isOps || isVend,
+          staffTitle: isVend ? "Кабинет поставщика" : "Панель оператора",
+          staffUser: isVend ? "ООО «Гидромаш»" : "Петров А. · админ",
+          staffInitials: isVend ? "ГМ" : "ПА",
+          staffNav: (isVend ? navVend : navOps).map(([t, id]) => ({ t, go: this.go(id),
+            style: "font-size:13px;padding:6px 10px;text-decoration:none;" + (id === cur ? "background:var(--color-accent-700);color:#fff" : "color:var(--color-neutral-300)") })),
+          loginLabel: buyer ? "ООО «Метизный завод»" : "Войти",
+          goAuthOrAccount: this.go(buyer ? "account" : "auth")
+        };
+      })(),
       seoCurrent: seo[cur] || {},
       isHomeB: cur === "homeB", isCatalog: cur === "catalog",
       isProduct: cur === "product", isQuote: cur === "quote", isPhoto: cur === "photo",
@@ -5247,18 +5287,18 @@ class Component extends DCLogic {
       isLogistics: cur === "logistics", isUnit: cur === "unit",
       unitStats: [
         { v: "18,4 млн ₽", k: "оборот за месяц", d: "+8% к августу", color: "var(--color-text)" },
-        { v: "2,98 млн ₽", k: "маржа до затрат", d: "16,2% от оборота", color: "var(--color-text)" },
-        { v: "2,41 млн ₽", k: "после затрат на обработку", d: "13,1% от оборота", color: "var(--color-accent-700)" },
+        { v: "3,53 млн ₽", k: "маржа до затрат", d: "19,2% от оборота", color: "var(--color-text)" },
+        { v: "2,96 млн ₽", k: "после затрат на обработку", d: "16,1% от оборота", color: "var(--color-accent-700)" },
         { v: "118 ₽", k: "сделка на автопилоте", d: "870 ₽ с оператором", color: "var(--color-text)" },
-        { v: "1 940", k: "сделок за месяц", d: "74% без человека", color: "var(--color-text)" },
-        { v: "14", k: "человек в команде", d: "в прошлом году было 11", color: "var(--color-text)" }
+        { v: "814", k: "заказов за месяц", d: "из 1 940 заявок · 74% без человека", color: "var(--color-text)" },
+        { v: "6", k: "человек в команде", d: "в прошлом году было 4", color: "var(--color-text)" }
       ],
       unitPaths: [
-        { path: "Артикул или каталог", note: "клиент нашёл сам, робот оформил", share: "38%", cost: "64 ₽", costColor: "var(--color-accent-700)", avg: "24 800 ₽", margin: "21%", time: "8 минут" },
-        { path: "Чат или фото шильдика", note: "подбор роботом, распознавание", share: "27%", cost: "118 ₽", costColor: "var(--color-accent-700)", avg: "31 400 ₽", margin: "19%", time: "16 минут" },
-        { path: "Автозакупка", note: "счёт без диалога по расписанию", share: "9%", cost: "22 ₽", costColor: "var(--color-accent-700)", avg: "19 600 ₽", margin: "24%", time: "2 минуты" },
-        { path: "Заявка списком", note: "разбор роботом, проверка человеком", share: "12%", cost: "340 ₽", costColor: "var(--color-neutral-700)", avg: "186 000 ₽", margin: "15%", time: "1,5 часа" },
-        { path: "Проект и КП", note: "инженерный подбор, торг, монтаж", share: "14%", cost: "870 ₽", costColor: "var(--color-neutral-700)", avg: "412 000 ₽", margin: "11%", time: "2–3 дня" }
+        { path: "Артикул или каталог", note: "клиент нашёл сам, робот оформил", share: "38%", cost: "64 ₽", costColor: "var(--color-accent-700)", avg: "9 800 ₽", margin: "21%", time: "8 минут" },
+        { path: "Чат или фото шильдика", note: "подбор роботом, распознавание", share: "27%", cost: "118 ₽", costColor: "var(--color-accent-700)", avg: "12 400 ₽", margin: "19%", time: "16 минут" },
+        { path: "Автозакупка", note: "счёт без диалога по расписанию", share: "9%", cost: "22 ₽", costColor: "var(--color-accent-700)", avg: "8 900 ₽", margin: "24%", time: "2 минуты" },
+        { path: "Заявка списком", note: "разбор роботом, проверка человеком", share: "12%", cost: "340 ₽", costColor: "var(--color-neutral-700)", avg: "38 600 ₽", margin: "15%", time: "1,5 часа" },
+        { path: "Проект и КП", note: "инженерный подбор, торг, монтаж", share: "14%", cost: "870 ₽", costColor: "var(--color-neutral-700)", avg: "72 000 ₽", margin: "11%", time: "2–3 дня" }
       ],
       unitDirs: [
         { dir: "Подшипники и ЗИП", note: "маленький чек, высокая частота", turnover: "2,8 млн ₽", margin: "868 тыс ₽", cost: "94 тыс ₽", total: "+774 тыс ₽", color: "var(--color-accent-700)" },
@@ -5290,17 +5330,17 @@ class Component extends DCLogic {
         { v: "11", k: "срывов предупреждено заранее", color: "var(--color-text)" }
       ],
       logOptions: [
-        { name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Деловые Линии", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
-        { name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "СДЭК + ПЭК", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
-        { name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Деловые Линии", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
+        { name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Перевозчик 1", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
+        { name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "Перевозчики 3 и 2", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
+        { name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Перевозчик 1", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
         { name: "Самовывоз с терминала", scheme: "клиент забирает в Туле", carrier: "—", term: "3 дня", cost: "0 ₽", pick: "Предложено клиенту", tagClass: "tag-neutral" }
       ],
       logCarriers: [
-        { name: "Деловые Линии", zone: "вся РФ, габарит", term: "2–5 дней", otd: "95,2%", color: "var(--color-neutral-700)", share: "42%" },
-        { name: "ПЭК", zone: "ЦФО, Поволжье", term: "2–4 дня", otd: "92,8%", color: "var(--color-neutral-700)", share: "24%" },
-        { name: "СДЭК", zone: "мелкие грузы, вся РФ", term: "1–3 дня", otd: "96,4%", color: "var(--color-neutral-700)", share: "19%" },
-        { name: "КИТ", zone: "Урал, Сибирь", term: "4–8 дней", otd: "88,1%", color: "var(--color-accent-700)", share: "9%" },
-        { name: "Своя машина", zone: "Москва и 200 км", term: "в день заказа", otd: "99,1%", color: "var(--color-neutral-700)", share: "6%" }
+        { name: "Перевозчик 1", zone: "вся РФ, габарит", term: "2–5 дней", otd: "95,2%", color: "var(--color-neutral-700)", share: "42%" },
+        { name: "Перевозчик 2", zone: "ЦФО, Поволжье", term: "2–4 дня", otd: "92,8%", color: "var(--color-neutral-700)", share: "24%" },
+        { name: "Перевозчик 3", zone: "мелкие грузы, вся РФ", term: "1–3 дня", otd: "96,4%", color: "var(--color-neutral-700)", share: "19%" },
+        { name: "Перевозчик 4", zone: "Урал, Сибирь", term: "4–8 дней", otd: "88,1%", color: "#b3261e", share: "9%" },
+        { name: "Перевозчик 5 · своя машина", zone: "Москва и 200 км", term: "в день заказа", otd: "99,1%", color: "var(--color-neutral-700)", share: "6%" }
       ],
       logDelay: [
         { n: "01", t: "Замечает отклонение", d: "сравнивает фактический статус перевозчика с обещанной датой каждые 30 минут" },
@@ -5389,7 +5429,7 @@ class Component extends DCLogic {
         { q: "«А если не подойдёт»", a: "Обмен по параметрам за 5 дней, возврат неустановленного за 14. Ошибку в подборе исправляем за свой счёт.", where: "гарантия и возврат" }
       ],
       incStats: [
-        { v: "27", k: "ошибок за месяц из 1 940 сделок", color: "var(--color-text)" },
+        { v: "27", k: "ошибок за месяц из 1 940 заявок", color: "var(--color-text)" },
         { v: "24 из 27", k: "система заметила первой", color: "var(--color-accent-700)" },
         { v: "184 000 ₽", k: "компенсировано", color: "var(--color-text)" },
         { v: "1", k: "клиент ушёл после ошибки", color: "var(--color-text)" }
@@ -5413,11 +5453,11 @@ class Component extends DCLogic {
       voiceTranscript: [
         { time: "00:00", dot: "var(--color-accent)", who: "Робот", text: "«Промконтур, здравствуйте. Разговор записывается. Вижу, вы из Тепломаша — по заказу или новая заявка?»", hasNote: true, note: "номер определён, поднята история: 12 заказов, отсрочка 30 дней" },
         { time: "00:06", dot: "var(--color-neutral-400)", who: "Клиент", text: "«Новая. Нужен насос как в прошлый раз, но чуть побольше по расходу, около сорока кубов.»", hasNote: false, note: "" },
-        { time: "00:14", dot: "var(--color-accent)", who: "Робот", text: "«В марте брали Grundfos CR 32-4 на тридцать два куба. На сорок подойдёт CR 45-3, напор сорок два метра, или CNP CDLF 42-30 — дешевле на тридцать процентов. Напор какой нужен?»", hasNote: true, note: "подбор из каталога, остатки проверены в реальном времени" },
+        { time: "00:14", dot: "var(--color-accent)", who: "Робот", text: "«В марте брали Grundfos CR 32-4 на тридцать два куба. На сорок подойдёт CR 45-3, напор сорок метров, или CNP CDLF 42-30 — почти вдвое дешевле. Напор какой нужен?»", hasNote: true, note: "подбор из каталога, остатки проверены в реальном времени" },
         { time: "00:31", dot: "var(--color-neutral-400)", who: "Клиент", text: "«Метров сорок. Сколько стоит и когда отгрузите?»", hasNote: false, note: "" },
-        { time: "00:38", dot: "var(--color-accent)", who: "Робот", text: "«CR 45-3 — сто тридцать две тысячи девятьсот, четыре штуки на складе, отгрузка через два дня. CNP — восемьдесят девять четыреста, отгрузка завтра. Оба с доставкой до Тулы.»", hasNote: false, note: "" },
+        { time: "00:38", dot: "var(--color-accent)", who: "Робот", text: "«CR 45-3 — сто пятьдесят шесть тысяч семьсот, четыре штуки на складе, отгрузка через два дня. CNP — семьдесят четыре восемьсот, отгрузка через два дня. Оба с доставкой до Тулы.»", hasNote: false, note: "" },
         { time: "00:58", dot: "var(--color-neutral-400)", who: "Клиент", text: "«Давайте Grundfos, две штуки. Счёт на те же реквизиты.»", hasNote: false, note: "" },
-        { time: "01:04", dot: "var(--color-accent)", who: "Робот", text: "«Оформляю: CR 45-3, две штуки, двести шестьдесят пять тысяч восемьсот с НДС и доставкой. Счёт придёт в MAX и на почту в течение пятнадцати минут. Резерв на складе поставил.»", hasNote: true, note: "создана сделка ПК-10432, резерв у поставщика, счёт в очереди" },
+        { time: "01:04", dot: "var(--color-accent)", who: "Робот", text: "«Оформляю: CR 45-3, две штуки, триста тринадцать тысяч четыреста с НДС и доставкой. Счёт придёт в MAX и на почту в течение пятнадцати минут. Резерв на складе поставил.»", hasNote: true, note: "создана сделка ПК-10432, резерв у поставщика, счёт в очереди" },
         { time: "01:19", dot: "var(--color-accent)", who: "Робот", text: "«Ещё вопрос: в прошлый раз брали без ответных фланцев. Добавить комплект, восемь тысяч четыреста?»", hasNote: true, note: "правило из обучения на исправлениях инженера" },
         { time: "01:27", dot: "var(--color-neutral-400)", who: "Клиент", text: "«Добавьте, да. Спасибо.»", hasNote: false, note: "" }
       ],
@@ -5445,7 +5485,7 @@ class Component extends DCLogic {
         { title: "Входящие", count: "14", sum: "1,9 млн", deals: [
           { channel: "Почта", age: "2 мин", title: "Фото шильдика, насос на замену", last: "Робот: распознано 94%, подбор оригинала и 2 аналогов", sum: "≈104 900 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
           { channel: "MAX", age: "6 мин", title: "«Нужен редуктор на конвейер, момент 400 Нм»", last: "Робот: уточняет передаточное число и вал", sum: "—", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
-          { channel: "Сайт", age: "11 мин", title: "Заявка списком, 20 строк", last: "Робот: разобрано 18/20, 2 строки инженеру", sum: "1 026 600 ₽", owner: "закупщик", tagClass: "tag-outline", bar: "var(--color-accent-700)" }
+          { channel: "Сайт", age: "11 мин", title: "Заявка списком, 20 строк", last: "Робот: разобрано 17/20, 3 без аналога", sum: "1 026 600 ₽", owner: "закупщик", tagClass: "tag-outline", bar: "var(--color-accent-700)" }
         ] },
         { title: "Подбор", count: "9", sum: "2,4 млн", deals: [
           { channel: "MAX", age: "18 мин", title: "Компрессор 10 бар, 75 кВт", last: "Робот: сравнение Kaishan / Remeza / Atlas отправлено", sum: "1,28 млн ₽", owner: "инженер", tagClass: "tag-outline", bar: "var(--color-accent-700)" },
@@ -5456,8 +5496,8 @@ class Component extends DCLogic {
           { channel: "MAX", age: "3 ч", title: "Отсрочка 45 дней на подшипники", last: "Робот: 30 дней в рамках лимита, 45 — человеку", sum: "108 000 ₽", owner: "оператор", tagClass: "tag-outline", bar: "var(--color-accent-700)" }
         ] },
         { title: "Счёт выставлен", count: "11", sum: "1,6 млн", deals: [
-          { channel: "MAX", age: "вчера", title: "Grundfos CR 32-4 × 2", last: "Робот: счёт и договор отправлены, напоминание завтра", sum: "209 800 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
-          { channel: "Сайт", age: "вчера", title: "Автозакупка SKF 6205 × 200", last: "Робот: без подтверждения в лимите", sum: "108 000 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" }
+          { channel: "MAX", age: "вчера", title: "Grundfos CR 32-4 × 2", last: "Робот: счёт и договор отправлены, напоминание завтра", sum: "201 400 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
+          { channel: "Сайт", age: "вчера", title: "Автозакупка SKF 6205 × 200", last: "Робот: выше лимита — подтверждение кнопкой в MAX", sum: "108 000 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" }
         ] },
         { title: "Оплачено", count: "23", sum: "4,1 млн", deals: [
           { channel: "Почта", age: "2 дня", title: "INNOVERT VR 15 × 4", last: "Робот: передано поставщику, трек ожидается", sum: "249 200 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
@@ -5466,10 +5506,10 @@ class Component extends DCLogic {
       ],
       crmTimeline: [
         { time: "10:02", dot: "var(--color-neutral-400)", who: "Клиент · почта", action: "входящее", text: "«Добрый день, нужен такой же насос или аналог, фото таблички во вложении. Срочно, линия стоит.»" },
-        { time: "10:02", dot: "var(--color-accent)", who: "Робот", action: "распознал шильдик", text: "Grundfos CR 32-4 A-F-A-E-HQQE, артикул 96122802, уверенность 94%. Найдено в каталоге, 8 шт. в наличии. Слово «срочно» и «линия стоит» — приоритет поднят." },
+        { time: "10:02", dot: "var(--color-accent)", who: "Робот", action: "распознал шильдик", text: "Grundfos CR 32-4 A-F-A-E-HQQE, артикул 96122802, уверенность 94%. Найдено в каталоге, 8 шт. в наличии. Слова «срочно» и «линия стоит» — приоритет поднят." },
         { time: "10:03", dot: "var(--color-accent)", who: "Робот", action: "подобрал и ответил", text: "Письмо: оригинал 104 900 ₽ с отгрузкой 2 дня, аналоги CNP CDLF 32-40 за 71 300 ₽ и Wilo Helix V 3604 за 98 700 ₽ с таблицей отличий по рабочей точке и уплотнению. Спросил, важна ли совместимость с существующей обвязкой." },
         { time: "10:21", dot: "var(--color-neutral-400)", who: "Клиент · почта", action: "ответ", text: "«Берём оригинал, 2 штуки. Конкурент даёт 98 000. Можете подвинуться?»" },
-        { time: "10:22", dot: "var(--color-accent)", who: "Робот", action: "торг в границах", text: "Проверил: маржа позволяет −4% (100 700 ₽) при сохранении минимума 9%. Предложил 100 700 ₽ за штуку, доставку включил, отметил гарантию 24 месяца и отгрузку через 2 дня против 7 у конкурента." },
+        { time: "10:22", dot: "var(--color-accent)", who: "Робот", action: "торг в границах", text: "Проверил: маржа позволяет −4% (100 700 ₽) при сохранении минимума 9%. Предложил 100 700 ₽ за штуку, доставку включил, отметил гарантию 24 месяца (условия поставщика) и отгрузку через 2 дня против 7 у конкурента." },
         { time: "10:36", dot: "var(--color-neutral-400)", who: "Клиент · почта", action: "согласие", text: "«Хорошо, выставляйте счёт на ООО «Тепломаш», ИНН 7104056789.»" },
         { time: "10:37", dot: "var(--color-accent)", who: "Робот", action: "проверил и оформил", text: "Контрагент проверен: скоринг 78, отсрочка доступна. Счёт на 201 400 ₽ и договор отправлены, сделка в CRM переведена в «Счёт выставлен», поставщику Гидромаш ушёл резерв на 2 шт. Напоминание клиенту завтра в 10:00." },
         { time: "10:43", dot: "var(--color-accent-700)", who: "Робот", action: "предложил правило", text: "«Линия стоит» встретилось 6 раз за месяц — предлагаю при этих словах сразу показывать только позиции в наличии со сроком до 3 дней." }
@@ -5487,7 +5527,7 @@ class Component extends DCLogic {
         { sys: "Касса · оплата картой", kind: "API", event: "успешная оплата", act: "то же, что банк: подтверждение и передача поставщику", lag: "сразу", status: "Работает", tagClass: "tag-accent" }
       ],
       crmSupplierTalk: [
-        { time: "10:03", who: "Робот → Гидромаш, ПромНасос, ТД Аква · API", text: "Запрос актуальной цены и остатка на 96122802 × 2, срочность высокая. Фид Гидромаш: 86 000 ₽, 8 шт.; ПромНасос: 88 500 ₽, 3 шт.; ТД Аква: нет в наличии." },
+        { time: "10:03", who: "Робот → Гидромаш, ПромНасос, ТД Аква · API", text: "Запрос актуальной цены и остатка на 96122802 × 2, срочность высокая. Фид Гидромаш: 86 000 ₽, 8 шт.; ПромНасос: 88 500 ₽, 3 шт.; ТД Аква: 91 000 ₽, под заказ." },
         { time: "10:22", who: "Робот → Гидромаш · MAX", text: "«Клиент просит скидку, у конкурента 98 000. Возьмём 2 шт. сегодня при 84 000 за штуку. Отгрузка завтра?»" },
         { time: "10:31", who: "Гидромаш · MAX", text: "«84 500 и отгрузка завтра до 14:00 — ок.»" },
         { time: "10:37", who: "Робот → Гидромаш · API", text: "Резерв 2 шт. по 84 500 ₽ на 24 часа, заказ ПК-10431 будет передан после оплаты. Маржа сделки 16,1% при цене клиенту 100 700 ₽." }
@@ -5500,22 +5540,25 @@ class Component extends DCLogic {
         { in: "Просьба о скидке", act: "торг в границах или аналог дешевле", auto: "72%" },
         { in: "Вопрос по заказу", act: "статус, трек, документы из CRM", auto: "95%" },
         { in: "Рекламация", act: "зарегистрировать → инженеру за 15 мин", auto: "0%" },
-        { in: "Запрос КП > 500 000 ₽", act: "собрать черновик → инженеру", auto: "черновик" }
+        { in: "Запрос КП > 500 000\u00a0₽", act: "собрать черновик → инженеру", auto: "черновик" }
       ],
       apStats: [
         { v: "312", k: "заявок за сутки", d: "+8% к среднему", color: "var(--color-text)" },
-        { v: "74%", k: "закрыто без оператора", d: "цель 80%", color: "var(--color-accent-700)" },
+        { v: "74%", k: "закрыто без оператора", d: "цель 85%", color: "var(--color-accent-700)" },
         { v: "9", k: "ждут человека", d: "самая старая — 2 ч 10 мин", color: "var(--color-text)" },
         { v: "3", k: "остановленных сценария", d: "1 фид, 2 правила цен", color: "var(--color-accent-700)" },
         { v: "4,1 млн ₽", k: "оформлено автоматически", d: "счета, отгрузки, документы", color: "var(--color-text)" },
         { v: "96,2%", k: "точность подбора", d: "по исправлениям инженера", color: "var(--color-text)" }
       ],
       apQueue: [
-        { wait: "2 ч 10 м", waitColor: "var(--color-accent-700)", what: "КП на компрессорную станцию, ООО «Метизный завод»", why: "сумма выше 500 000 ₽ · проект · агрессивная среда не указана", sum: "684 000 ₽", cta: "Собрать КП", go: this.go("quote") },
+        { wait: "2 ч 10 м", waitColor: "var(--color-accent-700)", what: "Дожать КП-2198: 17 дней без ответа", why: "комплекс водоподготовки, ООО «Метизный завод» · робот не дозвонился дважды", sum: "684 000 ₽", cta: "Позвонить", go: this.go("client") },
+        { wait: "1 ч 05 м", waitColor: "var(--color-accent-700)", what: "Отсрочка 45 дней на подшипники, ООО «Тепломаш»", why: "сверх стандартных 30 дней — решение за оператором", sum: "108 000 ₽", cta: "Решить", go: this.go("client") },
         { wait: "1 ч 40 м", waitColor: "var(--color-accent-700)", what: "Фид «Подшипник-Трейд» — 12 строк не распарсились дважды", why: "самолечение исчерпано, поставщик не ответил в MAX", sum: "318 позиций", cta: "Открыть", go: this.go("admin") },
         { wait: "55 м", waitColor: "var(--color-neutral-700)", what: "Шильдик распознан на 61%: «CNP NIS 80-65-1?0»", why: "уверенность ниже порога 85%, клиент новый", sum: "≈96 000 ₽", cta: "Уточнить", go: this.go("photo") },
-        { wait: "40 м", waitColor: "var(--color-neutral-700)", what: "Заявка на 20 строк: 2 строки не распознаны", why: "фильтр по чертежу цеха и шланг без параметров", sum: "1 026 600 ₽", cta: "Разобрать", go: this.go("upload") },
-        { wait: "25 м", waitColor: "var(--color-neutral-700)", what: "Отзыв с оценкой 2 — SKF 6205, АО «Агропром-Т»", why: "низкая оценка → обращение инженеру", sum: "—", cta: "Читать", go: this.go("client") },
+        { wait: "40 м", waitColor: "var(--color-neutral-700)", what: "Заявка на 20 строк: 3 позиции без аналога в базе", why: "пробел ассортимента — фильтр по чертежу, шланг, редуктор Bonfiglioli", sum: "1 026 600 ₽", cta: "Разобрать", go: this.go("upload") },
+        { wait: "32 м", waitColor: "var(--color-neutral-700)", what: "Среда: раствор щёлочи 15%, до 60 °C", why: "агрессивная среда → подбор инженером", sum: "≈210 000 ₽", cta: "Подобрать", go: this.go("chat") },
+        { wait: "25 м", waitColor: "var(--color-neutral-700)", what: "Отзыв с оценкой 2 — SKF 6205, ООО «Литмаш-Сервис»", why: "низкая оценка → обращение инженеру", sum: "—", cta: "Читать", go: this.go("client") },
+        { wait: "18 м", waitColor: "var(--color-neutral-700)", what: "Второй вопрос за сутки: трек ПК-10428 не обновляется", why: "повторное обращение → оператор", sum: "222 600 ₽", cta: "Ответить", go: this.go("order") },
         { wait: "12 м", waitColor: "var(--color-neutral-700)", what: "Регистрация ООО «Гидросети»: скоринг отсрочки 54 из 100", why: "серая зона 50–60 — решение за оператором", sum: "лимит 300 000 ₽", cta: "Решить", go: this.go("auth") }
       ],
       apDone: [
@@ -5523,7 +5566,7 @@ class Component extends DCLogic {
         { t: "Заявок списком разобрано", v: "23" },
         { t: "Счетов выставлено", v: "41" },
         { t: "Ответов на письма", v: "67" },
-        { t: "КП собрано до 500 000 ₽", v: "18" },
+        { t: "Черновиков КП собрано", v: "18" },
         { t: "Напоминаний о повторной закупке", v: "34" },
         { t: "Цен пересчитано", v: "12 480" },
         { t: "Статей опубликовано", v: "3" },
@@ -5544,8 +5587,8 @@ class Component extends DCLogic {
       apFollowup: [
         { day: "День 1", action: "Напоминание о КП", channel: "MAX, короткое сообщение", conv: "ответ 22%" },
         { day: "День 3", action: "Письмо с аналогом дешевле", channel: "почта, сравнение на 15–25%", conv: "ответ 18%" },
-        { day: "День 5", action: "Звонок инженера", channel: "задача в очереди", conv: "ответ 31%" },
-        { day: "День 10", action: "Уведомление об истечении цены", channel: "MAX + почта", conv: "ответ 12%" },
+        { day: "День 5", action: "Звонок робота, эскалация инженеру", channel: "задача в очереди", conv: "ответ 31%" },
+        { day: "День 11", action: "Уведомление об истечении цены", channel: "MAX + почта", conv: "ответ 12%" },
         { day: "День 14", action: "Закрыть как потерянное", channel: "причина → аналитика", conv: "—" }
       ],
       apPricing: [
@@ -5583,10 +5626,10 @@ class Component extends DCLogic {
         { label: "Ошибка синхронизации", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M4.5 12a7.5 7.5 0 0 1 13-5.1L20 9M20 4v5h-5M19.5 12a7.5 7.5 0 0 1-13 5.1L4 15m0 5v-5h5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Фид поставщика недоступен", text: "«Подшипник-Трейд»: 12 строк с ошибкой формата, последняя удачная выгрузка 4 часа назад. Позиции показываются по прошлым данным и помечены как требующие проверки.", cta: "Повторить выгрузку", alt: "Открыть журнал", go: this.go("admin"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
         { label: "Отсрочка отклонена", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='5' y='10.5' width='14' height='10'/%3E%3Cpath d='M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Лимит пока не открыт", text: "Компания зарегистрирована меньше года, истории закупок недостаточно. Работаем по счёту или с частичным авансом; повторная проверка — после трёх закрытых сделок.", cta: "Оформить по счёту", alt: "Спросить в чате", go: this.go("cart"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
         { label: "Нет связи", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M2.5 8.5a14 14 0 0 1 19 0M5.5 12a9.5 9.5 0 0 1 13 0M8.8 15.4a5 5 0 0 1 6.4 0'/%3E%3Ccircle cx='12' cy='19' r='1'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Соединение потеряно", text: "Черновик заявки сохранён локально. Как только связь появится, спецификация отправится сама — повторять ввод не нужно.", cta: "Повторить", alt: "Сохранить в файл", go: this.go("upload"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-neutral-600)" },
-        { label: "Позиция снята", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='3.5' y='4' width='17' height='5'/%3E%3Cpath d='M5 9v11h14V9M10 15l4-4m0 4-4-4'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Модель снята с производства", text: "Grundfos CR 32-4 в этом исполнении больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
+        { label: "Позиция снята", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='3.5' y='4' width='17' height='5'/%3E%3Cpath d='M5 9v11h14V9M10 15l4-4m0 4-4-4'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Модель снята с производства", text: "Grundfos CR 32-4-2 (выпуск до 2019) больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
       ],
       warrantyCases: [
-        { kicker: "24 месяца", title: "Гарантия производителя", text: "Срок указан в карточке. Обращение оформляется в кабинете, переписку с заводом ведёт сервис." },
+        { kicker: "12–36 мес. — по карточке", title: "Гарантия", text: "Срок указан в карточке. Обращение оформляется в кабинете, переписку с заводом ведёт сервис." },
         { kicker: "14 дней", title: "Возврат без причины", text: "Для неустановленного оборудования в заводской упаковке с полным комплектом документов." },
         { kicker: "при приёмке", title: "Недостача и бой", text: "Фиксируется в транспортной накладной. Замена или возврат денег в течение трёх дней." },
         { kicker: "под заказ", title: "Что не возвращается", text: "Позиции, изготовленные или собранные под ваш проект, и оборудование с монтажом." }
@@ -5607,7 +5650,7 @@ class Component extends DCLogic {
       ],
       projectStats: [
         { v: "2 часа", k: "предварительный расчёт" },
-        { v: "3 дня", k: "полное КП с монтажом" },
+        { v: "до 6 дней", k: "полное КП с монтажом" },
         { v: "14 дней", k: "срок действия цены" },
         { v: "до 45%", k: "аванс по графику проекта" }
       ],
@@ -5615,7 +5658,7 @@ class Component extends DCLogic {
         { kicker: "Водоснабжение", title: "Насосная станция повышения давления", text: "Насосы, шкаф управления с частотниками, мембранные баки, арматура, датчики, монтажная рама.", from: "от 640 000 ₽" },
         { kicker: "Пневмосеть", title: "Компрессорная станция", text: "Винтовой компрессор, ресивер, осушитель, фильтры, магистраль, автоматика и ПНР.", from: "от 1 280 000 ₽" },
         { kicker: "Теплоснабжение", title: "ИТП с автоматикой", text: "Теплообменники, циркуляционные насосы, регуляторы, КИПиА, щит управления.", from: "от 890 000 ₽" },
-        { kicker: "Водоподготовка", title: "Комплекс очистки воды", text: "Фильтрация, умягчение, обратный осмос, дозирование реагентов, накопительные ёмкости.", from: "от 684 000 ₽" }
+        { kicker: "Водоподготовка", title: "Комплекс водоподготовки", text: "Фильтрация, умягчение, обратный осмос, дозирование реагентов, накопительные ёмкости.", from: "от 684 000 ₽" }
       ],
       projectSteps: [
         { a: "01 · Запрос", b: "принимает спецификацию или опросный лист", c: "2 часа", d: "—" },
@@ -5625,8 +5668,8 @@ class Component extends DCLogic {
         { a: "05 · Монтаж и ПНР", b: "подрядчик в регионе, акты и документы", c: "по объекту", d: "остаток после ПНР" }
       ],
       brandStats: [
-        { v: "1 840", k: "моделей в каталоге" },
-        { v: "24 мес.", k: "гарантия производителя" },
+        { v: "1 440", k: "моделей в каталоге" },
+        { v: "24 мес.", k: "гарантия (условия поставщика)" },
         { v: "1–3 дня", k: "отгрузка запчастей" },
         { v: "214", k: "позиций в наличии сегодня" }
       ],
@@ -5639,10 +5682,10 @@ class Component extends DCLogic {
         { name: "SEG / SE", type: "канализационные с измельчителем", range: "до 220 м³/ч", use: "стоки, КНС", count: "130", from: "118 600 ₽" }
       ],
       aboutStats: [
-        { v: "300 000+", k: "моделей в базе" },
+        { v: "115 000+", k: "моделей в базе" },
         { v: "45", k: "направлений снабжения" },
         { v: "18", k: "поставщиков с выгрузкой" },
-        { v: "72%", k: "заявок без оператора" }
+        { v: "74%", k: "заявок без оператора" }
       ],
       aboutSteps: [
         { n: "01", t: "Заявка", d: "Каталог, чат, фото шильдика, заявка списком или письмо — любой удобный вход." },
@@ -5664,14 +5707,14 @@ class Component extends DCLogic {
         { name: "Grundfos CR 32-4", meta: "2 шт. · 12 сентября · 104 900 ₽" }
       ],
       mobileCrm: [
-        { channel: "Почта", age: "2 ч 10 м", title: "КП на компрессорную станцию", why: "выше 500 000 ₽ · среда не указана", sum: "684 000 ₽", cta: "Собрать" },
+        { channel: "Почта", age: "2 ч 10 м", title: "Дожать КП-2198: водоподготовка", why: "17 дней без ответа", sum: "684 000 ₽", cta: "Позвонить" },
         { channel: "Фид", age: "1 ч 40 м", title: "«Подшипник-Трейд» не парсится", why: "самолечение исчерпано", sum: "318 поз.", cta: "Открыть" },
         { channel: "MAX", age: "55 м", title: "Шильдик распознан на 61%", why: "ниже порога · клиент новый", sum: "≈96 000 ₽", cta: "Уточнить" },
         { channel: "Сайт", age: "40 м", title: "Заявка 20 строк, 3 без аналога", why: "пробел ассортимента", sum: "600 400 ₽", cta: "Разобрать" }
       ],
       mobileVoice: [
         { who: "Клиент", text: "«Нужен насос как в прошлый раз, но побольше, около сорока кубов.»", bar: "var(--color-neutral-300)" },
-        { who: "Робот", text: "«В марте брали CR 32-4. На сорок подойдёт CR 45-3 или CNP дешевле на 30%. Какой напор?»", bar: "var(--color-accent)" },
+        { who: "Робот", text: "«В марте брали CR 32-4. На сорок подойдёт CR 45-3 или CNP — почти вдвое дешевле. Какой напор?»", bar: "var(--color-accent)" },
         { who: "Клиент", text: "«Сорок метров. Давайте Grundfos, две штуки.»", bar: "var(--color-neutral-300)" },
         { who: "Робот", text: "«Оформляю. Счёт придёт в MAX за 15 минут, резерв поставил. Добавить ответные фланцы?»", bar: "var(--color-accent)" }
       ],
@@ -5683,7 +5726,7 @@ class Component extends DCLogic {
       mobileCart: [
         { name: "Grundfos CR 32-4", qty: "2 шт. × 104 900 ₽", sum: "209 800 ₽" },
         { name: "Подшипник SKF 6205-2RS", qty: "50 шт. × 540 ₽", sum: "27 000 ₽" },
-        { name: "INNOVERT VR 15 kW", qty: "1 шт. × 62 300 ₽", sum: "62 300 ₽" }
+        { name: "INNOVERT VR 15 кВт", qty: "1 шт. × 62 300 ₽", sum: "62 300 ₽" }
       ],
       mobileTabbar: [
         { t: "Главная", fill: "var(--color-accent)", color: "var(--color-text)" },
@@ -5701,8 +5744,8 @@ class Component extends DCLogic {
       goAbout: this.go("about"), goAuth: this.go("auth"), goBrand: this.go("brand"),
       moneyStats: [
         { v: "18,4 млн ₽", k: "оборот за сентябрь", color: "var(--color-text)" },
-        { v: "16,2%", k: "средняя маржа", color: "var(--color-accent-700)" },
-        { v: "148 400 ₽", k: "средний чек", color: "var(--color-text)" },
+        { v: "19,2%", k: "средняя маржа", color: "var(--color-accent-700)" },
+        { v: "22 600 ₽", k: "средний чек", color: "var(--color-text)" },
         { v: "41%", k: "КП закрыто в заказ", color: "var(--color-text)" },
         { v: "1,2%", k: "возвраты от оборота", color: "var(--color-text)" }
       ],
@@ -5719,57 +5762,57 @@ class Component extends DCLogic {
         { reason: "Дорого против конкурента", share: "34%", note: "чаще всего компрессоры и станки" },
         { reason: "Срок поставки не подошёл", share: "23%", note: "импорт и позиции под заказ" },
         { reason: "Проект перенесён или отменён", share: "19%", note: "вне нашего влияния" },
-        { reason: "Клиент не ответил", share: "16%", note: "нужен звонок инженера на 3-й день" },
+        { reason: "Клиент не ответил", share: "16%", note: "нужен звонок инженера на 5-й день" },
         { reason: "Не нашли нужное исполнение", share: "8%", note: "пробел в ассортименте, идёт в план" }
       ],
       auditLog: [
-        { when: "14 сент, 05:12", section: "Цены", tagClass: "tag-accent", what: "Базовая наценка", diff: "20% → 18%", who: "Петров А. · оператор" },
+        { when: "14 сент, 05:12", section: "Цены", tagClass: "tag-accent", what: "Базовая наценка", diff: "20% → 18%", who: "Петров А. · админ" },
         { when: "14 сент, 04:20", section: "Источники", tagClass: "tag-outline", what: "Подключён фид «ПромРедуктор»", diff: "— → XML, 4 ч", who: "система" },
-        { when: "13 сент, 18:44", section: "Автоматизация", tagClass: "tag-neutral", what: "Автоответ на рекламации", diff: "вкл → человеку", who: "Смирнова Е. · инженер" },
-        { when: "13 сент, 11:02", section: "Цены", tagClass: "tag-accent", what: "Правило «Подшипники»", diff: "+30% → +35%", who: "Петров А. · оператор" },
-        { when: "12 сент, 16:30", section: "Контент", tagClass: "tag-outline", what: "Норма публикаций", diff: "8 → 12 в неделю", who: "Иванов К. · редактор" },
-        { when: "12 сент, 09:15", section: "Цены", tagClass: "tag-accent", what: "Порог КП", diff: "400 000 → 500 000 ₽", who: "Петров А. · оператор" }
+        { when: "13 сент, 18:44", section: "Автоматизация", tagClass: "tag-neutral", what: "Автоответ на рекламации", diff: "вкл → человеку", who: "Смирнова Е. · оператор" },
+        { when: "13 сент, 11:02", section: "Цены", tagClass: "tag-accent", what: "Правило «Подшипники»", diff: "+30% → +37%", who: "Петров А. · админ" },
+        { when: "12 сент, 16:30", section: "Контент", tagClass: "tag-outline", what: "Норма публикаций", diff: "8 → 12 в неделю", who: "Иванов К. · контент" },
+        { when: "12 сент, 09:15", section: "Цены", tagClass: "tag-accent", what: "Порог КП", diff: "400 000 → 500 000 ₽", who: "Петров А. · админ" }
       ],
       clientStats: [
         { v: "1 240 800 ₽", k: "закуплено за квартал", color: "var(--color-text)" },
         { v: "12", k: "заказов всего", color: "var(--color-text)" },
-        { v: "41%", k: "лимит отсрочки использован", color: "var(--color-accent-700)" },
+        { v: "37%", k: "лимит отсрочки использован", color: "var(--color-accent-700)" },
         { v: "3", k: "запроса КП в работе", color: "var(--color-text)" },
         { v: "14 дней", k: "средний интервал закупки", color: "var(--color-text)" }
       ],
       clientTimeline: [
-        { date: "14 сент", channel: "MAX", what: "Подбор насоса на оборотную воду, спецификация собрана", sum: "168 640 ₽" },
-        { date: "13 сент", channel: "Почта", what: "Заявка цеха №4 списком, 20 строк — разобрана автоматом", sum: "1 026 600 ₽" },
-        { date: "12 сент", channel: "Сайт", what: "Заказ ПК-10428 оформлен, счёт выставлен", sum: "209 800 ₽" },
-        { date: "9 сент", channel: "MAX", what: "Фото шильдика: SKF 6205-2RS, повтор прошлой закупки", sum: "27 000 ₽" },
-        { date: "5 сент", channel: "Телефон", what: "Уточнение по отсрочке, лимит поднят до 600 000 ₽", sum: "—" },
-        { date: "2 сент", channel: "Сайт", what: "Заказ ПК-10390, частотники — доставлен", sum: "249 200 ₽" },
-        { date: "28 авг", channel: "Почта", what: "Запрос КП на компрессорную станцию — отправлено", sum: "684 000 ₽" }
+        { date: "14 сентября", channel: "MAX", what: "Подбор насоса на оборотную воду, спецификация собрана", sum: "168 640 ₽" },
+        { date: "13 сентября", channel: "Почта", what: "Заявка цеха №4 списком, 20 строк — разобрана автоматом", sum: "1 026 600 ₽" },
+        { date: "12 сентября", channel: "Сайт", what: "Заказ ПК-10428 оформлен, счёт выставлен", sum: "222 600 ₽" },
+        { date: "9 сентября", channel: "MAX", what: "Фото шильдика: SKF 6205-2RS, повтор прошлой закупки", sum: "108 000 ₽" },
+        { date: "5 сентября", channel: "Телефон", what: "Уточнение по отсрочке, лимит поднят до 600 000 ₽", sum: "—" },
+        { date: "2 сентября", channel: "Сайт", what: "Заказ ПК-10390, частотники — доставлен", sum: "249 200 ₽" },
+        { date: "28 августа", channel: "Почта", what: "КП-2198 на комплекс водоподготовки — отправлено", sum: "684 000 ₽" }
       ],
       clientItems: [
-        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", next: "Ожидается", tagClass: "tag-accent" },
+        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", next: "Октябрь", tagClass: "tag-accent" },
         { name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", next: "Декабрь", tagClass: "tag-neutral" },
-        { name: "INNOVERT VR 15 kW", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", next: "Ноябрь", tagClass: "tag-neutral" },
+        { name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", next: "Ноябрь", tagClass: "tag-neutral" },
         { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", times: "7", period: "раз в месяц", last: "13 сентября", next: "Октябрь", tagClass: "tag-neutral" },
         { name: "Мотор-редуктор NORD SK 02", sku: "NRD-SK02", times: "2", period: "по ремонту", last: "28 августа", next: "По запросу", tagClass: "tag-outline" }
       ],
       clientSpecs: [
         { name: "Ремонт насосной группы, цех 4", meta: "8 позиций · 386 400 ₽ · 13 сентября" },
         { name: "ЗИП на квартал", meta: "24 позиции · 142 800 ₽ · 1 сентября" },
-        { name: "Компрессорная станция, проект", meta: "6 позиций · 684 000 ₽ · на КП" },
+        { name: "Комплекс водоподготовки, проект", meta: "6 позиций · 684 000 ₽ · КП-2198" },
         { name: "Замена частотников линии 2", meta: "4 позиции · 249 200 ₽ · выполнено" }
       ],
       clientHints: [
         "Подшипники SKF 6205 закупаются раз в 3–4 недели, последняя 9 сентября — предложить повтор с оптовым уровнем от 200 шт.",
-        "Лимит отсрочки использован на 41%, просрочек нет — можно поднять до 800 000 ₽ под проект компрессорной.",
-        "Запрос КП на компрессорную станцию от 28 августа без ответа клиента 17 дней — нужен звонок инженера.",
+        "Лимит отсрочки использован на 37%, просрочек нет — можно поднять до 800 000 ₽ под комплекс водоподготовки.",
+        "КП-2198 на комплекс водоподготовки от 28 августа без ответа клиента 17 дней — нужен звонок.",
         "Мотор-редукторы берут по ремонту: предложить ЗИП-комплект на складе под их типоразмер."
       ],
       orderSteps: [
         { date: "12 сент", t: "Оформлен", d: "счёт выставлен, 15 минут", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "12 сент", t: "Оплачен", d: "отсрочка 30 дней", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "13 сент", t: "Передан поставщику", d: "Гидромаш, подтверждено", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "15 сент", t: "Отгружен", d: "трек 4512 8890 3341", color: "var(--color-accent-700)", bar: "var(--color-accent)" },
+        { date: "12 сент", t: "Счёт принят · отсрочка", d: "оплата до 15 октября", color: "var(--color-text)", bar: "var(--color-accent)" },
+        { date: "13 сент", t: "Передан поставщикам", d: "Гидромаш и ПромАрматура, подтверждено", color: "var(--color-text)", bar: "var(--color-accent)" },
+        { date: "15 сент", t: "Отгружен", d: "сборный груз, 2 отгрузки · трек 4512 8890 3341", color: "var(--color-accent-700)", bar: "var(--color-accent)" },
         { date: "18 сент", t: "Доставка", d: "терминал Тула, ожидается", color: "var(--color-neutral-700)", bar: "var(--color-neutral-300)" }
       ],
       orderItems: [
@@ -5797,21 +5840,22 @@ class Component extends DCLogic {
       uploadStats: [
         { v: "20", k: "строк в файле", color: "var(--color-text)" },
         { v: "14", k: "точных совпадений", color: "var(--color-accent-700)" },
-        { v: "4", k: "требуют подтверждения", color: "var(--color-text)" },
-        { v: "2", k: "не распознано", color: "var(--color-neutral-700)" }
+        { v: "3", k: "требуют подтверждения", color: "var(--color-text)" },
+        { v: "3", k: "без аналога", color: "var(--color-neutral-700)" }
       ],
       uploadRows: [
         { source: "Насос Грундфос CR32-4", match: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", stock: "8 шт. · 2–4 дня", price: "209 800 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "подшипник 6205 2RS SKF", match: "SKF 6205-2RS", sku: "SKF-6205", qty: "200", stock: "1 400 шт. · в день заказа", price: "108 000 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
-        { source: "Частотник 15 кВт 380В", match: "INNOVERT VR 15 kW", sku: "INV-VR-15", qty: "4", stock: "26 шт. · 1–2 дня", price: "249 200 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
+        { source: "Частотник 15 кВт 380В", match: "INNOVERT VR 15 кВт", sku: "INV-VR-15", qty: "4", stock: "26 шт. · 1–2 дня", price: "249 200 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "Задвижка 100 мм чугун", match: "Задвижка DN100 PN16, чугун", sku: "ARM-ZD-100", qty: "3", stock: "12 шт. · 2 дня", price: "58 400 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "Манжета 45х65х10", match: "Манжета 45×65×10 NBR", sku: "MNZ-456510", qty: "30", stock: "480 шт. · в день заказа", price: "4 200 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
-        { source: "Насос дозирующий 0,5 м3", match: "3 варианта исполнения", sku: "нужно уточнить материал", qty: "1", stock: "под заказ · 9 дней", price: "от 22 900 ₽", status: "Уточнить", tagClass: "tag-outline", check: "transparent" },
+        { source: "Насос дозировочный 0,5 м3", match: "3 варианта исполнения", sku: "нужно уточнить материал", qty: "1", stock: "под заказ · 9 дней", price: "от 22 900 ₽", status: "Уточнить", tagClass: "tag-outline", check: "transparent" },
         { source: "Компрессор винтовой 75 кВт", match: "Kaishan LGCY-75", sku: "KSN-LGCY-75-10", qty: "1", stock: "срок от 21 дня", price: "по запросу", status: "На КП", tagClass: "tag-outline", check: "transparent" },
-        { source: "Фильтр ФВ-12 (по чертежу цеха)", match: "—", sku: "не распознано", qty: "2", stock: "—", price: "—", status: "Инженеру", tagClass: "tag-neutral", check: "transparent" }
+        { source: "Фильтр ФВ-12 (по чертежу цеха)", match: "—", sku: "нет аналога в базе", qty: "2", stock: "—", price: "—", status: "Без аналога", tagClass: "tag-neutral", check: "transparent" },
+        { source: "Шланг 3/4 20 м", match: "46 похожих, точного аналога нет", sku: "нужны давление и армирование", qty: "5", stock: "—", price: "—", status: "Без аналога", tagClass: "tag-neutral", check: "transparent" }
       ],
       uploadIssues: [
-        { row: "Насос дозирующий 0,5 м³/ч", problem: "Не указан материал головки: PP, PVDF или нержавейка. От этого зависит цена и срок.", a1: "Выбрать PVDF", a2: "Спросить в чате" },
+        { row: "Насос дозировочный 0,5 м³/ч", problem: "Не указан материал головки: PP, PVDF или нержавейка. От этого зависит цена и срок.", a1: "Выбрать PVDF", a2: "Спросить в чате" },
         { row: "Фильтр ФВ-12 (по чертежу цеха)", problem: "Нет совпадений по артикулу. Похоже на изделие по чертежу — нужен инженер.", a1: "Отправить инженеру", a2: "Приложить чертёж" },
         { row: "Шланг 3/4 20 м", problem: "Найдено 46 позиций. Уточните давление и материал армирования.", a1: "Показать варианты", a2: "Удалить строку" }
       ],
@@ -5872,7 +5916,7 @@ class Component extends DCLogic {
       dirBrands: ["Grundfos", "Wilo", "CNP", "Pedrollo", "Ebara", "ESPA", "Lowara", "DAB", "Калужский НЗ", "Ливгидромаш", "Вихрь", "Unipump"],
       dirArticles: [
         { section: "Подбор · Насосы", title: "Как подобрать насос по рабочей точке", meta: "14 сентября · 9 мин" },
-        { section: "Регламент · Насосы", title: "Торцевое уплотнение: признаки износа", meta: "6 сентября · 5 мин" },
+        { section: "Регламент · Насосы", title: "Торцевое уплотнение: признаки износа", meta: "12 сентября · 5 мин" },
         { section: "Сравнение · Насосы", title: "Нержавейка или чугун: где экономия мнимая", meta: "1 сентября · 6 мин" }
       ],
       compareModels: [
@@ -5882,13 +5926,11 @@ class Component extends DCLogic {
         { name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
       ],
       compareRows: [
-        { k: "Подача в точке, м³/ч", cells: [{ v: "40", weight: "600", color: "var(--color-text)" }, { v: "42", weight: "400", color: "var(--color-text)" }, { v: "45", weight: "400", color: "var(--color-text)" }, { v: "33", weight: "400", color: "var(--color-neutral-700)" }] },
+        { k: "Подача в точке, м³/ч", cells: [{ v: "40", weight: "600", color: "var(--color-text)" }, { v: "42", weight: "400", color: "var(--color-text)" }, { v: "45", weight: "400", color: "var(--color-text)" }, { v: "33 · не проходит по точке", weight: "400", color: "#b3261e" }] },
         { k: "Напор, м", cells: [{ v: "36", weight: "600", color: "var(--color-text)" }, { v: "38", weight: "400", color: "var(--color-text)" }, { v: "40", weight: "400", color: "var(--color-text)" }, { v: "42", weight: "400", color: "var(--color-text)" }] },
         { k: "КПД в рабочей точке", cells: [{ v: "74%", weight: "600", color: "var(--color-accent-700)" }, { v: "71%", weight: "400", color: "var(--color-text)" }, { v: "73%", weight: "400", color: "var(--color-text)" }, { v: "68%", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Запас по напору", cells: [{ v: "3%", weight: "600", color: "var(--color-accent-700)" }, { v: "9%", weight: "400", color: "var(--color-text)" }, { v: "14%", weight: "400", color: "var(--color-text)" }, { v: "20%", weight: "400", color: "var(--color-neutral-700)" }] },
-        { k: "Мощность двигателя, кВт", cells: [{ v: "7,5", weight: "400", color: "var(--color-text)" }, { v: "7,5", weight: "400", color: "var(--color-text)" }, { v: "7,5", weight: "400", color: "var(--color-text)" }, { v: "7,5", weight: "400", color: "var(--color-text)" }] },
         { k: "Материал корпуса", cells: [{ v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "Чугун", weight: "400", color: "var(--color-neutral-700)" }] },
-        { k: "Присоединение", cells: [{ v: "DN65 PN16", weight: "400", color: "var(--color-text)" }, { v: "DN65 PN16", weight: "400", color: "var(--color-text)" }, { v: "DN65 PN16", weight: "400", color: "var(--color-text)" }, { v: "DN65 PN16", weight: "400", color: "var(--color-text)" }] },
         { k: "Наличие", cells: [{ v: "12 шт.", weight: "600", color: "var(--color-text)" }, { v: "5 шт.", weight: "400", color: "var(--color-text)" }, { v: "3 шт.", weight: "400", color: "var(--color-text)" }, { v: "под заказ", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Отгрузка", cells: [{ v: "2 дня", weight: "600", color: "var(--color-text)" }, { v: "4 дня", weight: "400", color: "var(--color-text)" }, { v: "3 дня", weight: "400", color: "var(--color-text)" }, { v: "9 дней", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Запчасти и сервис", cells: [{ v: "склад РФ", weight: "400", color: "var(--color-text)" }, { v: "склад РФ", weight: "400", color: "var(--color-text)" }, { v: "широкая сеть", weight: "600", color: "var(--color-accent-700)" }, { v: "под заказ", weight: "400", color: "var(--color-neutral-700)" }] },
@@ -5899,26 +5941,26 @@ class Component extends DCLogic {
         { sku: "96122802", name: "Grundfos CR 32-4", price: "86 000", stock: "8", lead: "3", source: "правка вручную", status: "Правлено", tagClass: "tag-accent", check: "var(--color-accent)" },
         { sku: "ARM-OK-65", name: "Обратный клапан DN65 PN16", price: "3 500", stock: "40", lead: "1", source: "XML фид", status: "Из фида", tagClass: "tag-neutral", check: "transparent" },
         { sku: "ARM-ZD-100", name: "Задвижка DN100 PN16, чугун", price: "16 200", stock: "0", lead: "14", source: "XML фид", status: "Нет остатка", tagClass: "tag-outline", check: "transparent" },
-        { sku: "PRK-65-SET", name: "Комплект прокладок DN65", price: "4 400", stock: "120", lead: "1", source: "правка вручную", status: "Правлено", tagClass: "tag-accent", check: "var(--color-accent)" },
-        { sku: "VBR-M12", name: "Виброопора М12", price: "780", stock: "—", lead: "—", source: "XML фид", status: "Ошибка формата", tagClass: "tag-outline", check: "transparent" }
+        { sku: "PRK-65-SET", name: "Комплект прокладок DN65", price: "3 600", stock: "120", lead: "1", source: "правка вручную", status: "Правлено", tagClass: "tag-accent", check: "var(--color-accent)" },
+        { sku: "VBR-M12", name: "Виброопора М12", price: "650", stock: "—", lead: "—", source: "XML фид", status: "Ошибка формата", tagClass: "tag-outline", check: "transparent" }
       ],
       vendorNav: [
-        { t: "Заявки", c: "7" }, { t: "Прайс и остатки", c: "12 480" }, { t: "Отгрузки", c: "4" },
+        { t: "Заявки", c: "1" }, { t: "Прайс и остатки", c: "12 480" }, { t: "Отгрузки", c: "4" },
         { t: "Расчёты", c: "2" }, { t: "Направления", c: "4" }, { t: "Договор и реквизиты", c: "" }
       ],
       vendorStats: [
-        { v: "7", k: "новых заявок" },
+        { v: "1", k: "новая заявка" },
         { v: "12 480", k: "позиций в выгрузке" },
         { v: "1 842 300 ₽", k: "отгружено за месяц" },
         { v: "3 дня", k: "средний срок расчёта" }
       ],
       vendorOrders: [
-        { id: "ЗВ-4821", date: "14 сентября", items: "CNP CDLF 42-30 · 2 шт.", sum: "149 600 ₽", lead: "отгрузка до 16 сентября", status: "Новая", tagClass: "tag-accent", action: "Подтвердить" },
-        { id: "ЗВ-4816", date: "13 сентября", items: "Обратный клапан DN65 · 6 шт.", sum: "25 200 ₽", lead: "отгрузка до 15 сентября", status: "Подтверждена", tagClass: "tag-accent", action: "Отгрузить" },
+        { id: "ЗВ-4821", date: "14 сентября", items: "CNP CDLF 42-30 · 2 шт.", sum: "124 600 ₽", lead: "отгрузка до 16 сентября", status: "Новая", tagClass: "tag-accent", action: "Подтвердить" },
+        { id: "ЗВ-4816", date: "13 сентября", items: "Обратный клапан DN65 · 6 шт.", sum: "21 000 ₽", lead: "отгрузка до 15 сентября", status: "Подтверждена", tagClass: "tag-accent", action: "Отгрузить" },
         { id: "ЗВ-4802", date: "11 сентября", items: "Насос CNP NIS 80-65-160", sum: "96 200 ₽", lead: "в пути", status: "Отгружена", tagClass: "tag-neutral", action: "Документы" },
-        { id: "ЗВ-4790", date: "9 сентября", items: "Виброопоры М12 · 40 шт.", sum: "31 200 ₽", lead: "доставлено", status: "К расчёту", tagClass: "tag-outline", action: "Сверка" },
-        { id: "ЗВ-4771", date: "5 сентября", items: "Задвижка DN100 · 3 шт.", sum: "58 400 ₽", lead: "доставлено", status: "Оплачена", tagClass: "tag-neutral", action: "Открыть" },
-        { id: "ЗВ-4760", date: "2 сентября", items: "Комплект прокладок · 12 шт.", sum: "14 800 ₽", lead: "доставлено", status: "Оплачена", tagClass: "tag-neutral", action: "Открыть" }
+        { id: "ЗВ-4790", date: "9 сентября", items: "Виброопоры М12 · 40 шт.", sum: "26 000 ₽", lead: "доставлено", status: "К расчёту", tagClass: "tag-outline", action: "Сверка" },
+        { id: "ЗВ-4771", date: "5 сентября", items: "Задвижка DN100 · 3 шт.", sum: "48 600 ₽", lead: "доставлено", status: "Оплачена", tagClass: "tag-neutral", action: "Открыть" },
+        { id: "ЗВ-4760", date: "2 сентября", items: "Комплект прокладок · 12 шт.", sum: "43 200 ₽", lead: "доставлено", status: "Оплачена", tagClass: "tag-neutral", action: "Открыть" }
       ],
       articles: [
         { bg: "url(img/a-compressor.jpg) center/cover no-repeat", section: "Сравнение · Компрессоры", title: "Винтовой или поршневой компрессор для цеха", lead: "Сравнение по удельному расходу энергии, ресурсу и стоимости владения на горизонте пяти лет.", meta: "12 сентября · 7 мин · 96 позиций", photo: "фото · винтовой компрессор" },
@@ -5942,7 +5984,7 @@ class Component extends DCLogic {
         { isText: true, isHead: false, text: "Треск, вибрация и выкрошенное рабочее колесо — признаки кавитации, а не брака. Она возникает, когда давление на входе падает ниже давления парообразования жидкости: пузырьки пара схлопываются на лопатках и выбивают металл. Причины почти всегда на всасывающей стороне: забитый фильтр, длинный или узкий подвод, высокая температура среды, подсос воздуха через неплотности." },
         { isText: true, isHead: false, text: "Проверяется это сравнением требуемого кавитационного запаса NPSHr из характеристики насоса с фактическим NPSHa в системе. Запас должен быть не меньше 0,5–1 метра. Если он отрицательный, замена насоса ничего не даст — нужно поднять уровень жидкости, укоротить или расширить всасывающий трубопровод, снизить температуру или поставить насос ниже." },
         { isText: false, isHead: true, text: "Частотное регулирование вместо запаса" },
-        { isText: true, isHead: false, text: "Там, где расход меняется в течение смены, правильнее взять насос точно под максимальную рабочую точку и добавить частотный преобразователь, а не покупать модель с запасом и душить её задвижкой. По закону подобия потребляемая мощность меняется как куб частоты вращения: снижение оборотов на 20% даёт экономию мощности около 50%. На насосе 15 кВт с круглосуточной работой окупаемость частотника обычно укладывается в один-два отопительных сезона." },
+        { isText: true, isHead: false, text: "Там, где расход меняется в течение смены, правильнее взять насос точно под максимальную рабочую точку и добавить частотный преобразователь, а не покупать модель с запасом и душить её задвижкой. По закону подобия потребляемая мощность меняется как куб частоты вращения: снижение оборотов на 20% даёт экономию мощности около 50%. На насосе 15 кВт с круглосуточной работой окупаемость частотника обычно укладывается в 1–2 года." },
         { isText: true, isHead: false, text: "Ограничение одно: на многоступенчатых насосах нельзя снижать обороты произвольно. Ниже определённого порога падает подача смазки на подшипники скольжения и нарушается охлаждение двигателя. Минимальную частоту берут из руководства производителя, обычно это 25–30 Гц, и закладывают в настройки шкафа управления." },
         { isText: false, isHead: true, text: "Материалы: где нержавейка обязательна, а где переплата" },
         { isText: true, isHead: false, text: "Чугунный корпус подходит для чистой воды, отопления и оборотных контуров с нормальным pH. Нержавеющая сталь AISI 304 нужна при слабоагрессивной среде и требованиях по чистоте, AISI 316 — при хлоридах, морской воде и пищевом производстве. Для кислот и щелочей корпус подбирается по таблице химической стойкости, и здесь ошибка стоит дороже всего: насос выходит из строя за недели, а не годы." },
@@ -5959,7 +6001,7 @@ class Component extends DCLogic {
       articleProducts: [
         { name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", price: "104 900 ₽" },
         { name: "CNP CDLF 42-30", spec: "40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
-        { name: "INNOVERT VR 15 kW", spec: "частотник · 380 В", price: "62 300 ₽" }
+        { name: "INNOVERT VR 15 кВт", spec: "частотник · 380 В", price: "62 300 ₽" }
       ],
       contentQueue: [
         { topic: "Подбор насоса по рабочей точке", dir: "Насосы", key: "как подобрать насос · 4 800/мес", photos: "3", size: "8 400", status: "Опубликовано", tagClass: "tag-accent", action: "Открыть" },
@@ -5971,7 +6013,7 @@ class Component extends DCLogic {
         { topic: "Импорт с Alibaba: сертификация ЕАЭС", dir: "Импорт", key: "оборудование из китая поставка · 5 600/мес", photos: "2", size: "9 000", status: "В очереди", tagClass: "tag-neutral", action: "Запустить" }
       ],
       contentStats: [
-        { v: "184", k: "статей опубликовано" },
+        { v: "202", k: "статьи в блоге · 3 170 обзоров моделей" },
         { v: "12 / нед", k: "темп генерации" },
         { v: "96%", k: "уникальность текстов" },
         { v: "41%", k: "трафика из блога в каталог" }
@@ -5980,7 +6022,7 @@ class Component extends DCLogic {
         { v: "45", k: "направлений снабжения" },
         { v: "6", k: "кластеров по аудитории" },
         { v: "18", k: "подключённых поставщиков" },
-        { v: "72%", k: "заявок закрывается автоматически" }
+        { v: "74%", k: "заявок закрывается автоматически" }
       ],
       directionGroups: [
         {
@@ -6012,7 +6054,7 @@ class Component extends DCLogic {
           ]
         },
         {
-          n: "03", title: "Воздух, климат и очистка", audience: "производства, пищёвка, металлообработка",
+          n: "03", title: "Воздух, климат и очистка", audience: "производства, пищевые производства, металлообработка",
           items: [
             { name: "Компрессоры", sub: "винтовые, поршневые, безмасляные, осушители, ресиверы", count: "1 940" },
             { name: "Вентиляция и климат", sub: "вентиляторы, приточные установки, чиллеры, теплообменники", count: "2 040" },
@@ -6045,13 +6087,13 @@ class Component extends DCLogic {
             { name: "Системы машинного зрения", sub: "камеры, датчики, контроль качества", count: "340" },
             { name: "3D-печать для производства", sub: "промышленные принтеры, материалы", count: "180" },
             { name: "Лабораторное оборудование", sub: "анализаторы, измерители, лабораторные насосы", count: "1 120" },
-            { name: "Сепараторы и центрифуги", sub: "пищёвка, химия, нефтепродукты", count: "260" }
+            { name: "Сепараторы и центрифуги", sub: "пищевые производства, химия, нефтепродукты", count: "260" }
           ]
         },
         {
           n: "06", title: "Логистика, упаковка, пищевые линии", audience: "склады, логистика, пищевые производства",
           items: [
-            { name: "Складская техника", sub: "штабелёры, рохли, погрузчики, комплектующие", count: "1 640" },
+            { name: "Складская техника", sub: "штабелёры, гидравлические тележки, погрузчики, комплектующие", count: "1 640" },
             { name: "Упаковочное оборудование", sub: "стреппинг, термоусадка, этикетировщики", count: "980" },
             { name: "Весовое оборудование", sub: "платформенные весы, дозаторы, чеквейеры", count: "720" },
             { name: "Пищевое оборудование", sub: "насосы, мешалки, дозаторы, упаковочные линии", count: "1 310" },
@@ -6070,7 +6112,7 @@ class Component extends DCLogic {
             { name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
           ] },
         { who: "Закупщик", text: "Берём CNP, две штуки. И добавь обратные клапаны DN65 и виброопоры.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
-        { who: "Чат", text: "Собрал спецификацию справа: 2 насоса, 2 клапана, 8 виброопор. Проверил остатки у трёх поставщиков, всё отгружается в один день. Счёт выставлю сразу после подтверждения.", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false }
+        { who: "Чат", text: "Собрал спецификацию справа: 2 насоса, 2 клапана, 8 виброопор и комплект прокладок. Проверил остатки у трёх поставщиков, всё отгружается в один день. Счёт выставлю сразу после подтверждения.", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false }
       ],
       maxFeatures: [
         "Подбор и аналоги в переписке: параметры, три варианта, цены с наличием.",
@@ -6092,8 +6134,8 @@ class Component extends DCLogic {
         { kind: "Насосы, арматура, редукторы", doc: "Декларация о соответствии ТР ТС 010", days: "14–20", cost: "45 000 ₽" },
         { kind: "Электродвигатели, частотники", doc: "Сертификат ТР ТС 004 и 020", days: "25–40", cost: "85 000 ₽" },
         { kind: "Компрессоры и сосуды под давлением", doc: "Сертификат ТР ТС 032", days: "35–60", cost: "160 000 ₽" },
-        { kind: "Подшипники, крепёж, расходники", doc: "Отказное письмо", days: "3–5", cost: "6 000 ₽" },
-        { kind: "Пищевое оборудование", doc: "ТР ТС 010 + экспертиза ЕАЭС 044", days: "40–60", cost: "210 000 ₽" }
+        { kind: "Подшипники, крепёж, расходники", doc: "Декларация ТР ТС 010", days: "3–5", cost: "6 000 ₽" },
+        { kind: "Пищевое оборудование", doc: "Декларация ТР ТС 010 + 004/020", days: "40–60", cost: "210 000 ₽" }
       ],
       mailRules: [
         { type: "Заявка списком", detect: "вложение XLSX или таблица в теле письма", reply: "сопоставленная спецификация с ценами и сроками", sla: "4 мин", status: "Включено", tagClass: "tag-accent" },
@@ -6105,8 +6147,8 @@ class Component extends DCLogic {
       ],
       reviewQueue: [
         { company: "ООО «Спецмонтаж»", date: "14 сентября", item: "Grundfos CR 32-4", score: "5,0", color: "var(--color-text)", check: "Покупка есть", tagClass: "tag-accent", action: "Опубликовать" },
-        { company: "АО «Агропром-Т»", date: "13 сентября", item: "Подшипник SKF 6205-2RS", score: "2,0", color: "var(--color-accent-700)", check: "Ушло инженеру", tagClass: "tag-outline", action: "Читать" },
-        { company: "ООО «Гидросети»", date: "13 сентября", item: "INNOVERT VR 15 kW", score: "4,0", color: "var(--color-text)", check: "Покупка есть", tagClass: "tag-accent", action: "Опубликовать" },
+        { company: "ООО «Литмаш-Сервис»", date: "13 сентября", item: "Подшипник SKF 6205-2RS", score: "2,0", color: "var(--color-accent-700)", check: "Ушло инженеру", tagClass: "tag-outline", action: "Читать" },
+        { company: "ООО «Энергосервис»", date: "13 сентября", item: "INNOVERT VR 15 кВт", score: "4,0", color: "var(--color-text)", check: "Покупка есть", tagClass: "tag-accent", action: "Опубликовать" },
         { company: "не определена", date: "12 сентября", item: "Kaishan LGCY-75", score: "5,0", color: "var(--color-text)", check: "Покупки нет", tagClass: "tag-neutral", action: "Отклонить" },
         { company: "ООО «Тепломаш»", date: "11 сентября", item: "NORD SK 02 мотор-редуктор", score: "3,0", color: "var(--color-text)", check: "Покупка есть", tagClass: "tag-accent", action: "Опубликовать" }
       ],
@@ -6124,7 +6166,7 @@ class Component extends DCLogic {
         { param: "Фильтры в индексе", how: "открыты только приоритетные комбинации", cover: "620 URL", status: "Готово", tagClass: "tag-accent" },
         { param: "Sitemap", how: "по направлениям, с lastmod при пересчёте цен", cover: "284 190 URL", status: "Готово", tagClass: "tag-accent" },
         { param: "Перелинковка", how: "карточка ↔ статья ↔ направление ↔ бренд", cover: "96%", status: "Готово", tagClass: "tag-accent" },
-        { param: "Core Web Vitals", how: "LCP 1,9 с, CLS 0,03, INP 140 мс", cover: "мобайл и десктоп", status: "Норма", tagClass: "tag-accent" },
+        { param: "Core Web Vitals", how: "LCP 1,9 с, CLS 0,03, INP 140 мс", cover: "мобильные и десктоп", status: "Норма", tagClass: "tag-accent" },
         { param: "Битые ссылки и 404", how: "редирект на направление при снятии позиции", cover: "42 ошибки", status: "В работе", tagClass: "tag-outline" },
         { param: "Дубли контента", how: "проверка пересечений статей перед публикацией", cover: "2 кластера", status: "Свести", tagClass: "tag-outline" }
       ],
@@ -6148,10 +6190,10 @@ class Component extends DCLogic {
         { dir: "Промышленная арматура", pages: "16", articles: "12", clusters: "36", pct: "38%", overlap: "0", overlapColor: "var(--color-neutral-700)", priority: "Высокий", tagClass: "tag-accent" }
       ],
       channels: [
-        { name: "Мессенджер MAX", id: "@promkontur_bot", dialogs: "1 860", auto: "74%", orders: "312", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Чат на сайте", id: "web-widget", dialogs: "4 240", auto: "72%", orders: "918", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Почта снабжения", id: "zakupki@promkontur.ru", dialogs: "980", auto: "48%", orders: "204", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Телефония", id: "8 800 000-00-00", dialogs: "1 120", auto: "12%", orders: "186", status: "Частично", tagClass: "tag-outline", action: "Настроить" },
+        { name: "Мессенджер MAX", id: "@promkontur_bot", dialogs: "1 860", auto: "74%", orders: "157", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { name: "Чат на сайте", id: "web-widget", dialogs: "4 240", auto: "72%", orders: "461", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { name: "Почта снабжения", id: "zakupki@promkontur.ru", dialogs: "980", auto: "48%", orders: "102", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { name: "Телефония", id: "номер не подключён", dialogs: "1 120", auto: "12%", orders: "94", status: "Частично", tagClass: "tag-outline", action: "Настроить" },
         { name: "Кабинет поставщика", id: "vendor-inbox", dialogs: "460", auto: "66%", orders: "—", status: "Подключено", tagClass: "tag-accent", action: "Настроить" }
       ],
       chatChips: ["Подобрать по параметрам", "Найти аналог", "Проверить наличие", "Загрузить заявку списком", "Собрать спецификацию"],
@@ -6245,12 +6287,12 @@ class Component extends DCLogic {
         { step: "Поиск или подбор", n: "96 400", pct: "52%", color: "var(--color-accent-700)", drop: "−48%", dropColor: "var(--color-neutral-700)" },
         { step: "Карточка товара", n: "61 300", pct: "33%", color: "var(--color-accent)", drop: "−36%", dropColor: "var(--color-neutral-700)" },
         { step: "Корзина или запрос КП", n: "14 800", pct: "8%", color: "var(--color-accent)", drop: "−76%", dropColor: "var(--color-accent-700)" },
-        { step: "Счёт выставлен", n: "6 240", pct: "3,4%", color: "var(--color-accent-300)", drop: "−58%", dropColor: "var(--color-neutral-700)" },
-        { step: "Оплачено", n: "4 180", pct: "2,3%", color: "var(--color-accent-300)", drop: "−33%", dropColor: "var(--color-neutral-700)" },
-        { step: "Повторная закупка за 90 дней", n: "1 890", pct: "1%", color: "var(--color-accent-200)", drop: "45% клиентов", dropColor: "var(--color-accent-700)" }
+        { step: "Счёт выставлен", n: "1 220", pct: "2%", color: "var(--color-accent-300)", drop: "−92%", dropColor: "var(--color-accent-700)" },
+        { step: "Оплачено", n: "814", pct: "2%", color: "var(--color-accent-300)", drop: "−33%", dropColor: "var(--color-neutral-700)" },
+        { step: "Повторная закупка за 90 дней", n: "366", pct: "2%", color: "var(--color-accent-200)", drop: "45% клиентов", dropColor: "var(--color-accent-700)" }
       ],
       funnelNotes: [
-        { k: "Главный отвал", t: "Между карточкой и корзиной теряется 76%: причина — отсутствие сравнения и непонятный срок отгрузки для позиций под заказ." },
+        { k: "Главный отвал", t: "Между корзиной и счётом теряется 92%: брошенные корзины и КП без ответа. Между карточкой и корзиной — ещё 76%: нет сравнения и непонятен срок отгрузки для позиций под заказ." },
         { k: "Что работает", t: "Заявки из MAX и разбора XLSX доходят до счёта в 3,2 раза чаще обычного поиска: спецификация уже собрана." },
         { k: "Зона роста", t: "45% клиентов возвращаются за 90 дней. Шаблоны спецификаций и повторный заказ поднимают этот показатель быстрее, чем новый трафик." }
       ],
@@ -6261,7 +6303,7 @@ class Component extends DCLogic {
         { v: "18%", k: "базовая наценка" }
       ],
       priceRules: [
-        { cat: "Подшипники", range: "до 5 000 ₽", markup: "+35%", round: "до 10 ₽", status: "Активно", tagClass: "tag-accent" },
+        { cat: "Подшипники", range: "до 5 000 ₽", markup: "+37%", round: "до 10 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Насосы", range: "5 000 – 300 000 ₽", markup: "+18%", round: "до 100 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Насосы", range: "от 300 000 ₽", markup: "+12%", round: "до 1 000 ₽", status: "Активно", tagClass: "tag-accent" },
         { cat: "Компрессоры", range: "от 500 000 ₽", markup: "по КП", round: "—", status: "Только КП", tagClass: "tag-outline" },
@@ -6271,7 +6313,7 @@ class Component extends DCLogic {
       feeds: [
         { name: "Гидромаш", url: "gidromash.ru/export/price.xml", format: "XML", schedule: "каждые 2 ч", last: "14 сентября, 06:00", count: "12 480", status: "Успешно", tagClass: "tag-accent" },
         { name: "ТехноПневмо", url: "api.technopnevmo.ru/v2/stock", format: "REST API", schedule: "реальное время", last: "14 сентября, 06:41", count: "8 910", status: "Успешно", tagClass: "tag-accent" },
-        { name: "Северсталь-Комплект", url: "ftp · price_2026.xlsx", format: "Excel", schedule: "раз в сутки", last: "14 сентября, 04:12", count: "31 260", status: "Успешно", tagClass: "tag-accent" },
+        { name: "СтальКомплект", url: "ftp · price_2026.xlsx", format: "Excel", schedule: "раз в сутки", last: "14 сентября, 04:12", count: "31 260", status: "Успешно", tagClass: "tag-accent" },
         { name: "Подшипник-Трейд", url: "1С:Обмен · УТ 11", format: "1С", schedule: "каждые 4 ч", last: "14 сентября, 04:00", count: "42 700", status: "12 ошибок", tagClass: "tag-outline" },
         { name: "ПромАрматура", url: "promarmatura.ru/yml", format: "YML", schedule: "раз в сутки", last: "13 сентября, 23:40", count: "18 305", status: "Устарело", tagClass: "tag-neutral" },
         { name: "Kaishan РФ", url: "по запросу · без фида", format: "вручную", schedule: "—", last: "9 сентября", count: "640", status: "Ручной ввод", tagClass: "tag-neutral" }
@@ -6285,14 +6327,14 @@ class Component extends DCLogic {
       goProduct: this.go("product"), goQuote: this.go("quote"), goPhoto: this.go("photo"),
       goSupplier: this.go("supplier"), goCatalog: this.go("catalog"),
 
-      examples: ["Grundfos CR 32-4", "SKF 6205", "INNOVERT 15 kW", "Kaishan 10 bar"],
+      examples: ["Grundfos CR 32-4", "SKF 6205", "INNOVERT 15 кВт", "Kaishan 10 бар"],
       brandTicker: (() => {
         const brands = ["GRUNDFOS", "WILO", "CNP", "SKF", "NSK", "SEW-EURODRIVE", "NORD", "INNOVERT", "SCHNEIDER", "ABB", "SIEMENS", "DANFOSS", "KAISHAN", "ATLAS COPCO", "FESTO", "CAMOZZI", "PARKER", "EBARA", "ЛИВГИДРОМАШ", "КАЛУЖСКИЙ НЗ", "ЧЕБОКСАРСКИЙ ЭА", "ВЗЛЁТ", "ЭЛЕКТРОПРИВОД", "РЕДУКТОР-ПТО"];
         return [{ items: brands }, { items: brands }];
       })(),
       heroStats: [
-        { v: "300 000+", k: "моделей в базе" },
-        { v: "15", k: "категорий оборудования" },
+        { v: "115 000+", k: "моделей в базе" },
+        { v: "45", k: "направлений снабжения" },
         { v: "2 часа", k: "срок ответа на запрос КП" }
       ],
       categories: [
@@ -6310,22 +6352,22 @@ class Component extends DCLogic {
       ],
       suppliers: [
         { name: "Поставщик А", price: "91 000 ₽", color: "var(--color-accent-300)" },
-        { name: "Поставщик Б · выбран", price: "86 000 ₽", color: "#fff" },
-        { name: "Поставщик В", price: "89 500 ₽", color: "var(--color-accent-300)" }
+        { name: "Поставщик Б", price: "88 500 ₽", color: "var(--color-accent-300)" },
+        { name: "Поставщик В · выбран", price: "86 000 ₽", color: "#fff" }
       ],
       suppliersLight: [
         { name: "Поставщик А", price: "91 000 ₽", color: "var(--color-neutral-700)" },
-        { name: "Поставщик Б · выбран", price: "86 000 ₽", color: "var(--color-text)" },
-        { name: "Поставщик В", price: "89 500 ₽", color: "var(--color-neutral-700)" }
+        { name: "Поставщик Б", price: "88 500 ₽", color: "var(--color-neutral-700)" },
+        { name: "Поставщик В · выбран", price: "86 000 ₽", color: "var(--color-text)" }
       ],
       products: catalogProducts,
       pumpProducts,
-      filters: [
+      filters: (x => x)([
         { name: "Производитель", options: ["Grundfos", "Wilo", "CNP", "Pedrollo", "Ebara"] },
-        { name: "Тип насоса", options: ["Центробежный", "Консольный", "Скважинный", "Дозирующий"] },
+        { name: "Тип насоса", options: ["Центробежный", "Консольный", "Скважинный", "Дозировочный"] },
         { name: "Подача, м³/ч", options: ["до 20", "20–60", "60–150", "более 150"] },
         { name: "Наличие", options: ["В наличии", "Под заказ"] }
-      ],
+      ]).map(f => ({ ...f, opts: f.options.map(t => { const on = ["Grundfos", "20–60", "В наличии"].includes(t); return { t, border: on ? "var(--color-accent)" : "var(--color-divider)", fill: on ? "var(--color-accent)" : "transparent" }; }) })),
       reviewBars: [
         { k: "Соответствие описанию", v: "4,9", pct: "98%" },
         { k: "Ресурс в работе", v: "4,6", pct: "92%" },
@@ -6333,10 +6375,10 @@ class Component extends DCLogic {
         { k: "Доступность запчастей", v: "4,4", pct: "88%" }
       ],
       reviews: [
-        { company: "ООО «Метизный завод»", role: "главный механик", score: "5,0", verified: "Покупка подтверждена", date: "6 сентября", text: "Второй насос этой серии на оборотной воде. Первый работает третий год без замены уплотнения, режим почти круглосуточный. Поставили за три дня, паспорт и сертификат были в коробке.", context: "Наработка 31 месяц · оборотное водоснабжение · 2 шт." },
-        { company: "АО «Тульский хлебокомбинат»", role: "энергетик", score: "4,0", verified: "Покупка подтверждена", date: "28 августа", text: "По характеристикам всё совпало, вопрос только к комплектации: пришлось отдельно заказывать ответные фланцы и прокладки. В следующий раз возьму комплектом — менеджер предупредил, но я не учёл.", context: "Наработка 7 месяцев · повышение давления · 1 шт." },
+        { company: "ООО «Метизный завод»", role: "главный механик", score: "5,0", verified: "Покупка подтверждена", date: "6 сентября", text: "Второй насос этой серии на оборотной воде. Первый работает третий год без замены уплотнения, режим почти круглосуточный. Поставили за три дня, паспорт и сертификат были в коробке.", context: "Наработка 29 месяцев · оборотное водоснабжение · 2 шт." },
+        { company: "АО «Хлебозавод Заречье»", role: "энергетик", score: "4,0", verified: "Покупка подтверждена", date: "28 августа", text: "По характеристикам всё совпало, вопрос только к комплектации: пришлось отдельно заказывать ответные фланцы и прокладки. В следующий раз возьму комплектом — менеджер предупредил, но я не учёл.", context: "Наработка 7 месяцев · повышение давления · 1 шт." },
         { company: "ООО «Спецмонтаж»", role: "инженер ПТО", score: "5,0", verified: "Покупка подтверждена", date: "14 августа", text: "Брали на замену старому импортному насосу по фото шильдика. Подобрали за час, присоединительные размеры совпали, переделывать обвязку не пришлось.", context: "Наработка 9 месяцев · ИТП жилого дома · 3 шт." },
-        { company: "ООО «Агропром-Т»", role: "начальник службы", score: "4,0", verified: "Покупка подтверждена", date: "2 июля", text: "Работает нормально, но при загрязнённой воде нужен фильтр на всасывании — без него уплотнение потекло через полгода. По гарантии заменили за две недели, претензий к сервису нет.", context: "Наработка 14 месяцев · техническая вода · 1 шт." }
+        { company: "АО «Агропром-Т»", role: "начальник службы", score: "4,0", verified: "Покупка подтверждена", date: "2 июля", text: "Работает нормально, но при загрязнённой воде нужен фильтр на всасывании — без него уплотнение потекло через полгода — поставили фильтр, ЗИП привезли за 3 дня, дальше без замечаний.", context: "Наработка 14 месяцев · техническая вода · 1 шт." }
       ],
       specs: [
         { k: "Тип", v: "Вертикальный многоступенчатый" },
@@ -6344,7 +6386,7 @@ class Component extends DCLogic {
         { k: "Напор", v: "46 м" },
         { k: "Мощность двигателя", v: "5,5 кВт" },
         { k: "Напряжение", v: "380 В, 50 Гц" },
-        { k: "Материал корпуса", v: "Нержавеющая сталь AISI 304" },
+        { k: "Материал корпуса", v: "Чугун / проточная часть AISI 304" },
         { k: "Присоединение", v: "Фланец DN65 / PN16" },
         { k: "Температура среды", v: "−20…+120 °C" }
       ],
@@ -6367,12 +6409,12 @@ class Component extends DCLogic {
       ],
       supplierStats: [
         { v: "0 ₽", k: "стоимость размещения прайса" },
-        { v: "1 сутки", k: "срок подключения выгрузки" },
-        { v: "до 5 дней", k: "расчёт после отгрузки" }
+        { v: "1–5 дней", k: "срок подключения выгрузки" },
+        { v: "3–7 дней", k: "расчёт после отгрузки" }
       ],
       autoBuy: [
-        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "18 сентября", tagClass: "tag-accent", mode: "без подтверждения", on: true },
-        { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", price: "180 ₽", period: "ежемесячно", qty: "100", next: "1 октября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
+        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "7 октября", tagClass: "tag-accent", mode: "выше лимита — подтверждение в MAX", on: true },
+        { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", price: "140 ₽", period: "ежемесячно", qty: "100", next: "1 октября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
         { name: "Grundfos CR 32-4", sku: "96122802", price: "104 900 ₽", period: "раз в квартал", qty: "1", next: "декабрь", tagClass: "tag-neutral", mode: "подтверждение в MAX", on: true },
         { name: "Фильтр-элемент воздушный 2 мкм", sku: "FLT-AIR-2", price: "3 200 ₽", period: "каждые 6 недель", qty: "6", next: "26 сентября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
         { name: "Комплект прокладок DN65", sku: "PRK-65-SET", price: "4 400 ₽", period: "по наработке", qty: "2", next: "пауза", tagClass: "tag-outline", mode: "выключена", on: false }
@@ -6399,7 +6441,7 @@ class Component extends DCLogic {
             steps: [st("Цех", "done"), st("Бюджет", "done"), st("Закупка", "wait")] },
           { id: "ЗЯ-315", name: "Замена частотников линии 2", author: "Гаврилов · энергетик", owner: "—", sum: "249 200 ₽", action: "Открыть заказ", btnClass: "btn-secondary",
             steps: [st("Цех", "done"), st("Бюджет", "done"), st("Закупка", "done")] },
-          { id: "ЗЯ-314", name: "Компрессорная станция, проект", author: "Технический директор", owner: "Бюджет · согласуется", sum: "684 000 ₽", action: "Запросить КП", btnClass: "btn-secondary",
+          { id: "ЗЯ-314", name: "Комплекс водоподготовки, проект", author: "Технический директор", owner: "Бюджет · согласуется", sum: "684 000 ₽", action: "Запросить КП", btnClass: "btn-secondary",
             steps: [st("Цех", "done"), st("Бюджет", "wait"), st("Закупка", "idle")] },
           { id: "ЗЯ-311", name: "Мотор-редукторы на конвейер", author: "Кузнецов · механик", owner: "Возвращена на уточнение", sum: "96 400 ₽", action: "Уточнить", btnClass: "btn-secondary",
             steps: [st("Цех", "wait"), st("Бюджет", "idle"), st("Закупка", "idle")] }
@@ -6409,7 +6451,7 @@ class Component extends DCLogic {
         { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", price: "540 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
         { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", times: "7", period: "раз в месяц", last: "13 сентября", price: "140 ₽", delta: "−4% к прошлой закупке", deltaColor: "var(--color-accent-700)" },
         { name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", price: "104 900 ₽", delta: "+2% к прошлой закупке", deltaColor: "var(--color-neutral-700)" },
-        { name: "INNOVERT VR 15 kW", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
+        { name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
         { name: "Мотор-редуктор NORD SK 02", sku: "NRD-SK02", times: "2", period: "по ремонту", last: "28 августа", price: "48 200 ₽", delta: "−7% к прошлой закупке", deltaColor: "var(--color-accent-700)" }
       ],
       accountNav: [
@@ -6422,16 +6464,16 @@ class Component extends DCLogic {
         { v: "1 240 800 ₽", k: "закуплено за квартал" }, { v: "30 дней", k: "доступная отсрочка" }
       ],
       orders: [
-        { id: "ПК-10428", items: "Grundfos CR 32-4 · 2 шт.", status: "В пути", tagClass: "tag-accent", date: "18 сентября", sum: "209 800 ₽" },
+        { id: "ПК-10428", items: "Grundfos CR 32-4 · 2 шт.", status: "В пути", tagClass: "tag-accent", date: "18 сентября", sum: "222 600 ₽" },
         { id: "ПК-10411", items: "SKF 6205-2RS · 200 шт.", status: "Отгружен", tagClass: "tag-neutral", date: "12 сентября", sum: "108 000 ₽" },
         { id: "КП-2207", items: "Kaishan LGCY-75", status: "Ждёт КП", tagClass: "tag-outline", date: "—", sum: "по запросу" },
-        { id: "ПК-10390", items: "INNOVERT VR 15 kW · 4 шт.", status: "Доставлен", tagClass: "tag-neutral", date: "2 сентября", sum: "249 200 ₽" },
-        { id: "КП-2198", items: "Водоподготовка, комплект", status: "КП получено", tagClass: "tag-accent", date: "—", sum: "684 000 ₽" }
+        { id: "ПК-10390", items: "INNOVERT VR 15 кВт · 4 шт.", status: "Доставлен", tagClass: "tag-neutral", date: "2 сентября", sum: "249 200 ₽" },
+        { id: "КП-2198", items: "Комплекс водоподготовки", status: "КП получено", tagClass: "tag-accent", date: "—", sum: "684 000 ₽" }
       ],
       cart: [
         { bg: "url(img/p-cr32.jpg) center/cover no-repeat", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
         { bg: "url(img/p-6205.jpg) center/cover no-repeat", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
-        { bg: "url(img/p-vr15.jpg) center/cover no-repeat", sku: "INV-VR-15", name: "INNOVERT VR 15 kW", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
+        { bg: "url(img/p-vr15.jpg) center/cover no-repeat", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
       ],
       footerCols: [
         { title: "Каталог", links: [

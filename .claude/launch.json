@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "b2b-mockup", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8150", "--directory", "project"], "port": 8150 }
+    { "name": "b2b-mockup", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8150", "--directory", "project"], "port": 8150 },
+    { "name": "b2b-site", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8151", "--directory", "/private/tmp/claude-501/-Users-alexandr-projects-linea-design-studio/f37ec837-dc9d-4a08-a68a-a8e821e67135/scratchpad/www"], "port": 8151, "url": "http://localhost:8151" }
   ]
 }

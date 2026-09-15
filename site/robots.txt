@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /b2b-marketplace/panel/
+Disallow: /b2b-marketplace/kabinet/
+Disallow: /b2b-marketplace/kabinet-postavshchika/
+Disallow: /b2b-marketplace/korzina/
+Disallow: /b2b-marketplace/maket/
+
+Sitemap: https://alex1986-rgb.github.io/b2b-marketplace/sitemap.xml

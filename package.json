@@ -1,0 +1,13 @@
+{
+  "name": "promkontur-site",
+  "private": true,
+  "description": "ПРОМКОНТУР — сборка статического сайта из макета Claude Design",
+  "scripts": {
+    "build": "node tools/build_site.js"
+  },
+  "devDependencies": {
+    "lucide-static": "^0.460.0",
+    "puppeteer-core": "^23.11.1",
+    "qrcode": "^1.5.4"
+  }
+}
