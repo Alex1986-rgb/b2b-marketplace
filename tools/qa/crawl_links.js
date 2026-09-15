@@ -288,7 +288,7 @@ async function main() {
         const sameTarget = {};
         for (const c of data.cards) {
           const label = c.title || c.text.slice(0, 60);
-          if (c.selfLink) { const r = toRel(c.selfAbs); if (r.rel !== undefined) (sameTarget[r.rel] = sameTarget[r.rel] || []).push(label); continue; }
+          if (c.selfLink) { const r = toRel(c.selfAbs); let q = ''; try { q = new URL(c.selfAbs).search; } catch (e) {} if (r.rel !== undefined) { const k = r.rel + q; (sameTarget[k] = sameTarget[k] || []).push(label); } continue; } // фильтр ?tip= — разные адреса
           const ent = matchEnts(ents.filter(e => e.type === 'products' || e.type === 'articles'), c.title || '');
           if (!ent.length) continue;
           const nav = c.inner.filter(i => i.raw && i.raw !== '#' && !/^(mailto|tel):/.test(i.raw));

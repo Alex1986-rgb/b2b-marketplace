@@ -1,10 +1,10 @@
 {
  "label": null,
- "date": "2026-09-15T12:07:40.419Z",
+ "date": "2026-09-15T13:45:18.990Z",
  "site": "site",
- "total": 195,
+ "total": 202,
  "public": {
-  "pages": 124,
+  "pages": 131,
   "h1_not_1": 0,
   "h1_zero": 0,
   "h1_multi": 0,
@@ -16,17 +16,17 @@
   "dup_h1": 1,
   "weak": 0,
   "self_links": 50,
-  "ilinks": 71,
-  "pages_with_ilinks": 35,
-  "out_avg": 39.3,
-  "in_avg": 36.1,
+  "ilinks": 72,
+  "pages_with_ilinks": 36,
+  "out_avg": 38.9,
+  "in_avg": 35.8,
   "orphans": [
    "poisk/"
   ],
-  "ilinks_per_page": 0.57
+  "ilinks_per_page": 0.55
  },
  "indexable": {
-  "pages": 119,
+  "pages": 126,
   "h1_not_1": 0,
   "h1_zero": 0,
   "h1_multi": 0,
@@ -38,12 +38,12 @@
   "dup_h1": 1,
   "weak": 0,
   "self_links": 44,
-  "ilinks": 71,
-  "pages_with_ilinks": 35,
-  "out_avg": 39.6,
-  "in_avg": 34.6,
+  "ilinks": 72,
+  "pages_with_ilinks": 36,
+  "out_avg": 39.2,
+  "in_avg": 34.2,
   "orphans": [],
-  "ilinks_per_page": 0.6
+  "ilinks_per_page": 0.57
  },
  "closed": {
   "pages": 71,
@@ -61,7 +61,7 @@
   "ilinks": 0,
   "pages_with_ilinks": 0,
   "out_avg": 36.5,
-  "in_avg": 3.4,
+  "in_avg": 3.5,
   "orphans": [
    "kabinet-postavshchika/nastrojki/",
    "kabinet-postavshchika/prajs/",
@@ -138,18 +138,18 @@
  "byType": {
   "главная": {
    "pages": 1,
-   "in_min": 118,
+   "in_min": 125,
    "ilinks": 2,
-   "in_avg": 118,
+   "in_avg": 125,
    "out_avg": 90,
    "ilinks_avg": 2
   },
   "прочие": {
    "pages": 15,
-   "in_min": 118,
+   "in_min": 125,
    "ilinks": 1,
-   "in_avg": 118,
-   "out_avg": 40.9,
+   "in_avg": 125,
+   "out_avg": 41.4,
    "ilinks_avg": 0.07
   },
   "статья": {
@@ -160,27 +160,27 @@
    "out_avg": 36.4,
    "ilinks_avg": 0.19
   },
+  "каталог": {
+   "pages": 8,
+   "in_min": 2,
+   "ilinks": 1,
+   "in_avg": 5,
+   "out_avg": 31.4,
+   "ilinks_avg": 0.13
+  },
   "товар": {
    "pages": 24,
-   "in_min": 2,
+   "in_min": 3,
    "ilinks": 43,
-   "in_avg": 15.5,
-   "out_avg": 38,
+   "in_avg": 16.2,
+   "out_avg": 38.4,
    "ilinks_avg": 1.79
-  },
-  "каталог": {
-   "pages": 1,
-   "in_min": 17,
-   "ilinks": 0,
-   "in_avg": 17,
-   "out_avg": 42,
-   "ilinks_avg": 0
   },
   "все направления": {
    "pages": 1,
-   "in_min": 118,
+   "in_min": 125,
    "ilinks": 0,
-   "in_avg": 118,
+   "in_avg": 125,
    "out_avg": 76,
    "ilinks_avg": 0
   },
@@ -188,15 +188,15 @@
    "pages": 45,
    "in_min": 7,
    "ilinks": 0,
-   "in_avg": 23.4,
-   "out_avg": 38.5,
+   "in_avg": 24.1,
+   "out_avg": 38.6,
    "ilinks_avg": 0
   },
   "производитель": {
    "pages": 16,
    "in_min": 8,
    "ilinks": 22,
-   "in_avg": 20.3,
+   "in_avg": 20.8,
    "out_avg": 41.3,
    "ilinks_avg": 1.38
   }
@@ -326,8 +326,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "blog/": {
    "key": "blog/",
@@ -411,8 +411,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/": {
    "key": "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/",
@@ -1678,8 +1678,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "garantiya/": {
    "key": "garantiya/",
@@ -1748,8 +1748,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "kabinet-postavshchika/": {
    "key": "kabinet-postavshchika/",
@@ -1808,8 +1808,8 @@
     "h2 работа в кабинете",
     "h2 статьи по теме"
    ],
-   "inPublic": 119,
-   "inAll": 194
+   "inPublic": 126,
+   "inAll": 201
   },
   "kabinet-postavshchika/nastrojki/": {
    "key": "kabinet-postavshchika/nastrojki/",
@@ -2827,8 +2827,8 @@
     "h3 согласование заявок",
     "h3 что вы закупаете регулярно"
    ],
-   "inPublic": 119,
-   "inAll": 194
+   "inPublic": 126,
+   "inAll": 201
   },
   "kabinet/dokumenty/": {
    "key": "kabinet/dokumenty/",
@@ -4101,6 +4101,13 @@
     "blog/",
     "oplata-i-dostavka/",
     "katalog/nasosy/",
+    "katalog/armatura/",
+    "katalog/privod/",
+    "katalog/podshipniki/",
+    "katalog/kompressory/",
+    "katalog/elektrika/",
+    "katalog/pnevmatika/",
+    "katalog/zapchasti/",
     "proizvoditeli/",
     "garantiya/",
     "kontakty/",
@@ -4255,8 +4262,66 @@
     "h3 разделы сайта: что где искать",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
+  },
+  "katalog/armatura/": {
+   "key": "katalog/armatura/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/promyshlennaya-armatura/",
+    "katalog/armatura/klapan-obratnyj-dn65-pn16/",
+    "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 промышленная арматура",
+    "h2 товары в каталоге: промышленная арматура",
+    "h3 обратный клапан dn65 pn16",
+    "h3 задвижка dn100 pn16, чугун",
+    "h2 нет нужной позиции?",
+    "h2 трубопроводная арматура: как подобрать без переделки обвязки",
+    "h3 виды арматуры и где они применяются",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 4,
+   "inAll": 4
   },
   "katalog/armatura/klapan-obratnyj-dn65-pn16/": {
    "key": "katalog/armatura/klapan-obratnyj-dn65-pn16/",
@@ -4285,12 +4350,13 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/promyshlennaya-armatura/",
+    "katalog/armatura/",
     "katalog/nasosy/grundfos-cr-32-2/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "katalog/nasosy/cnp-cdlf-42-30/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
+    "napravleniya/promyshlennaya-armatura/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4321,8 +4387,8 @@
     "h3 задвижка dn100 pn16, чугун",
     "h2 смотрите также"
    ],
-   "inPublic": 9,
-   "inAll": 14
+   "inPublic": 10,
+   "inAll": 15
   },
   "katalog/armatura/zadvizhka-dn100-pn16-chugun/": {
    "key": "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
@@ -4351,10 +4417,11 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/promyshlennaya-armatura/",
+    "katalog/armatura/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
+    "napravleniya/promyshlennaya-armatura/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4384,8 +4451,63 @@
     "h3 комплект прокладок dn65",
     "h2 смотрите также"
    ],
+   "inPublic": 4,
+   "inAll": 8
+  },
+  "katalog/elektrika/": {
+   "key": "katalog/elektrika/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "katalog/elektrika/innovert-vr-15/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 1,
+   "headings": [
+    "h1 частотники и автоматика",
+    "h2 товары в каталоге: частотники и автоматика",
+    "h3 innovert vr 15 квт",
+    "h2 нет нужной позиции?",
+    "h2 частотные преобразователи и автоматика: подбор под двигатель",
+    "h3 что выбрать для управления двигателем",
+    "h2 вопросы и ответы"
+   ],
    "inPublic": 3,
-   "inAll": 7
+   "inAll": 3
   },
   "katalog/elektrika/innovert-vr-15/": {
    "key": "katalog/elektrika/innovert-vr-15/",
@@ -4414,7 +4536,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/chastotniki-i-avtomatika/",
+    "katalog/elektrika/",
     "proizvoditeli/innovert/",
     "katalog/nasosy/cnp-cdlf-32-40/",
     "katalog/nasosy/grundfos-cr-32-6/",
@@ -4424,6 +4546,7 @@
     "blog/kak-vybrat-elektrodvigatel/",
     "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/",
     "blog/postavka-oborudovaniya-iz-kitaya/",
+    "napravleniya/chastotniki-i-avtomatika/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4456,8 +4579,62 @@
     "h3 поставка оборудования из китая: сроки и документы",
     "h2 смотрите также"
    ],
-   "inPublic": 11,
-   "inAll": 17
+   "inPublic": 12,
+   "inAll": 18
+  },
+  "katalog/kompressory/": {
+   "key": "katalog/kompressory/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 компрессоры",
+    "h2 товары в каталоге: компрессоры",
+    "h3 kaishan lgcy-75",
+    "h2 нет нужной позиции?",
+    "h2 промышленные компрессоры: подбор по расходу воздуха и давлен",
+    "h3 типы компрессоров и подготовка воздуха",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 2,
+   "inAll": 2
   },
   "katalog/kompressory/kaishan-lgcy-75/": {
    "key": "katalog/kompressory/kaishan-lgcy-75/",
@@ -4530,8 +4707,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 149
+   "inPublic": 125,
+   "inAll": 156
   },
   "katalog/nasosy/": {
    "key": "katalog/nasosy/",
@@ -4634,6 +4811,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "proizvoditeli/wilo/",
     "katalog/nasosy/grundfos-cr-32-4/",
@@ -4645,7 +4823,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4712,6 +4889,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "proizvoditeli/wilo/",
     "katalog/nasosy/grundfos-cr-45-3/",
@@ -4726,7 +4904,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4797,6 +4974,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "katalog/nasosy/ebara-3m-65-160/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
@@ -4809,7 +4987,6 @@
     "katalog/nasosy/grundfos-cr-45-3/",
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/cnp-cdlf-42-30/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4878,6 +5055,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/ebara/",
     "katalog/nasosy/cnp-cdlf-42-30/",
     "katalog/nasosy/wilo-helix-v-4204/",
@@ -4893,7 +5071,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -4962,6 +5139,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "katalog/nasosy/grundfos-cr-32-2/",
     "katalog/elektrika/innovert-vr-15/",
@@ -4971,7 +5149,6 @@
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
     "katalog/nasosy/cnp-nis-80-65-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5038,6 +5215,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "napravleniya/gidravlika/",
     "proizvoditeli/cnp/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
@@ -5051,7 +5229,6 @@
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
     "katalog/nasosy/cnp-nis-80-65-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5191,6 +5368,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "katalog/nasosy/grundfos-cr-45-3/",
     "katalog/elektrika/innovert-vr-15/",
@@ -5200,7 +5378,6 @@
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
     "katalog/nasosy/cnp-nis-80-65-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5267,6 +5444,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "proizvoditeli/wilo/",
     "katalog/nasosy/cnp-cdlf-42-30/",
@@ -5279,7 +5457,6 @@
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5347,6 +5524,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/nasosy/cnp-nis-80-65-160/",
@@ -5358,7 +5536,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
     "katalog/nasosy/cnp-cdlf-42-30/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5427,6 +5604,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/cnp/",
     "napravleniya/gidravlika/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
@@ -5438,7 +5616,6 @@
     "katalog/nasosy/grundfos-cr-45-3/",
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-tp-65-230-2/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5505,6 +5682,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "proizvoditeli/cnp/",
     "katalog/nasosy/cnp-nis-80-65-160/",
@@ -5516,7 +5694,6 @@
     "katalog/nasosy/grundfos-cr-45-3/",
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5583,6 +5760,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/wilo/",
     "napravleniya/gidravlika/",
     "proizvoditeli/cnp/",
@@ -5597,7 +5775,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5666,6 +5843,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/nasosy/",
     "proizvoditeli/wilo/",
     "napravleniya/gidravlika/",
     "proizvoditeli/cnp/",
@@ -5679,7 +5857,6 @@
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/nasosy/grundfos-nb-40-200-219/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
-    "katalog/nasosy/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5719,6 +5896,62 @@
    "inPublic": 7,
    "inAll": 9
   },
+  "katalog/pnevmatika/": {
+   "key": "katalog/pnevmatika/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/pnevmatika/",
+    "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 пневматика",
+    "h2 товары в каталоге: пневматика",
+    "h3 фильтр-элемент воздушный 2 мкм",
+    "h2 нет нужной позиции?",
+    "h2 промышленная пневматика: подбор цилиндров, распределителей и",
+    "h3 основные элементы пневмосистемы",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 3,
+   "inAll": 3
+  },
   "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/": {
    "key": "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
    "closed": false,
@@ -5746,9 +5979,10 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/pnevmatika/",
+    "katalog/pnevmatika/",
     "katalog/zapchasti/vibroopora-m12/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
+    "napravleniya/pnevmatika/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5778,8 +6012,63 @@
     "h3 манжета 45×65×10 nbr",
     "h2 смотрите также"
    ],
-   "inPublic": 2,
-   "inAll": 5
+   "inPublic": 3,
+   "inAll": 6
+  },
+  "katalog/podshipniki/": {
+   "key": "katalog/podshipniki/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "katalog/podshipniki/skf-6205-2rs/",
+    "napravleniya/kompressory/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 подшипники и комплектующие",
+    "h2 товары в каталоге: подшипники и комплектующие",
+    "h3 подшипник skf 6205-2rs",
+    "h2 нет нужной позиции?",
+    "h2 подшипники и комплектующие: поиск по обозначению и размерам",
+    "h3 основные суффиксы в обозначениях подшипников",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 3,
+   "inAll": 3
   },
   "katalog/podshipniki/skf-6205-2rs/": {
    "key": "katalog/podshipniki/skf-6205-2rs/",
@@ -5808,13 +6097,14 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "katalog/podshipniki/",
     "proizvoditeli/skf/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/privod/nord-sk-02/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "blog/priznaki-iznosa-podshipnika/",
     "blog/kak-prodlit-resurs-podshipnika/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/chastotniki-i-avtomatika/",
@@ -5846,8 +6136,64 @@
     "h3 как продлить ресурс подшипника",
     "h2 смотрите также"
    ],
-   "inPublic": 8,
-   "inAll": 16
+   "inPublic": 9,
+   "inAll": 17
+  },
+  "katalog/privod/": {
+   "key": "katalog/privod/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/reduktory-i-motor-reduktory/",
+    "katalog/privod/nord-sk-02/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 редукторы и мотор-редукторы",
+    "h2 товары в каталоге: редукторы и мотор-редукторы",
+    "h3 мотор-редуктор nord sk 02",
+    "h2 нет нужной позиции?",
+    "h2 мотор-редукторы: подбор по моменту, скорости и посадочным ра",
+    "h3 типы редукторов: особенности и применение",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 3,
+   "inAll": 3
   },
   "katalog/privod/nord-sk-02/": {
    "key": "katalog/privod/nord-sk-02/",
@@ -5876,12 +6222,13 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/reduktory-i-motor-reduktory/",
+    "katalog/privod/",
     "proizvoditeli/nord/",
     "proizvoditeli/innovert/",
     "katalog/podshipniki/skf-6205-2rs/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/elektrika/innovert-vr-15/",
+    "napravleniya/reduktory-i-motor-reduktory/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5911,8 +6258,68 @@
     "h3 innovert vr 15 квт",
     "h2 смотрите также"
    ],
-   "inPublic": 6,
-   "inAll": 10
+   "inPublic": 7,
+   "inAll": 11
+  },
+  "katalog/zapchasti/": {
+   "key": "katalog/zapchasti/",
+   "closed": false,
+   "noindex": false,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "napravleniya/zapchasti-dlya-proizvodstva/",
+    "katalog/zapchasti/komplekt-prokladok-dn65/",
+    "katalog/zapchasti/manzheta-45x65x10-nbr/",
+    "katalog/zapchasti/vibroopora-m12/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "kabinet/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 запчасти для производства",
+    "h2 товары в каталоге: запчасти для производства",
+    "h3 комплект прокладок dn65",
+    "h3 манжета 45×65×10 nbr",
+    "h3 виброопора м12",
+    "h2 нет нужной позиции?",
+    "h2 запчасти и расходники: подбор по размерам, артикулу и фото",
+    "h3 материалы уплотнений и где они применяются",
+    "h2 вопросы и ответы"
+   ],
+   "inPublic": 5,
+   "inAll": 5
   },
   "katalog/zapchasti/komplekt-prokladok-dn65/": {
    "key": "katalog/zapchasti/komplekt-prokladok-dn65/",
@@ -5941,7 +6348,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/zapchasti-dlya-proizvodstva/",
+    "katalog/zapchasti/",
     "katalog/nasosy/grundfos-cr-32-2/",
     "katalog/nasosy/grundfos-cr-32-6/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
@@ -5949,6 +6356,7 @@
     "katalog/nasosy/cnp-cdlf-42-30/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/zapchasti/vibroopora-m12/",
+    "napravleniya/zapchasti-dlya-proizvodstva/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -5981,8 +6389,8 @@
     "h3 виброопора м12",
     "h2 смотрите также"
    ],
-   "inPublic": 8,
-   "inAll": 14
+   "inPublic": 9,
+   "inAll": 15
   },
   "katalog/zapchasti/manzheta-45x65x10-nbr/": {
    "key": "katalog/zapchasti/manzheta-45x65x10-nbr/",
@@ -6011,12 +6419,13 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/zapchasti-dlya-proizvodstva/",
+    "katalog/zapchasti/",
     "proizvoditeli/skf/",
     "katalog/podshipniki/skf-6205-2rs/",
     "katalog/privod/nord-sk-02/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "katalog/zapchasti/vibroopora-m12/",
+    "napravleniya/zapchasti-dlya-proizvodstva/",
     "proizvoditeli/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
@@ -6048,8 +6457,8 @@
     "h3 виброопора м12",
     "h2 смотрите также"
    ],
-   "inPublic": 8,
-   "inAll": 12
+   "inPublic": 9,
+   "inAll": 13
   },
   "katalog/zapchasti/vibroopora-m12/": {
    "key": "katalog/zapchasti/vibroopora-m12/",
@@ -6078,12 +6487,13 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "napravleniya/zapchasti-dlya-proizvodstva/",
+    "katalog/zapchasti/",
     "napravleniya/kompressory/",
     "katalog/nasosy/cnp-cdlf-42-30/",
     "katalog/nasosy/grundfos-nbg-65-50-160/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
+    "napravleniya/zapchasti-dlya-proizvodstva/",
     "proizvoditeli/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
     "napravleniya/chastotniki-i-avtomatika/",
@@ -6114,8 +6524,8 @@
     "h3 манжета 45×65×10 nbr",
     "h2 смотрите также"
    ],
-   "inPublic": 6,
-   "inAll": 8
+   "inPublic": 7,
+   "inAll": 9
   },
   "kontakty/": {
    "key": "kontakty/",
@@ -6166,8 +6576,8 @@
     "h3 каналы связи: для чего и когда ждать ответа",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "korzina/": {
    "key": "korzina/",
@@ -6218,8 +6628,8 @@
     "h3 оформление заказа по шагам",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 119,
-   "inAll": 194
+   "inPublic": 126,
+   "inAll": 201
   },
   "napravleniya/": {
    "key": "napravleniya/",
@@ -6377,8 +6787,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "napravleniya/3d-pechat-dlya-proizvodstva/": {
    "key": "napravleniya/3d-pechat-dlya-proizvodstva/",
@@ -6473,6 +6883,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/elektrika/",
     "katalog/elektrika/innovert-vr-15/",
     "blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/",
     "blog/motor-reduktor-ili-reduktor-s-dvigatelem/",
@@ -6520,8 +6931,8 @@
     "h3 как выбрать привод и автоматику: задача → тип → параметры → ",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "napravleniya/dizel-generatory/": {
    "key": "napravleniya/dizel-generatory/",
@@ -7094,6 +7505,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/kompressory/",
     "proizvoditeli/kaishan/",
     "blog/vintovoj-ili-porshnevoj-kompressor/",
     "blog/skolko-vozduha-nuzhno-cehu/",
@@ -7140,8 +7552,8 @@
     "h3 как выбрать компрессор: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "napravleniya/konvejernoe-oborudovanie/": {
    "key": "napravleniya/konvejernoe-oborudovanie/",
@@ -7435,8 +7847,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "napravleniya/oborudovanie-dlya-metalloobrabotki/": {
    "key": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
@@ -7730,6 +8142,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/pnevmatika/",
     "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
     "blog/vintovoj-ili-porshnevoj-kompressor/",
     "blog/skolko-vozduha-nuzhno-cehu/",
@@ -7778,8 +8191,8 @@
     "h3 как выбрать пневматику: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 14,
-   "inAll": 14
+   "inPublic": 15,
+   "inAll": 15
   },
   "napravleniya/podemnoe-oborudovanie/": {
    "key": "napravleniya/podemnoe-oborudovanie/",
@@ -7874,6 +8287,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/podshipniki/",
     "katalog/podshipniki/skf-6205-2rs/",
     "proizvoditeli/skf/",
     "napravleniya/reduktory-i-motor-reduktory/",
@@ -7914,8 +8328,8 @@
     "h3 как выбрать: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "napravleniya/pozharnoe-oborudovanie/": {
    "key": "napravleniya/pozharnoe-oborudovanie/",
@@ -8016,6 +8430,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/armatura/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
     "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
     "blog/zadvizhka-klapan-ili-zatvor/",
@@ -8064,8 +8479,8 @@
     "h3 как выбрать арматуру: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 14,
-   "inAll": 14
+   "inPublic": 15,
+   "inAll": 15
   },
   "napravleniya/promyshlennaya-himiya/": {
    "key": "napravleniya/promyshlennaya-himiya/",
@@ -8623,6 +9038,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/privod/",
     "katalog/privod/nord-sk-02/",
     "proizvoditeli/nord/",
     "blog/motor-reduktor-ili-reduktor-s-dvigatelem/",
@@ -8668,8 +9084,8 @@
     "h3 как выбрать: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 51,
-   "inAll": 51
+   "inPublic": 52,
+   "inAll": 52
   },
   "napravleniya/separatory-i-centrifugi/": {
    "key": "napravleniya/separatory-i-centrifugi/",
@@ -9432,6 +9848,7 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "katalog/zapchasti/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/zapchasti/vibroopora-m12/",
@@ -9484,8 +9901,8 @@
     "h3 как выбрать: задача → тип → параметры → цена от",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 19,
-   "inAll": 19
+   "inPublic": 20,
+   "inAll": 20
   },
   "o-servise/": {
    "key": "o-servise/",
@@ -9559,8 +9976,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "oplata-i-dostavka/": {
    "key": "oplata-i-dostavka/",
@@ -9629,8 +10046,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "panel/admin/": {
    "key": "panel/admin/",
@@ -11620,8 +12037,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "poisk/": {
    "key": "poisk/",
@@ -11750,8 +12167,8 @@
     "h3 какие данные обрабатываются, зачем и как долго",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "postavshchikam/": {
    "key": "postavshchikam/",
@@ -11823,8 +12240,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "postavshchikam/usloviya/": {
    "key": "postavshchikam/usloviya/",
@@ -11892,8 +12309,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "proekty/": {
    "key": "proekty/",
@@ -11967,8 +12384,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "proizvoditeli/": {
    "key": "proizvoditeli/",
@@ -12058,8 +12475,8 @@
     "h3 производители по направлениям: что прислать для подбора",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "proizvoditeli/cnp/": {
    "key": "proizvoditeli/cnp/",
@@ -12433,8 +12850,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 146
+   "inPublic": 125,
+   "inAll": 153
   },
   "proizvoditeli/innovert/": {
    "key": "proizvoditeli/innovert/",
@@ -13293,8 +13710,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 119,
-   "inAll": 194
+   "inPublic": 126,
+   "inAll": 201
   },
   "usloviya-ispolzovaniya/": {
    "key": "usloviya-ispolzovaniya/",
@@ -13350,8 +13767,8 @@
     "h3 основные правила сервиса: что действует и где зафиксировано",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "vhod/": {
    "key": "vhod/",
@@ -13403,8 +13820,8 @@
     "h3 что доступно без регистрации и с аккаунтом компании",
     "h2 вопросы и ответы"
    ],
-   "inPublic": 119,
-   "inAll": 194
+   "inPublic": 126,
+   "inAll": 201
   },
   "zayavka-spiskom/": {
    "key": "zayavka-spiskom/",
@@ -13473,8 +13890,8 @@
     "h3 как продлить ресурс подшипника",
     "h3 аналог из китая: на что смотреть"
    ],
-   "inPublic": 118,
-   "inAll": 194
+   "inPublic": 125,
+   "inAll": 201
   },
   "404.html": {
    "key": "404.html",

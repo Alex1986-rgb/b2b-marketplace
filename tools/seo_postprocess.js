@@ -326,8 +326,14 @@ module.exports = function seoPostprocess(html, ctx) {
     const hxChanged = headings(html, root, ctx, edits, !closed, isPanel);
     if (!closed) contextLinks(html, root, ctx, edits);
     linkFixes(html, root, ctx, edits);
-    if (!edits.length) return html;
-    let out = applyEdits(html, edits);
+    let out = edits.length ? applyEdits(html, edits) : html;
+    // ссылки на текущую страницу: aria-current="page" (меню, крошки, подвал)
+    if (ctx.BASE != null && key !== '404.html') {
+      const self = String(ctx.BASE) + key;
+      const esc = self.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      out = out.replace(new RegExp('<a\\b([^>]*?)href="' + esc + '"([^>]*)>', 'g'), (m, a1, a2) => /aria-current=/.test(m) ? m : `<a${a1}href="${self}" aria-current="page"${a2}>`);
+    }
+    if (out === html) return html;
     if (hxChanged && !out.includes('id="pk-seo-hx"')) {
       const tag = `<style id="pk-seo-hx">${HX_CSS}</style>\n`;
       const at = out.search(/<link[^>]+rel="stylesheet"/i);

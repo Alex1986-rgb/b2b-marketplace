@@ -71,6 +71,7 @@ T = {  # name: (size, prompt)
  "p-cr32-6": ("1024x1024", PRODUCT + "Tall vertical multistage inline centrifugal pump with 6 stainless steel stages (tall stack with long tie rods), blue-painted cast iron base with flanged ports, blue electric motor 7.5 kW on top, blank nameplate."),
  "p-cr45-3": ("1024x1024", PRODUCT + "Large vertical multistage inline centrifugal pump with 3 wide stainless steel stages of larger diameter, heavy blue cast iron base with DN65 flanges, bigger blue electric motor on top, blank nameplate."),
  "p-cr20-5": ("1024x1024", PRODUCT + "Slim vertical multistage inline centrifugal pump with 5 narrow stainless steel stages, small blue cast iron base with DN50 oval flanges, blue electric motor 4 kW on top, blank nameplate."),
+ "p-gate-valve": ("1024x1024", PRODUCT + "Cast iron wedge gate valve DN100 PN16 with two round bolted flanges, tall bonnet with rising stem and a round red handwheel on top, grey-blue painted body, no text."),
 }
 
 def job(name):

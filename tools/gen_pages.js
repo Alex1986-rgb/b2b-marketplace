@@ -87,6 +87,7 @@ function articleCard(BASE, a) {
 
 const CAT2DIR = { nasosy: 'Насосы', armatura: 'Промышленная арматура', privod: 'Редукторы и мотор-редукторы', podshipniki: 'Подшипники и комплектующие', kompressory: 'Компрессоры', elektrika: 'Частотники и автоматика', pnevmatika: 'Пневматика', zapchasti: 'Запчасти для производства' };
 const dirName = p => CAT2DIR[p.category] || p.categoryName;
+const DIR2CAT = Object.fromEntries(Object.entries(CAT2DIR).map(([k, v]) => [v, k])); // название направления → категория каталога
 // «подбор <чего>» по категории товара — для анкоров с ключом
 const CAT2PL = { nasosy: 'насосов', privod: 'мотор-редукторов', podshipniki: 'подшипников', kompressory: 'компрессоров', elektrika: 'частотных преобразователей' };
 const CAT2GEN = { nasosy: 'насоса', armatura: 'арматуры', privod: 'мотор-редуктора', podshipniki: 'подшипника', kompressory: 'компрессора', elektrika: 'частотного преобразователя', pnevmatika: 'пневмооборудования', zapchasti: 'запчастей' };
@@ -132,7 +133,7 @@ module.exports = function genPages(BASE) {
     const brand = brands.find(b => b.slug === p.brandSlug);
     const photos = (p.photos && p.photos.length ? p.photos : ['p-cr32']);
     const related = (p.related || []).map(s => bySlug(products, s)).filter(Boolean).slice(0, 4);
-    const html = wrap(`${crumbs(BASE, [home, { name: dir ? dir.name : (p.categoryName || 'Каталог'), href: dir ? BASE + (dir.existing ? 'napravleniya/nasosy/' : P.direction(dir)) : BASE + 'napravleniya/' }, ...(brand ? [{ name: p.brand, href: BASE + P.brand(brand) }] : []), { name: p.name }])}
+    const html = wrap(`${crumbs(BASE, [home, { name: 'Каталог', href: BASE + 'napravleniya/' }, { name: dir ? dir.name : (p.categoryName || 'Каталог'), href: BASE + 'katalog/' + p.category + '/' }, ...(brand ? [{ name: p.brand, href: BASE + P.brand(brand) }] : []), { name: p.name }])}
 <h1 style="font-size:36px;margin:0 0 8px">${esc(p.fullName || p.name)}</h1>
 <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px">
   <span>Артикул ${esc(p.sku)}</span>${p.brand ? `<span>${brand ? `<a href="${BASE + P.brand(brand)}" style="color:inherit">${esc(p.brand)}</a>` : esc(p.brand)}${p.country ? ' · ' + esc(p.country) : ''}</span>` : ''}
@@ -255,12 +256,12 @@ ${H2('Подобрать оборудование') + tiles([
       <div><div class="mono" style="font-size:28px">${(d.subcats || []).length}</div><div style="font-size:13px;color:var(--color-neutral-700)">подкатегорий</div></div>
       <div><div class="mono" style="font-size:28px">${(d.brands || []).length}</div><div style="font-size:13px;color:var(--color-neutral-700)">производителей</div></div><div><div class="mono" style="font-size:28px">2 ч</div><div style="font-size:13px;color:var(--color-neutral-700)">ответ на запрос КП</div></div>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-primary" href="${BASE}chat/" style="text-decoration:none">Подобрать в чате</a><a class="btn btn-secondary" href="${BASE}zayavka-spiskom/" style="text-decoration:none">Загрузить заявку списком</a></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">${DIR2CAT[d.name] ? `<a class="btn btn-primary" href="${BASE}katalog/${DIR2CAT[d.name]}/" style="text-decoration:none">Открыть каталог</a><a class="btn btn-secondary" href="${BASE}chat/" style="text-decoration:none">Подобрать в чате</a>` : `<a class="btn btn-primary" href="${BASE}chat/" style="text-decoration:none">Подобрать в чате</a>`}<a class="btn btn-secondary" href="${BASE}zayavka-spiskom/" style="text-decoration:none">Загрузить заявку списком</a></div>
   </div>
   <div class="duotone ph" data-photo="1" style="min-height:300px;border-radius:14px;background:url(IMGBASE${d.cover || 'warehouse'}.jpg) center/cover no-repeat"></div>
 </section>
 <h2 style="font-size:26px;margin:0 0 12px">Подкатегории</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">${(d.subcats || []).map(s => `<a href="${BASE}chat/?q=${encodeURIComponent(s.name)}" class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;text-decoration:none;color:inherit"><span style="font-weight:600">${esc(s.name)}</span><span style="font-size:13px;color:var(--color-neutral-600);white-space:nowrap">${String(s.count).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</span></a>`).join('')}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">${(d.subcats || []).map(s => `<a href="${DIR2CAT[d.name] ? BASE + 'katalog/' + DIR2CAT[d.name] + '/?tip=' + encodeURIComponent(s.name) : BASE + 'chat/?q=' + encodeURIComponent(s.name)}" class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;text-decoration:none;color:inherit"><span style="font-weight:600">${esc(s.name)}</span><span style="font-size:13px;color:var(--color-neutral-600);white-space:nowrap">${String(s.count).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</span></a>`).join('')}</div>
 ${(d.tasks || []).length ? `<h2 style="font-size:26px;margin:32px 0 12px">Типовые задачи</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">${d.tasks.map(t => `<div class="blueprint" style="padding:18px 20px;display:flex;flex-direction:column;gap:8px"><span style="font-family:var(--font-heading);font-weight:600;font-size:18px">${esc(t.t)}</span><span style="font-size:14px;color:var(--color-neutral-700)">${esc(t.d || '')}</span><span class="mono" style="font-size:18px;margin-top:auto">${esc(t.from || '')}</span></div>`).join('')}</div>` : ''}
 ${dirProducts.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Популярные позиции</h2><div class="pk-lonegrid">${dirProducts.map(p => productCard(BASE, p)).join('')}</div>` : ''}
 ${dirBrands.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Производители в разделе «${esc(d.name)}»</h2><div style="display:flex;gap:8px;flex-wrap:wrap">${dirBrands.map(({ n, b }) => b ? `<a class="tag tag-outline" href="${BASE}proizvoditeli/${b.slug}/" style="text-decoration:none;font-size:13px;padding:6px 12px">${esc(n)}</a>` : `<span class="tag tag-outline" style="font-size:13px;padding:6px 12px;opacity:.7">${esc(n)}</span>`).join('')}</div>` : ''}

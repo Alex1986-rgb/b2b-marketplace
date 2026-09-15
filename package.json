@@ -6,6 +6,8 @@
     "build": "node tools/build_site.js"
   },
   "devDependencies": {
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.4.1",
     "lucide-static": "^1.46.0",
     "node-html-parser": "^9.0.4",
     "puppeteer-core": "^23.11.1",

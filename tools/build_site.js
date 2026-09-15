@@ -410,6 +410,7 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
   {
     const gp = require('./gen_pages');
     const ctx = { BASE, ROUTES, ...gp.helpers, load: gp.load, products: gp.load('products.json') };
+    globalThis.__PK_GEN_INDEX = [];
     for (const f of fs.readdirSync(__dirname).filter(f => /^gen_(?!pages).*\.js$/.test(f)).sort()) {
       let pages = [];
       try { pages = require('./' + f)(ctx) || []; } catch (e) { console.error('! генератор ' + f + ': ' + e.message); continue; }
@@ -418,6 +419,7 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
         const file = path.join(OUT, g.path, 'index.html'); fs.mkdirSync(path.dirname(file), { recursive: true });
         const body = String(g.html).replace(/IMGBASE/g, BASE + 'img/');
         writePage(file, page({ id: g.path, r: { index: false, ...g }, body: ch.head + (/<main\b/.test(body) ? body : `<main id="main" class="pk-main">${body}</main>`) + ch.tail, scripts: g.scripts || [] }));
+        if (g.index) globalThis.__PK_GEN_INDEX.push({ path: g.path, index: true });
         report.push(`  ${f.replace(/\.js$/, '')}  /${g.path}  ${g.h1 || g.title}`);
       }
     }
@@ -453,10 +455,13 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
   copyDir(path.join(__dirname, 'site', 'static'), OUT);
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 
-  const idx = Object.values(ROUTES).filter(r => r.index && !r.skip).concat(GENERATED).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
+  const idx = Object.values(ROUTES).filter(r => r.index && !r.skip).concat(GENERATED).concat(globalThis.__PK_GEN_INDEX || []).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     idx.map(r => `  <url><loc>${url(r.path)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n') + '\n</urlset>\n');
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('sitemap.xml')}\n`);
+
+  // перф-пост-обработка готовой папки: шрифты неблокирующе, inline-стили → классы, минификация CSS
+  if (process.env.PERF !== '0') require('./perf_postprocess').postprocessSite(OUT);
 
   const old = FINAL + '.old-' + process.pid;
   if (fs.existsSync(FINAL)) fs.renameSync(FINAL, old);
