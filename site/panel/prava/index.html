@@ -27,6 +27,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -41,7 +42,7 @@
         <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">ПРОМКОНТУР</span>
       </a>
       <span class="mono" style="font-size: 12px; text-transform: uppercase; color: var(--color-accent-300);">Панель оператора</span>
-      <nav style="display: flex; gap: 4px; flex-wrap: wrap; margin-left: 12px;">
+      <nav style="display: flex; gap: 4px; flex-wrap: wrap; margin-left: 12px;" aria-label="Разделы сайта">
         
           <a href="/b2b-marketplace/panel/crm/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-crm" style="color: var(--color-accent-300);"></span>CRM</a>
         
@@ -96,7 +97,7 @@
   
 
   
-  <div data-screen-label="Права и роли">
+  <div data-screen-label="Права и роли" role="main" id="main">
     <div style="max-width: 1360px; margin: 0px auto; padding: 24px 28px 56px; display: flex; flex-direction: column; gap: 22px;">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
         <div>
@@ -234,7 +235,7 @@
         <div class="blueprint" style="padding: 6px 14px 10px; overflow-x: auto;">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <table class="table" style="width: 100%; min-width: 520px;">
-            <thead><tr><th>Сотрудник</th><th>Роль</th><th>Направления</th><th>Последний вход</th><th></th></tr></thead>
+            <thead><tr><th>Сотрудник</th><th>Роль</th><th>Направления</th><th>Последний вход</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>
@@ -291,7 +292,7 @@
 
         <div class="blueprint" style="padding: 18px 20px;">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin: 0px 0px 4px;">Защитные ограничения</h3>
+          <h3 style="margin: 0px 0px 4px;" role="heading" aria-level="2">Защитные ограничения</h3>
           <p style="font-size: 14px; color: var(--color-neutral-700); margin: 0px 0px 12px;">Даже у&nbsp;админа есть рамки&nbsp;— чтобы одна правка не&nbsp;обрушила экономику.</p>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <div class="field"><label>Наценка за&nbsp;раз не&nbsp;более</label><input class="input mono" value="±5%"></div>

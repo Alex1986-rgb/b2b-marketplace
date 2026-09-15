@@ -25,8 +25,10 @@
 <link rel="stylesheet" href="/b2b-marketplace/assets/ds.css">
 <link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
+<link rel="preload" as="image" href="/b2b-marketplace/img/p-cr32.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -64,7 +66,7 @@
         <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-cart" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Корзина</a>
       </div>
     </div>
-    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;" aria-label="Разделы сайта">
       
         <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Направления</a>
       
@@ -106,7 +108,7 @@
   
 
   
-  <div data-screen-label="Корзина">
+  <div data-screen-label="Корзина" role="main" id="main">
     <div style="max-width: 1360px; margin: 0px auto; padding: 28px 28px 56px;">
       <h1 style="font-size: 34px;">Корзина</h1>
       <div class="split" style="--aside: 360px; gap: 28px; margin-top: 14px;">
@@ -115,7 +117,7 @@
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             
               <div class="cartrow">
-                <div class="ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255); height: 76px;"></div>
+                <div class="ph" data-photo="1" style="background: url(/b2b-marketplace/img/p-cr32.jpg) center center / contain no-repeat rgb(255, 255, 255); height: 76px; background-image: image-set(url(/b2b-marketplace/img/p-cr32.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-cr32.jpg) type(&quot;image/jpeg&quot;));"></div>
                 <div style="display: flex; flex-direction: column; gap: 3px;">
                   <span class="mono" style="font-size: 11px; color: var(--color-neutral-600);">96122802</span>
                   <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px;">Grundfos CR 32-4</span>
@@ -128,7 +130,7 @@
               </div>
             
               <div class="cartrow">
-                <div class="ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/p-6205.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255); height: 76px;"></div>
+                <div class="ph" data-photo="1" style="background: url(/b2b-marketplace/img/p-6205.jpg) center center / contain no-repeat rgb(255, 255, 255); height: 76px; background-image: image-set(url(/b2b-marketplace/img/p-6205.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-6205.jpg) type(&quot;image/jpeg&quot;));"></div>
                 <div style="display: flex; flex-direction: column; gap: 3px;">
                   <span class="mono" style="font-size: 11px; color: var(--color-neutral-600);">SKF-6205</span>
                   <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px;">Подшипник SKF 6205-2RS</span>
@@ -141,7 +143,7 @@
               </div>
             
               <div class="cartrow">
-                <div class="ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/p-vr15.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255); height: 76px;"></div>
+                <div class="ph" data-photo="1" style="background: url(/b2b-marketplace/img/p-vr15.jpg) center center / contain no-repeat rgb(255, 255, 255); height: 76px; background-image: image-set(url(/b2b-marketplace/img/p-vr15.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-vr15.jpg) type(&quot;image/jpeg&quot;));"></div>
                 <div style="display: flex; flex-direction: column; gap: 3px;">
                   <span class="mono" style="font-size: 11px; color: var(--color-neutral-600);">INV-VR-15</span>
                   <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px;">INNOVERT VR 15&nbsp;кВт</span>
@@ -157,7 +159,7 @@
 
           <div class="blueprint" style="padding: 22px 24px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <h3>Оформление</h3>
+            <h3 role="heading" aria-level="2">Оформление</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px;">
               <div class="field"><label>Плательщик</label><input class="input" placeholder="ООО «Метизный завод»"></div>
               <div class="field"><label>ИНН</label><input class="input mono" placeholder="7105012345"></div>
@@ -176,7 +178,7 @@
 
         <div class="card blueprint" style="padding: 22px; position: sticky; top: 96px;">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h4>Итого</h4>
+          <h4 role="heading" aria-level="3">Итого</h4>
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
             <div style="display: flex; justify-content: space-between;"><span class="text-muted">Оборудование, 3 поз.</span><span class="mono">299 100&nbsp;₽</span></div>
             <div style="display: flex; justify-content: space-between;"><span class="text-muted">Доставка до&nbsp;Тулы</span><span class="mono">включена</span></div>

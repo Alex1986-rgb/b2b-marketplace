@@ -25,8 +25,10 @@
 <link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Это бот или живой менеджер?","acceptedAnswer":{"@type":"Answer","text":"Сначала отвечает автоматический подбор. Если задача выходит за пороги, диалог подхватывает инженер — переписка не начинается заново."}},{"@type":"Question","name":"Можно ли отправить заявку списком?","acceptedAnswer":{"@type":"Answer","text":"Да, XLSX, CSV или текстом из письма. Строки сопоставляются с артикулами, нераспознанные выносятся отдельно на уточнение."}},{"@type":"Question","name":"Чат видит реальные остатки?","acceptedAnswer":{"@type":"Answer","text":"Да, он опрашивает фиды и API поставщиков в момент запроса и не предлагает позиции с нулевым остатком."}},{"@type":"Question","name":"Насколько можно доверять подбору?","acceptedAnswer":{"@type":"Answer","text":"Подбор идёт по рабочей точке и присоединительным размерам. Для ответственных объектов результат проверяет инженер — это указано в ответе."}},{"@type":"Question","name":"Чат может сразу оформить счёт?","acceptedAnswer":{"@type":"Answer","text":"Да, после подтверждения спецификации счёт формируется автоматически и приходит на почту в течение 15 минут."}},{"@type":"Question","name":"Сохраняется ли история диалога?","acceptedAnswer":{"@type":"Answer","text":"Да, в личном кабинете вместе со спецификациями — удобно для повторных закупок и отчётности."}},{"@type":"Question","name":"Что если нужного оборудования нет в базе?","acceptedAnswer":{"@type":"Answer","text":"Чат создаёт запрос поставщикам по категории и возвращается с ценами в течение двух рабочих часов."}},{"@type":"Question","name":"Можно ли работать через чат без регистрации?","acceptedAnswer":{"@type":"Answer","text":"Да, подбор и цены доступны сразу. Регистрация нужна только для счёта, отсрочки и документов."}}]}</script>
+<link rel="preload" as="image" href="/b2b-marketplace/img/p-cnp-cdlf.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -64,7 +66,7 @@
         <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-cart" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Корзина</a>
       </div>
     </div>
-    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;" aria-label="Разделы сайта">
       
         <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Направления</a>
       
@@ -110,7 +112,7 @@
   
 
   
-  <div data-screen-label="Умный чат">
+  <div data-screen-label="Умный чат" role="main" id="main">
     <div style="max-width: 1360px; margin: 0px auto; padding: 24px 28px 48px;">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
         <div>
@@ -181,17 +183,17 @@
                     <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 4px;">
                       
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--color-divider); padding-top: 6px; font-size: 14px;">
-                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(&quot;/b2b-marketplace/img/p-cnp-cdlf.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>CNP CDLF 42-30 · 40&nbsp;м³/ч · 36&nbsp;м · 7,5&nbsp;кВт</span>
+                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(/b2b-marketplace/img/p-cnp-cdlf.jpg) center center / contain no-repeat rgb(255, 255, 255); background-image: image-set(url(/b2b-marketplace/img/p-cnp-cdlf.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-cnp-cdlf.jpg) type(&quot;image/jpeg&quot;));"></span>CNP CDLF 42-30 · 40&nbsp;м³/ч · 36&nbsp;м · 7,5&nbsp;кВт</span>
                           <span class="mono" style="white-space: nowrap;">74 800&nbsp;₽</span>
                         </div>
                       
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--color-divider); padding-top: 6px; font-size: 14px;">
-                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(&quot;/b2b-marketplace/img/p-wilo-helix.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>Wilo Helix V 4204 · 42&nbsp;м³/ч · 38&nbsp;м · 7,5&nbsp;кВт</span>
+                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(/b2b-marketplace/img/p-wilo-helix.jpg) center center / contain no-repeat rgb(255, 255, 255); background-image: image-set(url(/b2b-marketplace/img/p-wilo-helix.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-wilo-helix.jpg) type(&quot;image/jpeg&quot;));"></span>Wilo Helix V 4204 · 42&nbsp;м³/ч · 38&nbsp;м · 7,5&nbsp;кВт</span>
                           <span class="mono" style="white-space: nowrap;">96 300&nbsp;₽</span>
                         </div>
                       
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--color-divider); padding-top: 6px; font-size: 14px;">
-                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>Grundfos CR 45-3 · 45&nbsp;м³/ч · 40&nbsp;м · 7,5&nbsp;кВт</span>
+                          <span style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 44px; height: 44px; background: url(/b2b-marketplace/img/p-cr32.jpg) center center / contain no-repeat rgb(255, 255, 255); background-image: image-set(url(/b2b-marketplace/img/p-cr32.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-cr32.jpg) type(&quot;image/jpeg&quot;));"></span>Grundfos CR 45-3 · 45&nbsp;м³/ч · 40&nbsp;м · 7,5&nbsp;кВт</span>
                           <span class="mono" style="white-space: nowrap;">156 700&nbsp;₽</span>
                         </div>
                       
@@ -200,7 +202,7 @@
                   
                     <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
                       <button class="btn btn-primary" style="font-size: 14px;" data-demo="1">Добавить в&nbsp;корзину</button>
-                      <a class="btn btn-secondary" style="font-size: 14px; text-decoration: none;" href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/">Запросить КП</a>
+                      <a class="btn btn-secondary" style="font-size: 14px; text-decoration: none;" href="/b2b-marketplace/proekty/">Запросить КП</a>
                       <button class="btn btn-secondary" style="font-size: 14px;" data-demo="1">Показать аналоги</button>
                     </div>
                   
@@ -260,31 +262,31 @@
         <div style="display: flex; flex-direction: column; gap: 18px;">
           <div class="blueprint" style="padding: 18px 20px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <h3 style="margin: 0px 0px 10px;">Собранная спецификация</h3>
+            <h3 style="margin: 0px 0px 10px;" role="heading" aria-level="2">Собранная спецификация</h3>
             <div style="overflow-x: auto;">
               <table class="table" style="width: 100%;">
                 <thead><tr><th>Позиция</th><th>Кол-во</th><th style="text-align: right;">Сумма</th></tr></thead>
                 <tbody>
                   
-                    <tr>
+                    <tr data-href="/b2b-marketplace/katalog/nasosy/cnp-cdlf-42-30/" style="cursor: pointer;">
                       <td style="font-size: 14px;">Насос CNP CDLF 42-30<div class="mono" style="font-size: 11px; color: var(--color-neutral-600);">CNP-CDLF-42-30</div></td>
                       <td class="mono" style="font-size: 14px;">2</td>
                       <td class="mono" style="text-align: right; font-size: 14px;">149 600&nbsp;₽</td>
                     </tr>
                   
-                    <tr>
+                    <tr data-href="/b2b-marketplace/katalog/armatura/klapan-obratnyj-dn65-pn16/" style="cursor: pointer;">
                       <td style="font-size: 14px;">Обратный клапан DN65 PN16<div class="mono" style="font-size: 11px; color: var(--color-neutral-600);">ARM-OK-65</div></td>
                       <td class="mono" style="font-size: 14px;">2</td>
                       <td class="mono" style="text-align: right; font-size: 14px;">8 400&nbsp;₽</td>
                     </tr>
                   
-                    <tr>
+                    <tr data-href="/b2b-marketplace/katalog/zapchasti/vibroopora-m12/" style="cursor: pointer;">
                       <td style="font-size: 14px;">Виброопора М12<div class="mono" style="font-size: 11px; color: var(--color-neutral-600);">VBR-M12</div></td>
                       <td class="mono" style="font-size: 14px;">8</td>
                       <td class="mono" style="text-align: right; font-size: 14px;">6 240&nbsp;₽</td>
                     </tr>
                   
-                    <tr>
+                    <tr data-href="/b2b-marketplace/katalog/zapchasti/komplekt-prokladok-dn65/" style="cursor: pointer;">
                       <td style="font-size: 14px;">Комплект прокладок DN65<div class="mono" style="font-size: 11px; color: var(--color-neutral-600);">PRK-65-SET</div></td>
                       <td class="mono" style="font-size: 14px;">1</td>
                       <td class="mono" style="text-align: right; font-size: 14px;">4 400&nbsp;₽</td>
@@ -674,7 +676,7 @@
           
             <a href="/b2b-marketplace/blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-cavitation.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-cavitation.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-cavitation.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-cavitation.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Кавитация: почему разрушается рабочее колесо</span>
@@ -685,7 +687,7 @@
           
             <a href="/b2b-marketplace/blog/torcevoe-uplotnenie-priznaki-iznosa/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-seal.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-seal.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-seal.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-seal.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Торцевое уплотнение: признаки износа</span>
@@ -696,7 +698,7 @@
           
             <a href="/b2b-marketplace/blog/motor-reduktor-ili-reduktor-s-dvigatelem/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-gearmotor.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-gearmotor.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-gearmotor.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-gearmotor.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сравнение · Приводы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Мотор-редуктор или редуктор с&nbsp;двигателем</span>
@@ -707,7 +709,7 @@
           
             <a href="/b2b-marketplace/blog/skolko-vozduha-nuzhno-cehu/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-air.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-air.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-air.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-air.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Расчёт · Компрессоры</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Сколько воздуха нужно цеху</span>
@@ -718,7 +720,7 @@
           
             <a href="/b2b-marketplace/blog/chastotnyj-preobrazovatel-kogda-okupaetsya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/art-vfd.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/art-vfd.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/art-vfd.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/art-vfd.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Подбор · Частотники</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Частотник к&nbsp;насосу: когда окупается</span>
@@ -729,7 +731,7 @@
           
             <a href="/b2b-marketplace/blog/chugun-nerzhavejka-ili-plastik/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-materials.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-materials.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-materials.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-materials.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Материалы · Арматура</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Чугун, нержавейка или пластик</span>
@@ -740,7 +742,7 @@
           
             <a href="/b2b-marketplace/blog/kak-prodlit-resurs-podshipnika/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-bearing.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-bearing.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-bearing.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-bearing.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сервис · Подшипники</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Как продлить ресурс подшипника</span>
@@ -751,7 +753,7 @@
           
             <a href="/b2b-marketplace/blog/postavka-oborudovaniya-iz-kitaya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-containers.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-containers.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-containers.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-containers.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Импорт · Поставки</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Аналог из&nbsp;Китая: на&nbsp;что смотреть</span>

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-15T01:46:11.318Z",
+  "generatedAt": "2026-09-15T02:08:32.369Z",
   "site": "/Users/alexandr/projects/b2b-marketplace/site",
-  "origin": "http://127.0.0.1:63705/b2b-marketplace/",
-  "durationSec": 44,
+  "origin": "http://127.0.0.1:54267/b2b-marketplace/",
+  "durationSec": 21,
   "dataFiles": {
     "products": 24,
     "articles": 15,
@@ -19,38 +19,18 @@
     "pages": 135,
     "publicPages": 122,
     "privatePages": 13,
-    "links": 10374,
-    "cardLinks": 894,
-    "demoElements": 356,
-    "uniqueTargets": 133
+    "links": 10685,
+    "cardLinks": 980,
+    "demoElements": 400,
+    "uniqueTargets": 135
   },
   "summary": {
-    "errors": 61,
-    "warnings": 48,
+    "errors": 1,
+    "warnings": 46,
     "byType": {
-      "wrong_target": {
-        "severity": "error",
-        "count": 2
-      },
-      "card_not_clickable": {
-        "severity": "error",
-        "count": 6
-      },
       "many_cards_same_target": {
         "severity": "warning",
-        "count": 46
-      },
-      "card_wrong_target": {
-        "severity": "error",
         "count": 45
-      },
-      "target_h1_mismatch": {
-        "severity": "error",
-        "count": 1
-      },
-      "card_to_hub": {
-        "severity": "error",
-        "count": 1
       },
       "page_not_in_data": {
         "severity": "warning",
@@ -59,14 +39,6 @@
       "orphan": {
         "severity": "warning",
         "count": 1
-      },
-      "click_test": {
-        "severity": "error",
-        "count": 4
-      },
-      "click_test_partial": {
-        "severity": "warning",
-        "count": 2
       }
     }
   },
@@ -76,29 +48,30 @@
       "width": 390,
       "page": "katalog/nasosy/",
       "text": "Grundfos CR 32-4",
-      "cardIsLink": false,
+      "cardIsLink": true,
+      "target": "katalog/nasosy/grundfos-cr-32-4/",
       "point": [
-        251,
-        485
+        195,
+        492
       ],
-      "landed": "katalog/nasosy/",
-      "ok": false,
-      "detail": "клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+      "landed": "katalog/nasosy/grundfos-cr-32-4/",
+      "h1": "Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE",
+      "ok": true
     },
     {
       "test": "первая статья блога",
       "width": 390,
       "page": "blog/",
       "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
-      "cardIsLink": false,
+      "cardIsLink": true,
+      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
       "point": [
         195,
-        427
+        425
       ],
       "landed": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
-      "ok": true,
-      "partial": true,
-      "detail": "название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+      "h1": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "ok": true
     },
     {
       "test": "первый раздел направлений",
@@ -106,44 +79,44 @@
       "page": "napravleniya/",
       "text": "Электродвигатели",
       "cardIsLink": true,
-      "target": "katalog/nasosy/",
+      "target": "napravleniya/elektrodvigateli/",
       "point": [
         195,
         451
       ],
-      "landed": "katalog/nasosy/",
-      "h1": "Насосы",
-      "ok": false,
-      "detail": "не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+      "landed": "napravleniya/elektrodvigateli/",
+      "h1": "Электродвигатели промышленные",
+      "ok": true
     },
     {
       "test": "первая карточка каталога",
       "width": 1440,
       "page": "katalog/nasosy/",
       "text": "Grundfos CR 32-4",
-      "cardIsLink": false,
+      "cardIsLink": true,
+      "target": "katalog/nasosy/grundfos-cr-32-4/",
       "point": [
         520,
         450
       ],
-      "landed": "katalog/nasosy/",
-      "ok": false,
-      "detail": "клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+      "landed": "katalog/nasosy/grundfos-cr-32-4/",
+      "h1": "Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE",
+      "ok": true
     },
     {
       "test": "первая статья блога",
       "width": 1440,
       "page": "blog/",
       "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
-      "cardIsLink": false,
+      "cardIsLink": true,
+      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
       "point": [
-        1046,
-        410
+        720,
+        450
       ],
       "landed": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
-      "ok": true,
-      "partial": true,
-      "detail": "название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+      "h1": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "ok": true
     },
     {
       "test": "первый раздел направлений",
@@ -151,99 +124,17 @@
       "page": "napravleniya/",
       "text": "Электродвигатели",
       "cardIsLink": true,
-      "target": "katalog/nasosy/",
+      "target": "napravleniya/elektrodvigateli/",
       "point": [
         226,
         450
       ],
-      "landed": "katalog/nasosy/",
-      "h1": "Насосы",
-      "ok": false,
-      "detail": "не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+      "landed": "napravleniya/elektrodvigateli/",
+      "h1": "Электродвигатели промышленные",
+      "ok": true
     }
   ],
   "issues": [
-    {
-      "type": "wrong_target",
-      "severity": "error",
-      "page": "chat/",
-      "text": "Запросить КП",
-      "card": "Подбор · насос для оборотной воды ответ 4 сек Нужен насос на оборотную воду: 40 м³/ч, напор 35 м, температура до +60 °C. Grundfos дорого, н…",
-      "cardSel": "div.blueprint",
-      "target": "katalog/kompressory/kaishan-lgcy-75/",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-45-3/",
-        "katalog/nasosy/cnp-cdlf-42-30/",
-        "katalog/nasosy/wilo-helix-v-4204/"
-      ],
-      "detail": "товар: в карточке «Grundfos CR 45-3», «CNP CDLF 42-30», «Wilo Helix V 4204», ссылка на «Kaishan LGCY-75»"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos CR 32-4",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-32-4/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos NB 40-200/219",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-nb-40-200-219/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos CR 45-3",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-45-3/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos CR 20-5",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-20-5/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos NBG 65-50-160",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-nbg-65-50-160/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
-    {
-      "type": "card_not_clickable",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos TP 65-230/2",
-      "cardSel": "div.card.blueprint",
-      "expected": [
-        "katalog/nasosy/grundfos-tp-65-230-2/"
-      ],
-      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
-    },
     {
       "type": "many_cards_same_target",
       "severity": "warning",
@@ -259,568 +150,6 @@
         "Инженерные пластики и композитные нити 40",
         "Фотополимеры и порошки 20",
         "Постобработка и сушка материалов 10"
-      ]
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Электродвигатели",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/elektrodvigateli/"
-      ],
-      "detail": "карточка направлениеа «Электродвигатели» ведёт на katalog/nasosy/, а её страница — napravleniya/elektrodvigateli/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Частотники и автоматика",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/chastotniki-i-avtomatika/"
-      ],
-      "detail": "карточка направлениеа «Частотники и автоматика» ведёт на katalog/nasosy/, а её страница — napravleniya/chastotniki-i-avtomatika/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "КИПиА",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/kipia/"
-      ],
-      "detail": "карточка направлениеа «КИПиА» ведёт на katalog/nasosy/, а её страница — napravleniya/kipia/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Электротехника",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/elektrotekhnika/"
-      ],
-      "detail": "карточка направлениеа «Электротехника» ведёт на katalog/nasosy/, а её страница — napravleniya/elektrotekhnika/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Кабель и кабеленесущие системы",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/kabel-i-kabelenesushchie-sistemy/"
-      ],
-      "detail": "карточка направлениеа «Кабель и кабеленесущие системы» ведёт на katalog/nasosy/, а её страница — napravleniya/kabel-i-kabelenesushchie-sistemy/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "ИБП и электропитание",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/ibp-i-elektropitanie/"
-      ],
-      "detail": "карточка направлениеа «ИБП и электропитание» ведёт на katalog/nasosy/, а её страница — napravleniya/ibp-i-elektropitanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Дизель-генераторы",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/dizel-generatory/"
-      ],
-      "detail": "карточка направлениеа «Дизель-генераторы» ведёт на katalog/nasosy/, а её страница — napravleniya/dizel-generatory/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленное освещение",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennoe-osveshchenie/"
-      ],
-      "detail": "карточка направлениеа «Промышленное освещение» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennoe-osveshchenie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Энергосбережение",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/energosberezhenie/"
-      ],
-      "detail": "карточка направлениеа «Энергосбережение» ведёт на katalog/nasosy/, а её страница — napravleniya/energosberezhenie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Насосы",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/nasosy/"
-      ],
-      "detail": "карточка направлениеа «Насосы» ведёт на katalog/nasosy/, а её страница — napravleniya/nasosy/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленная арматура",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennaya-armatura/"
-      ],
-      "detail": "карточка направлениеа «Промышленная арматура» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennaya-armatura/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Гидравлика",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/gidravlika/"
-      ],
-      "detail": "карточка направлениеа «Гидравлика» ведёт на katalog/nasosy/, а её страница — napravleniya/gidravlika/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Пневматика",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/pnevmatika/"
-      ],
-      "detail": "карточка направлениеа «Пневматика» ведёт на katalog/nasosy/, а её страница — napravleniya/pnevmatika/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Теплообменное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/teploobmennoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Теплообменное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/teploobmennoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Котельное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/kotelnoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Котельное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/kotelnoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Водоподготовка",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/vodopodgotovka/"
-      ],
-      "detail": "карточка направлениеа «Водоподготовка» ведёт на katalog/nasosy/, а её страница — napravleniya/vodopodgotovka/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Очистные сооружения",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/ochistnye-sooruzheniya/"
-      ],
-      "detail": "карточка направлениеа «Очистные сооружения» ведёт на katalog/nasosy/, а её страница — napravleniya/ochistnye-sooruzheniya/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Пожарное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/pozharnoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Пожарное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/pozharnoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Компрессоры",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/kompressory/"
-      ],
-      "detail": "карточка направлениеа «Компрессоры» ведёт на katalog/nasosy/, а её страница — napravleniya/kompressory/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Вентиляция и климат",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/ventilyaciya-i-klimat/"
-      ],
-      "detail": "карточка направлениеа «Вентиляция и климат» ведёт на katalog/nasosy/, а её страница — napravleniya/ventilyaciya-i-klimat/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленный холод",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennyj-holod/"
-      ],
-      "detail": "карточка направлениеа «Промышленный холод» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennyj-holod/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленные фильтры",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennye-filtry/"
-      ],
-      "detail": "карточка направлениеа «Промышленные фильтры» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-filtry/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Пылеулавливание и аспирация",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/pyleulavlivanie-i-aspiraciya/"
-      ],
-      "detail": "карточка направлениеа «Пылеулавливание и аспирация» ведёт на katalog/nasosy/, а её страница — napravleniya/pyleulavlivanie-i-aspiraciya/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Очистка воздуха и газов",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/ochistka-vozduha-i-gazov/"
-      ],
-      "detail": "карточка направлениеа «Очистка воздуха и газов» ведёт на katalog/nasosy/, а её страница — napravleniya/ochistka-vozduha-i-gazov/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленные печи и сушильные камеры",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennye-pechi-i-sushilnye-kamery/"
-      ],
-      "detail": "карточка направлениеа «Промышленные печи и сушильные камеры» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-pechi-i-sushilnye-kamery/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Редукторы и мотор-редукторы",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/reduktory-i-motor-reduktory/"
-      ],
-      "detail": "карточка направлениеа «Редукторы и мотор-редукторы» ведёт на katalog/nasosy/, а её страница — napravleniya/reduktory-i-motor-reduktory/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Подшипники и комплектующие",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/podshipniki-i-komplektuyushchie/"
-      ],
-      "detail": "карточка направлениеа «Подшипники и комплектующие» ведёт на katalog/nasosy/, а её страница — napravleniya/podshipniki-i-komplektuyushchie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Запчасти для производства",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/zapchasti-dlya-proizvodstva/"
-      ],
-      "detail": "карточка направлениеа «Запчасти для производства» ведёт на katalog/nasosy/, а её страница — napravleniya/zapchasti-dlya-proizvodstva/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Конвейерное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/konvejernoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Конвейерное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/konvejernoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Подъёмное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/podemnoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Подъёмное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/podemnoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленная химия",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennaya-himiya/"
-      ],
-      "detail": "карточка направлениеа «Промышленная химия» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennaya-himiya/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Оборудование для металлообработки",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/oborudovanie-dlya-metalloobrabotki/"
-      ],
-      "detail": "карточка направлениеа «Оборудование для металлообработки» ведёт на katalog/nasosy/, а её страница — napravleniya/oborudovanie-dlya-metalloobrabotki/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленный инструмент",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennyj-instrument/"
-      ],
-      "detail": "карточка направлениеа «Промышленный инструмент» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennyj-instrument/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Станки и ЧПУ",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/stanki-i-chpu/"
-      ],
-      "detail": "карточка направлениеа «Станки и ЧПУ» ведёт на katalog/nasosy/, а её страница — napravleniya/stanki-i-chpu/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Сварочное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/svarochnoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Сварочное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/svarochnoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Промышленные роботы",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/promyshlennye-roboty/"
-      ],
-      "detail": "карточка направлениеа «Промышленные роботы» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-roboty/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Системы машинного зрения",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/sistemy-mashinnogo-zreniya/"
-      ],
-      "detail": "карточка направлениеа «Системы машинного зрения» ведёт на katalog/nasosy/, а её страница — napravleniya/sistemy-mashinnogo-zreniya/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "3D-печать для производства",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/3d-pechat-dlya-proizvodstva/"
-      ],
-      "detail": "карточка направлениеа «3D-печать для производства» ведёт на katalog/nasosy/, а её страница — napravleniya/3d-pechat-dlya-proizvodstva/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Лабораторное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/laboratornoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Лабораторное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/laboratornoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Сепараторы и центрифуги",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/separatory-i-centrifugi/"
-      ],
-      "detail": "карточка направлениеа «Сепараторы и центрифуги» ведёт на katalog/nasosy/, а её страница — napravleniya/separatory-i-centrifugi/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Складская техника",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/skladskaya-tehnika/"
-      ],
-      "detail": "карточка направлениеа «Складская техника» ведёт на katalog/nasosy/, а её страница — napravleniya/skladskaya-tehnika/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Упаковочное оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/upakovochnoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Упаковочное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/upakovochnoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Весовое оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/vesovoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Весовое оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/vesovoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Пищевое оборудование",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/pishchevoe-oborudovanie/"
-      ],
-      "detail": "карточка направлениеа «Пищевое оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/pishchevoe-oborudovanie/"
-    },
-    {
-      "type": "card_wrong_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Средства безопасности",
-      "cardSel": "a.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "napravleniya/sredstva-bezopasnosti/"
-      ],
-      "detail": "карточка направлениеа «Средства безопасности» ведёт на katalog/nasosy/, а её страница — napravleniya/sredstva-bezopasnosti/"
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "error",
-      "page": "napravleniya/",
-      "target": "katalog/nasosy/",
-      "text": "45 разных карточек",
-      "detail": "45 разных карточек ведут на один адрес katalog/nasosy/: «Электродвигатели 6 900 асинхронные, взр…», «Частотники и автоматика 2 310 ПЛК, HMI,…», «КИПиА 4 180 датчики давления и температ…», «Электротехника 9 640 автоматы, контакто…»…",
-      "examples": [
-        "Электродвигатели 6 900 асинхронные, взрывозащищённые, тормоз",
-        "Частотники и автоматика 2 310 ПЛК, HMI, датчики, энкодеры, с",
-        "КИПиА 4 180 датчики давления и температуры, расходомеры, уро",
-        "Электротехника 9 640 автоматы, контакторы, реле, клеммы, шка",
-        "Кабель и кабеленесущие системы 3 520 промышленный кабель, ло",
-        "ИБП и электропитание 1 240 промышленные UPS, стабилизаторы, ",
-        "Дизель-генераторы 610 ДГУ, АВР, контейнерные станции",
-        "Промышленное освещение 2 070 LED для цехов и складов, взрыво",
-        "Энергосбережение 480 компенсация реактивной мощности, монито",
-        "Насосы 4 218 химические, пищевые, дренажные, дозировочные, ц",
-        "Промышленная арматура 8 470 задвижки, клапаны, краны, затвор",
-        "Гидравлика 5 130 насосы, распределители, РВД, гидроцилиндры"
       ]
     },
     {
@@ -1051,23 +380,6 @@
     },
     {
       "type": "many_cards_same_target",
-      "severity": "warning",
-      "page": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
-      "target": "chat/",
-      "text": "7 разных карточек",
-      "detail": "7 разных карточек ведут на один адрес chat/: «Твердосплавные пластины и державки 1 380», «Свёрла, развёртки и метчики 1 140», «Фрезы концевые и торцевые 1 010», «Токарные патроны и кулачки 630»…",
-      "examples": [
-        "Твердосплавные пластины и державки 1 380",
-        "Свёрла, развёртки и метчики 1 140",
-        "Фрезы концевые и торцевые 1 010",
-        "Токарные патроны и кулачки 630",
-        "Оправки, цанги и инструментальные системы 760",
-        "Тиски и станочная оснастка 630",
-        "Измерительный инструмент 760"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
       "severity": "error",
       "page": "napravleniya/nasosy/",
       "target": "katalog/nasosy/",
@@ -1082,6 +394,23 @@
         "Пищевые 260",
         "Дренажные и фекальные 330",
         "Циркуляционные 218"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Твердосплавные пластины и державки 1 380», «Свёрла, развёртки и метчики 1 140», «Фрезы концевые и торцевые 1 010», «Токарные патроны и кулачки 630»…",
+      "examples": [
+        "Твердосплавные пластины и державки 1 380",
+        "Свёрла, развёртки и метчики 1 140",
+        "Фрезы концевые и торцевые 1 010",
+        "Токарные патроны и кулачки 630",
+        "Оправки, цанги и инструментальные системы 760",
+        "Тиски и станочная оснастка 630",
+        "Измерительный инструмент 760"
       ]
     },
     {
@@ -1133,17 +462,6 @@
         "Системы безразборной мойки CIP 130",
         "Санитарная арматура и фитинги 240",
         "Упаковочные линии 130"
-      ]
-    },
-    {
-      "type": "target_h1_mismatch",
-      "severity": "error",
-      "page": "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
-      "target": "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
-      "detail": "h1 «Фильтрующий элемент магистрального фильтра сжатого воздуха, 2 мкм» не содержит названия «Фильтр-элемент воздушный 2 мкм»",
-      "expected": [
-        "Фильтр-элемент воздушный 2 мкм",
-        "Фильтр-элемент воздушный"
       ]
     },
     {
@@ -1589,34 +907,6 @@
       ]
     },
     {
-      "type": "card_to_hub",
-      "severity": "error",
-      "page": "poisk/",
-      "text": "Grundfos CR 32-4",
-      "card": "Искать вместо этого: Grundfos CR 32-4 8 шт. в наличии · 104 900 ₽",
-      "cardSel": "div.blueprint",
-      "target": "katalog/nasosy/",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-32-4/"
-      ],
-      "detail": "товар «Grundfos CR 32-4» ведёт на хаб вместо своей страницы"
-    },
-    {
-      "type": "wrong_target",
-      "severity": "error",
-      "page": "sravnenie/",
-      "text": "Открыть рекомендованную",
-      "card": "Вывод по подбору Под заданную рабочую точку ближе всего CNP CDLF 42-30: КПД в точке 74%, запас по напору 3%, цена на 22% ниже Wilo Helix V …",
-      "cardSel": "div.blueprint",
-      "target": "katalog/nasosy/grundfos-cr-32-4/",
-      "expected": [
-        "katalog/nasosy/grundfos-cr-45-3/",
-        "katalog/nasosy/cnp-cdlf-42-30/",
-        "katalog/nasosy/wilo-helix-v-4204/"
-      ],
-      "detail": "товар: в карточке «Grundfos CR 45-3», «CNP CDLF 42-30», «Wilo Helix V 4204», ссылка на «Grundfos CR 32-4»"
-    },
-    {
       "type": "page_not_in_data",
       "severity": "warning",
       "page": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
@@ -1627,54 +917,6 @@
       "severity": "warning",
       "page": "poisk/",
       "detail": "служебная/хаб-страница без входящих ссылок с публичных страниц"
-    },
-    {
-      "type": "click_test",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos CR 32-4",
-      "target": "katalog/nasosy/",
-      "detail": "первая карточка каталога @390px: клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
-    },
-    {
-      "type": "click_test_partial",
-      "severity": "warning",
-      "page": "blog/",
-      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
-      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
-      "detail": "первая статья блога @390px: название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
-    },
-    {
-      "type": "click_test",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Электродвигатели",
-      "target": "katalog/nasosy/",
-      "detail": "первый раздел направлений @390px: не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
-    },
-    {
-      "type": "click_test",
-      "severity": "error",
-      "page": "katalog/nasosy/",
-      "text": "Grundfos CR 32-4",
-      "target": "katalog/nasosy/",
-      "detail": "первая карточка каталога @1440px: клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
-    },
-    {
-      "type": "click_test_partial",
-      "severity": "warning",
-      "page": "blog/",
-      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
-      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
-      "detail": "первая статья блога @1440px: название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
-    },
-    {
-      "type": "click_test",
-      "severity": "error",
-      "page": "napravleniya/",
-      "text": "Электродвигатели",
-      "target": "katalog/nasosy/",
-      "detail": "первый раздел направлений @1440px: не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
     }
   ]
 }

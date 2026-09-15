@@ -66,6 +66,7 @@ T = {  # name: (size, prompt)
  "p-wilo-helix": ("1024x1024", PRODUCT + "Vertical multistage inline centrifugal pump: red-painted electric motor and red-painted cast iron base with inline flanges, brushed stainless steel pump stack between them with tie rods, blank nameplate, no logos, no brand names."),
  "p-ebara-3m": ("1024x1024", PRODUCT + "End-suction close-coupled stainless steel centrifugal pump: polished stainless steel volute casing with threaded or flanged suction and discharge ports, grey electric motor with cooling fins, compact feet, blank nameplate, no logos."),
  "p-air-filter": ("1024x1024", PRODUCT + "Cylindrical pleated compressed-air filter element with white pleated media, grey plastic end caps and black O-ring, standing upright, second one lying behind."),
+ "p-vibro-mount": ("1024x1024", PRODUCT + "Set of four anti-vibration rubber mounts with M12 threaded studs: cylindrical black rubber bodies bonded between two zinc-plated steel plates, one standing, others lying, with nuts and washers."),
 }
 
 def job(name):

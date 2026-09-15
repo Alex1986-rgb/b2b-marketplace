@@ -454,11 +454,106 @@
     b.addEventListener('click', function () { var el = document.getElementById(ids[i]); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
   });
 
+  // ═════════ Доступность (a11y 14.09.26) ═════════
+  function initA11y() {
+    // JS-1: имена кнопок-иконок и полей без подписи
+    if (menuBtn) menuBtn.setAttribute('aria-label', 'Меню');
+    $$('.hide-m').forEach(function (s) { var b = s.closest('button, a'); if (b && !b.getAttribute('aria-label')) b.setAttribute('aria-label', txt(s)); });
+    $$('button, a').forEach(function (b) { if (!txt(b) && !b.getAttribute('aria-label') && $('[class*="i-ui-search"]', b)) b.setAttribute('aria-label', 'Найти'); });
+    $$('input.input').forEach(function (i) {
+      if (i.getAttribute('aria-label') || i.id && $('label[for="' + i.id + '"]')) return;
+      var p = i.placeholder || '';
+      if (/модель|артикул|название/i.test(p)) i.setAttribute('aria-label', 'Поиск по модели, артикулу или названию');
+      else if (/^от\s/i.test(p)) i.setAttribute('aria-label', 'Цена от, ₽');
+      else if (/^до\s/i.test(p)) i.setAttribute('aria-label', 'Цена до, ₽');
+    });
+    $$('select').forEach(function (s) {
+      if (s.getAttribute('aria-label')) return;
+      s.setAttribute('aria-label', /дешёв|релевант/i.test(txt(s)) ? 'Сортировка' : /Все направления/i.test(txt(s)) ? 'Рубрика' : 'Выбор');
+    });
+    $$('header a').forEach(function (a) { // «3Корзина» → «Корзина: 3»
+      var n = $('span.mono[style*="position: absolute"]', a); if (!n) return;
+      var name = txt(a).replace(txt(n), '').trim(); if (name) a.setAttribute('aria-label', name + ': ' + txt(n));
+    });
+
+    // JS-2: label ↔ поле и autocomplete
+    var AC = [[/телефон/i, 'tel', 'tel'], [/почт|e-?mail/i, 'email', 'email'], [/контакт|имя|лицо/i, 'name'], [/компани|плательщик|организац/i, 'organization'], [/адрес/i, 'street-address'], [/инн/i, 'off']];
+    $$('.field').forEach(function (f, i) {
+      var l = $('label', f), c = $('input, select, textarea', f); if (!l || !c) return;
+      if (!c.id) c.id = 'pk-f' + i;
+      if (l.tagName === 'LABEL') l.htmlFor = c.id; else { l.id = l.id || 'pk-l' + i; c.setAttribute('aria-labelledby', l.id); }
+      var t = txt(l);
+      for (var k = 0; k < AC.length; k++) if (AC[k][0].test(t)) { c.setAttribute('autocomplete', AC[k][1]); if (AC[k][2] && c.tagName === 'INPUT') c.type = AC[k][2]; break; }
+      if (/инн/i.test(t)) c.setAttribute('inputmode', 'numeric');
+    });
+
+    // JS-3: степпер карточки товара — клавиатура
+    $$('.seg > span.seg-opt').forEach(function (s) {
+      var v = txt(s); if (s.closest('.cartrow')) return;
+      if (v === '+' || v === '−') {
+        s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0');
+        s.setAttribute('aria-label', v === '+' ? 'Увеличить количество' : 'Уменьшить количество');
+        s.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); s.click(); } });
+      } else if (/^\d+$/.test(v)) { s.setAttribute('role', 'status'); s.setAttribute('aria-live', 'polite'); s.setAttribute('aria-label', 'Количество'); }
+    });
+
+    // JS-4: фото — информативные получают имя, декоративные скрываются
+    var h1 = txt($('h1'));
+    $$('[data-photo], .gal > span').forEach(function (el, i) {
+      if (el.getAttribute('role') === 'img' || el.hasAttribute('aria-hidden')) return;
+      var inLink = el.closest('a, [data-href]'), main = el.matches('figure') || el.closest('.split > :first-child');
+      if (main && !inLink) {
+        el.setAttribute('role', 'img');
+        el.setAttribute('aria-label', h1 + (el.closest('.gal') ? ' — фото ' + ([].indexOf.call(el.parentElement.children, el) + 1) : ' — фото'));
+      } else el.setAttribute('aria-hidden', 'true');
+    });
+    $$('.gal[role="list"] > span[role="img"]').forEach(function (s) { var w = document.createElement('span'); w.setAttribute('role', 'listitem'); s.parentElement.insertBefore(w, s); w.appendChild(s); });
+    $$('span').forEach(function (s) { if (/^★+$/.test(txt(s))) s.setAttribute('aria-hidden', 'true'); });
+
+    // JS-5: фильтры и бегущая строка
+    if (filters) {
+      if (filters.found) { filters.found.setAttribute('role', 'status'); filters.found.setAttribute('aria-live', 'polite'); }
+      filters.boxes.forEach(function (l) { var g = l.parentElement, t = $('span.mono', g); if (t && !g.getAttribute('role')) { t.id = t.id || 'pk-g' + Math.random().toString(36).slice(2, 7); g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', t.id); } });
+    }
+    $$('.marquee-wrap').forEach(function (w) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pk-marquee-toggle'; b.textContent = 'Пауза';
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { var on = w.classList.toggle('pk-paused'); b.textContent = on ? 'Продолжить' : 'Пауза'; b.setAttribute('aria-pressed', String(on)); });
+      w.insertAdjacentElement('beforebegin', b);
+    });
+  }
+
   // ── старт ──
   paintCounters();
   initCartPage();
   initFilters();
   initMenu();
+  initA11y();
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// Ленивые фоновые фото: data-bg проставляет сборщик (optimizeImages)
+(function () {
+  var els = document.querySelectorAll('[data-bg]');
+  if (!els.length) return;
+  var webpSet = window.CSS && CSS.supports && CSS.supports('background-image', 'image-set(url("a.webp") type("image/webp"))');
+  function show(el) {
+    el.style.backgroundImage = webpSet ? el.getAttribute('data-bg') : 'url("' + el.getAttribute('data-bg-jpg') + '")';
+    el.removeAttribute('data-bg');
+  }
+  if (!('IntersectionObserver' in window)) { [].forEach.call(els, show); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+  }, { rootMargin: '600px 0px' });
+  [].forEach.call(els, function (el) { io.observe(el); });
+  window.addEventListener('beforeprint', function () { [].forEach.call(document.querySelectorAll('[data-bg]'), show); });
+})();
+
+// Каталог: ?tip=<подкатегория> из страницы направления — показываем выбранный тип в заголовке выдачи
+(function () {
+  var tip = new URLSearchParams(location.search).get('tip');
+  if (!tip) return;
+  var h1 = document.querySelector('h1');
+  if (h1 && /^Насосы$/.test(h1.textContent.trim())) h1.textContent = 'Насосы: ' + tip.toLowerCase();
 })();

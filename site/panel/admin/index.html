@@ -27,6 +27,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -41,7 +42,7 @@
         <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">ПРОМКОНТУР</span>
       </a>
       <span class="mono" style="font-size: 12px; text-transform: uppercase; color: var(--color-accent-300);">Панель оператора</span>
-      <nav style="display: flex; gap: 4px; flex-wrap: wrap; margin-left: 12px;">
+      <nav style="display: flex; gap: 4px; flex-wrap: wrap; margin-left: 12px;" aria-label="Разделы сайта">
         
           <a href="/b2b-marketplace/panel/crm/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-crm" style="color: var(--color-accent-300);"></span>CRM</a>
         
@@ -144,7 +145,7 @@
   
 
   
-  <div data-screen-label="Админка">
+  <div data-screen-label="Админка" role="main" id="main">
     <div style="max-width: 1360px; margin: 0px auto; padding: 24px 28px 56px;">
       <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px;">
         <div>
@@ -180,7 +181,7 @@
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px;">
           <div>
-            <h3 style="margin: 0px;">Журнал изменений</h3>
+            <h3 style="margin: 0px;" role="heading" aria-level="2">Журнал изменений</h3>
             <p style="font-size: 14px; color: var(--color-neutral-700); margin: 2px 0px 0px;">Кто и&nbsp;когда менял наценку, пороги, источники и&nbsp;сценарии автоматизации.</p>
           </div>
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -190,7 +191,7 @@
         </div>
         <div style="overflow-x: auto;">
           <table class="table" style="width: 100%;">
-            <thead><tr><th>Когда</th><th>Раздел</th><th>Что изменено</th><th>Было → стало</th><th>Кто</th><th></th></tr></thead>
+            <thead><tr><th>Когда</th><th>Раздел</th><th>Что изменено</th><th>Было → стало</th><th>Кто</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>
@@ -929,7 +930,7 @@
         <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin: 18px 0px 8px;">Каналы</div>
         <div style="overflow-x: auto;">
           <table class="table" style="width: 100%;">
-            <thead><tr><th>Канал</th><th>Идентификатор</th><th>Диалогов за&nbsp;месяц</th><th>Автоответов</th><th>Заказов из&nbsp;канала</th><th>Статус</th><th></th></tr></thead>
+            <thead><tr><th>Канал</th><th>Идентификатор</th><th>Диалогов за&nbsp;месяц</th><th>Автоответов</th><th>Заказов из&nbsp;канала</th><th>Статус</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>
@@ -1065,44 +1066,44 @@
           </div>
           <div style="overflow-x: auto;">
             <table class="table" style="width: 100%;">
-              <thead><tr><th>Компания</th><th>Позиция</th><th>Оценка</th><th>Проверка</th><th></th></tr></thead>
+              <thead><tr><th>Компания</th><th>Позиция</th><th>Оценка</th><th>Проверка</th><th><span class="pk-vh">Действие</span></th></tr></thead>
               <tbody>
                 
-                  <tr>
+                  <tr data-href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/" style="cursor: pointer;">
                     <td style="font-size: 14px; font-weight: 500;">ООО «Спецмонтаж»<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">14 сентября</div></td>
-                    <td style="font-size: 13px; color: var(--color-neutral-700);">Grundfos CR 32-4</td>
+                    <td style="font-size: 13px; color: var(--color-neutral-700);"><a href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/" style="color: inherit; text-decoration: none;">Grundfos CR 32-4</a></td>
                     <td class="mono" style="font-size: 15px; color: var(--color-text);">5,0</td>
                     <td><span class="tag tag-accent" style="font-size: 12px;">Покупка есть</span></td>
                     <td style="text-align: right; white-space: nowrap;"><button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Опубликовать</button></td>
                   </tr>
                 
-                  <tr>
+                  <tr data-href="/b2b-marketplace/katalog/podshipniki/skf-6205-2rs/" style="cursor: pointer;">
                     <td style="font-size: 14px; font-weight: 500;">ООО «Литмаш-Сервис»<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">13 сентября</div></td>
-                    <td style="font-size: 13px; color: var(--color-neutral-700);">Подшипник SKF 6205-2RS</td>
+                    <td style="font-size: 13px; color: var(--color-neutral-700);"><a href="/b2b-marketplace/katalog/podshipniki/skf-6205-2rs/" style="color: inherit; text-decoration: none;">Подшипник SKF 6205-2RS</a></td>
                     <td class="mono" style="font-size: 15px; color: var(--color-accent-700);">2,0</td>
                     <td><span class="tag tag-outline" style="font-size: 12px;">Ушло инженеру</span></td>
                     <td style="text-align: right; white-space: nowrap;"><button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Читать</button></td>
                   </tr>
                 
-                  <tr>
+                  <tr data-href="/b2b-marketplace/katalog/elektrika/innovert-vr-15/" style="cursor: pointer;">
                     <td style="font-size: 14px; font-weight: 500;">ООО «Энергосервис»<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">13 сентября</div></td>
-                    <td style="font-size: 13px; color: var(--color-neutral-700);">INNOVERT VR 15&nbsp;кВт</td>
+                    <td style="font-size: 13px; color: var(--color-neutral-700);"><a href="/b2b-marketplace/katalog/elektrika/innovert-vr-15/" style="color: inherit; text-decoration: none;">INNOVERT VR 15&nbsp;кВт</a></td>
                     <td class="mono" style="font-size: 15px; color: var(--color-text);">4,0</td>
                     <td><span class="tag tag-accent" style="font-size: 12px;">Покупка есть</span></td>
                     <td style="text-align: right; white-space: nowrap;"><button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Опубликовать</button></td>
                   </tr>
                 
-                  <tr>
+                  <tr data-href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="cursor: pointer;">
                     <td style="font-size: 14px; font-weight: 500;">не&nbsp;определена<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">12 сентября</div></td>
-                    <td style="font-size: 13px; color: var(--color-neutral-700);">Kaishan LGCY-75</td>
+                    <td style="font-size: 13px; color: var(--color-neutral-700);"><a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="color: inherit; text-decoration: none;">Kaishan LGCY-75</a></td>
                     <td class="mono" style="font-size: 15px; color: var(--color-text);">5,0</td>
                     <td><span class="tag tag-neutral" style="font-size: 12px;">Покупки нет</span></td>
                     <td style="text-align: right; white-space: nowrap;"><button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Отклонить</button></td>
                   </tr>
                 
-                  <tr>
+                  <tr data-href="/b2b-marketplace/katalog/privod/nord-sk-02/" style="cursor: pointer;">
                     <td style="font-size: 14px; font-weight: 500;">ООО «Тепломаш»<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">11 сентября</div></td>
-                    <td style="font-size: 13px; color: var(--color-neutral-700);">NORD SK 02 мотор-редуктор</td>
+                    <td style="font-size: 13px; color: var(--color-neutral-700);"><a href="/b2b-marketplace/katalog/privod/nord-sk-02/" style="color: inherit; text-decoration: none;">NORD SK 02 мотор-редуктор</a></td>
                     <td class="mono" style="font-size: 15px; color: var(--color-text);">3,0</td>
                     <td><span class="tag tag-accent" style="font-size: 12px;">Покупка есть</span></td>
                     <td style="text-align: right; white-space: nowrap;"><button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Опубликовать</button></td>
@@ -1282,7 +1283,7 @@
                   <td class="mono" style="font-size: 13px; color: var(--color-neutral-700);">нет</td>
                 </tr>
               
-                <tr>
+                <tr data-href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/" style="cursor: pointer;">
                   <td style="font-size: 14px; font-weight: 500;">Grundfos CR 32-4<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">grundfos cr 32-4 купить, цена</div></td>
                   <td class="mono" style="font-size: 13px;">2 900</td>
                   <td style="font-size: 13px;">Транзакционный</td>
@@ -1486,7 +1487,7 @@
         <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin: 18px 0px 8px;">Очередь генерации</div>
         <div style="overflow-x: auto;">
           <table class="table" style="width: 100%;">
-            <thead><tr><th>Тема</th><th>Направление</th><th>Ключевой запрос · частота</th><th>Фото</th><th>Объём</th><th>Статус</th><th></th></tr></thead>
+            <thead><tr><th>Тема</th><th>Направление</th><th>Ключевой запрос · частота</th><th>Фото</th><th>Объём</th><th>Статус</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>
@@ -1603,7 +1604,7 @@
         </div>
         <div style="overflow: auto; max-height: 520px;">
           <table class="table" style="width: 100%;">
-            <thead><tr><th>Направление</th><th>Поставщики РФ</th><th>Китай / импорт</th><th>Обновление</th><th>Валюта и&nbsp;наценка</th><th>Статус</th><th></th></tr></thead>
+            <thead><tr><th>Направление</th><th>Поставщики РФ</th><th>Китай / импорт</th><th>Обновление</th><th>Валюта и&nbsp;наценка</th><th>Статус</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>
@@ -2381,7 +2382,7 @@
         </div>
         <div style="overflow-x: auto;">
           <table class="table" style="width: 100%;">
-            <thead><tr><th>Поставщик</th><th>Формат</th><th>Расписание</th><th>Последний обмен</th><th>Позиций</th><th>Результат</th><th></th></tr></thead>
+            <thead><tr><th>Поставщик</th><th>Формат</th><th>Расписание</th><th>Последний обмен</th><th>Позиций</th><th>Результат</th><th><span class="pk-vh">Действие</span></th></tr></thead>
             <tbody>
               
                 <tr>

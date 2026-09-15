@@ -25,8 +25,10 @@
 <link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему именно эти направления?","acceptedAnswer":{"@type":"Answer","text":"Все они закупаются одной и той же службой снабжения. Это даёт повторные заказы и позволяет поставщику закрывать несколько разделов сразу."}},{"@type":"Question","name":"Все направления открыты сейчас?","acceptedAnswer":{"@type":"Answer","text":"Открыты разделы с подключёнными фидами поставщиков. Остальные работают в режиме запроса: цена приходит в течение двух часов."}},{"@type":"Question","name":"Можно ли закупить позиции из разных направлений одним заказом?","acceptedAnswer":{"@type":"Answer","text":"Да, спецификация собирается в одну корзину, счёт — один, отгрузки идут от разных поставщиков по своим срокам."}},{"@type":"Question","name":"Как открывается новое направление?","acceptedAnswer":{"@type":"Answer","text":"По подтверждённому спросу: три и более запроса в месяц плюс минимум два поставщика с электронной выгрузкой."}},{"@type":"Question","name":"Есть ли взрывозащищённое исполнение?","acceptedAnswer":{"@type":"Answer","text":"Да, по электродвигателям, освещению, КИПиА и вентиляции доступны Ex-исполнения — указывайте маркировку в запросе."}},{"@type":"Question","name":"Работаете ли с импортом и параллельным ввозом?","acceptedAnswer":{"@type":"Answer","text":"Да, по части брендов через партнёров. Срок и курс фиксируются в КП на момент подтверждения."}},{"@type":"Question","name":"Есть ли шеф-монтаж по проектным направлениям?","acceptedAnswer":{"@type":"Answer","text":"По компрессорам, котельному, холодильному и очистному оборудованию — да, работы считаются отдельной строкой в КП."}},{"@type":"Question","name":"Можно ли закрепить цены на год?","acceptedAnswer":{"@type":"Answer","text":"Для регулярной номенклатуры заключаем рамочный договор с прайс-листом и фиксацией цен."}}]}</script>
+<link rel="preload" as="image" href="/b2b-marketplace/img/a-vfd.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -64,7 +66,7 @@
         <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-cart" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Корзина</a>
       </div>
     </div>
-    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;" aria-label="Разделы сайта">
       
         <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-accent-700); text-decoration: none; font-weight: 600;">Направления</a>
       
@@ -108,7 +110,7 @@
   
 
   
-  <div data-screen-label="Направления">
+  <div data-screen-label="Направления" role="main" id="main">
     <section style="background: var(--color-accent-900); color: var(--color-neutral-100);">
       <div style="max-width: 1360px; margin: 0px auto; padding: 40px 28px 36px;">
         <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-accent-300); margin-bottom: 10px;">Каталог направлений · 45 разделов</div>
@@ -144,7 +146,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/a-vfd.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(/b2b-marketplace/img/a-vfd.jpg) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px; background-image: image-set(url(/b2b-marketplace/img/a-vfd.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-vfd.jpg) type(&quot;image/jpeg&quot;));"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-electric" style="color: var(--color-accent-700);"></span>
@@ -156,7 +158,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/elektrodvigateli/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-motors" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Электродвигатели</span></span>
@@ -165,7 +167,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">асинхронные, взрывозащищённые, тормозные, специальные</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/chastotniki-i-avtomatika/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-vfd" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Частотники и&nbsp;автоматика</span></span>
@@ -174,7 +176,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">ПЛК, HMI, датчики, энкодеры, сервоприводы, шкафы управления</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/kipia/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-kipia" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">КИПиА</span></span>
@@ -183,7 +185,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">датчики давления и&nbsp;температуры, расходомеры, уровнемеры</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/elektrotekhnika/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-electrical" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Электротехника</span></span>
@@ -192,7 +194,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">автоматы, контакторы, реле, клеммы, шкафы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/kabel-i-kabelenesushchie-sistemy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-cable" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Кабель и&nbsp;кабеленесущие системы</span></span>
@@ -201,7 +203,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">промышленный кабель, лотки, вводы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/ibp-i-elektropitanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-ups" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">ИБП и&nbsp;электропитание</span></span>
@@ -210,7 +212,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">промышленные UPS, стабилизаторы, аккумуляторные шкафы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/dizel-generatory/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-generators" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Дизель-генераторы</span></span>
@@ -219,7 +221,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">ДГУ, АВР, контейнерные станции</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennoe-osveshchenie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-lighting" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленное освещение</span></span>
@@ -228,7 +230,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">LED для&nbsp;цехов и&nbsp;складов, взрывозащищённые светильники</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/energosberezhenie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-energy" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Энергосбережение</span></span>
@@ -242,7 +244,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/dir-pumps.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(/b2b-marketplace/img/dir-pumps.jpg) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px; background-image: image-set(url(/b2b-marketplace/img/dir-pumps.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/dir-pumps.jpg) type(&quot;image/jpeg&quot;));"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-pumping" style="color: var(--color-accent-700);"></span>
@@ -254,7 +256,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-pumps" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Насосы</span></span>
@@ -263,7 +265,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">химические, пищевые, дренажные, дозировочные, циркуляционные</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennaya-armatura/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-valves" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленная арматура</span></span>
@@ -272,7 +274,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">задвижки, клапаны, краны, затворы, электроприводы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/gidravlika/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-hydraulics" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Гидравлика</span></span>
@@ -281,7 +283,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">насосы, распределители, РВД, гидроцилиндры</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/pnevmatika/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-pneumatics" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Пневматика</span></span>
@@ -290,7 +292,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">цилиндры, клапаны, фитинги, подготовка воздуха</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/teploobmennoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-heat-exchangers" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Теплообменное оборудование</span></span>
@@ -299,7 +301,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">пластинчатые и&nbsp;кожухотрубные теплообменники</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/kotelnoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-boilers" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Котельное оборудование</span></span>
@@ -308,7 +310,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">горелки, теплообменники, насосные группы, автоматика</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/vodopodgotovka/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-water" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Водоподготовка</span></span>
@@ -317,7 +319,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">обратный осмос, фильтрация, умягчение, дозирование реагентов</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/ochistnye-sooruzheniya/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-sewage" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Очистные сооружения</span></span>
@@ -326,7 +328,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">локальные очистные, станции для&nbsp;предприятий</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/pozharnoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-fire" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Пожарное оборудование</span></span>
@@ -340,7 +342,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/a-compressor.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(/b2b-marketplace/img/a-compressor.jpg) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px; background-image: image-set(url(/b2b-marketplace/img/a-compressor.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-compressor.jpg) type(&quot;image/jpeg&quot;));"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-air" style="color: var(--color-accent-700);"></span>
@@ -352,7 +354,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/kompressory/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-compressors" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Компрессоры</span></span>
@@ -361,7 +363,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">винтовые, поршневые, безмасляные, осушители, ресиверы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/ventilyaciya-i-klimat/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-ventilation" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Вентиляция и&nbsp;климат</span></span>
@@ -370,7 +372,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">вентиляторы, приточные установки, чиллеры, теплообменники</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennyj-holod/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-cooling" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленный холод</span></span>
@@ -379,7 +381,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">рефрижераторы, холодильные установки, ККБ</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennye-filtry/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-filters" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленные фильтры</span></span>
@@ -388,7 +390,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">воздушные, масляные, гидравлические, аспирационные</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/pyleulavlivanie-i-aspiraciya/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-dust" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Пылеулавливание и&nbsp;аспирация</span></span>
@@ -397,7 +399,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">циклоны, фильтры, вытяжные установки</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/ochistka-vozduha-i-gazov/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-gas-cleaning" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Очистка воздуха и&nbsp;газов</span></span>
@@ -406,7 +408,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">скрубберы, фильтры, газоочистка</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennye-pechi-i-sushilnye-kamery/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-furnaces" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленные печи и&nbsp;сушильные камеры</span></span>
@@ -420,7 +422,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/cl-mechanics.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" data-bg="image-set(url(/b2b-marketplace/img/cl-mechanics.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/cl-mechanics.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/cl-mechanics.jpg" style="background:  center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-mechanics" style="color: var(--color-accent-700);"></span>
@@ -432,7 +434,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/reduktory-i-motor-reduktory/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-gearboxes" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Редукторы и&nbsp;мотор-редукторы</span></span>
@@ -441,7 +443,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">цилиндрические, червячные, планетарные, мотор-редукторы, вариаторы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/podshipniki-i-komplektuyushchie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-bearings" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Подшипники и&nbsp;комплектующие</span></span>
@@ -450,7 +452,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">подшипники, манжеты, сальники, ремни, цепи, муфты</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/zapchasti-dlya-proizvodstva/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-spares" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Запчасти для&nbsp;производства</span></span>
@@ -459,7 +461,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">ремкомплекты, уплотнения, расходники</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/konvejernoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-conveyors" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Конвейерное оборудование</span></span>
@@ -468,7 +470,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">ролики, ленты, мотор-барабаны, барабаны, цепи</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/podemnoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-lifting" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Подъёмное оборудование</span></span>
@@ -477,7 +479,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">тали, лебёдки, краны, электротельферы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennaya-himiya/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-chemistry" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленная химия</span></span>
@@ -486,7 +488,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">масла, смазки, очистители, СОЖ</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/oborudovanie-dlya-metalloobrabotki/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-metalworking" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Оборудование для&nbsp;металлообработки</span></span>
@@ -495,7 +497,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">инструмент, оснастка, патроны</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennyj-instrument/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-tools" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленный инструмент</span></span>
@@ -509,7 +511,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/cl-production.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" data-bg="image-set(url(/b2b-marketplace/img/cl-production.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/cl-production.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/cl-production.jpg" style="background:  center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-production" style="color: var(--color-accent-700);"></span>
@@ -521,7 +523,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/stanki-i-chpu/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-cnc" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Станки и&nbsp;ЧПУ</span></span>
@@ -530,7 +532,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">лазеры, токарные, фрезерные, листогибы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/svarochnoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-welding" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Сварочное оборудование</span></span>
@@ -539,7 +541,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">полуавтоматы, плазма, TIG/MIG/MAG, расходники</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/promyshlennye-roboty/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-robots" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Промышленные роботы</span></span>
@@ -548,7 +550,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">манипуляторы, коботы, сварочные роботы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/sistemy-mashinnogo-zreniya/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-vision" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Системы машинного зрения</span></span>
@@ -557,7 +559,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">камеры, датчики, контроль качества</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/3d-pechat-dlya-proizvodstva/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-3d-print" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">3D-печать для&nbsp;производства</span></span>
@@ -566,7 +568,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">промышленные принтеры, материалы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/laboratornoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-lab" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Лабораторное оборудование</span></span>
@@ -575,7 +577,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">анализаторы, измерители, лабораторные насосы</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/separatory-i-centrifugi/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-separators" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Сепараторы и&nbsp;центрифуги</span></span>
@@ -589,7 +591,7 @@
       
         <div>
           <div class="dir-banner" style="display: grid; grid-template-columns: 220px minmax(0px, 1fr); gap: 0px; margin-bottom: 14px; border-radius: 14px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(22, 38, 58, 0.08) 0px 1px 3px, rgba(22, 38, 58, 0.06) 0px 6px 20px;">
-            <div class="duotone dir-banner-ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/cl-logistics.jpg&quot;) center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
+            <div class="duotone dir-banner-ph" data-photo="1" data-bg="image-set(url(/b2b-marketplace/img/cl-logistics.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/cl-logistics.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/cl-logistics.jpg" style="background:  center center / cover no-repeat; min-height: 112px; border-radius: 14px 0px 0px 14px;"></div>
             <div style="padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="ico ico-28 i-cluster-logistics" style="color: var(--color-accent-700);"></span>
@@ -601,7 +603,7 @@
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/skladskaya-tehnika/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-warehouse" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Складская техника</span></span>
@@ -610,7 +612,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">штабелёры, гидравлические тележки, погрузчики, комплектующие</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/upakovochnoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-packaging" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Упаковочное оборудование</span></span>
@@ -619,7 +621,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">стреппинг, термоусадка, этикетировщики</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/vesovoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-weighing" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Весовое оборудование</span></span>
@@ -628,7 +630,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">платформенные весы, дозаторы, чеквейеры</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/pishchevoe-oborudovanie/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-food" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Пищевое оборудование</span></span>
@@ -637,7 +639,7 @@
                 <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">насосы, мешалки, дозаторы, упаковочные линии</span>
               </a>
             
-              <a href="/b2b-marketplace/katalog/nasosy/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
+              <a href="/b2b-marketplace/napravleniya/sredstva-bezopasnosti/" class="blueprint" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
                   <span style="display: flex; align-items: center; gap: 10px;"><span class="ico i-dir-safety" style="color: var(--color-accent-700);"></span><span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.2;">Средства безопасности</span></span>
@@ -935,7 +937,7 @@
           
             <a href="/b2b-marketplace/blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-cavitation.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-cavitation.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-cavitation.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-cavitation.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Кавитация: почему разрушается рабочее колесо</span>
@@ -946,7 +948,7 @@
           
             <a href="/b2b-marketplace/blog/torcevoe-uplotnenie-priznaki-iznosa/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-seal.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-seal.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-seal.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-seal.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Торцевое уплотнение: признаки износа</span>
@@ -957,7 +959,7 @@
           
             <a href="/b2b-marketplace/blog/motor-reduktor-ili-reduktor-s-dvigatelem/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-gearmotor.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-gearmotor.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-gearmotor.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-gearmotor.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сравнение · Приводы</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Мотор-редуктор или редуктор с&nbsp;двигателем</span>
@@ -968,7 +970,7 @@
           
             <a href="/b2b-marketplace/blog/skolko-vozduha-nuzhno-cehu/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-air.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-air.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-air.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-air.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Расчёт · Компрессоры</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Сколько воздуха нужно цеху</span>
@@ -979,7 +981,7 @@
           
             <a href="/b2b-marketplace/blog/chastotnyj-preobrazovatel-kogda-okupaetsya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/art-vfd.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/art-vfd.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/art-vfd.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/art-vfd.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Подбор · Частотники</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Частотник к&nbsp;насосу: когда окупается</span>
@@ -990,7 +992,7 @@
           
             <a href="/b2b-marketplace/blog/chugun-nerzhavejka-ili-plastik/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-materials.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/c-materials.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/c-materials.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/c-materials.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Материалы · Арматура</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Чугун, нержавейка или пластик</span>
@@ -1001,7 +1003,7 @@
           
             <a href="/b2b-marketplace/blog/kak-prodlit-resurs-podshipnika/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-bearing.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-bearing.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-bearing.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-bearing.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сервис · Подшипники</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Как продлить ресурс подшипника</span>
@@ -1012,7 +1014,7 @@
           
             <a href="/b2b-marketplace/blog/postavka-oborudovaniya-iz-kitaya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-containers.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" data-bg="image-set(url(/b2b-marketplace/img/a-containers.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/a-containers.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/a-containers.jpg" style="height: 132px; background:  center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
                 <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Импорт · Поставки</span>
                 <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Аналог из&nbsp;Китая: на&nbsp;что смотреть</span>

@@ -25,8 +25,10 @@
 <link rel="stylesheet" href="/b2b-marketplace/assets/ds.css">
 <link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
+<link rel="preload" as="image" href="/b2b-marketplace/img/p-6205.webp" type="image/webp" fetchpriority="high">
 </head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
 
   
@@ -64,7 +66,7 @@
         <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-cart" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Корзина</a>
       </div>
     </div>
-    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+    <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;" aria-label="Разделы сайта">
       
         <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Направления</a>
       
@@ -104,7 +106,7 @@
   
 
   
-  <div data-screen-label="Личный кабинет">
+  <div data-screen-label="Личный кабинет" role="main" id="main">
     <div style="max-width: 1360px; margin: 0px auto; padding: 28px; display: grid; grid-template-columns: 230px minmax(0px, 1fr); gap: 28px; align-items: start;">
       <nav class="blueprint" style="padding: 8px 0px;">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -186,7 +188,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 12px;">
             <div>
-              <h3 style="margin: 0px;">Автозакупка регулярных позиций</h3>
+              <h3 style="margin: 0px;" role="heading" aria-level="2">Автозакупка регулярных позиций</h3>
               <p style="font-size: 14px; color: var(--color-neutral-700); margin: 2px 0px 0px;">Система сама формирует счёт при&nbsp;наступлении срока. Вы подтверждаете одной кнопкой в&nbsp;MAX или отключаете подтверждение внутри лимита.</p>
             </div>
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
@@ -205,8 +207,8 @@
               <thead><tr><th>Позиция</th><th>Периодичность</th><th>Количество</th><th>Следующий счёт</th><th>Режим</th><th>Вкл</th></tr></thead>
               <tbody>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-6205.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span><div>Подшипник SKF 6205-2RS<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">SKF-6205 · 540&nbsp;₽</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/podshipniki/skf-6205-2rs/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(/b2b-marketplace/img/p-6205.jpg) center center / contain no-repeat rgb(255, 255, 255); background-image: image-set(url(/b2b-marketplace/img/p-6205.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-6205.jpg) type(&quot;image/jpeg&quot;));"></span><div>Подшипник SKF 6205-2RS<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">SKF-6205 · 540&nbsp;₽</div></div></div></td>
                     <td style="font-size: 13px;">каждые 4 недели</td>
                     <td><input class="input mono" value="200" style="min-height: 36px; max-width: 80px;"></td>
                     <td><span class="tag tag-accent" style="font-size: 12px;">7 октября</span></td>
@@ -214,8 +216,8 @@
                     <td><label class="radio"><input type="checkbox" checked=""><span class="dot"></span></label></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-lip-seal.jpg&quot;) center center / cover no-repeat;"></span><div>Манжета 45×65×10 NBR<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">MNZ-456510 · 140&nbsp;₽</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/zapchasti/manzheta-45x65x10-nbr/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(/b2b-marketplace/img/p-lip-seal.jpg) center center / cover no-repeat; background-image: image-set(url(/b2b-marketplace/img/p-lip-seal.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-lip-seal.jpg) type(&quot;image/jpeg&quot;));"></span><div>Манжета 45×65×10 NBR<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">MNZ-456510 · 140&nbsp;₽</div></div></div></td>
                     <td style="font-size: 13px;">ежемесячно</td>
                     <td><input class="input mono" value="100" style="min-height: 36px; max-width: 80px;"></td>
                     <td><span class="tag tag-neutral" style="font-size: 12px;">1 октября</span></td>
@@ -223,8 +225,8 @@
                     <td><label class="radio"><input type="checkbox" checked=""><span class="dot"></span></label></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span><div>Grundfos CR 32-4<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">96122802 · 104 900&nbsp;₽</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(/b2b-marketplace/img/p-cr32.jpg) center center / contain no-repeat rgb(255, 255, 255); background-image: image-set(url(/b2b-marketplace/img/p-cr32.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-cr32.jpg) type(&quot;image/jpeg&quot;));"></span><div>Grundfos CR 32-4<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">96122802 · 104 900&nbsp;₽</div></div></div></td>
                     <td style="font-size: 13px;">раз в&nbsp;квартал</td>
                     <td><input class="input mono" value="1" style="min-height: 36px; max-width: 80px;"></td>
                     <td><span class="tag tag-neutral" style="font-size: 12px;">декабрь</span></td>
@@ -232,8 +234,8 @@
                     <td><label class="radio"><input type="checkbox" checked=""><span class="dot"></span></label></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-air-filter.jpg&quot;) center center / cover no-repeat;"></span><div>Фильтр-элемент воздушный 2 мкм<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">FLT-AIR-2 · 3 200&nbsp;₽</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-air-filter.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-air-filter.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-air-filter.jpg" style="width: 40px; height: 40px; background:  center center / cover no-repeat;"></span><div>Фильтр-элемент воздушный 2 мкм<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">FLT-AIR-2 · 3 200&nbsp;₽</div></div></div></td>
                     <td style="font-size: 13px;">каждые 6 недель</td>
                     <td><input class="input mono" value="6" style="min-height: 36px; max-width: 80px;"></td>
                     <td><span class="tag tag-neutral" style="font-size: 12px;">26 сентября</span></td>
@@ -241,8 +243,8 @@
                     <td><label class="radio"><input type="checkbox" checked=""><span class="dot"></span></label></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-gasket-kit.jpg&quot;) center center / cover no-repeat;"></span><div>Комплект прокладок DN65<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">PRK-65-SET · 4 400&nbsp;₽</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/zapchasti/komplekt-prokladok-dn65/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-gasket-kit.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-gasket-kit.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-gasket-kit.jpg" style="width: 40px; height: 40px; background:  center center / cover no-repeat;"></span><div>Комплект прокладок DN65<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">PRK-65-SET · 4 400&nbsp;₽</div></div></div></td>
                     <td style="font-size: 13px;">по&nbsp;наработке</td>
                     <td><input class="input mono" value="2" style="min-height: 36px; max-width: 80px;"></td>
                     <td><span class="tag tag-outline" style="font-size: 12px;">пауза</span></td>
@@ -267,7 +269,7 @@
           </div>
           <div style="overflow-x: auto;">
             <table class="table" style="width: 100%;">
-              <thead><tr><th>Заявка</th><th>Инициатор</th><th>Маршрут</th><th>На&nbsp;ком</th><th style="text-align: right;">Сумма</th><th></th></tr></thead>
+              <thead><tr><th>Заявка</th><th>Инициатор</th><th>Маршрут</th><th>На&nbsp;ком</th><th style="text-align: right;">Сумма</th><th><span class="pk-vh">Действие</span></th></tr></thead>
               <tbody>
                 
                   <tr>
@@ -426,11 +428,11 @@
           </div>
           <div style="overflow-x: auto;">
             <table class="table" style="width: 100%;">
-              <thead><tr><th>Позиция</th><th>Закупок</th><th>Периодичность</th><th>Последняя</th><th>Цена сейчас</th><th></th></tr></thead>
+              <thead><tr><th>Позиция</th><th>Закупок</th><th>Периодичность</th><th>Последняя</th><th>Цена сейчас</th><th><span class="pk-vh">Действие</span></th></tr></thead>
               <tbody>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-6205.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span><div>Подшипник SKF 6205-2RS<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">SKF-6205</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/podshipniki/skf-6205-2rs/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-6205.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-6205.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-6205.jpg" style="width: 40px; height: 40px; background:  center center / contain no-repeat rgb(255, 255, 255);"></span><div>Подшипник SKF 6205-2RS<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">SKF-6205</div></div></div></td>
                     <td class="mono" style="font-size: 13px;">9</td>
                     <td style="font-size: 13px;">раз в&nbsp;3–4 недели</td>
                     <td style="font-size: 13px; color: var(--color-neutral-700);">9 сентября</td>
@@ -438,8 +440,8 @@
                     <td style="text-align: right;"><a class="btn btn-primary" style="font-size: 13px; gap: 6px; text-decoration: none;" href="/b2b-marketplace/korzina/"><span class="ico ico-16 i-ui-repeat" style="color: currentcolor;"></span>Повторить</a></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-lip-seal.jpg&quot;) center center / cover no-repeat;"></span><div>Манжета 45×65×10 NBR<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">MNZ-456510</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/zapchasti/manzheta-45x65x10-nbr/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-lip-seal.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-lip-seal.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-lip-seal.jpg" style="width: 40px; height: 40px; background:  center center / cover no-repeat;"></span><div>Манжета 45×65×10 NBR<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">MNZ-456510</div></div></div></td>
                     <td class="mono" style="font-size: 13px;">7</td>
                     <td style="font-size: 13px;">раз в&nbsp;месяц</td>
                     <td style="font-size: 13px; color: var(--color-neutral-700);">13 сентября</td>
@@ -447,8 +449,8 @@
                     <td style="text-align: right;"><a class="btn btn-primary" style="font-size: 13px; gap: 6px; text-decoration: none;" href="/b2b-marketplace/korzina/"><span class="ico ico-16 i-ui-repeat" style="color: currentcolor;"></span>Повторить</a></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span><div>Grundfos CR 32-4<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">96122802</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-cr32.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-cr32.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-cr32.jpg" style="width: 40px; height: 40px; background:  center center / contain no-repeat rgb(255, 255, 255);"></span><div>Grundfos CR 32-4<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">96122802</div></div></div></td>
                     <td class="mono" style="font-size: 13px;">4</td>
                     <td style="font-size: 13px;">раз в&nbsp;квартал</td>
                     <td style="font-size: 13px; color: var(--color-neutral-700);">12 сентября</td>
@@ -456,8 +458,8 @@
                     <td style="text-align: right;"><a class="btn btn-primary" style="font-size: 13px; gap: 6px; text-decoration: none;" href="/b2b-marketplace/korzina/"><span class="ico ico-16 i-ui-repeat" style="color: currentcolor;"></span>Повторить</a></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-vr15.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span><div>INNOVERT VR 15&nbsp;кВт<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">INV-VR-15</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/elektrika/innovert-vr-15/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-vr15.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-vr15.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-vr15.jpg" style="width: 40px; height: 40px; background:  center center / contain no-repeat rgb(255, 255, 255);"></span><div>INNOVERT VR 15&nbsp;кВт<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">INV-VR-15</div></div></div></td>
                     <td class="mono" style="font-size: 13px;">3</td>
                     <td style="font-size: 13px;">раз в&nbsp;2&nbsp;месяца</td>
                     <td style="font-size: 13px; color: var(--color-neutral-700);">2 сентября</td>
@@ -465,8 +467,8 @@
                     <td style="text-align: right;"><a class="btn btn-primary" style="font-size: 13px; gap: 6px; text-decoration: none;" href="/b2b-marketplace/korzina/"><span class="ico ico-16 i-ui-repeat" style="color: currentcolor;"></span>Повторить</a></td>
                   </tr>
                 
-                  <tr>
-                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" style="width: 40px; height: 40px; background: url(&quot;/b2b-marketplace/img/p-gearmotor.jpg&quot;) center center / cover no-repeat;"></span><div>Мотор-редуктор NORD SK 02<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">NRD-SK02</div></div></div></td>
+                  <tr data-href="/b2b-marketplace/katalog/privod/nord-sk-02/" style="cursor: pointer;">
+                    <td style="font-size: 14px; font-weight: 500;"><div style="display: flex; align-items: center; gap: 10px;"><span class="thumb" data-bg="image-set(url(/b2b-marketplace/img/p-gearmotor.webp) type(&quot;image/webp&quot;), url(/b2b-marketplace/img/p-gearmotor.jpg) type(&quot;image/jpeg&quot;))" data-bg-jpg="/b2b-marketplace/img/p-gearmotor.jpg" style="width: 40px; height: 40px; background:  center center / cover no-repeat;"></span><div>Мотор-редуктор NORD SK 02<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">NRD-SK02</div></div></div></td>
                     <td class="mono" style="font-size: 13px;">2</td>
                     <td style="font-size: 13px;">по&nbsp;ремонту</td>
                     <td style="font-size: 13px; color: var(--color-neutral-700);">28 августа</td>
@@ -485,7 +487,7 @@
             <thead><tr><th>Номер</th><th>Позиции</th><th>Статус</th><th>Отгрузка</th><th style="text-align: right;">Сумма</th></tr></thead>
             <tbody>
               
-                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/kabinet/zakaz-pk-10428/">
+                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/katalog/nasosy/grundfos-cr-32-4/">
                   <td class="mono" style="font-size: 13px;">ПК-10428</td>
                   <td>Grundfos CR 32-4 · 2&nbsp;шт.</td>
                   <td><span class="tag tag-accent">В&nbsp;пути</span></td>
@@ -493,7 +495,7 @@
                   <td class="mono" style="text-align: right; white-space: nowrap;">222 600&nbsp;₽</td>
                 </tr>
               
-                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/kabinet/zakaz-pk-10428/">
+                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/katalog/podshipniki/skf-6205-2rs/">
                   <td class="mono" style="font-size: 13px;">ПК-10411</td>
                   <td>SKF 6205-2RS · 200&nbsp;шт.</td>
                   <td><span class="tag tag-neutral">Отгружен</span></td>
@@ -501,15 +503,15 @@
                   <td class="mono" style="text-align: right; white-space: nowrap;">108 000&nbsp;₽</td>
                 </tr>
               
-                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/kabinet/zakaz-pk-10428/">
+                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/">
                   <td class="mono" style="font-size: 13px;">КП-2207</td>
-                  <td>Kaishan LGCY-75</td>
+                  <td><a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="color: inherit; text-decoration: none;">Kaishan LGCY-75</a></td>
                   <td><span class="tag tag-outline">Ждёт КП</span></td>
                   <td style="font-size: 13px; color: var(--color-neutral-700);">—</td>
                   <td class="mono" style="text-align: right; white-space: nowrap;">по&nbsp;запросу</td>
                 </tr>
               
-                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/kabinet/zakaz-pk-10428/">
+                <tr class="row-hover" style="cursor: pointer;" data-href="/b2b-marketplace/katalog/elektrika/innovert-vr-15/">
                   <td class="mono" style="font-size: 13px;">ПК-10390</td>
                   <td>INNOVERT VR 15&nbsp;кВт · 4&nbsp;шт.</td>
                   <td><span class="tag tag-neutral">Доставлен</span></td>

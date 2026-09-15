@@ -388,7 +388,7 @@
           <span class="tag tag-accent" style="font-size:12px;padding:6px 11px">Grundfos ×</span>
           <span class="tag tag-accent" style="font-size:12px;padding:6px 11px">Подача 20–60 м³/ч ×</span>
           <span class="tag tag-outline" style="font-size:12px;padding:6px 11px">В наличии</span>
-          <span style="margin-left:auto;font-size:13px;color:var(--color-neutral-600)">Найдено 1 128</span>
+          <span style="margin-left:auto;font-size:13px;color:var(--color-neutral-600)">Найдено 214</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px">
           <sc-for list="{{ pumpProducts }}" as="p" hint-placeholder-count="6">
@@ -552,7 +552,7 @@
         <span class="tag tag-accent" style="margin-bottom:10px">Оборудование под проект · цена по запросу</span>
         <h1 style="font-size:36px;margin-bottom:8px">Винтовой компрессор Kaishan LGCY-75, 75 кВт, 10 бар</h1>
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
-          <span>Артикул KSN-LGCY-75-10</span><span>Kaishan</span><span>Срок поставки от 21 дня</span>
+          <span>Артикул KSN-LGCY-75</span><span>Kaishan</span><span>Срок поставки от 21 дня</span>
         </div>
         <figure class="blueprint duotone ph" style="background:url(img/p-lgcy75.jpg) center/cover no-repeat;height:340px;display:flex;align-items:flex-end;padding:16px;margin-bottom:26px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -5983,10 +5983,10 @@ class Component extends DCLogic {
         { source: "Насос Грундфос CR32-4", match: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", stock: "8 шт. · 2–4 дня", price: "209 800 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "подшипник 6205 2RS SKF", match: "SKF 6205-2RS", sku: "SKF-6205", qty: "200", stock: "1 400 шт. · в день заказа", price: "108 000 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "Частотник 15 кВт 380В", match: "INNOVERT VR 15 кВт", sku: "INV-VR-15", qty: "4", stock: "26 шт. · 1–2 дня", price: "249 200 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
-        { source: "Задвижка 100 мм чугун", match: "Задвижка DN100 PN16, чугун", sku: "ARM-ZD-100", qty: "3", stock: "12 шт. · 2 дня", price: "58 400 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
+        { source: "Задвижка 100 мм чугун", match: "Задвижка DN100 PN16, чугун", sku: "ARM-ZD-100", qty: "3", stock: "12 шт. · 2 дня", price: "58 410 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "Манжета 45х65х10", match: "Манжета 45×65×10 NBR", sku: "MNZ-456510", qty: "30", stock: "480 шт. · в день заказа", price: "4 200 ₽", status: "Совпадение", tagClass: "tag-accent", check: "var(--color-accent)" },
         { source: "Насос дозировочный 0,5 м3", match: "3 варианта исполнения", sku: "нужно уточнить материал", qty: "1", stock: "под заказ · 9 дней", price: "от 22 900 ₽", status: "Уточнить", tagClass: "tag-outline", check: "transparent" },
-        { source: "Компрессор винтовой 75 кВт", match: "Kaishan LGCY-75", sku: "KSN-LGCY-75-10", qty: "1", stock: "срок от 21 дня", price: "по запросу", status: "На КП", tagClass: "tag-outline", check: "transparent" },
+        { source: "Компрессор винтовой 75 кВт", match: "Kaishan LGCY-75", sku: "KSN-LGCY-75", qty: "1", stock: "срок от 21 дня", price: "по запросу", status: "На КП", tagClass: "tag-outline", check: "transparent" },
         { source: "Фильтр ФВ-12 (по чертежу цеха)", match: "—", sku: "нет аналога в базе", qty: "2", stock: "—", price: "—", status: "Без аналога", tagClass: "tag-neutral", check: "transparent" },
         { source: "Шланг 3/4 20 м", match: "46 похожих, точного аналога нет", sku: "нужны давление и армирование", qty: "5", stock: "—", price: "—", status: "Без аналога", tagClass: "tag-neutral", check: "transparent" }
       ],
@@ -6067,8 +6067,8 @@ class Component extends DCLogic {
         { k: "КПД в рабочей точке", cells: [{ v: "74%", weight: "600", color: "var(--color-accent-700)" }, { v: "71%", weight: "400", color: "var(--color-text)" }, { v: "73%", weight: "400", color: "var(--color-text)" }, { v: "68%", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Запас по напору", cells: [{ v: "3%", weight: "600", color: "var(--color-accent-700)" }, { v: "9%", weight: "400", color: "var(--color-text)" }, { v: "14%", weight: "400", color: "var(--color-text)" }, { v: "20%", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Материал корпуса", cells: [{ v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "AISI 304", weight: "400", color: "var(--color-text)" }, { v: "Чугун", weight: "400", color: "var(--color-neutral-700)" }] },
-        { k: "Наличие", cells: [{ v: "12 шт.", weight: "600", color: "var(--color-text)" }, { v: "5 шт.", weight: "400", color: "var(--color-text)" }, { v: "3 шт.", weight: "400", color: "var(--color-text)" }, { v: "под заказ", weight: "400", color: "var(--color-neutral-700)" }] },
-        { k: "Отгрузка", cells: [{ v: "2 дня", weight: "600", color: "var(--color-text)" }, { v: "4 дня", weight: "400", color: "var(--color-text)" }, { v: "3 дня", weight: "400", color: "var(--color-text)" }, { v: "9 дней", weight: "400", color: "var(--color-neutral-700)" }] },
+        { k: "Наличие", cells: [{ v: "12 шт.", weight: "600", color: "var(--color-text)" }, { v: "5 шт.", weight: "400", color: "var(--color-text)" }, { v: "5 шт.", weight: "400", color: "var(--color-text)" }, { v: "под заказ", weight: "400", color: "var(--color-neutral-700)" }] },
+        { k: "Отгрузка", cells: [{ v: "2 дня", weight: "600", color: "var(--color-text)" }, { v: "4 дня", weight: "400", color: "var(--color-text)" }, { v: "2–4 дня", weight: "400", color: "var(--color-text)" }, { v: "9 дней", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Запчасти и сервис", cells: [{ v: "склад РФ", weight: "400", color: "var(--color-text)" }, { v: "склад РФ", weight: "400", color: "var(--color-text)" }, { v: "широкая сеть", weight: "600", color: "var(--color-accent-700)" }, { v: "под заказ", weight: "400", color: "var(--color-neutral-700)" }] },
         { k: "Гарантия", cells: [{ v: "18 мес.", weight: "400", color: "var(--color-text)" }, { v: "24 мес.", weight: "400", color: "var(--color-text)" }, { v: "24 мес.", weight: "400", color: "var(--color-text)" }, { v: "12 мес.", weight: "400", color: "var(--color-neutral-700)" }] }
       ],

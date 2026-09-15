@@ -43,6 +43,31 @@ function copyDir(a, b, skip = () => false) {
   }
 }
 
+
+// ── фоновые фото: WebP через image-set, предзагрузка первой, ленивая подгрузка остальных (по отчёту perf) ──
+const IMG_SRC_DIR = path.join(SRC, 'img');
+const EAGER = 3;
+function optimizeImages(html) {
+  let i = 0, preload = '';
+  const body = html.replace(
+    /(<[a-z][a-z0-9]*\b[^>]*?)style="([^"]*?)url\((&quot;|'|)([^"')&]*?\/img\/([\w-]+)\.jpg)\3\)([^"]*)"/g,
+    (m, tag, pre, q, jpg, name, post) => {
+      if (/gradient/.test(pre + post) || /<head/.test(tag)) return m;
+      const hasWebp = fs.existsSync(path.join(IMG_SRC_DIR, name + '.webp'));
+      const webp = jpg.replace(/\.jpg$/, '.webp');
+      const set = hasWebp ? `image-set(url(${webp}) type(&quot;image/webp&quot;), url(${jpg}) type(&quot;image/jpeg&quot;))` : `url(${jpg})`;
+      const n = i++;
+      if (n === 0 && hasWebp) {
+        const media = /hero-ph/.test(tag) ? ' media="(min-width: 761px)"' : '';
+        preload = `<link rel="preload" as="image" href="${webp}" type="image/webp" fetchpriority="high"${media}>\n`;
+      }
+      if (n < EAGER) return `${tag}style="${pre}url(${jpg})${post.replace(/;?\s*$/, '')}; background-image: ${set};"`;
+      return `${tag}data-bg="${set}" data-bg-jpg="${jpg}" style="${pre}${post}"`;
+    });
+  return body.replace('</head>', preload + '</head>');
+}
+const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(html));
+
 // ── то, что выполняется внутри страницы макета ────────────────────────────────
 function inPage(routes, base, L) {
   const P = DCLogic.prototype, orig = P.setState; let cap;
@@ -114,7 +139,18 @@ function inPage(routes, base, L) {
     const href = el.getAttribute('href') || el.getAttribute('data-href');
     const set = h => el.hasAttribute('href') ? el.setAttribute('href', h) : el.setAttribute('data-href', h);
     const own = norm(el.textContent);
-    if (href === base + routes.product.path || href === base + routes.catalog.path && /в корзину|открыть|купить/.test(own)) {
+    const exactProduct = L.products.find(pr => pr.names.some(n => own === norm(n) || own.endsWith(': ' + norm(n))));
+    if (/открыть рекомендованную/.test(own)) {
+      const txt = norm((el.closest('section, .blueprint, div') || c).parentElement.textContent);
+      const first = L.products.map(pr => ({ pr, i: Math.min(...pr.names.map(n => { const k = txt.indexOf('ближе всего ' + norm(n)); return k < 0 ? 1e9 : k; })) })).sort((a, b) => a.i - b.i)[0];
+      if (first && first.i < 1e9) set(first.pr.href);
+    } else if (/запросить кп/.test(own) && href === base + routes.quote.path && !/kaishan|компрессор/.test(norm((el.closest('.blueprint, section') || c).textContent))) {
+      set(base + routes.project.path);
+    } else if (href === base + routes.catalog.path && L.directions.some(d => own === norm(d.names[0]) || own.startsWith(norm(d.names[0]) + ' '))) {
+      set(L.directions.find(d => own === norm(d.names[0]) || own.startsWith(norm(d.names[0]) + ' ')).href);
+    } else if (exactProduct && (href === base + routes.catalog.path || href === base + routes.product.path)) {
+      set(exactProduct.href);
+    } else if (href === base + routes.product.path || href === base + routes.catalog.path && /в корзину|открыть|купить/.test(own)) {
       const m = nearest(el, L.products, 'section, main'); if (m) set(m.href);
     } else if (href === base + routes.direction.path) {
       const m = L.directions.find(d => own === norm(d.names[0]) || own.startsWith(norm(d.names[0]) + ' ')); if (m) set(m.href);
@@ -123,6 +159,27 @@ function inPage(routes, base, L) {
     } else if (href === base + routes.article.path || href === base + routes.blog.path) {
       const m = nearest(el, L.articles, 'section, main'); if (m) set(m.href);
     }
+  }
+  // вся карточка товара/статьи кликабельна: data-href на карточке + ссылка на названии
+  if (L) for (const card of c.querySelectorAll('.card, a.blueprint, div.blueprint, tbody tr')) {
+    if (card.closest('header, footer, nav') || card.querySelector('.card, div.blueprint')) continue;
+    const text = norm(card.textContent);
+    for (const [list, key] of [[L.products, 'p'], [L.articles, 'a']]) {
+      const m = matches(list, text);
+      if (m.length !== 1) continue;
+      const href = m[0].href;
+      if (href === L.current) break;
+      if (card.tagName === 'A') { card.setAttribute('href', href); break; }
+      card.setAttribute('data-href', href); card.style.cursor = 'pointer';
+      const nameEl = [...card.querySelectorAll('span, div, h3, h4, strong, td')].find(x => !x.querySelector('*') && m[0].names.some(n => norm(x.textContent) === norm(n) || norm(x.textContent) === norm(n).replace(/^[^:]+:\s*/, '')));
+      if (nameEl && !nameEl.closest('a')) { const a = document.createElement('a'); a.href = href; a.textContent = nameEl.textContent; a.style.cssText = 'color:inherit;text-decoration:none'; nameEl.textContent = ''; nameEl.appendChild(a); }
+      break;
+    }
+  }
+  // подкатегории направления «Насосы» → каталог с фильтром по типу
+  if (L && L.current === base + routes.direction.path) for (const a of c.querySelectorAll('a[href="' + base + routes.catalog.path + '"]')) {
+    const name = (a.querySelector('span') || a).textContent.replace(/[\d\s\u00A0\u202F]+$/, '').trim();
+    if (name && !/₽|^от /.test(name) && /\d/.test(a.textContent)) a.setAttribute('href', base + routes.catalog.path + '?tip=' + encodeURIComponent(name));
   }
   // плашки брендов без своей страницы — не ссылка (иначе вели бы на чужой бренд)
   for (const a of [...c.querySelectorAll('a.brand-logo')]) {
@@ -136,6 +193,20 @@ function inPage(routes, base, L) {
   for (const el of c.querySelectorAll('[data-dc-tpl],[data-local]')) { el.removeAttribute('data-dc-tpl'); el.removeAttribute('data-local'); }
   // относительные картинки → от корня сайта
   for (const el of c.querySelectorAll('[style*="img/"]')) el.setAttribute('style', el.getAttribute('style').replace(/url\((["']?)img\//g, 'url($1' + base + 'img/'));
+
+  // ── доступность ──
+  // BUILD-1: основная область. Если футер оказался внутри экрана, main ставим на обёртку без футера
+  const scr = c.querySelector('[data-screen-label]');
+  if (scr && !c.querySelector('main')) {
+    if (!scr.querySelector('footer')) { scr.setAttribute('role', 'main'); scr.id = 'main'; }
+    else { const m = document.createElement('main'); m.id = 'main'; const f = scr.querySelector(':scope > footer'); [...scr.childNodes].filter(n => n !== f && !(n.nodeType === 1 && n.matches('header'))).forEach(n => m.appendChild(n)); scr.insertBefore(m, f); }
+  }
+  // BUILD-3: без скачков уровней заголовков — семантика через aria-level, вёрстку не трогаем
+  { let last = 1; for (const h of c.querySelectorAll('h1,h2,h3,h4,h5,h6')) { const lv = +h.tagName[1]; if (lv > last + 1) { h.setAttribute('role', 'heading'); h.setAttribute('aria-level', String(last + 1)); last += 1; } else last = lv; } }
+  // BUILD-4: пустые заголовки таблиц и имена навигаций
+  for (const th of c.querySelectorAll('th')) if (!th.textContent.trim()) th.innerHTML = '<span class="pk-vh">' + (th.closest('thead') && [...th.parentElement.children].indexOf(th) === th.parentElement.children.length - 1 ? 'Действие' : 'Фото') + '</span>';
+  const hn = c.querySelector('header nav'); if (hn && !hn.getAttribute('aria-label')) hn.setAttribute('aria-label', 'Разделы сайта');
+  for (const f of c.querySelectorAll('figure[data-photo]')) { f.setAttribute('role', 'img'); f.setAttribute('aria-label', (c.querySelector('h1') || {}).textContent.trim() + ' — фото'); }
 
   // типографика: неразрывные пробелы в разрядах, перед единицами и после коротких слов
   const walker = document.createTreeWalker(c, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement && /^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentElement.tagName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
@@ -207,6 +278,7 @@ ${r.index ? '' : '<meta name="robots" content="noindex, follow">\n'}${r.path ===
 <link rel="stylesheet" href="${BASE}assets/app.css">
 ${extraHead}</head>
 <body>
+<a class="pk-skip" href="#main">К содержимому</a>
 ${body}
 <script src="${BASE}assets/site.js" defer></script>
 </body>
@@ -228,6 +300,7 @@ ${body}
   const errors = [];
   const genPages = require('./gen_pages');
   const LINKS = genPages.linkIndex(BASE);
+  LINKS.articles.push({ names: ['Как подобрать насос по рабочей точке'], href: BASE + ROUTES.article.path });
   const GENERATED = genPages(BASE);
   p.on('pageerror', e => errors.push(e.message));
   await p.goto(DOC, { waitUntil: 'networkidle0' });
@@ -238,12 +311,12 @@ ${body}
     if (r.skip) continue;
     await p.evaluate(id => { for (const s of document.querySelectorAll('select')) for (const o of s.options) if (o.value === id) { s.value = id; s.dispatchEvent(new Event('change', { bubbles: true })); return; } }, id);
     await new Promise(res => setTimeout(res, 450));
-    const snap = await p.evaluate(inPage, ROUTES, BASE, LINKS);
+    const snap = await p.evaluate(inPage, ROUTES, BASE, { ...LINKS, current: BASE + r.path });
     styles = snap.styles;
     const html = page({ id, r, body: snap.html, extraHead: jsonLd(id, r, snap) + '\n' });
     const file = path.join(OUT, r.path, 'index.html');
     fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, html);
+    writePage(file, html);
     report.push(`${(html.length / 1024).toFixed(0).padStart(4)} КБ  /${r.path}  ${snap.h1.slice(0, 60)}${snap.faq.length ? '  FAQ×' + snap.faq.length : ''}`);
 
     if (id === 'homeB') {
@@ -252,7 +325,7 @@ ${body}
       const start = chrome.indexOf('<div data-screen-label=');
       const foot = chrome.lastIndexOf('<footer');
       if (start > 0 && foot > start) {
-        const main = `<main style="max-width:1360px;margin:0 auto;padding:64px 28px 96px;display:flex;flex-direction:column;gap:16px;align-items:flex-start">
+        const main = `<main id="main" style="max-width:1360px;margin:0 auto;padding:64px 28px 96px;display:flex;flex-direction:column;gap:16px;align-items:flex-start">
   <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-neutral-600)">Ошибка 404</div>
   <h1 style="font-size:44px;margin:0">Такой страницы нет</h1>
   <p style="font-size:17px;color:var(--color-neutral-700);max-width:640px;margin:0">Возможно, адрес изменился или позиция снята с публикации. Найдите оборудование по артикулу, фото шильдика или в каталоге.</p>
@@ -266,8 +339,8 @@ ${body}
         const tail = chrome.slice(foot);
         // head заканчивается внутри корневого контейнера экрана — закрывать ничего не нужно:
         // screen-блоки лежат внутри sc-if-обёрток, которые рендерятся без собственного тега.
-        fs.writeFileSync(path.join(OUT, '404.html'), page({ id: '404', r: { path: '404.html', index: false, title: 'Страница не найдена — ПРОМКОНТУР', desc: 'Страница не найдена.' }, body: head + main + tail }));
-        const wrap = (h1, inner) => `<main style="max-width:920px;margin:0 auto;padding:40px 28px 72px"><div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-neutral-600)"><a href="${BASE}" style="color:inherit">Главная</a> / ${h1}</div><h1 style="font-size:40px;margin:8px 0 18px">${h1}</h1><div class="pk-prose">${inner}</div></main>`;
+        writePage(path.join(OUT, '404.html'), page({ id: '404', r: { path: '404.html', index: false, title: 'Страница не найдена — ПРОМКОНТУР', desc: 'Страница не найдена.' }, body: head + main + tail }));
+        const wrap = (h1, inner) => `<main id="main" style="max-width:920px;margin:0 auto;padding:40px 28px 72px"><div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-neutral-600)"><a href="${BASE}" style="color:inherit">Главная</a> / ${h1}</div><h1 style="font-size:40px;margin:8px 0 18px">${h1}</h1><div class="pk-prose">${inner}</div></main>`;
         for (const g of GENERATED) {
           const f = path.join(OUT, g.path, 'index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
           const body = g.html.replace(/IMGBASE/g, BASE + 'img/');
@@ -275,12 +348,12 @@ ${body}
           if (g.ld) ld.push({ '@context': 'https://schema.org', ...JSON.parse(JSON.stringify(g.ld).replace(/IMGABS/g, url('img/'))) });
           if (g.faq && g.faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: g.faq.map(q => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) });
           const head2 = ld.map(o => '<script type="application/ld+json">' + JSON.stringify(o).replace(/</g, '\\u003c') + '</script>').join('\n');
-          fs.writeFileSync(f, page({ id: g.og ? 'gen:' + g.og : g.path, r: g, body: head + body + tail, extraHead: head2 + '\n' }));
+          writePage(f, page({ id: g.og ? 'gen:' + g.og : g.path, r: g, body: head + body + tail, extraHead: head2 + '\n' }));
           report.push(`       /${g.path}  ${g.h1}`);
         }
         for (const extra of require('./extra_pages')(BASE, ROUTES)) {
           const f = path.join(OUT, extra.path, 'index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
-          fs.writeFileSync(f, page({ id: extra.path, r: extra, body: head + wrap(extra.h1, extra.html) + tail }));
+          writePage(f, page({ id: extra.path, r: extra, body: head + wrap(extra.h1, extra.html) + tail }));
           report.push(`       /${extra.path}  ${extra.h1}`);
         }
       }
