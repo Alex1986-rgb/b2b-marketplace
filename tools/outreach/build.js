@@ -2,10 +2,13 @@
 // Сборка инструкции по партнёрской рассылке из docs/outreach/data/*.json.
 //   node tools/outreach/build.js          — MD, CSV-трекер, HTML для PDF + проверка покрытия ассортимента
 //   node tools/outreach/build.js --pdf    — дополнительно PDF (docs/outreach/partnerstvo.pdf)
+//   --dropship                            — издание под модель дропшиппинга (*-dropshipping.*)
 const fs = require('fs');
 const path = require('path');
 const { TEMPLATES, FOLLOWUP } = require('./templates');
-const { PROCESS } = require('./process');
+const { PROCESS, PROCESS_DS } = require('./process');
+const DS = process.argv.includes('--dropship');
+const SUF = DS ? '-dropshipping' : '';
 
 const ROOT = path.join(__dirname, '..', '..');
 const DATA = path.join(ROOT, 'docs/outreach/data');
@@ -58,7 +61,37 @@ for (const d of DIRS) {
 }
 const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const list = a => (Array.isArray(a) ? a : a ? [a] : []);
-const P = p => ({ 1: 'Неделя 1', 2: 'Неделя 2', 3: 'Резерв' })[p.priority] || 'Резерв';
+const fitOf = p => ((p.dropship && p.dropship.fit) || 'неизвестно').toLowerCase();
+const rank = p => {
+  if (!DS) return p.priority || 3;
+  if (!p.dropship) return p.priority || 3;                       // инфраструктура: банки, ТК, сервисы
+  const f = fitOf(p);
+  if (/^(да|частич)/.test(f)) return 1;
+  if (/^неизвест/.test(f)) return (p.priority || 3) <= 2 ? 2 : 3;
+  return 3;
+};
+const DS_ASK = ['Отгружаете ли юрлицам от 1 шт. с документами на нас, если грузополучатель — наш клиент (транзитная поставка)?',
+  'Возможен ли забор груза нашей транспортной компанией с вашего склада и отгрузка без ваших прайсов и рекламы в упаковке?',
+  'Есть ли фид цен и остатков (YML/XML/API) и как часто он обновляется?',
+  'Как принимаете заказы — API, личный кабинет или e-mail — и какой срок отгрузки со склада?',
+  'Условия оплаты (предоплата по заказу или отсрочка) и порядок возвратов и гарантии.'];
+const P = p => ({ 1: 'Неделя 1', 2: 'Неделя 2', 3: 'Резерв' })[rank(p)] || 'Резерв';
+const FIT = p => (p.dropship && p.dropship.fit) || 'неизвестно';
+const fitCls = f => /^да/.test(f) ? 'ok' : /частич/.test(f) ? '' : /^нет/.test(f) ? 'bad' : 'warn';
+const DSF = [['directShip', 'Отгрузка клиенту'], ['blind', 'Нейтрально'], ['minOrder', 'Мин. заказ'], ['feed', 'Фид'], ['orderApi', 'Приём заказа'], ['payment', 'Оплата'], ['shipSla', 'Срок отгрузки'], ['returns', 'Возвраты']];
+if (DS) for (const d of all) {
+  for (const p of d.partners || []) {
+    if (!p.dropship) continue;
+    const f = fitOf(p);
+    // «неизвестно» у дилеров и дистрибьюторов со складом — пробуем дропшип без программы: забор нашей ТК
+    if (/^неизвест/.test(f) && ['dealer', 'feed'].includes(p.template)) {
+      p.template = 'dropship';
+      if (!list(p.ask).some(q => /отгруз|дропшип|транзит|(^|[^а-яё])тк([^а-яё]|$)/i.test(q))) p.ask = DS_ASK.concat(list(p.ask).slice(0, 2));
+    }
+  }
+  d.partners = (d.partners || []).slice().sort((a, b) => rank(a) - rank(b));
+}
+const isDS = p => DS && /^(да|частич)/.test(FIT(p));
 
 function letter(p, d) {
   const t = TEMPLATES[p.template] || TEMPLATES.dealer;
@@ -72,30 +105,31 @@ function letter(p, d) {
 }
 
 // ── MD ──
-let md = `# Инструкция: кому и что писать о партнёрстве — ПРОМКОНТУР\n\nСобрано ${new Date().toLocaleDateString('ru-RU')} из разведки (docs/research). ` +
+let md = `# Инструкция: кому и что писать о партнёрстве — ПРОМКОНТУР${DS ? ' (модель дропшиппинга)' : ''}\n\nСобрано ${new Date().toLocaleDateString('ru-RU')} из разведки (docs/research). ` +
   `Направлений: ${all.length}, партнёров: ${all.reduce((n, d) => n + list(d.partners).length, 0)}. ` +
   `Отправка писем — только вручную Александром. [[…]] — заполнить перед отправкой.\n\n`;
-md += PROCESS.md + '\n';
-md += `## Покрытие ассортимента\n\n| Направление | Стратегия | Партнёры недели 1 | Не покрыто |\n|---|---|---|---|\n`;
+md += (DS ? PROCESS_DS : PROCESS).md + '\n';
+md += `## Покрытие ассортимента\n\n| Направление | Стратегия | Партнёры недели 1 |${DS ? ' Дропшип да/частично |' : ''} Не покрыто |\n|---|---|---|${DS ? '---|' : ''}---|\n`;
 for (const d of all) {
   const c = coverage.find(x => x.slug === d.slug) || { missing: [] };
-  md += `| ${d.name} | ${d.strategy || ''} | ${list(d.partners).filter(p => p.priority === 1).map(p => p.company).join('; ')} | ${c.missing.length ? c.missing.join('; ') : '—'} |\n`;
+  md += `| ${d.name} | ${d.strategy || ''} | ${list(d.partners).filter(p => rank(p) === 1).map(p => p.company).join('; ')} |${DS ? ' ' + list(d.partners).filter(p => /^(да|частич)/.test(FIT(p))).length + ' |' : ''} ${c.missing.length ? c.missing.join('; ') : '—'} |\n`;
 }
 for (const g of groups) {
   md += `\n---\n\n# ${g.dirs[0] ? g.dirs[0].cluster : g.file}\n`;
   for (const d of g.dirs) {
     md += `\n## ${d.name}\n\n**Стратегия:** ${d.strategy || '—'}. ${d.summary || ''}\n\n`;
-    md += `| Приоритет | Компания | Закрывает | Канал | Шаблон |\n|---|---|---|---|---|\n`;
+    md += `| Приоритет | Компания |${DS ? ' Дропшип |' : ''} Закрывает | Канал | Шаблон |\n|---|---|${DS ? '---|' : ''}---|---|---|\n`;
     for (const p of list(d.partners)) {
       const ch = p.channel || {};
       const contact = [ch.email, ch.phone, ch.url].filter(Boolean).join(' · ');
-      md += `| ${P(p)} | **${p.company}** (${p.role || ''}) | ${list(p.covers).join(', ')} | ${ch.how || ''}: ${contact} | ${(TEMPLATES[p.template] || {}).title || p.template} |\n`;
+      md += `| ${P(p)} | **${p.company}** (${p.role || ''}) |${DS ? ' ' + FIT(p) + ' |' : ''} ${list(p.covers).join(', ')} | ${ch.how || ''}: ${contact} | ${(TEMPLATES[p.template] || {}).title || p.template} |\n`;
     }
     for (const p of list(d.partners)) {
       const ch = p.channel || {};
       const L = letter(p, d);
       md += `\n### ${p.company} — ${P(p)}\n\n`;
       md += `- **Кому:** ${ch.who || 'отдел продаж'} · ${ch.how || ''}${ch.email ? ' · ' + ch.email : ''}${ch.phone ? ' · ' + ch.phone : ''}${ch.url ? ' · ' + ch.url : ''}\n`;
+      if (DS && p.dropship) md += `- **Дропшиппинг: ${FIT(p)}.** ${DSF.map(([k, l]) => p.dropship[k] ? `${l}: ${p.dropship[k]}` : '').filter(Boolean).join(' · ')}${p.dropship.evidence ? ` · Источник: ${p.dropship.evidence}` : ''}\n`;
       if (p.known) md += `- **Что известно:** ${p.known}\n`;
       if (p.expect) md += `- **Чего ждать:** ${p.expect}\n`;
       if (p.leverage) md += `- **Рычаг в переговорах:** ${p.leverage}\n`;
@@ -107,22 +141,22 @@ for (const g of groups) {
   }
 }
 md += `\n---\n\n## Повторное касание (через 3–4 рабочих дня)\n\n\`\`\`text\n${FOLLOWUP}\n\`\`\`\n`;
-fs.writeFileSync(path.join(OUT, 'INSTRUKCIYA.md'), md);
+fs.writeFileSync(path.join(OUT, `INSTRUKCIYA${SUF}.md`), md);
 
 // ── CSV-трекер (Excel: разделитель «;», BOM) ──
 const cell = v => { v = v == null ? '' : String(v).replace(/\r?\n/g, ' '); return /[;"]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-const rows = [['№', 'Кластер', 'Направление', 'Приоритет', 'Компания', 'Роль', 'Закрывает', 'Шаблон', 'Канал', 'E-mail', 'Телефон', 'Страница', 'Тема письма', 'Дата отправки', 'Повтор', 'Звонок', 'Ответ', 'Скидка/условия', 'Порог входа', 'Отсрочка', 'Фид/API', 'Статус', 'Комментарий']];
+const rows = [['№', 'Кластер', 'Направление', 'Приоритет', 'Компания', 'Роль', 'Закрывает', 'Шаблон', 'Канал', 'E-mail', 'Телефон', 'Страница', ...(DS ? ['Дропшип', 'Отгрузка клиенту', 'Нейтрально', 'Мин. заказ', 'Фид', 'Приём заказа', 'Оплата', 'Срок отгрузки', 'Возвраты'] : []), 'Тема письма', 'Дата отправки', 'Повтор', 'Звонок', 'Ответ', 'Скидка/условия', 'Порог входа', 'Отсрочка', 'Фид/API', 'Статус', 'Комментарий']];
 let n = 0;
 for (const d of all) for (const p of list(d.partners)) {
   const ch = p.channel || {};
-  rows.push([++n, d.cluster, d.name, P(p), p.company, p.role, list(p.covers).join(', '), (TEMPLATES[p.template] || {}).title || p.template, ch.how, ch.email, ch.phone, ch.url, letter(p, d).subject, '', '', '', '', '', '', '', '', 'не отправлено', '']);
+  rows.push([++n, d.cluster, d.name, P(p), p.company, p.role, list(p.covers).join(', '), (TEMPLATES[p.template] || {}).title || p.template, ch.how, ch.email, ch.phone, ch.url, ...(DS ? [p.dropship ? FIT(p) : 'н/п', ...DSF.map(([k]) => (p.dropship || {})[k] || '')] : []), letter(p, d).subject, '', '', '', '', '', '', '', '', 'не отправлено', '']);
 }
-fs.writeFileSync(path.join(OUT, 'tracker.csv'), '﻿' + rows.map(r => r.map(cell).join(';')).join('\r\n'));
+fs.writeFileSync(path.join(OUT, `tracker${SUF}.csv`), '﻿' + rows.map(r => r.map(cell).join(';')).join('\r\n'));
 
 // ── HTML для PDF ──
 const tpl = fs.readFileSync(path.join(__dirname, 'instrukciya.tpl.html'), 'utf8');
 const totalP = all.reduce((k, d) => k + list(d.partners).length, 0);
-const p1 = all.reduce((k, d) => k + list(d.partners).filter(p => p.priority === 1).length, 0);
+const p1 = all.reduce((k, d) => k + list(d.partners).filter(p => rank(p) === 1).length, 0);
 let body = '';
 for (const g of groups) {
   body += `<section class="cluster"><div class="eyebrow"><span class="num">${esc(g.file.slice(0, 2))}</span><span class="mono">кластер</span></div><h2>${esc(g.dirs[0] ? g.dirs[0].cluster : '')}</h2></section>`;
@@ -132,7 +166,7 @@ for (const g of groups) {
     body += `<div class="partners">`;
     for (const p of list(d.partners)) {
       const ch = p.channel || {};
-      body += `<div class="pc p${p.priority || 3}">
+      body += `<div class="pc p${rank(p)}">
         <div class="c1"><div class="top"><span class="prio">${esc(P(p))}</span><span class="tpl">${esc((TEMPLATES[p.template] || {}).title || p.template)}</span></div>
           <h4>${esc(p.company)}</h4><div class="role">${esc(p.role || '')}${list(p.brands).length ? ' · ' + esc(list(p.brands).join(', ')) : ''}</div>
           <div class="covers">${list(p.covers).map(x => `<span>${esc(x)}</span>`).join('')}</div></div>
@@ -141,21 +175,25 @@ for (const g of groups) {
           ${p.leverage ? `<p class="k lev"><b>Рычаг:</b> ${esc(p.leverage)}</p>` : ''}
           ${p.risks ? `<p class="k risk"><b>Проверить:</b> ${esc(p.risks)}</p>` : ''}</div>
         <div class="c3">${list(p.ask).length ? `<b class="lbl">Спросить</b><ul>${list(p.ask).map(q => `<li>${esc(q)}</li>`).join('')}</ul>` : ''}
+          ${DS && p.dropship ? `<div class="ds"><span class="pill ${fitCls(FIT(p))}">дропшип: ${esc(FIT(p))}</span>${DSF.map(([k, l]) => p.dropship[k] && !/^неизвест/i.test(p.dropship[k]) ? `<span><b>${l}:</b> ${esc(p.dropship[k])}</span>` : '').join('')}</div>` : ''}
           <div class="ch"><b>${esc(ch.how || '')}</b>${ch.who ? ' · ' + esc(ch.who) : ''}<br>${[ch.email, ch.phone].filter(Boolean).map(esc).join(' · ')}${ch.url ? `<br><span class="url">${esc(ch.url)}</span>` : ''}</div></div>
       </div>`;
     }
     body += `</div>${c.missing.length ? `<p class="gap">Не покрыто: ${esc(c.missing.join('; '))}</p>` : ''}</article>`;
   }
 }
-const tplCards = Object.entries(TEMPLATES).map(([k, t]) => `<div class="card tcard"><div class="mono">${esc(k)}</div><h3>${esc(t.title)}</h3><p class="when">${esc(t.when)}</p><div class="subj">Тема: ${esc(t.subject)}</div><pre>${esc(t.body)}</pre></div>`).join('');
+const tplCards = Object.entries(TEMPLATES).filter(([k]) => !DS || !['dealer', 'ved', 'oem'].includes(k)).map(([k, t]) => `<div class="card tcard"><div class="mono">${esc(k)}</div><h3>${esc(t.title)}</h3><p class="when">${esc(t.when)}</p><div class="subj">Тема: ${esc(t.subject)}</div><pre>${esc(t.body)}</pre></div>`).join('');
 const html = tpl
   .replace('{{DATE}}', new Date().toLocaleDateString('ru-RU'))
   .replace('{{N_DIRS}}', all.filter(d => DIRS.some(x => x.slug === d.slug)).length).replace('{{N_PARTNERS}}', totalP).replace('{{N_P1}}', p1)
-  .replace('{{PROCESS}}', PROCESS.html)
-  .replace('{{MATRIX}}', all.map(d => { const c = coverage.find(x => x.slug === d.slug) || { missing: [] }; return `<tr><td><b>${esc(d.name)}</b></td><td>${esc(d.strategy || '')}</td><td>${list(d.partners).filter(p => p.priority === 1).map(p => esc(p.company)).join('<br>')}</td><td>${list(d.partners).length}</td><td>${c.missing.length ? `<span class="pill warn">${c.missing.length}</span>` : '<span class="pill ok">всё</span>'}</td></tr>`; }).join(''))
+  .replace('{{TITLE}}', DS ? 'Дропшиппинг: кому и что писать' : 'Кому и что писать о партнёрстве')
+  .replace('{{SUB}}', DS ? 'Партнёры с прямой отгрузкой клиенту на весь ассортимент: признаки дропшиппинга по каждому, контакт, что спросить, готовое письмо, схема денег и документов, чек-лист договора.' : 'Пошаговый план рассылки на весь ассортимент площадки: партнёр по каждой подкатегории, публичный контакт, что спросить, готовое письмо и порядок на четыре недели.')
+  .replace('{{KPI3}}', DS ? all.reduce((k, d) => k + list(d.partners).filter(p => /^(да|частич)/.test(FIT(p))).length, 0) : p1).replace('{{KPI3L}}', DS ? 'с прямой отгрузкой' : 'писем в первую неделю')
+  .replace('{{PROCESS}}', (DS ? PROCESS_DS : PROCESS).html)
+  .replace('{{MATRIX}}', all.map(d => { const c = coverage.find(x => x.slug === d.slug) || { missing: [] }; return `<tr><td><b>${esc(d.name)}</b></td><td>${esc(d.strategy || '')}</td><td>${list(d.partners).filter(p => rank(p) === 1).map(p => esc(p.company)).join('<br>')}</td><td>${list(d.partners).length}${DS ? ` / <b>${list(d.partners).filter(p => /^(да|частич)/.test(FIT(p))).length}</b>` : ''}</td><td>${c.missing.length ? `<span class="pill warn">${c.missing.length}</span>` : '<span class="pill ok">всё</span>'}</td></tr>`; }).join(''))
   .replace('{{BODY}}', body)
   .replace('{{TEMPLATES}}', tplCards + `<div class="card tcard"><div class="mono">followup</div><h3>Повторное касание</h3><p class="when">через 3–4 рабочих дня без ответа</p><pre>${esc(FOLLOWUP)}</pre></div>`);
-fs.writeFileSync(path.join(__dirname, 'instrukciya.html'), html);
+fs.writeFileSync(path.join(__dirname, `instrukciya${SUF}.html`), html);
 
 const holes = coverage.filter(c => c.noData || c.missing.length);
 console.log(`Направлений витрины: ${all.filter(d => DIRS.some(x => x.slug === d.slug)).length}/${N_SITE}, инфраструктура: ${all.filter(d => !DIRS.some(x => x.slug === d.slug)).length}, партнёров: ${totalP}, недели 1: ${p1}`);
@@ -166,12 +204,12 @@ if (process.argv.includes('--pdf')) {
   (async () => {
     const b = await puppeteer.launch({ executablePath: process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: 'new', args: ['--allow-file-access-from-files'] });
     const pg = await b.newPage();
-    await pg.goto('file://' + path.join(__dirname, 'instrukciya.html'), { waitUntil: 'networkidle0', timeout: 90000 });
+    await pg.goto('file://' + path.join(__dirname, `instrukciya${SUF}.html`), { waitUntil: 'networkidle0', timeout: 90000 });
     await pg.evaluate(() => document.fonts.ready);
-    const out = path.join(OUT, 'partnerstvo.pdf');
+    const out = path.join(OUT, `partnerstvo${SUF}.pdf`);
     await pg.pdf({ path: out, width: '1600px', height: '900px', printBackground: true, displayHeaderFooter: true,
       headerTemplate: '<span></span>',
-      footerTemplate: '<div style="width:100%;font:10px Fira Code,monospace;color:#7a7a7d;padding:0 60px;display:flex;justify-content:space-between"><span>ПРОМКОНТУР · инструкция по партнёрству</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>',
+      footerTemplate: '<div style="width:100%;font:10px Fira Code,monospace;color:#7a7a7d;padding:0 60px;display:flex;justify-content:space-between"><span>ПРОМКОНТУР · инструкция по партнёрству' + (DS ? ' · дропшиппинг' : '') + '</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>',
       margin: { top: '40px', bottom: '46px', left: '0', right: '0' } });
     await b.close();
     console.log('PDF:', out, (fs.statSync(out).size / 1048576).toFixed(1) + ' МБ');

@@ -59,6 +59,8 @@ ul.clean li::before{content:"";position:absolute;left:3px;top:12px;width:8px;hei
 .pc ul{margin:0;padding-left:16px;font-size:13px}.pc li{margin-bottom:2px}
 .ch{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);font-size:12.5px;font-family:var(--m);color:var(--a800);word-break:break-word}.ch b{font-family:var(--b)}
 .url{color:var(--soft)}
+.ds{display:flex;flex-wrap:wrap;gap:3px 10px;font-size:12px;color:var(--muted);margin-top:6px;padding:6px 8px;background:#fff;border:1px solid var(--line2);border-radius:5px}.ds b{color:var(--text);font-weight:600}.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.flow{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}.fstep{padding:12px 14px;border-top:3px solid var(--a)}.fstep b{font-family:var(--h);font-size:17px}.fstep p{font-size:13px;color:var(--muted);margin-top:4px}
 .gap{margin-top:10px;font-size:13px;color:var(--warn);background:var(--warn-bg);padding:7px 12px;border-radius:6px}
 .tpls{break-before:page;padding-top:26px}
 .tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
@@ -74,12 +76,12 @@ pre{white-space:pre-wrap;font-family:var(--b);font-size:13px;line-height:1.45;ma
       <div class="brand"><svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#5980a6"/><path d="M4 9V4h5M23 4h5v5M28 23v5h-5M9 28H4v-5" fill="none" stroke="#d6ebff" stroke-width="1.5"/><path d="M10.5 23.5V9.5h11v14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="square"/></svg>ПРОМКОНТУР</div>
       <span class="mono" style="color:var(--a300)">инструкция · {{DATE}}</span>
     </div>
-    <h1>Кому и что писать о партнёрстве</h1>
-    <p class="sub">Пошаговый план рассылки на весь ассортимент площадки: партнёр по каждой подкатегории, публичный контакт, что спросить, готовое письмо и порядок на четыре недели.</p>
+    <h1>{{TITLE}}</h1>
+    <p class="sub">{{SUB}}</p>
     <div class="kpis">
       <div class="kpi"><b>{{N_DIRS}}</b><span>направлений</span></div>
       <div class="kpi"><b>{{N_PARTNERS}}</b><span>партнёров и сервисов</span></div>
-      <div class="kpi"><b>{{N_P1}}</b><span>писем в первую неделю</span></div>
+      <div class="kpi"><b>{{KPI3}}</b><span>{{KPI3L}}</span></div>
       <div class="kpi"><b>4</b><span>недели до договоров</span></div>
     </div>
   </div>
@@ -88,9 +90,9 @@ pre{white-space:pre-wrap;font-family:var(--b);font-size:13px;line-height:1.45;ma
 {{PROCESS}}
 
 <section class="matrix">
-  <div class="eyebrow"><span class="num">03</span><span class="mono">покрытие</span></div>
+  <div class="eyebrow"><span class="num">04</span><span class="mono">покрытие</span></div>
   <h2>Весь ассортимент: стратегия и первые письма</h2>
-  <div class="card" style="padding:10px 16px"><table><thead><tr><th>Направление</th><th>Стратегия</th><th>Неделя 1</th><th>Партнёров</th><th>Покрытие</th></tr></thead><tbody>{{MATRIX}}</tbody></table></div>
+  <div class="card" style="padding:10px 16px"><table><thead><tr><th>Направление</th><th>Стратегия</th><th>Неделя 1</th><th>Партнёров / дропшип</th><th>Покрытие</th></tr></thead><tbody>{{MATRIX}}</tbody></table></div>
 </section>
 
 {{BODY}}

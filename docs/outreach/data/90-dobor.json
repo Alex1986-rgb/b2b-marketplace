@@ -33,7 +33,21 @@
     "expect": "Ответ по запросу, условия индивидуальные — рынок запчастей к электродвигателям в целом непрозрачен по цене.",
     "leverage": "Аналогичный ассортимент есть у НПО «Электромашкомплект» (motors33.ru) и elektro-dvigateli.ru — можно сравнивать условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, kuboris.ru"
+    "source": "web_search 15.09.2026, kuboris.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — на kuboris.ru нет раздела о дропшиппинге/прямой отгрузке конечному клиенту/API",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://kuboris.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -65,7 +79,21 @@
     "expect": "Ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, motors33.ru"
+    "source": "web_search 15.09.2026, motors33.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "http://motors33.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -105,7 +133,21 @@
     "expect": "Ответ по запросу, расчёт под конкретную спецификацию.",
     "leverage": "Похожий ассортимент есть у Кабельного завода «Эксперт-Кабель» — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, smk-cabel.ru"
+    "source": "web_search 15.09.2026, smk-cabel.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — продукция под спецификацию/проект, дропшип-формат не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://smk-cabel.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -138,7 +180,21 @@
     "expect": "Ответ по запросу, детали программы не публикуются.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, expert-cable.ru"
+    "source": "web_search 15.09.2026, expert-cable.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — производство под заказ (от 5 дней), дилерская сеть есть, но дропшип-формат не описан на сайте",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://expert-cable.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -177,7 +233,21 @@
     "expect": "Индивидуальный расчёт под каждую заявку, готовых цен нет — оборудование проектное.",
     "leverage": "Похожий ассортимент есть у «ПитерЭнергоМаш» и ГК ТЕХ — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, gmenergo.ru"
+    "source": "web_search 15.09.2026, gmenergo.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — оборудование несерийное, проектное, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://gmenergo.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -212,7 +282,21 @@
     "expect": "Ответ по запросу, детали не публикуются на сайте.",
     "leverage": "Похожий ассортимент фильтров/контроллеров есть у «ДГУ Мастер» (Екатеринбург) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, stamfordgenerator.ru"
+    "source": "web_search 15.09.2026, stamfordgenerator.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — есть склад в СПб, но дропшип/прямая отгрузка конечному клиенту не описаны",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://stamfordgenerator.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -250,7 +334,21 @@
     "expect": "Бесплатный расчёт и подбор оборудования под проект, % скидки — индивидуально.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, ledeffect.ru"
+    "source": "web_search 15.09.2026, ledeffect.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — проектный расчёт под объект, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://ledeffect.ru/solutions/lighting-control/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -282,7 +380,21 @@
     "expect": "Ответ по запросу, цены по прайсу компонентов.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, trion-led.ru"
+    "source": "web_search 15.09.2026, trion-led.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://trion-led.ru/catalog/sistemy-upravleniya-osveshcheniem-astrum/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -320,7 +432,21 @@
     "expect": "Ответ по запросу, цены по каталогу оборудования.",
     "leverage": "Аналогичное оборудование производит НТЦ «Механотроника» (бренд SystemeSine у Systeme Electric) и «Хомов электро» — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, sinepower.ru"
+    "source": "web_search 15.09.2026, sinepower.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — оборудование требует расчёта конфигурации под сеть клиента, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://sinepower.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -353,7 +479,21 @@
     "expect": "Внедрение — проектная работа, готовых фиксированных цен на витрину нет; ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, sedmax.ru"
+    "source": "web_search 15.09.2026, sedmax.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — программная платформа с проектным внедрением, дропшип не применим",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://sedmax.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -391,7 +531,21 @@
     "expect": "Ответ по запросу; заявлена гибкость условий оплаты как конкурентное преимущество.",
     "leverage": "Аналогичный сегмент закрывают ETATRON D.S. (официальный представитель — ООО «Дозирующие системы») и WRS (wrsdosing.ru) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, doseuro.su"
+    "source": "web_search 15.09.2026, doseuro.su",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — дилерское соглашение с гибкой оплатой заявлено, но дропшип/прямая отгрузка конечному клиенту не описаны",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://doseuro.su/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -425,7 +579,21 @@
     "expect": "Гибкая ценовая политика заявлена публично; ответ по запросу с конкретной сеткой скидок.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, etatron.ru"
+    "source": "web_search 15.09.2026, etatron.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "склады в Москве/СПб/Армавире с 85% моделей в наличии — операционно готовы к быстрой отгрузке, но дропшип/блайнд-отгрузка конечному клиенту на сайте явно не описана",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "быстрая отгрузка вероятна для 85% моделей в наличии, точный SLA не указан",
+     "returns": "неизвестно",
+     "url": "https://www.etatron.ru/about/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -466,7 +634,21 @@
     "expect": "Ответ менеджера, вероятны индивидуальные условия по объёму.",
     "leverage": "Аналогичный ассортимент по бренду PIAB есть у cficom.ru и piab.nt-rt.ru — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, bb-engineering.ru"
+    "source": "web_search 15.09.2026, bb-engineering.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — на bb-engineering.ru нет описания дропшип-программы/прямой отгрузки конечному клиенту",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://bb-engineering.ru/vakuumnye-zahvaty/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -505,7 +687,21 @@
     "expect": "Индивидуальный расчёт под каждый объект, готовых цен на витрину нет.",
     "leverage": "Похожий ассортимент есть у РКМ Корп (roskotlomash.pro) и завода «Вулкан» — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, eremias.ru"
+    "source": "web_search 15.09.2026, eremias.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — продукция изготавливается под проект/спецификацию, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://eremias.ru/promyshlennye-dymohody/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -537,7 +733,21 @@
     "expect": "Индивидуальный расчёт, ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, roskotlomash.pro"
+    "source": "web_search 15.09.2026, roskotlomash.pro",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — полный цикл «проект → монтаж», дропшип не применим",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://roskotlomash.pro/products/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -576,7 +786,21 @@
     "expect": "Дилерский статус даёт официальный дилерский прайс от производителя; отклик быстрый — компания сама заявляет открытую программу.",
     "leverage": "Похожий сервис предлагает Pipal Chemicals («Промыватор», xn--80ad3ahdbhfq1g.xn--p1ai) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, opt.novochem.ru"
+    "source": "web_search 15.09.2026, opt.novochem.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "дилерская программа с отгрузкой от 2000 л реагентов подразумевает крупные оптовые партии дилеру, а не блайнд-отгрузку мелких заказов конечному клиенту — дропшип на сайте не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "от 2000 л реагентов (для дилерского статуса — не дропшип-формат)",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://opt.novochem.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -609,7 +833,21 @@
     "expect": "Ответ по запросу, детали программы уточняются напрямую.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, xn--80ad3ahdbhfq1g.xn--p1ai"
+    "source": "web_search 15.09.2026, xn--80ad3ahdbhfq1g.xn--p1ai",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — дилерская/сервисная программа описана, но дропшип-формат не упомянут",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://xn--80ad3ahdbhfq1g.xn--p1ai/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -652,7 +890,21 @@
     "expect": "Отгрузка со склада в день заказа для стоковых позиций; скидки и отсрочка — по объёму.",
     "leverage": "Аналогичный ассортимент производит ГК BBCR (tdbbc.ru) серии SD/SAF/SNK — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, snl-inner.ru"
+    "source": "web_search 15.09.2026, snl-inner.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "отгрузка со склада в день заказа заявлена, но именно дропшип (отгрузка на адрес третьего лица без документов Inner) на сайте не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "отгрузка в день заказа для стоковых позиций",
+     "returns": "неизвестно",
+     "url": "https://snl-inner.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -684,7 +936,21 @@
     "expect": "Ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, tdbbc.ru"
+    "source": "web_search 15.09.2026, tdbbc.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://tdbbc.ru/razyomnye-korpusa/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -723,7 +989,21 @@
     "expect": "Расчёт стоимости и сроков после получения чертежа/3D-модели; готовых фиксированных цен нет.",
     "leverage": "Похожий сервис есть у ВТМ (vtmehanika.ru, расчёт за 24 часа) и Grastek (grastek.ru) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, leotec.ru"
+    "source": "web_search 15.09.2026, leotec.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — производство по чертежу под заказ, дропшип не применим в классическом виде",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://www.leotec.ru/metalloobrabotka/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -756,7 +1036,21 @@
     "expect": "Расчёт за 24 часа, минимальная стоимость заказа 5000 руб.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, vtmehanika.ru"
+    "source": "web_search 15.09.2026, vtmehanika.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — производство по чертежу под заказ, дропшип не применим в классическом виде",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "минимальная стоимость заказа 5000 руб. (не дропшип-порог)",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://vtmehanika.ru/izgotovlenie-detalej-na-zakaz/izgotovlenie-detalej-chpu-na-zakaz/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -794,7 +1088,21 @@
     "expect": "Ответ по запросу, подбор технический (нужны параметры барабана/ленты).",
     "leverage": "Похожий ассортимент (очистители + футеровка одним поставщиком) есть у BISON (bisonrti.ru) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, centrobelt.ru"
+    "source": "web_search 15.09.2026, centrobelt.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — техническая продукция с подбором под параметры оборудования клиента, дропшип-формат не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://centrobelt.ru/Flexco/Belt-Cleaning-Systems/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -827,7 +1135,21 @@
     "expect": "Индивидуальный расчёт под диаметр и условия эксплуатации барабана.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, futerovka-futurum.ru"
+    "source": "web_search 15.09.2026, futerovka-futurum.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — изготовление и монтаж под конкретный барабан, дропшип не применим",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://futerovka-futurum.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -865,7 +1187,21 @@
     "expect": "Ответ по запросу; подбор состава — с выездом технолога или консультацией онлайн.",
     "leverage": "Похожий ассортимент есть у LIKSIR и ОСМ Технолоджи (официальный дилер Houghton) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, gremlos.ru"
+    "source": "web_search 15.09.2026, gremlos.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://gremlos.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -898,7 +1234,21 @@
     "expect": "Ответ по запросу, вышлют презентацию-каталог по отрасли.",
     "leverage": "Аналогичный сегмент (Bio-Circle) закрывают Surfox и CIP System — можно сравнить условия.",
     "risks": "Проверить, что «Квадро» действительно авторизован (заявлено на сайте) — убедиться в отсутствии санкционных ограничений на конкретные позиции.",
-    "source": "web_search 15.09.2026, crc-industries.ru"
+    "source": "web_search 15.09.2026, crc-industries.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://crc-industries.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -937,7 +1287,21 @@
     "expect": "Ответ отдела оптовых продаж, скидка — по объёму закупки.",
     "leverage": "Аналогичный ассортимент (Insize) есть у МКРус (mkrus.ru) — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, microntools.ru"
+    "source": "web_search 15.09.2026, microntools.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — заявлены оптовые цены, но дропшип-формат/прямая отгрузка конечному клиенту не описаны",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://www.microntools.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -975,7 +1339,21 @@
     "expect": "Максимально открытая для ниши программа: дилерский прайс, склад под конкретного партнёра, обучение — отклик ожидается быстрый.",
     "leverage": "Единственный производитель хлопковых абразивов в РФ — прямых конкурентов на переговоры нет, но можно сравнивать с обычными шлифкругами (Косулинский завод, Корунд).",
     "risks": null,
-    "source": "web_search 15.09.2026, poliroff.ru/diler/"
+    "source": "web_search_exa 15.09.26, poliroff.ru/diler/",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "заявлены складская программа (90% позиций в наличии, отгрузка 24–48 ч) и эксклюзив на территорию — операционно готовы к быстрой отгрузке, но именно дропшип/блайнд-отгрузка на адрес третьего лица на сайте не описана",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "форма «Стать дилером» на сайте",
+     "payment": "неизвестно",
+     "shipSla": "отгрузка 24–48 ч для 90% позиций в наличии",
+     "returns": "неизвестно",
+     "url": "https://poliroff.ru/diler/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -1007,7 +1385,21 @@
     "expect": "Ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, kosulino.ru"
+    "source": "web_search 15.09.2026, kosulino.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://kosulino.ru/shlifovalnye-krugi/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1045,7 +1437,21 @@
     "expect": "Вероятно направят к региональному представителю (напр. НКР в Екатеринбурге), прямой контракт с FANUC — по объёму.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, fanuc-russia.ru"
+    "source": "web_search 15.09.2026, fanuc-russia.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — сложное промышленное оборудование с пуско-наладкой, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://fanuc-russia.ru/roboty/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1083,7 +1489,21 @@
     "expect": "Ответ менеджера, консультация по подбору конфигурации под материал.",
     "leverage": "Российские сушильные камеры для 3D-печати (ШС) поставляет Lider-3D — можно сравнить условия для менее капиталоёмких проектов.",
     "risks": null,
-    "source": "web_search 15.09.2026, shini.ru"
+    "source": "web_search 15.09.2026, shini.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — собственный склад и сервис в России заявлены, но дропшип-формат не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://shini.ru/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -1116,7 +1536,21 @@
     "expect": "Ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, lider-3d.ru"
+    "source": "web_search 15.09.2026, lider-3d.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://lider-3d.ru/catalog/dopolnitelnoe_oborudovanie/dlya_3d_printerov/sushilnye_kamery/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1155,7 +1589,21 @@
     "expect": "Ответ по запросу; компания активно развивает партнёров.",
     "leverage": "Российский производитель Госметр (через nv-lab.ru/mirvesov.ru) — альтернатива для более бюджетного сегмента.",
     "risks": null,
-    "source": "web_search 15.09.2026, scale.ru"
+    "source": "web_search 15.09.2026, scale.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "лабораторные весы обычно требуют поверки при вводе в эксплуатацию — на scale.ru нет описания дропшип-программы; есть общая партнёрская сеть, детали не публикуются",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://www.scale.ru/about/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1193,7 +1641,21 @@
     "expect": "Ответ по запросу, подбор технический (нужна модель погрузчика).",
     "leverage": "Литиевые тяговые АКБ Everest Energy закрывает официальный дилер ЭТТО (etto.com.ru) — можно сравнить для более дешёвого сегмента.",
     "risks": null,
-    "source": "web_search 15.09.2026, clark-ural.ru"
+    "source": "web_search 15.09.2026, clark-ural.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — техническая продукция с подбором под модель погрузчика клиента, дропшип-формат не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://clark-ural.ru/katalog/akb-zu/"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -1225,7 +1687,21 @@
     "expect": "Ответ по запросу.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, etto.com.ru"
+    "source": "web_search 15.09.2026, etto.com.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://etto.com.ru/everestenergy"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1264,7 +1740,21 @@
     "expect": "Низкий порог входа, договор между клиентом и производителем — напрямую, оплата минуя агента.",
     "leverage": null,
     "risks": null,
-    "source": "web_search 15.09.2026, ugecopack.ru"
+    "source": "web_search 15.09.2026, ugecopack.ru",
+    "dropship": {
+     "fit": "нет",
+     "evidence": "собственная модель компании — оплата идёт напрямую производителю, минуя агента и минуя ПРОМКОНТУР; это противоречит дропшип-модели, где клиент платит ПРОМКОНТУРу",
+     "directShip": "да, но платёж не через нас — не подходит под нашу схему",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "оплата клиента идёт напрямую производителю, минуя посредника — несовместимо с моделью «клиент платит ПРОМКОНТУР»",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://ugecopack.ru/partneram.html"
+    },
+    "dropshipPriority": 3
    },
    {
     "priority": 2,
@@ -1297,7 +1787,21 @@
     "expect": "КП в течение 24 часов после заявки (заявлено официальным дилером de-pack.ru).",
     "leverage": "Аналогичный ассортимент производит «Интеграл Плюс» (линейка «Инпак») — можно сравнить условия.",
     "risks": null,
-    "source": "web_search 15.09.2026, notis.ru"
+    "source": "web_search 15.09.2026, notis.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — оборудование требует пуско-наладки на производстве клиента, дропшип логически маловероятен",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://www.notis.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1336,7 +1840,21 @@
     "expect": "Отдел продаж работает только с юрлицами; ответ по запросу.",
     "leverage": "Продукцию «Респираторный комплекс» также распространяет НПК СИЗОД (npksizod.ru) как один из официальных дистрибьюторов — можно сравнить каналы входа.",
     "risks": null,
-    "source": "web_search 15.09.2026, rkszpe.ru"
+    "source": "web_search 15.09.2026, rkszpe.ru",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — работа только с юрлицами (не с розничными интернет-магазинами напрямую), дропшип-формат на сайте не описан",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://rkszpe.ru/"
+    },
+    "dropshipPriority": 3
    }
   ]
  },
@@ -1375,7 +1893,21 @@
     "expect": "крупная сеть — процесс входа формализован, но условия зависят от конкретного филиала",
     "leverage": "по масштабу вне конкуренции — можно требовать условия не хуже среднего оптового клиента",
     "risks": "работает больше как прямой производитель-ритейлер, а не классическая дилерская сеть с фидом/API — уточнить техническую возможность интеграции прайса",
-    "source": "docs/research/partners/07-logistika-upakovka-pishchevoe-bezopasnost.md, раздел 5"
+    "source": "docs/research/partners/07-logistika-upakovka-pishchevoe-bezopasnost.md, раздел 5",
+    "dropship": {
+     "fit": "неизвестно",
+     "evidence": "не найдено — на vostok.ru нет описания дропшип-программы/прямой блайнд-отгрузки конечному клиенту (см. также оценку той же компании в направлении «Средства безопасности», 06-logistika-upakovka.json)",
+     "directShip": "неизвестно",
+     "blind": "неизвестно",
+     "minOrder": "неизвестно",
+     "feed": "нет",
+     "orderApi": "неизвестно",
+     "payment": "неизвестно",
+     "shipSla": "неизвестно",
+     "returns": "неизвестно",
+     "url": "https://vostok.ru"
+    },
+    "dropshipPriority": 3
    }
   ]
  }
