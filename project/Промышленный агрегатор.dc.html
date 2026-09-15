@@ -26,6 +26,7 @@
   .marquee-track:hover { animation-play-state: paused; }
   .brand-logo { display:inline-flex; align-items:center; gap:10px; margin:0 10px; padding:8px 16px 8px 8px; border-radius:12px; background:var(--color-surface, #fff); border:1px solid color-mix(in srgb, var(--color-text) 8%, transparent); text-decoration:none; color:var(--color-neutral-700); white-space:nowrap; filter:grayscale(1); opacity:.85; transition:filter .2s, opacity .2s, box-shadow .2s, color .2s; }
   .brand-logo:hover { filter:none; opacity:1; color:var(--color-text); box-shadow:0 6px 18px rgba(22,38,58,.10); }
+  .brand-logo.has-logo { padding:8px 18px; gap:10px; position:relative; }
   .brand-logo-mark { width:32px; height:32px; border-radius:9px; display:grid; place-items:center; background:var(--color-accent); color:#fff; flex:none; }
   .brand-logo-name { font-family:var(--font-heading); font-weight:600; font-size:17px; letter-spacing:.01em; }
   .split { display:grid; gap:36px; align-items:start; grid-template-columns:minmax(0,1fr) var(--aside,380px); }
@@ -225,7 +226,7 @@
         <sc-for list="{{ brandTicker }}" as="b" hint-placeholder-count="2">
           <div style="display:flex;gap:0">
             <sc-for list="{{ b.items }}" as="n" hint-placeholder-count="20">
-              <a href="#" onClick="{{ goBrand }}" class="brand-logo" title="{{ n.t }}"><span class="brand-logo-mark"><span class="ico ico-20 {{ n.icon }}"></span></span><span class="brand-logo-name">{{ n.t }}</span></a>
+              <a href="#" onClick="{{ goBrand }}" class="brand-logo {{ n.cls }}" title="{{ n.t }}"><span class="brand-logo-img" role="img" aria-label="{{ n.t }}" style="{{ n.imgStyle }}"></span><span class="brand-logo-mark" style="{{ n.markStyle }}"><span class="ico ico-20 {{ n.icon }}"></span></span><span class="brand-logo-name" style="{{ n.nameStyle }}">{{ n.t }}</span></a>
             </sc-for>
           </div>
         </sc-for>
@@ -724,7 +725,7 @@
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="padding:10px 16px 12px;border-bottom:1px solid var(--color-divider)">
           <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-ui-account" style="color:var(--color-accent-700)"></span>ООО «Метизный завод»</div>
-          <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">ИНН 7105012345</div>
+          <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">ИНН 7105012341</div>
         </div>
         <sc-for list="{{ accountNav }}" as="n" hint-placeholder-count="6">
           <a href="#" class="row-hover" style="display:flex;justify-content:space-between;padding:9px 16px;font-size:14px;color:inherit;text-decoration:none">
@@ -904,7 +905,7 @@
             <h3>Оформление</h3>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
               <div class="field"><label>Плательщик</label><input class="input" placeholder="ООО «Метизный завод»"></div>
-              <div class="field"><label>ИНН</label><input class="input mono" placeholder="7105012345"></div>
+              <div class="field"><label>ИНН</label><input class="input mono" placeholder="7105012341"></div>
               <div class="field"><label>Адрес доставки</label><input class="input" placeholder="г. Тула, ул. Заводская, 14"></div>
               <div class="field"><label>Контакт на объекте</label><input class="input" placeholder="Имя, телефон"></div>
             </div>
@@ -2896,7 +2897,7 @@
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Клиент · оператор сервиса</div>
           <h1 style="font-size:32px;margin:2px 0 0;display:flex;align-items:center;gap:12px"><span class="ico i-op-client" style="color:var(--color-accent-700)"></span>ООО «Метизный завод»</h1>
-          <div class="mono" style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">ИНН 7105012345 · Тула · снабжение, 4 сотрудника · с марта 2024</div>
+          <div class="mono" style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">ИНН 7105012341 · Тула · снабжение, 4 сотрудника · с марта 2024</div>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button onClick="{{ goChat }}" class="btn btn-secondary">Открыть диалог</button>
@@ -6466,7 +6467,12 @@ class Component extends DCLogic {
       examples: ["Grundfos CR 32-4", "SKF 6205", "INNOVERT 15 кВт", "Kaishan 10 бар"],
       brandTicker: (() => {
         const prof = { pump: "i-dir-pumps", bearing: "i-dir-bearings", gear: "i-dir-gearboxes", vfd: "i-dir-vfd", el: "i-dir-electrical", air: "i-dir-compressors", pn: "i-dir-pneumatics", kip: "i-dir-kipia" };
-        const brands = [["Grundfos", "pump"], ["Wilo", "pump"], ["CNP", "pump"], ["SKF", "bearing"], ["NSK", "bearing"], ["SEW-Eurodrive", "gear"], ["NORD", "gear"], ["INNOVERT", "vfd"], ["Schneider", "el"], ["ABB", "el"], ["Siemens", "el"], ["Danfoss", "vfd"], ["Kaishan", "air"], ["Atlas Copco", "air"], ["Festo", "pn"], ["Camozzi", "pn"], ["Parker", "pn"], ["Ebara", "pump"], ["Ливгидромаш", "pump"], ["Калужский НЗ", "pump"], ["Чебоксарский ЭА", "el"], ["Взлёт", "kip"], ["Электропривод", "vfd"], ["Редуктор-ПТО", "gear"]].map(([t, k]) => ({ t, icon: prof[k] }));
+        const brands = [["Grundfos", "pump"], ["Wilo", "pump"], ["CNP", "pump"], ["SKF", "bearing"], ["NSK", "bearing"], ["SEW-Eurodrive", "gear"], ["NORD", "gear"], ["INNOVERT", "vfd"], ["Schneider", "el"], ["ABB", "el"], ["Siemens", "el"], ["Danfoss", "vfd"], ["Kaishan", "air"], ["Atlas Copco", "air"], ["Festo", "pn"], ["Camozzi", "pn"], ["Parker", "pn"], ["Ebara", "pump"], ["Ливгидромаш", "pump"], ["Калужский НЗ", "pump"], ["Чебоксарский ЭА", "el"], ["Взлёт", "kip"], ["Электропривод", "vfd"], ["Редуктор-ПТО", "gear"]].map(([t, k]) => {
+          // оригинальные логотипы: файл и ширина плашки при высоте 30 px; name — показывать ли название рядом (у знака без текста)
+          const L = { "Wilo": ["wilo", 74], "SKF": ["skf", 96], "NSK": ["nsk", 78], "SEW-Eurodrive": ["sew", 76], "NORD": ["nord", 100], "Danfoss": ["danfoss", 96], "Atlas Copco": ["atlascopco", 112], "Festo": ["festo", 120], "Parker": ["parker", 104], "Ebara": ["ebara", 74], "ABB": ["abb", 76], "Siemens": ["siemens", 128], "Schneider": ["schneider", 30, true] }[t];
+          return L ? { t, icon: prof[k], cls: "has-logo", imgStyle: "display:block;width:" + L[1] + "px;height:" + (L[0] === "nord" ? 38 : 30) + "px;background:url(img/logos/" + L[0] + ".svg) center/contain no-repeat", markStyle: "display:none", nameStyle: L[2] ? "" : "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" }
+                   : { t, icon: prof[k], cls: "", imgStyle: "display:none", markStyle: "", nameStyle: "" };
+        });
         return [{ items: brands }, { items: brands }];
       })(),
       heroStats: [

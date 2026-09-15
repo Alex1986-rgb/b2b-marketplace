@@ -2,7 +2,7 @@
  "demo": true,
  "company": {
   "name": "ООО «Метизный завод»",
-  "inn": "7105012345",
+  "inn": "7105012341",
   "kpp": "710501001",
   "ogrn": "1027100512345",
   "address": "300012, г. Тула, ул. Оружейная, д. 15",
@@ -126,8 +126,7 @@
    "terminal": "терминал Тула",
    "eta": "2026-09-18",
    "shipped": "2026-09-15",
-   "author": "Кузнецов А. С.",
-   "page": "kabinet/zakaz-pk-10428/"
+   "author": "Кузнецов А. С."
   },
   {
    "id": "ПК-10425",
@@ -1080,6 +1079,11 @@
  "notifications": {
   "quietHours": "22:00–08:00",
   "priceWatch": 5,
+  "maxLinked": true,
+  "maxBot": "@promkontur_bot",
+  "email": "zakupki@metiz-tula.example",
+  "buhEmail": "buh@metiz-tula.example",
+  "watch": { "stock": true, "drop": true, "eol": false },
   "rows": [
    {
     "event": "Счёт выставлен",

@@ -27,6 +27,9 @@ module.exports = {
   notify: { path: 'kabinet/uvedomleniya/', index: false, title: 'Уведомления — ПРОМКОНТУР', desc: 'Настройка уведомлений по каналам MAX, почта и SMS.' },
   cart: { path: 'korzina/', index: false, title: 'Корзина и оформление — ПРОМКОНТУР', desc: 'Позиции, реквизиты, адрес доставки и способ оплаты.' },
   supplier: { path: 'postavshchikam/', index: true, title: 'Поставщикам оборудования: подключите прайс бесплатно — ПРОМКОНТУР', desc: 'Подключение прайса по Excel, XML или API без оплаты: цены и остатки обновляются автоматически, заказы приходят оформленными, отгрузка напрямую клиенту.' },
+  // vendor: экран макета нужен сборщику только как каркас (шапка кабинета) и цель ссылок «Кабинет поставщика»;
+  // саму страницу /kabinet-postavshchika/ перезаписывает живой шаблон из tools/gen_vendor.js (генераторы идут после маршрутов).
+  // skip:true пока нельзя: build_site.js при skip не снимает каркас CHROMES.vendor и превращает ссылки на маршрут в ссылки на главную.
   vendor: { path: 'kabinet-postavshchika/', index: false, title: 'Кабинет поставщика — ПРОМКОНТУР', desc: 'Состояние выгрузки, заявки, расчёты и редактор прайса.' },
   client: { path: 'panel/klient/', index: false, title: 'Карточка клиента — панель оператора', desc: 'История обращений клиента во всех каналах.' },
   crm: { path: 'panel/crm/', index: false, title: 'CRM: сделки на автопилоте — панель оператора', desc: 'Канбан сделок и лента действий робота.' },
@@ -40,3 +43,8 @@ module.exports = {
   mobile: { skip: true, path: 'panel/mobilnye-ekrany/', index: false, title: 'Мобильные экраны — ПРОМКОНТУР', desc: 'Мобильные макеты для снабженца и оператора.' },
   states: { skip: true, path: 'panel/sostoyaniya/', index: false, title: 'Состояния интерфейса — ПРОМКОНТУР', desc: 'Пустые, ошибочные и граничные состояния интерфейса.' },
 };
+// Кабинет закупщика: обзор, уведомления и ПК-10428 — живые страницы tools/gen_cabinet.js (экраны макета не пишутся).
+// skip неперечисляемый: сборщик видит r.skip и пропускает экран, а в браузер макета (inPage получает маршруты
+// через JSON) флаг не уходит — ссылки макета «Кабинет», «Уведомления», «Статус заказа» сохраняют свои адреса.
+// По старому адресу kabinet/zakaz-pk-10428/ gen_cabinet.js пишет редирект на kabinet/zakaz/pk-10428/.
+for (const id of ['account', 'order', 'notify']) Object.defineProperty(module.exports[id], 'skip', { value: true, enumerable: false });

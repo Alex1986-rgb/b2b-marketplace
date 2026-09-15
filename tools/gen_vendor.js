@@ -30,18 +30,18 @@ module.exports = ctx => {
     { key: 'settle', href: V + 'raschety/', icon: 'payout', t: 'Расчёты', count: 'pay', n: c.pay },
     { key: 'settings', href: V + 'nastrojki/', icon: 'vendor-directions', t: 'Настройки', count: '', n: 0 },
   ];
-  const TITLE_N = { 'new': 'новых заявок', err: 'ошибок формата', feed: 'ошибок в последнем обмене', pay: 'заявок к расчёту' };
+  const TITLE_N = { 'new': 'заявок ждут подтверждения', err: 'ошибок формата в прайсе', feed: 'ошибок в последнем обмене фида', pay: `заявок в расчётах: к оплате ${c['К расчёту'] || 0}, ждут УПД ${c['Доставлена'] || 0}` };
   const crumbs = items => ctx.crumbs.length >= 2 ? ctx.crumbs(BASE, items) : ctx.crumbs(items);
 
   const shell = (active, h1, lead, content, tools = '', crumbTail = null) => `${dataTag}
 <div class="pv-shell">
   <nav class="blueprint pv-side" aria-label="Разделы кабинета поставщика">
     <div class="pv-company"><span class="pv-ava" aria-hidden="true">${esc(D.company.short)}</span><div><strong>${esc(D.company.name)}</strong><div class="pv-sub">Уровень «${esc(D.company.tier)}» · ${esc(D.company.tierFormat)}</div></div></div>
-    <ul class="pv-menu">${NAV.map(n => `<li><a href="${n.href}" class="pv-menu-a"${n.key === active ? ' aria-current="page"' : ''}>${R.ico(n.icon)}<span>${n.t}</span>${n.count ? `<span class="pv-count mono" data-ven-count="${n.count}"${n.n ? '' : ' hidden'} title="${TITLE_N[n.count]}">${n.n || ''}</span>` : ''}</a></li>`).join('')}</ul>
+    <ul class="pv-menu">${NAV.map(n => `<li><a href="${n.href}" class="pv-menu-a"${n.key === active ? ' aria-current="page"' : ''}>${R.ico(n.icon)}<span>${n.t}</span>${n.count ? `<span class="pv-count mono" data-ven-count="${n.count}"${n.n ? '' : ' hidden'} title="${n.n} ${TITLE_N[n.count]}" aria-hidden="true">${n.n || ''}</span>` : ''}</a></li>`).join('')}</ul>
     <a class="pv-side-foot" href="${BASE}postavshchikam/usloviya/">${R.ico('doc-generic')}Условия для поставщиков</a>
   </nav>
   <div class="pv-body" data-ven-page="${active}"${active === 'order' ? '' : ''}>
-    ${crumbs([{ name: 'Кабинет поставщика', href: V }, ...(crumbTail || []), { name: h1 }])}
+    ${active === 'home' ? crumbs([{ name: 'Кабинет поставщика' }]) : crumbs([{ name: 'Кабинет поставщика', href: V }, ...(crumbTail || []), { name: h1 }])}
     <div class="pv-head"><div><h1 class="pv-h1">${h1}</h1>${lead ? `<p class="pv-lead">${lead}</p>` : ''}</div>${tools ? `<div class="pv-head-tools">${tools}</div>` : ''}</div>
     ${content}
   </div>
@@ -50,17 +50,52 @@ module.exports = ctx => {
   const page = (path, title, desc, h1, html) => ({ path, title, desc, h1, html, chrome: 'vendor', scripts: ['vendor.js'], index: false });
   const pages = [];
 
+  // ── сводка: живой шаблон с тем же меню, что у разделов (решение по 3.2) ──
+  const S0 = { orders: D.orders, price: D.price, feed: D.feed, settings: D.settings };
+  const ps = R.priceStats(D.price);
+  pages.push(page('kabinet-postavshchika/', 'Кабинет поставщика — ПРОМКОНТУР', 'Сводка поставщика: новые заявки, отгрузки, ошибки прайса, выплаты и состояние выгрузки фида.', 'Сводка',
+    shell('home', 'Сводка', `${esc(D.company.name)} · уровень «${esc(D.company.tier)}». Новые заявки подтверждайте за 2 часа — просрочка снижает приоритет в подборе.`, `
+    <div class="pv-stats" data-ven-home="stats">${R.homeStats(S0, D, BASE)}</div>
+    <section class="blueprint pv-card pv-card-flush" aria-labelledby="pv-home-ord-h">
+      <div class="pv-card-head pv-pad"><h2 class="pv-h2" id="pv-home-ord-h">Последние заявки</h2><a class="pv-link" href="${V}zayavki/">Все заявки →</a></div>
+      <div class="pv-scroll"><table class="table pv-table pv-cards pv-orders">${R.ORDER_HEAD}<tbody data-ven-home="orders">${R.homeOrders(S0, D, BASE)}</tbody></table></div>
+    </section>
+    <div class="pv-two">
+      <section class="blueprint pv-card" aria-labelledby="pv-home-feed-h">
+        <h2 class="pv-h2" id="pv-home-feed-h">${R.ico('tier-sync', 'width:20px;height:20px;color:var(--color-accent-700)')} Состояние выгрузки</h2>
+        <div data-ven-home="feed">${R.homeFeed(S0, D, BASE)}</div>
+      </section>
+      <section class="blueprint pv-card" aria-labelledby="pv-home-quick-h">
+        <h2 class="pv-h2" id="pv-home-quick-h">Быстрые действия</h2>
+        <div class="pv-quick" data-ven-home="quick">
+          <a class="btn btn-primary" data-q="new" href="${V}zayavki/?st=${encodeURIComponent('Новая')}">Подтвердить новые заявки <span class="mono">${c['Новая'] || 0}</span></a>
+          <a class="btn btn-secondary" data-q="work" href="${V}zayavki/?st=${encodeURIComponent('В работе')}">Собрать и отгрузить <span class="mono">${c.work}</span></a>
+          <a class="btn btn-secondary" href="${V}prajs/">${R.ico('vendor-price', 'color:currentColor')}Править цены и остатки</a>
+          <a class="btn btn-secondary" href="${V}vygruzka/">${R.ico('tier-sync', 'color:currentColor')}Запустить обмен фида</a>
+          <button type="button" class="btn btn-secondary" data-ven-csv>${R.ico('ui-download', 'color:currentColor')}Скачать прайс (CSV)</button>
+          <button type="button" class="btn btn-secondary" data-ven-orderscsv>${R.ico('ui-download', 'color:currentColor')}Выгрузить заявки (CSV)</button>
+          <a class="btn btn-secondary" href="${V}raschety/#akty">${R.ico('doc-generic', 'color:currentColor')}Акты сверки</a>
+        </div>
+      </section>
+    </div>
+    <section class="blueprint pv-card pv-card-flush" aria-labelledby="pv-home-price-h">
+      <div class="pv-card-head pv-pad"><h2 class="pv-h2" id="pv-home-price-h">Прайс: требует внимания</h2><a class="pv-link" href="${V}prajs/">Прайс-редактор →</a></div>
+      <p class="pv-sub pv-pad">В выгрузке ${R.num(D.company.positionsTotal)} позиций; в демо-редакторе — ${ps.all}. Счётчики ниже — по демо-редактору.</p>
+      <div class="pv-chips pv-pad" data-ven-home="chips">${R.homePriceChips(S0, BASE)}</div>
+      <div class="pv-scroll"><table class="table pv-table pv-cards"><thead><tr><th scope="col">Позиция</th><th scope="col" class="pv-num">Цена</th><th scope="col" class="pv-num">Остаток</th><th scope="col" class="pv-num">Срок</th><th scope="col">Источник</th><th scope="col">Статус</th></tr></thead><tbody data-ven-home="attention">${R.homeAttention(S0, BASE)}</tbody></table></div>
+    </section>`)));
+
   // ── заявки ──
   pages.push(page('kabinet-postavshchika/zayavki/', 'Заявки поставщика — кабинет ПРОМКОНТУР', 'Входящие заявки поставщика: подтверждение, сборка, отгрузка с трек-номером, передача к расчёту.', 'Заявки',
     shell('orders', 'Заявки', 'Новую заявку нужно подтвердить за 2 часа: наличие и дата отгрузки. Покупатель обезличен — вся переписка идёт через менеджера площадки.', `
     <div class="pv-stats" data-ven-stats>${statBox([[c['Новая'] || 0, 'новых — подтвердить за 2 часа'], [c.work, 'в сборке и к отгрузке'], [c['Отгружена'] || 0, 'в пути у перевозчика'], [R.rub(D.company.shippedMonth), 'отгружено за сентябрь']])}</div>
     <div class="pv-toolbar">
-      <div class="pv-chips" role="group" aria-label="Фильтр по статусу" data-ven-chips>${['Все'].concat(D.statuses).map(s => `<button type="button" class="pv-chip" aria-pressed="${s === 'Все'}" data-st="${esc(s)}">${esc(s)} <span class="mono">${s === 'Все' ? c.all : (c[s] || 0)}</span></button>`).join('')}</div>
+      <div class="pv-chips" role="group" aria-label="Фильтр по статусу" data-ven-chips>${['Все', 'Новая', 'В работе'].concat(D.statuses.slice(1)).map(s => `<button type="button" class="pv-chip" aria-pressed="${s === 'Все'}" data-st="${esc(s)}">${esc(s)} <span class="mono">${s === 'Все' ? c.all : s === 'В работе' ? c.work : (c[s] || 0)}</span></button>`).join('')}</div>
       <label class="pv-search">${R.ico('ui-search')}<input class="input" type="search" data-ven-q placeholder="Номер заявки, город или позиция" aria-label="Поиск по заявкам"></label>
     </div>
     <div class="blueprint pv-card pv-card-flush">
       <div class="pv-scroll"><table class="table pv-table pv-cards pv-orders">
-        <thead><tr><th scope="col">Заявка</th><th scope="col">Покупатель</th><th scope="col">Позиции</th><th scope="col" class="pv-num">Сумма</th><th scope="col">Срок</th><th scope="col">Статус</th><th scope="col"><span class="pv-sr">Действия</span></th></tr></thead>
+        ${R.ORDER_HEAD}
         <tbody data-ven-orders>${R.orderRows(D.orders, D, BASE)}</tbody>
       </table></div>
       <div class="pk-empty" data-ven-empty hidden><strong>Заявок не найдено</strong><span>Смените статус или уточните поиск.</span></div>
@@ -89,8 +124,8 @@ module.exports = ctx => {
       <div class="pv-batch" role="group" aria-label="Пакетное изменение цен">
         <span class="pv-sub" data-ven-selinfo aria-live="polite">Отметьте строки</span>
         <label class="pv-pct"><span>Цены на</span><input class="input mono" data-ven-pct inputmode="decimal" value="5" aria-label="Процент изменения цен"><span>%</span></label>
-        <button type="button" class="btn btn-secondary pv-btn-sm" data-ven-batch="-1">− понизить</button>
-        <button type="button" class="btn btn-secondary pv-btn-sm" data-ven-batch="1">+ повысить</button>
+        <button type="button" class="btn btn-secondary pv-btn-sm" data-ven-batch="-1">− понизить на 5%</button>
+        <button type="button" class="btn btn-secondary pv-btn-sm" data-ven-batch="1">+ повысить на 5%</button>
         <span class="pv-grow"></span>
         <button type="button" class="btn btn-secondary pv-btn-sm" data-ven-csv>${R.ico('ui-download', 'color:currentColor')}Экспорт CSV</button>
       </div>
@@ -119,7 +154,7 @@ module.exports = ctx => {
         <div class="field"><label for="pv-url">Адрес фида</label><input class="input mono" id="pv-url" name="url" type="url" inputmode="url" autocomplete="off" value="${esc(D.feed.url)}" aria-describedby="pv-url-err"><span class="pk-err" id="pv-url-err" data-ven-urlerr hidden>Адрес вида https://site.ru/export/price.xml</span></div>
         <fieldset class="pv-fieldset"><legend>Формат</legend><div class="seg pv-seg">${FORMATS.map(f => `<label class="seg-opt"><input type="radio" name="format" value="${f[0]}"${f[0] === D.feed.format ? ' checked' : ''}>${f[1]}</label>`).join('')}</div><p class="pv-sub" data-ven-fhint></p></fieldset>
         <div class="field"><label for="pv-sched">Расписание</label><select class="input" id="pv-sched" name="schedule">${SCHED.map(s => `<option${s === D.feed.schedule ? ' selected' : ''}>${s}</option>`).join('')}</select></div>
-        <div class="pv-actrow"><button type="submit" class="btn btn-secondary">Сохранить настройки</button></div>
+        <div class="pv-actrow"><button type="submit" class="btn btn-secondary">Сохранить настройки</button><span class="pv-sub" data-ven-feeddirty aria-live="polite"></span></div>
       </form>
       <section class="blueprint pv-card" aria-labelledby="pv-run-h">
         <h2 class="pv-h2" id="pv-run-h">Обмен вручную</h2>
@@ -154,7 +189,7 @@ module.exports = ctx => {
     </section>
     <section class="blueprint pv-card pv-card-flush" id="akty" aria-labelledby="pv-acts-h">
       <h2 class="pv-h2 pv-pad" id="pv-acts-h">Акты сверки</h2>
-      <div class="pv-scroll"><table class="table pv-table pv-cards" data-ven-acts><thead><tr><th scope="col">Период</th><th scope="col" class="pv-num">Оборот</th><th scope="col">Статус</th><th scope="col">Дата</th><th scope="col"><span class="pv-sr">Файл</span></th></tr></thead><tbody>${D.settlements.acts.map(a => `<tr><td data-label="Период">${esc(a.period)}</td><td data-label="Оборот" class="mono pv-num">${R.rub(a.sum)}</td><td data-label="Статус">${a.sum ? '<span class="tag pv-tag-ok pv-tag">' + esc(a.status) + '</span>' : '<span class="tag tag-neutral pv-tag">' + esc(a.status) + '</span>'}</td><td data-label="Дата">${/^\d{4}-/.test(a.date) ? R.fmtD(a.date) : esc(a.date)}</td><td class="pv-acts">${a.sum ? `<button type="button" class="btn btn-secondary pv-btn-sm" data-act-id="${esc(a.id)}">${R.ico('ui-download', 'color:currentColor')}Скачать (демо)</button>` : '<span class="pv-sub">ещё не готов</span>'}</td></tr>`).join('')}</tbody></table></div>
+      <div class="pv-scroll"><table class="table pv-table pv-cards" data-ven-acts><thead><tr><th scope="col">Период</th><th scope="col" class="pv-num">Оборот</th><th scope="col">Статус</th><th scope="col">Дата</th><th scope="col"><span class="pv-sr">Файл</span></th></tr></thead><tbody>${D.settlements.acts.map(a => `<tr><td data-label="Период">${esc(a.period)}</td><td data-label="Оборот" class="mono pv-num">${R.rub(a.sum)}</td><td data-label="Статус">${a.sum ? '<span class="tag pv-tag-ok pv-tag">' + esc(a.status) + '</span>' : '<span class="tag tag-neutral pv-tag">' + esc(a.status) + '</span>'}</td><td data-label="Дата">${/^\d{4}-/.test(a.date) ? R.fmtD(a.date) : esc(a.date)}</td><td class="pv-acts">${a.sum ? `<button type="button" class="btn btn-secondary pv-btn-sm" data-act-id="${esc(a.id)}" aria-label="Скачать акт сверки за ${esc(a.period)} (CSV)">${R.ico('ui-download', 'color:currentColor')}Скачать CSV</button>` : '<span class="pv-sub">ещё не готов</span>'}</td></tr>`).join('')}</tbody></table></div>
     </section>`)));
 
   // ── настройки ──

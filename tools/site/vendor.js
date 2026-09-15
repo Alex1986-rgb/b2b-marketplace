@@ -18,7 +18,7 @@
   var slug = R.slug = function (id) { return String(id).toLowerCase().replace('зв-', 'zv-'); };
   // bus: у заявок из шины нет статической страницы — ссылка на список с поиском по номеру
   var oHref = R.oHref = function (o, BASE) { return o.bus ? BASE + 'kabinet-postavshchika/zayavki/?q=' + encodeURIComponent(o.id) : BASE + 'kabinet-postavshchika/zayavka/' + slug(o.id) + '/'; };
-  var TAG = { 'Новая': 'tag-accent', 'Подтверждена': 'tag-outline', 'Собрана': 'tag-outline', 'Отгружена': 'tag-neutral', 'Доставлена': 'tag-neutral', 'К расчёту': 'tag-outline', 'Оплачена': 'pv-tag-ok', 'Отклонена': 'pv-tag-bad', 'ОК': 'pv-tag-ok', 'Нет остатка': 'tag-neutral', 'Ошибка формата': 'pv-tag-bad', 'Успешно': 'pv-tag-ok', 'С ошибками': 'tag-outline', 'Сбой': 'pv-tag-bad' };
+  var TAG = { 'Новая': 'tag-accent', 'Подтверждена': 'tag-outline', 'Собрана': 'tag-outline', 'Отгружена': 'tag-outline', 'Доставлена': 'tag-outline', 'К расчёту': 'tag-outline', 'Оплачена': 'pv-tag-ok', 'Отклонена': 'pv-tag-bad', 'ОК': 'pv-tag-ok', 'Нет остатка': 'tag-neutral', 'Ошибка формата': 'pv-tag-bad', 'Успешно': 'pv-tag-ok', 'С ошибками': 'tag-outline', 'Сбой': 'pv-tag-bad' };
   var tag = R.tag = function (s) { return '<span class="tag ' + (TAG[s] || 'tag-neutral') + ' pv-tag">' + esc(s) + '</span>'; };
   var ico = R.ico = function (id, extra) { return '<span class="ico ico-16 i-' + id + '" aria-hidden="true"' + (extra ? ' style="' + extra + '"' : '') + '></span>'; };
 
@@ -54,7 +54,7 @@
       : 'отгрузка до ' + fmtD(o.confirmedShip || o.shipBy);
     return '<tr data-id="' + esc(o.id) + '">' +
       '<td data-label="Заявка"><a class="pv-link mono" href="' + oHref(o, BASE) + '">' + esc(o.id) + '</a><div class="pv-sub">' + fmtDT(o.created) + (o.pkOrder ? ' · заказ ' + esc(o.pkOrder) : '') + '</div></td>' + // bus: oHref, pkOrder
-      '<td data-label="Покупатель">' + esc(D.buyer) + ' · ' + esc(o.city) + '<div class="pv-sub">' + esc(String(o.warehouse).split(' · ')[1] ? o.warehouse.split(' · ')[1].split(',')[0] : '') + ' → ' + esc(o.city) + '</div></td>' +
+      '<td data-label="Доставка"><span class="pv-route">' + (R.fromCity(o) ? esc(R.fromCity(o)) + ' → ' : '') + esc(o.city) + '</span></td>' + // 4.8: покупатель обезличен — только маршрут
       '<td data-label="Позиции">' + esc(first.name) + ' × ' + num(first.qty) + (more > 0 ? '<div class="pv-sub">и ещё ' + more + ' поз.</div>' : '') + '</td>' +
       '<td data-label="Сумма" class="mono pv-num">' + rub(orderSum(o)) + '</td>' +
       '<td data-label="Срок">' + term + '</td>' +
@@ -62,6 +62,64 @@
       '<td class="pv-acts">' + (acts || '<a class="btn btn-secondary pv-btn-sm" href="' + oHref(o, BASE) + '">Открыть</a>') + '</td></tr>'; // bus: oHref
   };
   R.orderRows = function (orders, D, BASE) { return orders.map(function (o) { return R.orderRow(o, D, BASE); }).join(''); };
+  R.fromCity = function (o) { var w = String(o.warehouse || '').split(' · ')[1]; return w ? w.split(',')[0].trim() : ''; };
+  R.ORDER_HEAD = '<thead><tr><th scope="col">Заявка</th><th scope="col">Доставка</th><th scope="col">Позиции</th><th scope="col" class="pv-num">Сумма</th><th scope="col">Срок</th><th scope="col">Статус</th><th scope="col"><span class="pv-sr">Действия</span></th></tr></thead>';
+  // склонение: plural(3, ['новая заявка', 'новые заявки', 'новых заявок']) → 'новые заявки'
+  var plural = R.plural = function (n, f) { var m = Math.abs(n) % 10, h = Math.abs(n) % 100; return m === 1 && h !== 11 ? f[0] : m >= 2 && m <= 4 && (h < 12 || h > 14) ? f[1] : f[2]; };
+  // фильтр «В работе» = подтверждены + собраны (то, что ещё предстоит отгрузить)
+  R.inWork = function (o) { return o.status === 'Подтверждена' || o.status === 'Собрана'; };
+  R.priceStats = function (price) {
+    return { all: price.length, zero: price.filter(function (r) { return r.stock === 0; }).length, errors: price.filter(function (r) { return R.rowStatus(r) === 'Ошибка формата'; }).length, manual: price.filter(function (r) { return r.source === 'ручная правка'; }).length };
+  };
+
+  // ── сводка (главная кабинета): всё из состояния S = {orders, price, feed, settings} ──
+  var stat = function (href, v, k, attr) { return '<a class="blueprint pv-stat pv-stat-link" href="' + href + '"' + (attr || '') + '><div class="mono pv-stat-v">' + v + '</div><div class="pv-stat-k">' + k + '</div></a>'; };
+  R.homeStats = function (S, D, BASE) {
+    var V = BASE + 'kabinet-postavshchika/', c = R.counts(S.orders), ps = R.priceStats(S.price);
+    var toPay = S.orders.filter(function (o) { return o.status === 'К расчёту'; }), paySum = toPay.reduce(function (a, o) { return a + orderSum(o); }, 0);
+    var nNew = c['Новая'] || 0;
+    return stat(V + 'zayavki/?st=' + encodeURIComponent('Новая'), num(nNew), plural(nNew, ['новая заявка', 'новые заявки', 'новых заявок']) + ' — подтвердить за 2 часа') +
+      stat(V + 'zayavki/?st=' + encodeURIComponent('В работе'), num(c.work), plural(c.work, ['заявка к отгрузке', 'заявки к отгрузке', 'заявок к отгрузке']) + ' — подтверждены и собраны') +
+      stat(V + 'prajs/?f=errors', num(ps.errors), plural(ps.errors, ['ошибка формата', 'ошибки формата', 'ошибок формата']) + ' в прайсе') +
+      stat(V + 'raschety/', rub(paySum), 'к выплате · ' + toPay.length + ' ' + plural(toPay.length, ['заявка', 'заявки', 'заявок']));
+  };
+  R.homeOrders = function (S, D, BASE) { return R.orderRows(S.orders.slice().sort(function (a, b) { return String(b.created).localeCompare(String(a.created)); }).slice(0, 6), D, BASE); };
+  R.homeFeed = function (S, D, BASE) {
+    var V = BASE + 'kabinet-postavshchika/', f = S.feed, st = S.settings, last = f.log[0] || {};
+    var on = function (l) { return l.filter(function (x) { return x.on; }).map(function (x) { return x.n; }); };
+    var regs = on(st.regions), cats = on(st.categories);
+    var kv = function (k, v) { return '<div class="pv-kv"><dt>' + k + '</dt><dd>' + v + '</dd></div>'; };
+    return '<div class="pv-home-feed"><div><h3 class="pv-h3">Фид</h3><dl class="pv-dl" data-ven-feedstate>' +
+      kv('Последний обмен', fmtDT(f.last) + ' ' + (last.result ? tag(last.result) : '')) +
+      kv('Строк / ошибок', num(last.total) + ' / ' + num(last.errors)) +
+      kv('Формат', '<span data-ven-format>' + esc(f.format) + '</span>') +
+      kv('Частота', '<span data-ven-schedule>' + esc(f.schedule) + '</span>') +
+      kv('Адрес фида', '<span class="mono pv-url">' + esc(f.url) + '</span>') +
+      '</dl><a class="pv-link" href="' + V + 'vygruzka/">Изменить выгрузку →</a></div>' +
+      '<div><h3 class="pv-h3">Приём заявок</h3><dl class="pv-dl">' +
+      kv('Минимальная сумма заказа', '<span class="mono" data-ven-minsum>' + rub(st.minSum) + '</span>') +
+      kv('Нулевые остатки', st.hideZero ? 'скрываются с витрины' : 'показываются «под заказ»') +
+      kv('Регионы', regs.length ? esc(regs.slice(0, 3).join(', ')) + (regs.length > 3 ? ' и ещё ' + (regs.length - 3) : '') : '<span class="pv-bad">не выбраны</span>') +
+      kv('Направления', cats.length ? esc(cats.join(', ')) : '<span class="pv-bad">не выбраны</span>') +
+      '</dl><a class="pv-link" href="' + V + 'nastrojki/">Изменить настройки →</a></div></div>';
+  };
+  R.homePriceChips = function (S, BASE) {
+    var V = BASE + 'kabinet-postavshchika/prajs/', ps = R.priceStats(S.price);
+    return [['', 'Все', ps.all], ['zero', 'Нулевые остатки', ps.zero], ['errors', 'Ошибки формата', ps.errors], ['manual', 'Ручные правки', ps.manual]].map(function (x) {
+      return '<a class="pv-chip" href="' + V + (x[0] ? '?f=' + x[0] : '') + '">' + x[1] + ' <span class="mono">' + x[2] + '</span></a>';
+    }).join('');
+  };
+  R.homeAttention = function (S, BASE) {
+    var V = BASE + 'kabinet-postavshchika/prajs/';
+    var rank = function (r) { return R.rowStatus(r) === 'Ошибка формата' ? 0 : r.source === 'ручная правка' ? 1 : r.stock === 0 ? 2 : 9; };
+    var rows = S.price.filter(function (r) { return rank(r) < 9; }).sort(function (a, b) { return rank(a) - rank(b) || String(b.editedAt || '').localeCompare(String(a.editedAt || '')); }).slice(0, 6);
+    if (!rows.length) return '<tr><td colspan="6" class="pv-sub">Ошибок, нулевых остатков и ручных правок нет.</td></tr>';
+    return rows.map(function (r) {
+      return '<tr data-sku="' + esc(r.sku) + '"><td data-label="Позиция"><a class="pv-link" href="' + V + '?q=' + encodeURIComponent(r.sku) + '">' + esc(r.name) + '</a><div class="pv-sub mono">' + esc(r.sku) + '</div>' + (r.error && R.rowStatus(r) === 'Ошибка формата' ? '<div class="pv-err-note">' + ico('state-sync-error') + ' Фид: ' + esc(r.error.msg) + '</div>' : '') + '</td>' +
+        '<td data-label="Цена" class="mono pv-num" data-f="price">' + (r.price == null ? '—' : rub(r.price)) + '</td><td data-label="Остаток" class="mono pv-num" data-f="stock">' + (r.stock == null ? '—' : num(r.stock)) + '</td><td data-label="Срок" class="mono pv-num">' + (r.lead == null ? '—' : r.lead + ' дн.') + '</td>' +
+        '<td data-label="Источник">' + (r.source === 'ручная правка' ? 'ручная правка' : 'фид') + '</td><td data-label="Статус">' + tag(R.rowStatus(r)) + '</td></tr>';
+    }).join('');
+  };
 
   // ── карточка заявки ──
   R.orderView = function (o, D, BASE) {
@@ -92,7 +150,7 @@
       o.paidAt ? ['Выплачено', fmtD(o.paidAt) + (o.payDoc ? ', п/п № ' + esc(o.payDoc) : '')] : null
     ].filter(Boolean).map(function (r) { return '<div class="pv-kv"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
     var docs = /Отгружена|Доставлена|К расчёту|Оплачена/.test(o.status)
-      ? '<li>' + ico('doc-generic') + ' УПД по заявке ' + esc(o.id) + ' <button type="button" class="pv-linkbtn" data-ven-doc="' + esc(o.id) + '">Скачать (демо)</button></li>'
+      ? '<li>' + ico('doc-generic') + ' УПД по заявке ' + esc(o.id) + ' <button type="button" class="pv-linkbtn" data-ven-doc="' + esc(o.id) + '">Скачать УПД (CSV)</button></li>'
       : '<li class="pv-sub">УПД и транспортная накладная появятся после отгрузки.</li>';
     return '<div class="pv-order-head">' + tag(o.status) + '<span class="pv-sub">создана ' + fmtDT(o.created) + ' · ' + esc(D.buyer) + ' · ' + esc(o.city) + '</span></div>' +
       '<div class="pv-order-grid"><div class="pv-col">' +
@@ -208,13 +266,13 @@
     initCommon();
     var pg = $('[data-ven-page]');
     var kind = pg && pg.getAttribute('data-ven-page');
-    if (kind === 'orders') pageOrders(pg);
+    if (kind === 'home') pageHome(pg);
+    else if (kind === 'orders') pageOrders(pg);
     else if (kind === 'order') pageOrder(pg);
     else if (kind === 'price') pagePrice(pg);
     else if (kind === 'feed') pageFeed(pg);
     else if (kind === 'settle') pageSettle(pg);
     else if (kind === 'settings') pageSettings(pg);
-    else if ($('[data-screen-label="Кабинет поставщика"]')) pageMockup($('[data-screen-label="Кабинет поставщика"]'));
     tick(); setInterval(tick, 1000);
     if (window.PK_BUS_READY) PK_BUS_READY(busConnect); // bus
   }
@@ -249,7 +307,7 @@
     return { ignored: true };
   }
   function busBanner() {
-    var N = store.get('notices', {}), host = $('[data-ven-page]') || $('[data-screen-label="Кабинет поставщика"]') || $('main');
+    var N = store.get('notices', {}), host = $('[data-ven-page]') || $('main');
     $$('.pk-bus-banner').forEach(function (b) { b.remove(); });
     if (!host) return;
     function banner(title, text, closable) {
@@ -317,8 +375,13 @@
     var c = R.counts(S.orders);
     var errs = S.price.filter(function (r) { return R.rowStatus(r) === 'Ошибка формата'; }).length;
     var map = { 'new': c['Новая'] || 0, work: c.work, pay: c.pay, err: errs, feed: (S.feed.log[0] || {}).errors || 0 };
+    var toPay = c['К расчёту'] || 0, wait = c['Доставлена'] || 0;
+    var TITLE = { 'new': zayavok(map['new']) + ' ждут подтверждения', work: zayavok(map.work) + ' к отгрузке', err: map.err + ' ' + plural(map.err, ['ошибка', 'ошибки', 'ошибок']) + ' формата в прайсе', feed: map.feed + ' ' + plural(map.feed, ['ошибка', 'ошибки', 'ошибок']) + ' в последнем обмене фида', pay: zayavok(map.pay) + ' в расчётах: к оплате ' + toPay + ', ждут УПД ' + wait };
     $$('[data-ven-count]').forEach(function (el) {
-      var v = map[el.getAttribute('data-ven-count')]; el.textContent = v ? v : ''; el.hidden = !v;
+      var k = el.getAttribute('data-ven-count'), v = map[k]; el.textContent = v ? v : ''; el.hidden = !v;
+      el.title = TITLE[k] || ''; el.setAttribute('aria-hidden', 'true');
+      var a = el.closest('a'), t = a && $('span:not([data-ven-count])', a);
+      if (a && t) { if (v) a.setAttribute('aria-label', txt(t) + ': ' + TITLE[k]); else a.removeAttribute('aria-label'); }
     });
   }
   function slaUntil(o) { return S.meta.slaBase + (o.slaMin || 120) * 60000; }
@@ -414,6 +477,35 @@
     toast('Файл ' + name + ' сохранён');
   }
 
+  function priceCsv() {
+    download('prajs-gidromash-' + todayIso() + '.csv', csv([['Код', 'Наименование', 'Цена поставщика, руб.', 'Остаток, шт.', 'Срок, дней', 'Источник', 'Статус']].concat(S.price.map(function (r) {
+      return [r.sku, r.name, r.price == null ? '' : String(r.price).replace('.', ','), r.stock == null ? '' : r.stock, r.lead == null ? '' : r.lead, r.source, R.rowStatus(r)];
+    }))));
+  }
+
+  // ═════════ Сводка ═════════
+  function pageHome(pg) {
+    var box = function (k) { return $('[data-ven-home="' + k + '"]', pg); };
+    function render() {
+      box('stats').innerHTML = R.homeStats(S, D, BASE);
+      box('orders').innerHTML = R.homeOrders(S, D, BASE);
+      box('feed').innerHTML = R.homeFeed(S, D, BASE);
+      box('chips').innerHTML = R.homePriceChips(S, BASE);
+      box('attention').innerHTML = R.homeAttention(S, BASE);
+      var c = R.counts(S.orders), nNew = c['Новая'] || 0, q = box('quick');
+      $('[data-q="new"] .mono', q).textContent = nNew; $('[data-q="work"] .mono', q).textContent = c.work;
+    }
+    $$('[data-ven-csv]', pg).forEach(function (b) { b.addEventListener('click', priceCsv); });
+    $$('[data-ven-orderscsv]', pg).forEach(function (b) {
+      b.addEventListener('click', function () {
+        download('zayavki-gidromash-' + todayIso() + '.csv', csv([['Заявка', 'Создана', 'Заказ площадки', 'Откуда', 'Куда', 'Позиций', 'Сумма, руб.', 'Статус', 'Отгрузка до', 'Перевозчик', 'Трек-номер']].concat(S.orders.map(function (o) {
+          return [o.id, o.created.replace('T', ' '), o.pkOrder || '', R.fromCity(o), o.city, o.items.length, orderSum(o), o.status, o.confirmedShip || o.shipBy || '', o.carrier || '', o.track || ''];
+        }))));
+      });
+    });
+    refreshers.push(render); render();
+  }
+
   // ═════════ Заявки ═════════
   function pageOrders(pg) {
     var tbody = $('[data-ven-orders]', pg), chips = $('[data-ven-chips]', pg), q = $('[data-ven-q]', pg), empty = $('[data-ven-empty]', pg), stats = $('[data-ven-stats]', pg);
@@ -422,15 +514,15 @@
     function list() {
       var s = q.value.trim().toLowerCase();
       return S.orders.filter(function (o) {
-        if (filter !== 'Все' && !(filter === 'В работе' ? /Подтверждена|Собрана/.test(o.status) : o.status === filter)) return false;
+        if (filter !== 'Все' && !(filter === 'В работе' ? R.inWork(o) : o.status === filter)) return false;
         if (!s) return true;
         return (o.id + ' ' + o.city + ' ' + o.items.map(function (i) { return i.name + ' ' + i.sku; }).join(' ')).toLowerCase().indexOf(s) >= 0;
       });
     }
     function render() {
       var c = R.counts(S.orders);
-      chips.innerHTML = ['Все'].concat(D.statuses).map(function (st) {
-        var n = st === 'Все' ? c.all : (c[st] || 0);
+      chips.innerHTML = ['Все', 'Новая', 'В работе'].concat(D.statuses.slice(1)).map(function (st) {
+        var n = st === 'Все' ? c.all : st === 'В работе' ? c.work : (c[st] || 0);
         return '<button type="button" class="pv-chip" aria-pressed="' + (st === filter) + '" data-st="' + esc(st) + '">' + esc(st) + ' <span class="mono">' + n + '</span></button>';
       }).join('');
       var l = list();
@@ -461,7 +553,8 @@
   function pagePrice(pg) {
     var tbody = $('[data-ven-price]', pg), chips = $('[data-ven-chips]', pg), q = $('[data-ven-q]', pg), all = $('[data-ven-all]', pg);
     var bar = $('[data-ven-bar]', pg), btnSave = $('[data-ven-save]', pg), btnCancel = $('[data-ven-cancel]', pg), pct = $('[data-ven-pct]', pg), selInfo = $('[data-ven-selinfo]', pg), empty = $('[data-ven-empty]', pg);
-    var draft = {}, selected = {}, filter = 'all';
+    var draft = {}, selected = {}, qs0 = new URLSearchParams(location.search), filter = /^(zero|errors|manual)$/.test(qs0.get('f') || '') ? qs0.get('f') : 'all';
+    if (qs0.get('q')) q.value = qs0.get('q');
     function eff(r) {
       var d = draft[r.id] || {}, e = { raw: {}, invalid: {}, changed: {}, selected: !!selected[r.id], source: r.source };
       ['price', 'stock', 'lead'].forEach(function (f) {
@@ -534,7 +627,8 @@
       paintBar();
     });
     all.addEventListener('change', function () { visible().forEach(function (r) { if (all.checked) selected[r.id] = 1; else delete selected[r.id]; }); render(); });
-    chips.addEventListener('click', function (e) { var b = e.target.closest('[data-f]'); if (!b) return; filter = b.getAttribute('data-f'); render(); var nb = $('[data-f="' + filter + '"]', chips); if (nb) nb.focus(); });
+    chips.addEventListener('click', function (e) { var b = e.target.closest('[data-f]'); if (!b) return; filter = b.getAttribute('data-f'); render();
+      var u = new URL(location.href); if (/^(zero|errors|manual)$/.test(filter)) u.searchParams.set('f', filter); else u.searchParams.delete('f'); history.replaceState(null, '', u); var nb = $('[data-f="' + filter + '"]', chips); if (nb) nb.focus(); });
     q.addEventListener('input', render);
     function batch(p) {
       var ids = Object.keys(selected);
@@ -550,6 +644,12 @@
       render();
       toast('Цены ' + (p > 0 ? '+' : '−') + Math.abs(p) + '% для ' + n + ' поз.' + (skip ? ' · пропущено с ошибкой цены: ' + skip : '') + ' — не забудьте сохранить');
     }
+    function pctLabels() {
+      var v = parseFloat(String(pct.value).replace(',', '.')), ok = isFinite(v) && v > 0 && v <= 300;
+      pct.classList.toggle('pv-invalid', !ok && String(pct.value).trim() !== '');
+      $$('[data-ven-batch]', pg).forEach(function (b) { b.textContent = (+b.getAttribute('data-ven-batch') > 0 ? '+ повысить' : '− понизить') + (ok ? ' на ' + String(v).replace('.', ',') + '%' : ''); });
+    }
+    pct.addEventListener('input', pctLabels); pctLabels();
     $$('[data-ven-batch]', pg).forEach(function (b) {
       b.addEventListener('click', function () {
         var sign = +b.getAttribute('data-ven-batch'), v = parseFloat(String(pct.value).replace(',', '.'));
@@ -575,11 +675,7 @@
       toast('Сохранено: ' + n + ' знач. в ' + rows + ' поз. Правки держатся до следующей выгрузки фида');
     });
     btnCancel.addEventListener('click', function () { draft = {}; render(); toast('Несохранённые правки отменены'); });
-    $('[data-ven-csv]', pg).addEventListener('click', function () {
-      download('prajs-gidromash-' + todayIso() + '.csv', csv([['Код', 'Наименование', 'Цена поставщика, руб.', 'Остаток, шт.', 'Срок, дней', 'Источник', 'Статус']].concat(S.price.map(function (r) {
-        return [r.sku, r.name, r.price == null ? '' : String(r.price).replace('.', ','), r.stock == null ? '' : r.stock, r.lead == null ? '' : r.lead, r.source, R.rowStatus(r)];
-      }))));
-    });
+    $('[data-ven-csv]', pg).addEventListener('click', priceCsv);
     window.addEventListener('beforeunload', function (e) { if (Object.keys(draft).length) { e.preventDefault(); e.returnValue = ''; } });
     render();
   }
@@ -604,7 +700,10 @@
         .map(function (x) { return '<div class="blueprint pv-stat"><div class="mono pv-stat-v">' + x[0] + '</div><div class="pv-stat-k">' + x[1] + '</div></div>'; }).join('');
       log.innerHTML = R.logRows(S.feed.log);
     }
-    form.addEventListener('change', function (e) { if (e.target.name === 'format') hint(); });
+    var feedDirty = false, fd = $('[data-ven-feeddirty]', pg);
+    function markFeed(v) { feedDirty = v; if (fd) { fd.textContent = v ? 'Есть несохранённые изменения' : 'Настройки сохранены'; fd.classList.toggle('pv-dirty', v); } }
+    form.addEventListener('input', function () { markFeed(true); });
+    form.addEventListener('change', function (e) { if (e.target.name === 'format') hint(); markFeed(true); });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var u = form.url.value.trim(), err = $('[data-ven-urlerr]', pg);
@@ -613,7 +712,7 @@
       if (!ok) { form.url.setAttribute('aria-invalid', 'true'); form.url.focus(); return; }
       form.url.removeAttribute('aria-invalid');
       S.feed.url = u; S.feed.format = form.querySelector('input[name=format]:checked').value; S.feed.schedule = form.schedule.value;
-      save('feed'); paint(); toast('Настройки выгрузки сохранены');
+      save('feed'); paint(); markFeed(false); toast('Настройки выгрузки сохранены');
     });
     run.addEventListener('click', function () {
       run.disabled = true; res.hidden = true; prog.hidden = false;
@@ -645,7 +744,7 @@
     fill(); paint();
   }
 
-  function plural(n) { var m = n % 10, h = n % 100; return n + ' ' + (m === 1 && h !== 11 ? 'заявка' : m >= 2 && m <= 4 && (h < 12 || h > 14) ? 'заявки' : 'заявок'); }
+  function zayavok(n) { return n + ' ' + plural(n, ['заявка', 'заявки', 'заявок']); }
   // ═════════ Расчёты ═════════
   function pageSettle(pg) {
     var stats = $('[data-ven-stats]', pg), body = $('[data-ven-payouts]', pg), acts = $('[data-ven-acts]', pg);
@@ -653,7 +752,7 @@
       var c = S.orders, toPay = c.filter(function (o) { return o.status === 'К расчёту'; }), wait = c.filter(function (o) { return o.status === 'Доставлена'; });
       var s = function (l) { return l.reduce(function (a, o) { return a + orderSum(o); }, 0); };
       var plans = toPay.map(function (o) { return o.payPlan; }).filter(Boolean).sort();
-      stats.innerHTML = [[rub(s(toPay)), 'к оплате · ' + plural(toPay.length)], [rub(s(wait)), 'ждут УПД · ' + plural(wait.length)], [rub(D.settlements.paidMonth), 'оплачено в сентябре'], [plans[0] ? fmtD(plans[0]) : '—', 'ближайшая выплата']]
+      stats.innerHTML = [[rub(s(toPay)), 'к оплате · ' + zayavok(toPay.length)], [rub(s(wait)), 'ждут УПД · ' + zayavok(wait.length)], [rub(D.settlements.paidMonth), 'оплачено в сентябре'], [plans[0] ? fmtD(plans[0]) : '—', 'ближайшая выплата']]
         .map(function (x) { return '<div class="blueprint pv-stat"><div class="mono pv-stat-v">' + x[0] + '</div><div class="pv-stat-k">' + x[1] + '</div></div>'; }).join('');
       body.innerHTML = R.payoutRows(R.payouts(c, D), BASE);
     }
@@ -700,6 +799,12 @@
       W.managers = W.managers.filter(function (x) { return x !== m; }); renderManagers(); mark(true);
       toast('Удалён контакт: ' + m.name + ' — сохраните настройки'); var f = $('[data-del]', mgr); if (f) f.focus();
     });
+    var mgrDraft = false;
+    $('[data-ven-addmgr]', pg).addEventListener('input', function () {
+      mgrDraft = $$('.input', $('[data-ven-addmgr]', pg)).some(function (i) { return i.value.trim(); });
+      dirty.textContent = mgrDraft ? 'Новый контакт ещё не добавлен — нажмите «+ Добавить контакт»' : changed ? 'Есть несохранённые изменения' : 'Все изменения сохранены';
+      dirty.classList.toggle('pv-dirty', mgrDraft || changed);
+    });
     $('[data-ven-addmgr]', pg).addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); $('[data-ven-addbtn]', pg).click(); } });
     $('[data-ven-addbtn]', pg).addEventListener('click', function () {
       var box = $('[data-ven-addmgr]', pg), f = function (n) { return $('[name=' + n + ']', box); };
@@ -713,7 +818,7 @@
       if (bad) { bad[0].classList.add('pk-invalid'); bad[0].setAttribute('aria-invalid', 'true'); bad[0].focus(); err.textContent = bad[1]; err.hidden = false; return; }
       err.hidden = true;
       W.managers.push({ id: 'm' + Date.now(), name: name, role: role || 'Менеджер', phone: phone, email: email });
-      $$('.input', box).forEach(function (i) { i.value = ''; });
+      $$('.input', box).forEach(function (i) { i.value = ''; }); mgrDraft = false;
       renderManagers(); mark(true); toast('Контакт добавлен — сохраните настройки');
     });
     form.addEventListener('submit', function (e) {
@@ -734,107 +839,6 @@
     });
     window.addEventListener('beforeunload', function (e) { if (changed) { e.preventDefault(); e.returnValue = ''; } });
     fill();
-  }
-
-  // ═════════ Экран из макета: /kabinet-postavshchika/ ═════════
-  function pageMockup(scr) {
-    var V = BASE + 'kabinet-postavshchika/';
-    var NAV = { 'Заявки': ['zayavki/', 'new'], 'Прайс и остатки': ['prajs/', 'err'], 'Отгрузки': ['zayavki/?st=' + encodeURIComponent('Собрана'), 'work'], 'Расчёты': ['raschety/', 'pay'], 'Направления': ['nastrojki/#napravleniya', ''], 'Договор и реквизиты': ['nastrojki/', ''] };
-    $$('nav.blueprint a.row-hover', scr).forEach(function (a) {
-      var label = txt(a.querySelector('span')), m = NAV[label.replace(/ /g, ' ')]; if (!m) return;
-      a.href = V + m[0]; a.removeAttribute('data-demo');
-      var c = a.querySelector('.mono'); if (c && m[1]) c.setAttribute('data-ven-count', m[1]);
-    });
-    $$('button', scr).forEach(function (b) {
-      var t = txt(b), to = /^Настроить выгрузку$/.test(t) ? 'vygruzka/' : /^Загрузить прайс$/.test(t) ? 'prajs/' : null;
-      if (!to) return;
-      var a = document.createElement('a'); a.className = b.className; a.href = V + to; a.innerHTML = b.innerHTML; a.style.cssText = b.getAttribute('style') || ''; a.style.textDecoration = 'none';
-      b.replaceWith(a);
-    });
-    // показатели
-    var st = $$('.mono', scr).filter(function (el) { var k = el.nextElementSibling; return k && /новая заявка|новых заяв/.test(txt(k)); })[0];
-    if (st) refreshers.push(function () { var n = R.counts(S.orders)['Новая'] || 0; st.textContent = n; st.nextElementSibling.textContent = n === 1 ? 'новая заявка' : 'новых заявок'; });
-
-    // таблица прайса: живые поля, чекбоксы, пакет −5%, сохранение
-    var priceTable = $$('table', scr).filter(function (t) { return /Остаток/.test(txt(t.querySelector('thead'))); })[0];
-    if (priceTable) {
-      var pdraft = {}, psel = {};
-      var heads = $$('thead th', priceTable).map(txt), col = function (re) { for (var i = 0; i < heads.length; i++) if (re.test(heads[i])) return i; return -1; };
-      var cPos = col(/Позиция/), cSrc = col(/Источник/), cSt = col(/Статус/);
-      $$('tbody tr', priceTable).forEach(function (tr) {
-        var posCell = tr.children[cPos], skuEl = posCell && $$('.mono', posCell).pop(), sku = txt(skuEl), row = S.price.filter(function (r) { return r.sku === sku; })[0]; if (!row) return;
-        tr.setAttribute('data-sku', sku);
-        var inputs = $$('input.input', tr), fields = ['price', 'stock', 'lead'];
-        inputs.forEach(function (inp, i) {
-          var f = fields[i]; inp.setAttribute('data-f', f); inp.setAttribute('aria-label', ({ price: 'Цена, ₽', stock: 'Остаток', lead: 'Срок, дней' })[f] + ': ' + row.name);
-          inp.value = row[f] == null ? '' : num(row[f]).replace(/ /g, ' ');
-          inp.addEventListener('input', function () {
-            var p = R.parseCell(f, inp.value);
-            inp.classList.toggle('pv-invalid', !p.ok); inp.title = p.ok ? '' : p.msg; inp.classList.toggle('pv-changed', true);
-            pdraft[sku] = pdraft[sku] || {}; pdraft[sku][f] = inp.value;
-          });
-        });
-        var box = tr.querySelector('td:first-child > span[style*="width: 14px"]');
-        if (box) {
-          box.setAttribute('role', 'checkbox'); box.setAttribute('tabindex', '0'); box.setAttribute('aria-label', 'Выбрать: ' + row.name); box.style.cursor = 'pointer';
-          var on = /accent/.test(box.getAttribute('style') || ''); if (on) psel[sku] = 1; box.setAttribute('aria-checked', String(on));
-          var toggle = function () { var v = !psel[sku]; if (v) psel[sku] = 1; else delete psel[sku]; box.style.background = v ? 'var(--color-accent)' : 'transparent'; box.setAttribute('aria-checked', String(v)); };
-          box.addEventListener('click', toggle);
-          box.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
-        }
-        var paintRow = function () {
-          var cells = tr.children;
-          if (cells[cSrc]) cells[cSrc].textContent = row.source === 'ручная правка' ? 'правка вручную' : 'XML фид';
-          if (cells[cSt]) cells[cSt].innerHTML = tag(R.rowStatus(row));
-        };
-        paintRow(); tr._pv = { row: row, inputs: inputs, paint: paintRow };
-      });
-      var card = priceTable.closest('.blueprint');
-      $$('button', card).forEach(function (b) {
-        var t = txt(b);
-        if (/^Изменить цены на/.test(t)) b.addEventListener('click', function () {
-          var ids = Object.keys(psel); if (!ids.length) { toast('Отметьте строки квадратиками слева'); return; }
-          ids.forEach(function (sku) {
-            var tr = $('tr[data-sku="' + CSS.escape(sku) + '"]', priceTable); if (!tr) return;
-            var inp = tr._pv.inputs[0], p = R.parseCell('price', inp.value); if (!p.ok) return;
-            inp.value = String(Math.max(1, Math.round(p.v * 0.95))); inp.classList.add('pv-changed');
-            pdraft[sku] = pdraft[sku] || {}; pdraft[sku].price = inp.value;
-          });
-          toast('Цены −5% для ' + ids.length + ' поз. — нажмите «Сохранить правки»');
-        });
-        if (/^Сохранить правки$/.test(t)) b.addEventListener('click', function () {
-          var skus = Object.keys(pdraft); if (!skus.length) { toast('Правок нет'); return; }
-          var bad = $('.pv-invalid', priceTable); if (bad) { bad.focus(); toast('Исправьте значение: ' + (bad.title || 'нужно число')); return; }
-          skus.forEach(function (sku) {
-            var tr = $('tr[data-sku="' + CSS.escape(sku) + '"]', priceTable), row = tr._pv.row;
-            Object.keys(pdraft[sku]).forEach(function (f) { row[f] = R.parseCell(f, pdraft[sku][f]).v; });
-            row.source = 'ручная правка'; if (row.error && row.price != null && row.stock != null && row.lead != null) delete row.error;
-            tr._pv.inputs.forEach(function (i) { i.classList.remove('pv-changed'); }); tr._pv.paint();
-          });
-          pdraft = {}; save('price'); paintCounts(); toast('Прайс сохранён: ' + skus.length + ' поз.');
-        });
-      });
-      var inp = $('input[placeholder]', card);
-      if (inp) { inp.setAttribute('aria-label', 'Поиск по прайсу'); inp.placeholder = 'Код или наименование'; inp.addEventListener('input', function () { var s = inp.value.trim().toLowerCase(); $$('tbody tr', priceTable).forEach(function (tr) { tr.hidden = !!s && txt(tr).toLowerCase().indexOf(s) < 0; }); }); }
-    }
-
-    // таблица заявок: статусы и действия из состояния
-    var ordTable = $$('table', scr).filter(function (t) { return /Сумма отгрузки/.test(txt(t.querySelector('thead'))); })[0];
-    if (ordTable) {
-      var paintOrders = function () {
-        $$('tbody tr', ordTable).forEach(function (tr) {
-          var c00 = tr.children[0], lnk = c00.querySelector('a'), id = txt(lnk || c00.firstChild), o = byId(id); if (!o) return;
-          tr.setAttribute('data-href', V + 'zayavka/' + slug(o.id) + '/');
-          var tagEl = tr.querySelector('.tag'); if (tagEl) tagEl.outerHTML = tag(o.status);
-          var cell = tr.lastElementChild, a = R.actions(o)[0], c0 = tr.children[0];
-          if (!c0.querySelector('a')) { if (c0.firstChild && c0.firstChild.nodeType === 3) c0.firstChild.nodeValue = ''; c0.insertAdjacentHTML('afterbegin', '<a class="pv-link mono" href="' + V + 'zayavka/' + slug(o.id) + '/">' + esc(o.id) + '</a>'); }
-          cell.innerHTML = a ? '<button type="button" class="btn ' + (a.primary ? 'btn-primary' : 'btn-secondary') + '" style="font-size:13px" data-ven-act="' + a.act + '" data-id="' + esc(o.id) + '">' + esc(a.label) + '</button>'
-            : '<a class="btn btn-secondary" style="font-size:13px;text-decoration:none" href="' + V + 'zayavka/' + slug(o.id) + '/">Открыть</a>';
-        });
-      };
-      refreshers.push(paintOrders);
-    }
-    refresh();
   }
 
   // ── запуск: данные в странице или (на экране макета) из страницы заявок ──

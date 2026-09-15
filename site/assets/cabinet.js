@@ -1,13 +1,14 @@
 // ПРОМКОНТУР — кабинет закупщика: заказы, согласование, автозакупка, запросы КП, документы, спецификации,
-// сотрудники, реквизиты. Состояние — localStorage с префиксом pk:cab:, начальное — JSON из страницы (#pk-cab-data).
-// На экранах макета (/kabinet/, /kabinet/zakaz-pk-10428/, /kabinet/uvedomleniya/) скрипт проставляет ссылки
-// бокового меню и оживляет таблицы обзора. Весь вывод — через textContent/атрибуты, без вставки строк в innerHTML.
+// сотрудники, реквизиты, обзор и уведомления. Все страницы — шаблоны tools/gen_cabinet.js (экранов макета больше нет).
+// Состояние — localStorage с префиксом pk:cab: (демо-компания) или pk:cab:<ключ компании>: (компания, зарегистрированная
+// на /vhod/ — стартует пустой), начальное — JSON из страницы (#pk-cab-data).
+// Весь вывод — через textContent/атрибуты, без вставки строк в innerHTML.
 (function () {
   'use strict';
   var BASE = (document.querySelector('link[rel="manifest"]') || { getAttribute: function () { return '/site.webmanifest'; } }).getAttribute('href').replace('site.webmanifest', '');
   var PATH = location.pathname.slice(BASE.length - 1).replace(/^\//, '');
   var PREFIX = 'pk:cab:';
-  var SEED = null, AUTH = null;
+  var SEED = null, AUTH = null, IS_NEW = false, CAB_KEY = 'seed';
 
   // ═════════ утилиты ═════════
   function $(s, r) { return (r || document).querySelector(s); }
@@ -62,14 +63,46 @@
   }
 
   // ═════════ состояние ═════════
-  var KEYS = ['orders', 'approvals', 'regular', 'autobuy', 'quotes', 'documents', 'specs', 'employees', 'company', 'addresses', 'deferral'];
+  var KEYS = ['orders', 'approvals', 'regular', 'autobuy', 'quotes', 'documents', 'specs', 'employees', 'company', 'addresses', 'deferral', 'notify'];
   var ST = {};
   function lsGet(k) { try { var v = localStorage.getItem(PREFIX + k); return v == null ? undefined : JSON.parse(v); } catch (e) { return undefined; } }
   function lsSet(k, v) { try { localStorage.setItem(PREFIX + k, JSON.stringify(v)); } catch (e) {} }
+  function hash(str) { var x = 5381; for (var i = 0; i < str.length; i++) x = (x * 33 + str.charCodeAt(i)) >>> 0; return x.toString(36); }
+  // чей кабинет: демо-компания из данных или новая компания из регистрации (1.6)
+  function pickCompany() {
+    var s = AUTH || {};
+    if (s.cabKey) CAB_KEY = s.cabKey;
+    else if (s.newCompany || (s.inn && s.inn !== SEED.company.inn) || (s.company && s.company !== SEED.company.name)) CAB_KEY = 'c' + hash(String(s.inn || '') + '|' + String(s.company || s.name || ''));
+    IS_NEW = CAB_KEY !== 'seed';
+    PREFIX = IS_NEW ? 'pk:cab:' + CAB_KEY + ':' : 'pk:cab:';
+  }
+  function baseState(k) {
+    if (k === 'notify') return clone(SEED.notifications);
+    if (!IS_NEW) return clone(SEED[k]);
+    var s = AUTH || {};
+    switch (k) {
+      case 'orders': case 'approvals': case 'regular': case 'quotes': case 'documents': case 'specs': case 'addresses': return [];
+      case 'deferral': return { limit: 0, used: 0, days: 0 };
+      case 'company': return { name: s.company || 'Новая компания', inn: s.inn || '', kpp: '', ogrn: '', address: '', director: s.name || '', bank: '', bik: '', ks: '', rs: '', email: s.email || '', phone: s.phone || '' };
+      case 'employees': return [{ id: 'e1', name: s.name || 'Закупщик', position: 'Закупщик', role: 'Закупщик', limit: 300000, phone: s.phone || '', email: s.email || '', you: true }];
+      default: return clone(SEED[k]);
+    }
+  }
   function loadState() {
+    pickCompany();
     var ver = String(SEED.orders.length) + ':' + JSON.stringify(SEED).length;
     if (lsGet('seed') !== ver) { KEYS.forEach(function (k) { try { localStorage.removeItem(PREFIX + k); } catch (e) {} }); lsSet('seed', ver); }
-    KEYS.forEach(function (k) { var v = lsGet(k); ST[k] = v === undefined ? clone(SEED[k]) : v; });
+    KEYS.forEach(function (k) { var v = lsGet(k); ST[k] = v === undefined || (k === 'notify' && (!v || Array.isArray(v))) ? baseState(k) : v; });
+  }
+  // название и ИНН компании — в сессию, чтобы шапка сайта показывала то же, что кабинет (3.8)
+  function syncSession(force) {
+    if (!window.PK_AUTH || !PK_AUTH.get || !PK_AUTH.login) return;
+    var s = PK_AUTH.get(); if (!s || s.role !== 'buyer') return;
+    if (s.company === ST.company.name && (s.inn || '') === (ST.company.inn || '') && s.cabKey === CAB_KEY) return;
+    if (!force && s.company === ST.company.name && (!IS_NEW || s.cabKey === CAB_KEY)) return; // при открытии — только если есть что поправить
+    var x = {}; for (var k in s) if (Object.prototype.hasOwnProperty.call(s, k)) x[k] = s[k];
+    x.company = ST.company.name; x.inn = ST.company.inn; x.cabKey = CAB_KEY;
+    try { AUTH = PK_AUTH.login('buyer', s.phone, x) || AUTH; } catch (e) {}
   }
   function save() { for (var i = 0; i < arguments.length; i++) lsSet(arguments[i], ST[arguments[i]]); paintCounts(); }
   function prod(slug) { return SEED.products[slug] || { name: slug, sku: '', price: 0, img: '', href: '' }; }
@@ -91,9 +124,8 @@
   };
   function paintCounts() {
     $$('[data-cab-count]').forEach(function (el) { var f = COUNTS[el.getAttribute('data-cab-count')]; if (f) el.textContent = f(); });
-    $$('[data-cab-legacy-count]').forEach(function (el) { var f = COUNTS[el.getAttribute('data-cab-legacy-count')]; if (f) el.textContent = f(); });
     $$('[data-cab-company]').forEach(function (el) { el.textContent = ST.company.name; });
-    $$('[data-cab-inn]').forEach(function (el) { el.textContent = 'ИНН ' + ST.company.inn; });
+    $$('[data-cab-inn]').forEach(function (el) { el.textContent = ST.company.inn ? 'ИНН ' + ST.company.inn : 'ИНН не указан'; });
   }
 
   // ── корзина сайта: pk:cart2 = [{sku, name, note, img, price, qty}] ──
@@ -121,7 +153,8 @@
   function createOrder(items, meta) {
     var id = 'ПК-' + nextNum(ST.orders, /^ПК-(\d+)/);
     var lines = items.map(function (l) { var p = prod(l.slug); return { slug: l.slug, qty: +l.qty || 1, price: l.price != null ? l.price : p.price, vendor: l.vendor || 'Гидромаш' }; });
-    var o = Object.assign({ id: id, date: today(), status: 'Счёт', items: lines, total: lineSum(lines), payment: 'Отсрочка 30 дней', payDue: addDays(today(), 30), author: userName() }, meta || {});
+    var def = ST.deferral && ST.deferral.limit > 0;
+    var o = Object.assign({ id: id, date: today(), status: 'Счёт', items: lines, total: lineSum(lines), payment: def ? 'Отсрочка ' + (ST.deferral.days || 30) + ' дней' : 'Оплата по счёту', payDue: def ? addDays(today(), ST.deferral.days || 30) : addDays(today(), 5), author: userName() }, meta || {});
     ST.orders.unshift(o);
     ST.documents.unshift({ id: 'СЧ-' + nextNum(ST.documents, /^СЧ-(\d+)/), type: 'Счёт', title: 'Счёт на оплату', order: id, date: today(), total: o.total, edo: o.payment.indexOf('Отсрочка') === 0 ? 'Отсрочка' : 'Ожидает оплаты' });
     save('orders', 'documents');
@@ -129,7 +162,8 @@
   }
 
   // ═════════ общие элементы ═════════
-  var STATUS_TAG = { 'Оформлен': 'tag-outline', 'Счёт': 'tag-outline', 'Оплачен': 'tag-neutral', 'Отгружен': 'tag-neutral', 'В пути': 'tag-accent', 'Доставлен': 'tag-neutral', 'Закрыт': 'tag-neutral', 'Отменён': 'tag-outline' };
+  // единая шкала статусов (4.7): tag-accent — новое/в работе, tag-outline — ждёт действия, tag-neutral — завершено, tag-danger — отмена/отказ
+  var STATUS_TAG = { 'Оформлен': 'tag-accent', 'Счёт': 'tag-outline', 'Оплачен': 'tag-accent', 'Отгружен': 'tag-accent', 'В пути': 'tag-accent', 'Доставлен': 'tag-outline', 'Закрыт': 'tag-neutral', 'Отменён': 'tag-danger' };
   function tag(t, cls) { return h('span', { class: 'tag ' + (cls || 'tag-neutral') + ' pk-cab-tag', text: t }); }
   function btn(text, cls, onclick, extra) { return h('button', Object.assign({ type: 'button', class: 'btn ' + (cls || 'btn-secondary'), onclick: onclick }, extra || {}), text); }
   function thumb(img, alt) { var s = h('span', { class: 'thumb pk-cab-thumb', 'aria-hidden': 'true' }); if (img) s.style.backgroundImage = 'url("' + imgUrl(img) + '")'; return s; }
@@ -161,12 +195,85 @@
     return h('div', { class: 'pk-cab-tablewrap' }, h('table', { class: 'table pk-cab-table' + (cls ? ' ' + cls : '') }, [
       h('thead', null, h('tr', null, cols.map(function (c) { return h('th', { scope: 'col', class: c.cls || null }, c.hidden ? h('span', { class: 'pk-vh', text: c.t }) : c.t); }))),
       h('tbody', null, rows.map(function (r) {
-        var tr = h('tr', r.attrs || null, r.cells.map(function (cell, i) { return h('td', { 'data-label': cols[i].t, class: cols[i].cls || null }, cell); }));
+        var tr = h('tr', r.attrs || null, r.cells.map(function (cell, i) { return h('td', { 'data-label': cols[i].t, class: cols[i].cls || null }, typeof cell === 'string' || typeof cell === 'number' ? h('span', { class: 'pk-cab-cellt', text: String(cell) }) : cell); }));
         return tr;
       }))
     ]));
   }
-  function empty(text, action) { return h('div', { class: 'blueprint pk-cab-empty' }, [ico('i-ui-history', 24), h('p', { text: text }), action || null]); }
+  function empty(text, action) { return h('div', { class: 'blueprint pk-cab-empty' }, [ico('i-ui-history', 24), h('p', { text: text }), Array.isArray(action) ? h('div', { class: 'pk-cab-actions pk-cab-empty-a' }, action) : action || null]); }
+  // пустой кабинет новой компании: куда идти за первой закупкой
+  function startLinks(kp) {
+    return [
+      h('a', { class: 'btn btn-primary', href: BASE + 'napravleniya/', text: 'Найти в каталоге' }),
+      h('a', { class: 'btn btn-secondary', href: BASE + 'zayavka-spiskom/', text: 'Загрузить заявку списком' }),
+      kp === false ? null : h('a', { class: 'btn btn-secondary', href: BASE + 'kabinet/zaprosy-kp/#new', text: 'Запросить КП' })
+    ];
+  }
+
+  // ═════════ файлы: CSV и счёт (2.1, 2.2) ═════════
+  function csvCell(v) { v = v == null ? '' : String(v); return /[;"\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function saveFile(name, text, type) {
+    var blob = new Blob([text], { type: type });
+    var url = URL.createObjectURL(blob);
+    var a = h('a', { href: url, download: name, style: 'display:none' });
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+  }
+  function downloadCsv(name, rows) { saveFile(name, '\ufeff' + rows.map(function (r) { return r.map(csvCell).join(';'); }).join('\r\n'), 'text/csv;charset=utf-8'); }
+  function vendorsOf(o) { return o.items.map(function (i) { return i.vendor; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(', '); }
+  function exportOrders() {
+    if (!ST.orders.length) { toast('Заказов пока нет — реестр пуст.'); return; }
+    var rows = [['Номер', 'Дата', 'Статус', 'Позиции', 'Поставщики', 'Оплата', 'Автор', 'Сумма с НДС, ₽']];
+    ST.orders.forEach(function (o) { rows.push([o.id, o.date, o.status, o.items.map(function (i) { return prod(i.slug).name + ' × ' + i.qty; }).join(', '), vendorsOf(o), o.payment || '', o.author || '', o.total]); });
+    rows.push(['Итого', '', '', '', '', '', '', ST.orders.reduce(function (a, o) { return a + o.total; }, 0)]);
+    downloadCsv('reestr-zakazov-' + today() + '.csv', rows);
+    toast('Реестр заказов выгружен: ' + ST.orders.length + ' ' + plural(ST.orders.length, 'заказ', 'заказа', 'заказов') + ' (CSV).');
+  }
+  function exportDocs() {
+    if (!ST.documents.length) { toast('Документов пока нет — реестр пуст.'); return; }
+    var rows = [['Документ', 'Номер', 'Тип', 'Заказ', 'Дата', 'Сумма, ₽', 'ЭДО']];
+    ST.documents.forEach(function (d) { rows.push([d.title, d.id, d.type, d.order || '', d.date, d.total == null ? '' : d.total, d.edo]); });
+    downloadCsv('reestr-dokumentov-' + today() + '.csv', rows);
+    toast('Реестр документов выгружен: ' + ST.documents.length + ' шт. (CSV).');
+  }
+  function fileSlug(id) { return String(id).replace(/[^\wА-Яа-яЁё-]+/g, '-'); }
+  function escHtml(v) { return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function invoiceHtml(o, d) {
+    var C = ST.company, vat = Math.round(o.total * 20 / 120);
+    var rows = o.items.map(function (i, n) { var p = prod(i.slug); return '<tr><td>' + (n + 1) + '</td><td>' + escHtml(p.name) + (p.sku ? '<br><small>арт. ' + escHtml(p.sku) + '</small>' : '') + '</td><td class="r">' + i.qty + ' шт.</td><td class="r">' + escHtml(money(i.price)) + '</td><td class="r">' + escHtml(money(i.price * i.qty)) + '</td></tr>'; }).join('');
+    return '<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="icon" href="data:,"><title>' + escHtml('Счёт ' + d.id + ' — демо') + '</title><style>' +
+      'body{font:14px/1.45 Arial,sans-serif;color:#1d1f20;max-width:820px;margin:24px auto;padding:0 16px}h1{font-size:22px;margin:0 0 4px}table{width:100%;border-collapse:collapse;margin:14px 0}td,th{border:1px solid #bbb;padding:6px 8px;text-align:left;vertical-align:top}.r{text-align:right;white-space:nowrap}.demo{background:#fff4e5;border:1px solid #f3c98b;padding:8px 12px;margin:0 0 16px}.bar{display:flex;gap:10px;margin:0 0 16px}button{font:inherit;padding:8px 14px;cursor:pointer}dl{display:grid;grid-template-columns:160px 1fr;gap:4px 12px;margin:10px 0}dt{color:#666}dd{margin:0}@media print{.bar,.demo{display:none}}' +
+      '</style></head><body><div class="bar"><button type="button" onclick="window.print()">Печать</button><button type="button" onclick="window.close()">Закрыть</button></div>' +
+      '<p class="demo">Счёт на оплату (демо). Документ сформирован в демо-версии ПРОМКОНТУРА и не является основанием для платежа.</p>' +
+      '<h1>Счёт на оплату № ' + escHtml(d.id) + ' от ' + escHtml(fdate(d.date, true)) + '</h1><p>К заказу ' + escHtml(o.id) + '</p>' +
+      '<dl><dt>Поставщик</dt><dd>ПРОМКОНТУР (демо-реквизиты)</dd><dt>Покупатель</dt><dd>' + escHtml(C.name) + (C.inn ? ', ИНН ' + escHtml(C.inn) : '') + (C.kpp ? ', КПП ' + escHtml(C.kpp) : '') + '</dd>' +
+      (C.address ? '<dt>Адрес</dt><dd>' + escHtml(C.address) + '</dd>' : '') + '<dt>Условия оплаты</dt><dd>' + escHtml(o.payment || 'по счёту') + (o.payDue ? ', до ' + escHtml(fdate(o.payDue, true)) : '') + '</dd></dl>' +
+      '<table><thead><tr><th>№</th><th>Товар</th><th class="r">Кол-во</th><th class="r">Цена</th><th class="r">Сумма</th></tr></thead><tbody>' + rows + '</tbody>' +
+      '<tfoot><tr><th colspan="4" class="r">Итого с НДС</th><th class="r">' + escHtml(money(o.total)) + '</th></tr><tr><td colspan="4" class="r">в т. ч. НДС 20%</td><td class="r">' + escHtml(money(vat)) + '</td></tr></tfoot></table>' +
+      '<p>Всего наименований ' + o.items.length + ', на сумму ' + escHtml(money(o.total)) + '.</p></body></html>';
+  }
+  function openInvoice(o, d) {
+    d = d || ST.documents.filter(function (x) { return x.order === o.id && x.type === 'Счёт'; })[0] || { id: 'СЧ-' + o.id.replace(/\D/g, ''), date: o.date, total: o.total };
+    var html = invoiceHtml(o, d), w = null;
+    try { w = window.open('', '_blank'); } catch (e) { w = null; }
+    if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); toast('Счёт ' + d.id + ' открыт в новой вкладке — его можно распечатать.'); }
+    else { saveFile('schet-' + fileSlug(d.id) + '.html', html, 'text/html;charset=utf-8'); toast('Счёт ' + d.id + ' скачан файлом (браузер не дал открыть вкладку).'); }
+  }
+  function downloadDoc(d) {
+    var o = d.order ? findOrder(d.order) : null;
+    if (d.type === 'Счёт' && o) { openInvoice(o, d); return; }
+    var C = ST.company, rows = [[d.title + ' ' + d.id + ' (демо)'], ['Дата', d.date], ['Покупатель', C.name + (C.inn ? ', ИНН ' + C.inn : '')], ['Статус ЭДО', d.edo]];
+    if (o) {
+      rows.push(['Заказ', o.id], [], ['Позиция', 'Артикул', 'Кол-во', 'Цена, ₽', 'Сумма, ₽', 'Поставщик']);
+      o.items.forEach(function (i) { var p = prod(i.slug); rows.push([p.name, p.sku, i.qty, i.price, i.price * i.qty, i.vendor]); });
+      rows.push(['Итого с НДС', '', '', '', o.total, '']);
+    } else if (d.type === 'Акт сверки') {
+      rows.push([], ['Заказ', 'Дата', 'Статус', 'Сумма, ₽']);
+      ST.orders.forEach(function (x) { rows.push([x.id, x.date, x.status, x.total]); });
+    } else if (d.total != null) rows.push(['Сумма, ₽', d.total]);
+    downloadCsv(fileSlug(d.id) + '.csv', rows);
+    toast(d.title + ' ' + d.id + ' скачан (CSV).');
+  }
 
   // перерисовка с сохранением фокуса
   function mount(view, render) {
@@ -187,6 +294,7 @@
     var q = new URLSearchParams(location.search);
     var F = { q: q.get('q') || '', status: q.get('status') || 'all', sort: 'date-desc' };
     return mount(view, function (rerender) {
+      if (!ST.orders.length) return empty('Заказов пока нет. Найдите позиции в каталоге, загрузите заявку цеха списком или запросите КП — заказ со счётом появится здесь.', startLinks());
       var list = ST.orders.filter(function (o) {
         if (F.status !== 'all' && o.status !== F.status) return false;
         if (!F.q) return true;
@@ -216,7 +324,7 @@
               fdate(o.date),
               h('div', { class: 'pk-cab-item' }, [thumb(first.img), h('div', null, [h('span', { class: 'pk-cab-item-name', text: first.name + ' · ' + o.items[0].qty + ' шт.' }), o.items.length > 1 ? h('span', { class: 'pk-cab-muted', text: '+ ещё ' + (o.items.length - 1) + ' ' + plural(o.items.length - 1, 'позиция', 'позиции', 'позиций') }) : null])]),
               h('span', { class: 'pk-cab-muted', text: vendors }),
-              tag(o.status, STATUS_TAG[o.status]),
+              h('div', { class: 'pk-cab-stcell' }, [tag(o.status, STATUS_TAG[o.status]), o.busNote ? h('span', { class: 'pk-cab-muted', text: o.busNote }) : null]), // bus
               h('span', { class: 'mono', text: money(o.total) })
             ] };
           }), 'pk-cab-orders'), 'pk-cab-tablecard') : empty('По этим условиям заказов нет.', btn('Сбросить фильтры', 'btn-secondary', function () { F.q = ''; F.status = 'all'; rerender(); }))
@@ -262,7 +370,7 @@
       var docs = ST.documents.filter(function (d) { return d.order === o.id; });
       var actions = [
         btn('Повторить заказ', 'btn-primary', function () { addToCart(o.items); }, { 'data-cab-act': 'repeat' }),
-        btn('Скачать счёт (демо)', 'btn-secondary', function () { toast('Демо-режим: файл счёта не формируется. В рабочей версии — PDF с подписью и печатью.'); }),
+        btn('Скачать счёт', 'btn-secondary', function () { openInvoice(o); }, { 'data-cab-act': 'invoice' }),
         h('a', { class: 'btn btn-secondary', href: BASE + 'chat/', text: 'Написать в MAX' })
       ];
       if (o.status === 'Счёт') actions.push(btn('Отметить оплату (демо)', 'btn-secondary', function () { o.status = 'Оплачен'; o.paid = today(); o.eta = addDays(today(), 5); ST.documents.forEach(function (d) { if (d.order === o.id && d.type === 'Счёт') d.edo = 'Оплачен'; }); save('orders', 'documents'); toast('Оплата отмечена. Заказ передан поставщикам.'); rerender(); }));
@@ -272,7 +380,7 @@
       return [
         h('div', { class: 'pk-cab-actions pk-cab-actions-row' }, actions),
         card([
-          h('div', { class: 'pk-cab-orderhead' }, [tag(o.status, STATUS_TAG[o.status]), o.track && o.track !== '—' ? h('span', { class: 'mono pk-cab-muted' }, 'Трек ' + o.track + ' · ' + o.carrier + (o.terminal ? ' · ' + o.terminal : '')) : o.carrier ? h('span', { class: 'pk-cab-muted', text: o.carrier }) : h('span', { class: 'pk-cab-muted', text: 'Трек-номер появится после отгрузки' })]),
+          h('div', { class: 'pk-cab-orderhead' }, [tag(o.status, STATUS_TAG[o.status]), o.busNote ? tag(o.busNote, 'tag-outline') : null /* bus */, o.track && o.track !== '—' ? h('span', { class: 'mono pk-cab-muted' }, 'Трек ' + o.track + ' · ' + o.carrier + (o.terminal ? ' · ' + o.terminal : '')) : o.carrier ? h('span', { class: 'pk-cab-muted', text: o.carrier }) : h('span', { class: 'pk-cab-muted', text: 'Трек-номер появится после отгрузки' })]),
           stepper
         ]),
         h('div', { class: 'pk-cab-split' }, [
@@ -289,7 +397,7 @@
             h('h2', { class: 'pk-cab-h2' }, [ico('i-doc-generic', 20), 'Документы']),
             docs.length ? h('ul', { class: 'pk-cab-doclist' }, docs.map(function (d) {
               return h('li', null, [h('span', null, [h('span', { class: 'pk-cab-doc-t', text: d.title }), h('span', { class: 'mono pk-cab-muted', text: d.id + ' · ' + fdate(d.date) + ' · ' + d.edo })]),
-                h('button', { type: 'button', class: 'btn btn-ghost pk-cab-iconbtn', 'aria-label': 'Скачать ' + d.title + ' ' + d.id + ' (демо)', title: 'Скачать (демо)', onclick: function () { toast('Демо-режим: ' + d.title + ' ' + d.id + ' не скачивается.'); } }, ico('i-ui-download'))]);
+                h('button', { type: 'button', class: 'btn btn-ghost pk-cab-iconbtn', 'aria-label': 'Скачать ' + d.title + ' ' + d.id, title: d.type === 'Счёт' ? 'Открыть счёт' : 'Скачать CSV', onclick: function () { downloadDoc(d); } }, ico('i-ui-download'))]);
             })) : h('p', { class: 'pk-cab-muted', text: 'Документы появятся после выставления счёта.' }),
             h('div', { class: 'pk-cab-total' }, [h('span', { text: 'Итого с НДС' }), h('span', { class: 'mono', text: money(o.total) })]),
             h('p', { class: 'pk-cab-muted', text: 'в т. ч. НДС 20% — ' + money(vat) + (deferral && o.payDue && o.status !== 'Закрыт' ? ' · оплата до ' + fdate(o.payDue) : '') })
@@ -328,6 +436,7 @@
     if (!ok) {
       a.status = 'rejected';
       a.history.push({ step: role, who: who, decision: 'Отклонено', date: stamp, comment: comment });
+      busEmit('approval.rejected', { id: a.id, name: a.name, total: a.total, stage: role, comment: comment, company: ST.company.name }); // bus
       save('approvals'); toast('Заявка ' + a.id + ' отклонена.'); return;
     }
     if (a.stage < 2) {
@@ -337,6 +446,7 @@
     var items = approvalItems(a);
     var o = items.length ? createOrder(items.map(function (i) { return { slug: i.slug, qty: i.qty, vendor: i.vendor }; }), { approval: a.id, author: userName() }) : null;
     a.status = 'done'; a.stage = 3; if (o) a.order = o.id;
+    busEmit('approval.done', { id: a.id, name: a.name, total: o ? o.total : a.total, order: o ? o.id : null, company: ST.company.name, author: userName(), items: o ? o.items.map(function (i) { return { slug: i.slug, name: prod(i.slug).name, qty: i.qty, price: i.price }; }) : [] }); // bus
     a.history.push({ step: role, who: who, decision: o ? 'Оформлен заказ ' + o.id : 'Согласовано', date: stamp, comment: comment || '' });
     save('approvals'); toast(o ? 'Заявка ' + a.id + ' согласована, оформлен заказ ' + o.id + ' со счётом.' : 'Заявка ' + a.id + ' согласована.');
   }
@@ -360,7 +470,7 @@
           kpi('Цех → Бюджет → Закупка', 'маршрут', true)
         ]),
         chips('Показать заявки', [['active', 'Ждут решения · ' + act], ['closed', 'Завершённые'], ['all', 'Все · ' + ST.approvals.length]], F.f, function (v) { F.f = v; rerender(); }),
-        list.length ? list.map(function (a) { return approvalCard(a, rerender); }) : empty(F.f === 'active' ? 'Все заявки согласованы — решений не ждёт ни одна.' : 'Здесь пока пусто.')
+        list.length ? list.map(function (a) { return approvalCard(a, rerender); }) : !ST.approvals.length ? empty('Заявок на согласование пока нет. Заявка цеха появится здесь и пройдёт маршрут Цех → Бюджет → Закупка.', [h('a', { class: 'btn btn-primary', href: BASE + 'zayavka-spiskom/', text: 'Загрузить заявку списком' }), h('a', { class: 'btn btn-secondary', href: BASE + 'kabinet/sotrudniki/', text: 'Настроить роли и лимиты' })]) : empty(F.f === 'active' ? 'Все заявки согласованы — решений не ждёт ни одна.' : 'Здесь пока пусто.')
       ];
     });
   }
@@ -370,11 +480,11 @@
     var over = a.status === 'wait' && e && e.limit && a.total > e.limit;
     var items = approvalItems(a);
     var cid = 'pk-cab-c-' + a.id;
-    var comment = h('textarea', { class: 'input pk-cab-comment', id: cid, rows: '2', placeholder: a.status === 'returned' ? 'Что уточнили' : 'Комментарий к решению (для отклонения — обязательно)', 'data-k': 'c-' + a.id });
+    var comment = h('textarea', { class: 'input pk-cab-comment', id: cid, rows: '2', placeholder: a.status === 'returned' ? 'Что уточнили' : 'Комментарий к решению (для отклонения — обязательно)', 'data-k': 'c-' + a.id, oninput: function (e) { var f = e.target.closest('.field'), hint = f && $('.pk-cab-hint', f); if (hint) hint.textContent = e.target.value.trim() ? 'Комментарий: ' + e.target.value.trim().length + ' зн. — сохранится в истории решений' : 'Попадёт в историю решений по заявке'; } });
     var controls = null;
     if (a.status === 'wait' || a.status === 'returned') {
       controls = h('div', { class: 'pk-cab-decide' }, [
-        field('Комментарий', comment),
+        field('Комментарий', comment, 'Попадёт в историю решений по заявке'),
         h('div', { class: 'pk-cab-actions' }, a.status === 'returned' ? [
           btn('Уточнить и отправить заново', 'btn-primary', function () { decide(a, true, comment.value.trim()); rerender(); })
         ] : [
@@ -428,6 +538,7 @@
             setting('Спросить, если цена выросла более', 'priceGrowth', '%')
           ])
         ]),
+        ST.regular.length ? null : empty('Регулярных позиций пока нет. Система предложит автозакупку, когда одну и ту же позицию закажут хотя бы дважды.', startLinks(false)),
         ST.regular.map(function (r, idx) {
           var p = prod(r.slug), d = priceDelta(r), warn = d > A.priceGrowth, sum = p.price * r.qty;
           var mode = !r.on ? 'выключена' : sum <= A.limitNoConfirm ? 'без подтверждения' : 'выше лимита — подтверждение в MAX';
@@ -469,10 +580,12 @@
   }
 
   // ═════════ Запросы КП ═════════
-  var QUOTE_TAG = { 'В работе': 'tag-outline', 'Ждёт КП': 'tag-outline', 'КП получено': 'tag-accent', 'Принято': 'tag-neutral', 'Отозван': 'tag-outline' };
+  var QUOTE_TAG = { 'В работе': 'tag-accent', 'Ждёт КП': 'tag-accent', 'КП получено': 'tag-outline', 'Принято': 'tag-neutral', 'Отозван': 'tag-danger' };
   function viewQuotes(view) {
     var S = { form: location.hash === '#new', open: {} };
-    document.addEventListener('click', function (e) { var b = e.target.closest('[data-cab-act="quote-new"]'); if (b) { S.form = true; rer(); var f = $('#pk-cab-q-name'); if (f) f.focus(); } });
+    function openForm() { S.form = true; rer(); var f = $('#pk-cab-q-name'); if (f) f.focus(); }
+    document.addEventListener('click', function (e) { var b = e.target.closest('[data-cab-act="quote-new"]'); if (b) openForm(); });
+    window.addEventListener('hashchange', function () { if (location.hash === '#new') openForm(); });
     var rer = mount(view, function (rerender) {
       var form = null;
       if (S.form) {
@@ -485,6 +598,7 @@
           if (!setErr(name, name.value.trim().length >= 3 ? '' : 'Опишите, что нужно рассчитать')) { name.focus(); return; }
           var id = 'КП-' + nextNum(ST.quotes, /^КП-(\d+)/);
           ST.quotes.unshift({ id: id, name: name.value.trim(), created: today(), due: addDays(today(), 1), status: 'В работе', engineer: 'Назначается инженер', spec: spec.value || null, note: desc.value.trim() || 'Желаемый срок поставки — ' + fdate(due.value), wanted: due.value });
+          busEmit('quote.requested', { id: id, name: ST.quotes[0].name, note: ST.quotes[0].note, spec: ST.quotes[0].spec, specTotal: (ST.specs.filter(function (x) { return x.id === ST.quotes[0].spec; })[0] || { items: [] }).items.reduce(function (a2, i) { return a2 + (i.price || prod(i.slug).price) * i.qty; }, 0), wanted: due.value, company: ST.company.name, author: userName() }); // bus
           save('quotes'); S.form = false; toast('Запрос ' + id + ' создан. Инженер ответит в течение 2 рабочих часов.'); rerender();
         } }, [
           h('h2', { class: 'pk-cab-h2', text: 'Новый запрос КП' }),
@@ -494,7 +608,7 @@
           h('div', { class: 'pk-cab-actions' }, [h('button', { type: 'submit', class: 'btn btn-primary' }, 'Создать запрос'), btn('Отмена', 'btn-secondary', function () { S.form = false; rerender(); })])
         ]), 'pk-cab-formcard');
       }
-      return [form, ST.quotes.map(function (q) {
+      return [form, ST.quotes.length || S.form ? null : empty('Запросов КП пока нет. Опишите задачу — инженер рассчитает предложение за 2 рабочих часа.', [btn('Новый запрос КП', 'btn-primary', function () { S.form = true; rerender(); var f = $('#pk-cab-q-name'); if (f) f.focus(); }), h('a', { class: 'btn btn-secondary', href: BASE + 'napravleniya/', text: 'Найти в каталоге' })]), ST.quotes.map(function (q) {
         var spec = ST.specs.filter(function (s) { return s.id === q.spec; })[0];
         var total = q.total || (spec ? lineSum(spec.items) : null);
         var ready = q.status === 'КП получено';
@@ -533,11 +647,12 @@
   }
 
   // ═════════ Документы ═════════
-  var EDO_TAG = { 'Подписан': 'tag-neutral', 'Оплачен': 'tag-neutral', 'Отправлен': 'tag-outline', 'Ожидает подписи': 'tag-accent', 'Ожидает оплаты': 'tag-accent', 'Отсрочка': 'tag-outline' };
+  var EDO_TAG = { 'Подписан': 'tag-neutral', 'Оплачен': 'tag-neutral', 'Отправлен': 'tag-accent', 'Ожидает подписи': 'tag-outline', 'Ожидает оплаты': 'tag-outline', 'Отсрочка': 'tag-accent' };
   function viewDocuments(view) {
     var q = new URLSearchParams(location.search);
     var F = { type: 'all', period: 'all', q: q.get('order') || '' };
     return mount(view, function (rerender) {
+      if (!ST.documents.length) return empty('Документов пока нет. Счёт появится сразу после оформления первого заказа, УПД — после отгрузки.', startLinks());
       var months = {}; ST.documents.forEach(function (d) { months[d.date.slice(0, 7)] = 1; });
       var periods = [['all', 'Всё время']].concat(Object.keys(months).sort().reverse().map(function (m) { var d = pd(m + '-01'); return [m, ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'][d.getMonth()] + ' ' + d.getFullYear()]; }));
       var list = ST.documents.filter(function (d) {
@@ -563,7 +678,7 @@
             fdate(d.date), h('span', { class: 'mono', text: d.total == null ? '—' : money(d.total) }), tag(d.edo, EDO_TAG[d.edo]),
             h('div', { class: 'pk-cab-rowacts' }, [
               d.edo === 'Ожидает подписи' ? btn('Подписать', 'btn-secondary', function () { d.edo = 'Подписан'; save('documents'); toast(d.title + ' ' + d.id + ' подписан в ЭДО (демо).'); rerender(); }, { 'aria-label': 'Подписать ' + d.id }) : null,
-              h('button', { type: 'button', class: 'btn btn-ghost', 'aria-label': 'Скачать ' + d.title + ' ' + d.id + ' (демо)', onclick: function () { toast('Демо-режим: ' + d.id + ' не скачивается.'); } }, [ico('i-ui-download'), 'Скачать (демо)'])
+              h('button', { type: 'button', class: 'btn btn-ghost', 'aria-label': 'Скачать ' + d.title + ' ' + d.id, onclick: function () { downloadDoc(d); } }, [ico('i-ui-download'), d.type === 'Счёт' ? 'Счёт' : 'CSV'])
             ])
           ] };
         }), 'pk-cab-docs'), 'pk-cab-tablecard') : empty('Документов по фильтру нет.', btn('Сбросить фильтры', 'btn-secondary', function () { F.type = 'all'; F.period = 'all'; F.q = ''; rerender(); }))
@@ -675,8 +790,13 @@
       var C = ST.company, def = ST.deferral;
       var F = {};
       function f(key, label, a, hint) { F[key] = input(Object.assign({ value: C[key] || '', 'data-k': 'rq-' + key }, a || {})); return field(label, F[key], hint); }
-      var innHint = checkInn(C.inn) ? 'демо-номер: контрольная цифра условная' : '';
-      var form = h('form', { class: 'pk-cab-form', novalidate: true, onsubmit: function (e) {
+      var innHint = C.inn && checkInn(C.inn) ? 'контрольная цифра не сходится — проверьте номер' : '';
+      function dirty(e) {
+        var f = e.target.closest('form'), st = f && $('[data-cab-dirty]', f); if (!st) return;
+        var changed = Object.keys(F).some(function (k) { return F[k].value.trim() !== String(C[k] || ''); });
+        st.textContent = changed ? 'Есть несохранённые изменения — нажмите «Сохранить реквизиты».' : '';
+      }
+      var form = h('form', { class: 'pk-cab-form', novalidate: true, oninput: dirty, onchange: dirty, onsubmit: function (e) {
         e.preventDefault();
         var v = {}; Object.keys(F).forEach(function (k) { v[k] = F[k].value.trim(); });
         var ok = true;
@@ -692,7 +812,7 @@
         if (!ok) { var bad = $('.pk-invalid', view); if (bad) bad.focus(); toast('Проверьте выделенные поля'); return; }
         var warn = checkInn(v.inn);
         v.rs = v.rs.replace(/\s/g, ''); v.ks = v.ks.replace(/\s/g, '');
-        Object.assign(C, v); save('company');
+        Object.assign(C, v); save('company'); syncSession(true);
         toast('Реквизиты сохранены' + (warn ? '. Внимание: ' + warn.toLowerCase() : '') + '.'); rerender();
       } }, [
         h('h2', { class: 'pk-cab-h2', text: 'Реквизиты компании' }),
@@ -709,16 +829,18 @@
           f('email', 'Почта для документов', { type: 'email', autocomplete: 'email' }),
           f('phone', 'Телефон', { type: 'tel', autocomplete: 'tel' })
         ]),
-        h('div', { class: 'pk-cab-actions' }, [h('button', { type: 'submit', class: 'btn btn-primary' }, 'Сохранить реквизиты'), btn('Вернуть исходные', 'btn-secondary', function () { ST.company = clone(SEED.company); save('company'); toast('Реквизиты сброшены к исходным.'); rerender(); })])
+        h('p', { class: 'pk-cab-muted pk-cab-dirty', role: 'status', 'data-cab-dirty': '' }),
+        h('div', { class: 'pk-cab-actions' }, [h('button', { type: 'submit', class: 'btn btn-primary' }, 'Сохранить реквизиты'), btn('Вернуть исходные', 'btn-secondary', function () { ST.company = baseState('company'); save('company'); syncSession(true); toast('Реквизиты сброшены к исходным.'); rerender(); })])
       ]);
-      var used = Math.round(def.used / def.limit * 100);
+      var used = def.limit > 0 ? Math.round(def.used / def.limit * 100) : 0;
       var an = input({ id: 'pk-cab-a-name', placeholder: 'Например: склад № 2', 'data-k': 'a-name' });
       var aa = input({ placeholder: 'Город, улица, дом, склад', autocomplete: 'street-address', 'data-k': 'a-addr' });
       var ac = input({ placeholder: 'ФИО и телефон на приёмке', 'data-k': 'a-contact' });
       var ah = input({ placeholder: 'пн–пт 8:00–17:00', 'data-k': 'a-hours' });
       return [
-        h('div', { class: 'pk-cab-kpis' }, [kpi(money(def.limit), 'лимит отсрочки'), kpi(used + '%', 'использовано · ' + money(def.used)), kpi(def.days + ' дней', 'срок отсрочки'), kpi('ЭДО', 'подключено: Диадок', true)]),
-        h('div', { class: 'blueprint pk-cab-card' }, [h('div', { class: 'pk-cab-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(used), 'aria-label': 'Использование лимита отсрочки' }, h('span', { style: 'width:' + used + '%' })), form]),
+        def.limit > 0 ? h('div', { class: 'pk-cab-kpis' }, [kpi(money(def.limit), 'лимит отсрочки'), kpi(used + '%', 'использовано · ' + money(def.used)), kpi(def.days + ' дней', 'срок отсрочки'), kpi('ЭДО', 'подключено: Диадок', true)])
+          : h('div', { class: 'pk-cab-kpis' }, [kpi('нет', 'отсрочка платежа', true), kpi('по счёту', 'оплата заказов', true), kpi('ЭДО', 'подключается после проверки реквизитов', true)]),
+        h('div', { class: 'blueprint pk-cab-card' }, [def.limit > 0 ? h('div', { class: 'pk-cab-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(used), 'aria-label': 'Использование лимита отсрочки' }, h('span', { style: 'width:' + used + '%' })) : h('p', { class: 'pk-cab-muted', text: 'Отсрочку до 30 дней открываем после проверки реквизитов и первых заказов.' }), form]),
         card([
           h('h2', { class: 'pk-cab-h2', text: 'Адреса доставки' }),
           h('ul', { class: 'pk-cab-addrs' }, ST.addresses.map(function (a) {
@@ -730,7 +852,7 @@
               ])
             ]);
           })),
-          h('form', { class: 'pk-cab-form pk-cab-addform', novalidate: true, onsubmit: function (e) {
+          h('form', { class: 'pk-cab-form pk-cab-addform', novalidate: true, oninput: function (e) { var st = $('[data-cab-dirty]', e.currentTarget); if (st) st.textContent = [an, aa, ac, ah].some(function (x) { return x.value.trim(); }) ? 'Адрес ещё не добавлен — нажмите «Добавить адрес».' : ''; }, onsubmit: function (e) {
             e.preventDefault();
             var ok = setErr(an, an.value.trim() ? '' : 'Назовите адрес');
             ok = setErr(aa, aa.value.trim().length >= 8 ? '' : 'Укажите адрес полностью') && ok;
@@ -740,6 +862,7 @@
           } }, [
             h('h3', { class: 'pk-cab-h3', text: 'Добавить адрес' }),
             h('div', { class: 'pk-cab-grid2' }, [field('Название *', an), field('Адрес *', aa), field('Контакт на приёмке', ac), field('Часы приёмки', ah)]),
+            h('p', { class: 'pk-cab-muted pk-cab-dirty', role: 'status', 'data-cab-dirty': '' }),
             h('div', { class: 'pk-cab-actions' }, h('button', { type: 'submit', class: 'btn btn-secondary' }, 'Добавить адрес'))
           ])
         ])
@@ -747,166 +870,222 @@
     });
   }
 
-  // ═════════ экраны макета: меню, обзор, заказ ПК-10428, уведомления ═════════
-  var LEGACY_NAV = { 'Заказы': ['kabinet/zakazy/', 'orders'], 'Согласование': ['kabinet/soglasovanie/', 'approvals'], 'Регулярные закупки': ['kabinet/regulyarnye-zakupki/', 'regular'], 'Запросы КП': ['kabinet/zaprosy-kp/', 'quotes'], 'Счета и УПД': ['kabinet/dokumenty/', 'documents'], 'Спецификации': ['kabinet/specifikacii/', 'specs'], 'Сотрудники': ['kabinet/sotrudniki/', 'employees'], 'Реквизиты': ['kabinet/rekvizity/', ''], 'Уведомления': ['kabinet/uvedomleniya/', ''] };
-  function legacyNav() {
-    $$('main a, [role="main"] a, #main a').forEach(function (a) {
-      var label = txt(a.querySelector('span') || a).replace(/\d+$/, '').trim();
-      var m = LEGACY_NAV[label]; if (!m || a.closest('.pk-cab')) return;
-      if (!a.closest('nav')) return;
-      a.setAttribute('href', BASE + m[0]); a.removeAttribute('data-demo');
-      var c = [].slice.call(a.querySelectorAll('.mono')).pop(); if (c && m[1]) c.setAttribute('data-cab-legacy-count', m[1]);
-      if (location.pathname.indexOf(m[0]) >= 0) a.setAttribute('aria-current', 'page');
-    });
-  }
-  function rowOf(el) { return el.closest('tr'); }
-  function legacyOverview() {
-    var main = $('#main') || document.body;
-    // KPI обзора
-    $$('.blueprint', main).forEach(function (b) {
-      var k = txt(b.children[b.children.length - 1]);
-      var v = b.querySelector('.mono'); if (!v) return;
-      if (/запрос\S* КП в работе/.test(k)) v.textContent = COUNTS.quotes();
-      if (/заказ\S* в пути/.test(k)) v.textContent = ST.orders.filter(function (o) { return o.status === 'В пути'; }).length;
-    });
-    // таблицы
-    $$('table', main).forEach(function (t) {
-      var head = txt(t.querySelector('thead'));
-      if (/Периодичность/.test(head) && /Вкл/.test(head)) legacyAutobuy(t);
-      else if (/Маршрут/.test(head)) legacyApprovals(t);
-      else if (/Закупок/.test(head)) legacyRepeat(t);
-      else if (/Номер/.test(head) && /Статус/.test(head)) legacyOrders(t);
-    });
-    // поля автозакупки над таблицей
-    var map = { 'Лимит без подтверждения': 'limitNoConfirm', 'Лимит в месяц': 'limitMonth', 'Предупреждать за': 'warnDays', 'Если цена выросла более': 'priceGrowth' };
-    $$('.field', main).forEach(function (f) {
-      var key = map[txt($('label', f))], inp = $('input', f); if (!key || !inp) return;
-      var fmt = function () { var v = ST.autobuy[key]; return key === 'warnDays' ? v + ' ' + plural(v, 'день', 'дня', 'дней') : key === 'priceGrowth' ? v + '% → спросить' : money(v); };
-      inp.value = fmt();
-      inp.addEventListener('change', function () { var v = num(inp.value); if (!v && key !== 'warnDays') { inp.value = fmt(); return; } ST.autobuy[key] = v; save('autobuy'); inp.value = fmt(); toast('Сохранено: ' + txt($('label', f)).toLowerCase()); });
-    });
-    // кнопки шапки и блоков
-    $$('button, a', main).forEach(function (b) {
-      var t = txt(b), go = { 'Новый запрос КП': 'kabinet/zaprosy-kp/#new', 'Добавить позицию': 'kabinet/regulyarnye-zakupki/', 'Настроить маршрут': 'kabinet/sotrudniki/', 'График закупок': 'kabinet/regulyarnye-zakupki/' }[t];
-      if (go) { b.removeAttribute('data-demo'); b.addEventListener('click', function (e) { e.preventDefault(); location.href = BASE + go; }); }
-      if (t === 'Выгрузить реестр') { b.removeAttribute('data-demo'); b.addEventListener('click', function (e) { e.preventDefault(); toast('Демо-режим: реестр заказов не выгружается. Полный список — в разделе «Заказы».'); }); }
-    });
-    paintAutobuyTag(main);
-  }
-  function paintAutobuyTag(main) {
-    $$('.tag', main).forEach(function (t) { if (/^Включена · \d+/.test(txt(t)) || /^Выключена/.test(txt(t))) { var n = ST.regular.filter(function (r) { return r.on; }).length; t.textContent = n ? 'Включена · ' + n + ' ' + plural(n, 'позиция', 'позиции', 'позиций') : 'Выключена'; } });
-  }
-  function regBySku(sku) { return ST.regular.filter(function (r) { return prod(r.slug).sku === sku; })[0]; }
-  function skuInRow(tr) { var m = $$('.mono', tr).map(txt).map(function (s) { return s.split(' · ')[0]; }); return m[0] || ''; }
-  function legacyAutobuy(t) {
-    $$('tbody tr', t).forEach(function (tr) {
-      var r = regBySku(skuInRow(tr)); if (!r) return;
-      var cb = $('input[type="checkbox"]', tr), qty = $('input.input', tr), tg = $('.tag', tr), cells = tr.children;
-      var name = prod(r.slug).name;
-      function paint() {
-        cb.checked = !!r.on; if (qty) qty.value = r.qty;
-        if (tg) { tg.textContent = r.on && r.next ? fdate(r.next) : 'пауза'; tg.className = 'tag ' + (r.on && r.next ? 'tag-accent' : 'tag-outline'); tg.style.fontSize = '12px'; }
-        var sum = prod(r.slug).price * r.qty;
-        if (cells[4]) cells[4].textContent = !r.on ? 'выключена' : sum <= ST.autobuy.limitNoConfirm ? 'без подтверждения' : 'выше лимита — подтверждение в MAX';
-        if (cells[1]) cells[1].textContent = r.period;
-      }
-      if (cb) { cb.setAttribute('aria-label', 'Автозакупка: ' + name); cb.addEventListener('change', function () { r.on = cb.checked; r.next = r.on ? addDays(today(), r.periodDays || 30) : null; save('regular'); paint(); paintAutobuyTag($('#main') || document.body); toast((r.on ? 'Автозакупка включена: ' : 'Автозакупка выключена: ') + name); }); }
-      if (qty) { qty.setAttribute('aria-label', 'Количество: ' + name); qty.addEventListener('change', function () { r.qty = Math.max(1, num(qty.value)); save('regular'); paint(); toast('Количество: ' + name + ' — ' + r.qty + ' шт.'); }); }
-      if (cb) paint();
-    });
-  }
-  function legacyApprovals(t) {
-    $$('tbody tr', t).forEach(function (tr) {
-      var idEl = $$('.mono', tr).filter(function (m) { return /^ЗЯ-\d+/.test(txt(m)); })[0]; if (!idEl) return;
-      var a = ST.approvals.filter(function (x) { return x.id === txt(idEl); })[0]; if (!a) return;
-      var b = $('button, a.btn', tr), cells = tr.children;
-      function paint() {
-        var route = cells[2]; if (route) { route.textContent = ''; route.appendChild(routeEl(a, true)); }
-        if (cells[3]) cells[3].textContent = ownerText(a);
-        if (!b) return;
-        var label = a.status === 'done' ? (a.order ? 'Открыть заказ' : 'Готово') : a.status === 'rejected' ? 'Отклонена' : a.status === 'returned' ? 'Уточнить' : a.quote && a.stage < 2 ? 'Согласовать' : a.stage === 2 ? 'Оформить' : 'Согласовать';
-        b.textContent = label; b.className = 'btn ' + (/Открыть|Уточнить|Отклонена|Готово/.test(label) ? 'btn-secondary' : 'btn-primary'); b.style.fontSize = '13px';
-        b.setAttribute('aria-label', label + ': ' + a.id); b.removeAttribute('data-demo');
-      }
-      if (b) b.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (a.status === 'done' && a.order) { location.href = orderHref(a.order); return; }
-        if (a.status === 'returned' || a.status === 'rejected') { location.href = BASE + 'kabinet/soglasovanie/'; return; }
-        decide(a, true, ''); paint();
-      });
-      paint();
-    });
-  }
-  function legacyRepeat(t) {
-    $$('tbody tr', t).forEach(function (tr) {
-      var sku = skuInRow(tr), slug = Object.keys(SEED.products).filter(function (k) { return SEED.products[k].sku === sku; })[0]; if (!slug) return;
-      var b = $('button, a', tr); if (!b || !/Повторить/.test(txt(b))) return;
-      var r = regBySku(sku);
-      b.removeAttribute('data-demo'); b.setAttribute('aria-label', 'Повторить закупку: ' + prod(slug).name);
-      b.addEventListener('click', function (e) { e.preventDefault(); addToCart([{ slug: slug, qty: r ? r.qty : 1 }]); });
-    });
-  }
-  function legacyOrders(t) {
-    $$('tbody tr', t).forEach(function (tr) {
-      var id = txt(tr.children[0]);
-      var o = findOrder(id);
-      var href = o ? orderHref(id) : /^КП-/.test(id) ? BASE + 'kabinet/zaprosy-kp/' : null;
-      if (href) { tr.setAttribute('data-href', href); tr.style.cursor = 'pointer'; if (!tr.children[0].querySelector('a')) { var a = h('a', { href: href, class: 'mono pk-cab-idlink', text: id }); tr.children[0].textContent = ''; tr.children[0].appendChild(a); } }
-      if (o && tr.children[2]) { var tg = $('.tag', tr.children[2]); if (tg) { tg.textContent = o.status; tg.className = 'tag ' + (STATUS_TAG[o.status] || 'tag-neutral'); } }
-      if (/^КП-/.test(id) && tr.children[2]) { var q = ST.quotes.filter(function (x) { return x.id === id; })[0], tg2 = $('.tag', tr.children[2]); if (q && tg2 && q.status !== txt(tg2)) tg2.textContent = q.status; }
-    });
-  }
-  function legacyOrderPage() {
-    var o = findOrder('ПК-10428'); if (!o) return;
-    $$('#main button, #main a, [role="main"] button, [role="main"] a').forEach(function (b) {
-      var t = txt(b);
-      if (t === 'Повторить заказ') { b.removeAttribute('data-demo'); b.addEventListener('click', function (e) { e.preventDefault(); addToCart(o.items); }); }
-      if (t === 'Документы') { b.removeAttribute('data-demo'); b.addEventListener('click', function (e) { e.preventDefault(); location.href = BASE + 'kabinet/dokumenty/?order=' + encodeURIComponent(o.id); }); }
-    });
-  }
-  function legacyNotify() {
-    var boxes = $$('main input[type="checkbox"], [role="main"] input[type="checkbox"]');
-    if (!boxes.length) return;
-    var saved = lsGet('notify');
-    boxes.forEach(function (cb, i) {
-      if (Array.isArray(saved) && typeof saved[i] === 'boolean') cb.checked = saved[i];
-      cb.addEventListener('change', function () { lsSet('notify', boxes.map(function (x) { return x.checked; })); toast('Настройки уведомлений сохранены'); });
-    });
-    $$('main button, [role="main"] button').forEach(function (b) {
-      if (/^Сохранить/.test(txt(b))) { b.removeAttribute('data-demo'); b.addEventListener('click', function (e) { e.preventDefault(); lsSet('notify', boxes.map(function (x) { return x.checked; })); toast('Настройки уведомлений сохранены (в этом браузере)'); }); }
+  // ═════════ Обзор ═════════
+  function regMode(r) { var sum = prod(r.slug).price * r.qty; return !r.on ? 'выключена' : sum <= ST.autobuy.limitNoConfirm ? 'без подтверждения' : 'выше лимита — подтверждение в MAX'; }
+  function viewOverview(view) {
+    return mount(view, function (rerender) {
+      var C = ST.company, def = ST.deferral;
+      var qn = COUNTS.quotes(), tr = ST.orders.filter(function (o) { return o.status === 'В пути'; }).length, an = COUNTS.approvals();
+      var onN = ST.regular.filter(function (r) { return r.on; }).length;
+      var out = [];
+      if (IS_NEW) out.push(card([
+        h('h2', { class: 'pk-cab-h2' }, [ico('i-ui-account', 20), 'Кабинет компании ' + C.name + ' создан']),
+        h('p', { text: 'Здравствуйте, ' + userName() + '! Вы — администратор кабинета: можно пригласить коллег в разделе «Сотрудники».' }),
+        h('p', { class: 'pk-cab-muted', text: 'Заказов, заявок и документов пока нет. Начните с первой закупки — счёт за 15 минут, КП инженера за 2 рабочих часа. Реквизиты для счетов проверьте в разделе «Реквизиты».' }),
+        h('div', { class: 'pk-cab-actions' }, startLinks().concat([h('a', { class: 'btn btn-ghost', href: BASE + 'kabinet/rekvizity/', text: 'Заполнить реквизиты' })]))
+      ], 'pk-cab-welcome'));
+      out.push(h('div', { class: 'pk-cab-kpis' }, [
+        kpi(qn, plural(qn, 'запрос', 'запроса', 'запросов') + ' КП в работе'),
+        kpi(tr, plural(tr, 'заказ', 'заказа', 'заказов') + ' в пути'),
+        kpi(an, plural(an, 'заявка ждёт', 'заявки ждут', 'заявок ждут') + ' решения'),
+        def.limit > 0 ? kpi(money(def.limit - def.used), 'доступно по отсрочке ' + def.days + ' дн.') : kpi('по счёту', 'отсрочка не подключена', true)
+      ]));
+      // последние заказы и запросы КП
+      var rows = ST.orders.map(function (o) { return { d: o.date, id: o.id, o: o }; })
+        .concat(ST.quotes.filter(function (q) { return !/Принято/.test(q.status); }).map(function (q) { return { d: q.created, id: q.id, q: q }; }))
+        .sort(function (a, b) { return b.d.localeCompare(a.d) || b.id.localeCompare(a.id); }).slice(0, 6);
+      out.push(card([
+        h('div', { class: 'pk-cab-cardhead' }, [h('h2', { class: 'pk-cab-h2', text: 'Последние заказы и запросы КП' }), h('div', { class: 'pk-cab-actions' }, [h('a', { class: 'pk-cab-link-inline', href: BASE + 'kabinet/zakazy/', text: 'Все заказы' }), h('a', { class: 'pk-cab-link-inline', href: BASE + 'kabinet/zaprosy-kp/', text: 'Все запросы КП' })])]),
+        rows.length ? table([{ t: 'Номер' }, { t: 'Позиции' }, { t: 'Статус' }, { t: 'Дата' }, { t: 'Сумма', cls: 'pk-num' }], rows.map(function (r) {
+          if (r.o) {
+            var o = r.o, first = prod(o.items[0].slug);
+            return { cells: [h('a', { href: orderHref(o.id), class: 'mono pk-cab-idlink', text: o.id }),
+              h('div', { class: 'pk-cab-item' }, [thumb(first.img), h('div', null, [h('span', { class: 'pk-cab-item-name', text: first.name + ' · ' + o.items[0].qty + ' шт.' }), o.items.length > 1 ? h('span', { class: 'pk-cab-muted', text: '+ ещё ' + (o.items.length - 1) + ' ' + plural(o.items.length - 1, 'позиция', 'позиции', 'позиций') }) : null])]),
+              h('div', { class: 'pk-cab-stcell' }, [tag(o.status, STATUS_TAG[o.status]), o.busNote ? h('span', { class: 'pk-cab-muted', text: o.busNote }) : null]), // bus
+              fdate(o.date), h('span', { class: 'mono', text: money(o.total) })] };
+          }
+          var q = r.q, spec = ST.specs.filter(function (s) { return s.id === q.spec; })[0], total = q.total || (q.status === 'КП получено' && spec ? lineSum(spec.items) : null);
+          return { cells: [h('a', { href: BASE + 'kabinet/zaprosy-kp/', class: 'mono pk-cab-idlink', text: q.id }),
+            h('div', null, [h('span', { class: 'pk-cab-item-name', text: q.name }), h('span', { class: 'pk-cab-muted', text: 'запрос КП · ' + q.engineer })]),
+            tag(q.status, QUOTE_TAG[q.status]), fdate(q.created), h('span', { class: 'mono', text: total ? money(total) : 'расчёт' })] };
+        }), 'pk-cab-recent') : empty('Заказов и запросов пока нет.', startLinks())
+      ], 'pk-cab-tablecard pk-cab-ovcard'));
+      // согласование
+      var act = ST.approvals.filter(function (a) { return a.status === 'wait' || a.status === 'returned'; });
+      out.push(card([
+        h('div', { class: 'pk-cab-cardhead' }, [h('div', null, [h('h2', { class: 'pk-cab-h2', text: 'Согласование заявок' }), h('p', { class: 'pk-cab-muted', text: 'Заявка цеха проходит бюджет и закупку. Роли и лимиты — в разделе «Сотрудники».' })]), h('div', { class: 'pk-cab-actions' }, [h('a', { class: 'pk-cab-link-inline', href: BASE + 'kabinet/soglasovanie/', text: 'Все заявки' }), h('a', { class: 'pk-cab-link-inline', href: BASE + 'kabinet/sotrudniki/', text: 'Настроить маршрут' })])]),
+        act.length ? table([{ t: 'Заявка' }, { t: 'Маршрут' }, { t: 'На ком' }, { t: 'Сумма', cls: 'pk-num' }, { t: 'Действие', cls: 'pk-num' }], act.slice(0, 5).map(function (a) {
+          var label = a.status === 'returned' ? 'Уточнить' : a.stage === 2 ? 'Оформить заказ' : 'Согласовать';
+          return { cells: [
+            h('div', null, [h('span', { class: 'pk-cab-item-name', text: a.name }), h('span', { class: 'mono pk-cab-muted', text: a.id + ' · ' + a.author })]),
+            routeEl(a, true), h('span', { text: ownerText(a) }), h('span', { class: 'mono', text: money(a.total) }),
+            a.status === 'returned' ? h('a', { class: 'btn btn-secondary', href: BASE + 'kabinet/soglasovanie/', text: label, 'aria-label': label + ': ' + a.id })
+              : btn(label, 'btn-primary', function () { decide(a, true, ''); rerender(); }, { 'aria-label': label + ': ' + a.id })
+          ] };
+        }), 'pk-cab-ovappr') : h('p', { class: 'pk-cab-muted pk-cab-pad', text: ST.approvals.length ? 'Все заявки согласованы — решений не ждёт ни одна.' : 'Заявок на согласование пока нет.' })
+      ], 'pk-cab-tablecard pk-cab-ovcard'));
+      // автозакупка
+      out.push(card([
+        h('div', { class: 'pk-cab-cardhead' }, [h('div', null, [h('h2', { class: 'pk-cab-h2' }, ['Автозакупка регулярных позиций ', tag(onN ? 'Включена · ' + onN + ' ' + plural(onN, 'позиция', 'позиции', 'позиций') : 'Выключена', onN ? 'tag-accent' : 'tag-neutral')]), h('p', { class: 'pk-cab-muted', text: 'Счёт формируется при наступлении срока: внутри лимита ' + money(ST.autobuy.limitNoConfirm) + ' — без подтверждения, выше — кнопка в MAX.' })]), h('div', { class: 'pk-cab-actions' }, [h('a', { class: 'pk-cab-link-inline', href: BASE + 'kabinet/regulyarnye-zakupki/', text: 'Правила и лимиты' })])]),
+        ST.regular.length ? table([{ t: 'Позиция' }, { t: 'Периодичность' }, { t: 'Количество' }, { t: 'Следующий счёт' }, { t: 'Режим' }, { t: 'Вкл', cls: 'pk-num' }], ST.regular.map(function (r, idx) {
+          var p = prod(r.slug);
+          var qty = input({ type: 'number', min: '1', inputmode: 'numeric', value: String(r.qty), class: 'input mono pk-cab-qty', 'aria-label': 'Количество: ' + p.name, 'data-k': 'ov-qty-' + idx, onchange: function (e) { r.qty = Math.max(1, num(e.target.value)); save('regular'); toast('Количество: ' + p.name + ' — ' + r.qty + ' шт.'); rerender(); } });
+          var sw = h('label', { class: 'pk-cab-switch' }, [h('input', { type: 'checkbox', role: 'switch', checked: !!r.on, 'data-k': 'ov-sw-' + idx, 'aria-label': 'Автозакупка: ' + p.name, onchange: function (e) { r.on = e.target.checked; r.next = r.on ? addDays(today(), r.periodDays || 30) : null; save('regular'); toast((r.on ? 'Автозакупка включена: ' : 'Автозакупка выключена: ') + p.name); rerender(); } }), h('span', { class: 'pk-cab-switch-ui', 'aria-hidden': 'true' })]);
+          return { cells: [
+            h('div', { class: 'pk-cab-item' }, [thumb(p.img), h('div', null, [p.href ? h('a', { href: BASE + p.href, class: 'pk-cab-item-name', text: p.name }) : h('span', { class: 'pk-cab-item-name', text: p.name }), h('span', { class: 'mono pk-cab-muted', text: p.sku + ' · ' + money(p.price) })])]),
+            r.period, qty, r.on && r.next ? tag(fdate(r.next), 'tag-accent') : tag('пауза', 'tag-outline'), h('span', { class: 'pk-cab-muted', text: regMode(r) }), sw
+          ] };
+        }), 'pk-cab-ovreg') : h('p', { class: 'pk-cab-muted pk-cab-pad', text: 'Регулярных позиций пока нет — система предложит автозакупку, когда позицию закажут хотя бы дважды.' }),
+        ST.regular.length ? h('p', { class: 'pk-cab-muted pk-cab-pad', text: 'За квартал автозакупка оформила ' + ST.autobuy.quarterInvoices + ' ' + plural(ST.autobuy.quarterInvoices, 'счёт', 'счёта', 'счетов') + ' на ' + money(ST.autobuy.quarterSum) + '.' }) : null
+      ], 'pk-cab-tablecard pk-cab-ovcard'));
+      // быстрые действия
+      var docsWait = ST.documents.filter(function (d) { return d.edo === 'Ожидает подписи' || d.edo === 'Ожидает оплаты'; }).length;
+      out.push(h('section', { class: 'pk-cab-quick', 'aria-label': 'Быстрые действия' }, [
+        ['i-ui-quote', 'Новый запрос КП', 'Инженер ответит за 2 рабочих часа', 'kabinet/zaprosy-kp/#new'],
+        ['i-ui-orders', 'Найти в каталоге', '115 000+ моделей с ценой и сроком', 'napravleniya/'],
+        ['i-ui-specs', 'Загрузить заявку списком', 'Excel цеха → спецификация с ценами', 'zayavka-spiskom/'],
+        ['i-pay-invoice', 'Счета и УПД', docsWait ? 'ждут подписи или оплаты: ' + docsWait : 'все документы в порядке', 'kabinet/dokumenty/'],
+        ['i-ui-notify', 'Уведомления', 'MAX, почта, SMS и тихие часы', 'kabinet/uvedomleniya/']
+      ].map(function (x) { return h('a', { class: 'blueprint pk-cab-qa', href: BASE + x[3] }, [ico(x[0], 20), h('span', { class: 'pk-cab-qa-t', text: x[1] }), h('span', { class: 'pk-cab-muted', text: x[2] })]); })));
+      return out;
     });
   }
 
+  // ═════════ Уведомления ═════════
+  var QUIET = [['', 'не задавать'], ['20:00–08:00', '20:00–08:00'], ['21:00–08:00', '21:00–08:00'], ['22:00–08:00', '22:00–08:00'], ['23:00–07:00', '23:00–07:00']];
+  function viewNotify(view) {
+    return mount(view, function (rerender) {
+      var N = ST.notify;
+      N.watch = N.watch || { stock: true, drop: true, eol: false };
+      function ok(inp) { var v = inp.value.trim(); return setErr(inp, !v || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) ? '' : 'Проверьте адрес почты'); }
+      var quiet = select(QUIET.some(function (q) { return q[0] === N.quietHours; }) ? QUIET : QUIET.concat([[N.quietHours, N.quietHours]]), N.quietHours || '', { 'data-k': 'n-quiet', onchange: function (e) { N.quietHours = e.target.value; save('notify'); toast(N.quietHours ? 'Тихие часы: ' + N.quietHours + ' — ночью только срочное' : 'Тихие часы отключены'); rerender(); } });
+      var max = select([['on', 'Привязан: ' + (N.maxBot || '@promkontur_bot')], ['off', 'Не присылать в MAX']], N.maxLinked === false ? 'off' : 'on', { 'data-k': 'n-max', onchange: function (e) { N.maxLinked = e.target.value === 'on'; save('notify'); toast(N.maxLinked ? 'Уведомления в MAX включены' : 'MAX отключён — события придут на почту и SMS'); rerender(); } });
+      var mail = input({ type: 'email', value: N.email || '', autocomplete: 'email', placeholder: 'zakupki@company.ru', 'data-k': 'n-mail', class: 'input mono', onchange: function (e) { if (!ok(e.target)) return; N.email = e.target.value.trim(); save('notify'); toast('Рабочая почта: ' + (N.email || 'не указана')); } });
+      var buh = input({ type: 'email', value: N.buhEmail || '', placeholder: 'buh@company.ru', 'data-k': 'n-buh', class: 'input mono', onchange: function (e) { if (!ok(e.target)) return; N.buhEmail = e.target.value.trim(); save('notify'); toast(N.buhEmail ? 'Копия документов бухгалтерии: ' + N.buhEmail : 'Копия бухгалтерии отключена'); } });
+      var thr = input({ type: 'number', min: '1', max: '50', inputmode: 'numeric', value: String(N.priceWatch), 'data-k': 'n-thr', class: 'input mono', onchange: function (e) { var v = Math.min(50, Math.max(1, num(e.target.value) || 1)); N.priceWatch = v; save('notify'); toast('Порог изменения цены: ' + v + '%'); rerender(); } });
+      function check(key, label) { return h('label', { class: 'pk-cab-check' }, [h('input', { type: 'checkbox', checked: !!N.watch[key], 'data-k': 'n-w-' + key, onchange: function (e) { N.watch[key] = e.target.checked; save('notify'); toast((e.target.checked ? 'Сообщим: ' : 'Не сообщать: ') + label.toLowerCase()); } }), h('span', { text: label })]); }
+      return [
+        card([
+          h('h2', { class: 'pk-cab-h2', text: 'Куда и когда отправлять' }),
+          h('div', { class: 'pk-cab-grid2' }, [
+            field('Тихие часы', quiet, 'Ночью приходят только срочные события: отгрузка и срок оплаты'),
+            field('Мессенджер MAX', max),
+            field('Рабочая почта', mail, 'Счета, УПД и ответы на запросы КП'),
+            field('Копия бухгалтерии', buh, 'Копия закрывающих документов')
+          ]),
+          h('div', { class: 'pk-cab-actions' }, [btn('Сохранить', 'btn-primary', function () {
+            var good = ok(mail) && ok(buh);
+            if (!good) { var bad = $('.pk-invalid', view); if (bad) bad.focus(); toast('Проверьте адреса почты'); return; }
+            N.email = mail.value.trim(); N.buhEmail = buh.value.trim(); N.quietHours = quiet.value; N.maxLinked = max.value === 'on'; save('notify');
+            toast('Настройки уведомлений сохранены');
+          })])
+        ]),
+        card([
+          h('h2', { class: 'pk-cab-h2', text: 'События и каналы' }),
+          table([{ t: 'Событие' }, { t: 'MAX' }, { t: 'Почта' }, { t: 'SMS' }, { t: 'Когда' }], N.rows.map(function (r, i) {
+            function box(ch, name) {
+              var off = ch === 'max' && N.maxLinked === false;
+              return h('input', { type: 'checkbox', class: 'pk-cab-box' + (off ? ' is-off' : ''), checked: !!r[ch], title: off ? 'MAX отключён в настройках выше' : null, 'aria-label': name + ': ' + r.event, 'data-k': 'n-' + ch + '-' + i, onchange: function (e) {
+                r[ch] = e.target.checked; save('notify');
+                var any = r.max && N.maxLinked !== false || r.mail || r.sms;
+                toast((e.target.checked ? name + ' включён' : name + ' выключен') + ': ' + r.event.toLowerCase() + (off && e.target.checked ? ' — но канал MAX сейчас отключён, включите его в «Мессенджер MAX»' : any ? '' : ' — событие не придёт ни в один канал'));
+              } });
+            }
+            return { cells: [h('div', null, [h('span', { class: 'pk-cab-item-name', text: r.event }), h('span', { class: 'pk-cab-muted', text: r.note })]), box('max', 'MAX'), box('mail', 'Почта'), box('sms', 'SMS'), h('span', { class: 'pk-cab-muted', text: r.when })] };
+          }), 'pk-cab-notify')
+        ], 'pk-cab-tablecard'),
+        card([
+          h('h2', { class: 'pk-cab-h2', text: 'Следить за ценами' }),
+          h('p', { class: 'pk-cab-muted', text: 'Сообщим, если цена на позицию из регулярных закупок изменится больше порога или позиция появится в наличии.' }),
+          h('div', { class: 'pk-cab-grid2' }, [field('Порог изменения, %', thr), h('div', { class: 'pk-cab-fact' }, [h('span', { class: 'pk-cab-muted', text: 'Отслеживается позиций' }), h('a', { class: 'pk-cab-link-inline mono', href: BASE + 'kabinet/regulyarnye-zakupki/', text: String(ST.regular.length) })])]),
+          h('div', { class: 'pk-cab-checks' }, [check('stock', 'Появление в наличии'), check('drop', 'Снижение цены'), check('eol', 'Снятие с производства')])
+        ])
+      ];
+    });
+  }
+
+  // ═════════ bus: события других кабинетов ═════════
+  var RERENDER = null, BUS = null;
+  function busEmit(type, payload) { try { if (window.PK_BUS) PK_BUS.emit(type, payload); } catch (e) {} }
+  var VSTATE = { 'Подтверждена': 'Передан поставщику', 'Собрана': 'Собран у поставщика', 'Отгружена': 'Отгружен поставщиком', 'Доставлена': 'Доставлен', 'К расчёту': 'Доставлен', 'Оплачена': 'Доставлен', 'Отклонена': 'Поставщик отказал — подбираем замену' };
+  function busApply(ev) {
+    var p = ev.payload || {};
+    if (ev.type === 'order.created') {
+      if (findOrder(p.order)) return { dup: true };
+      var bySku = {}; Object.keys(SEED.products).forEach(function (k) { bySku[SEED.products[k].sku] = k; });
+      var extra = lsGet('busprod') || {};
+      var lines = (p.items || []).map(function (i) {
+        var slug = bySku[i.sku];
+        if (!slug) { slug = 'bus-' + (i.sku || i.name); extra[slug] = { name: i.name, sku: i.sku || '', price: i.price, img: '', href: '' }; SEED.products[slug] = extra[slug]; }
+        return { slug: slug, qty: +i.qty || 1, price: +i.price || 0, vendor: 'назначается' };
+      });
+      lsSet('busprod', extra);
+      var deferral = /отсроч/i.test(p.payment || '');
+      var o = { id: p.order, date: today(), status: 'Счёт', busNote: 'Счёт выставлен', items: lines, total: lineSum(lines), payment: deferral ? 'Отсрочка 30 дней' : (p.payment || 'Счёт для юрлица'), payDue: deferral ? addDays(today(), 30) : null, author: ev.author && ev.author.name || userName(), address: p.address || '', fromBus: ev.id };
+      ST.orders.unshift(o);
+      ST.documents.unshift({ id: 'СЧ-' + nextNum(ST.documents, /^СЧ-(\d+)/), type: 'Счёт', title: 'Счёт на оплату', order: o.id, date: today(), total: o.total, edo: deferral ? 'Отсрочка' : 'Ожидает оплаты' });
+      save('orders', 'documents');
+      return { order: o.id };
+    }
+    if (ev.type === 'vendor.order.status') {
+      var ord = p.order && findOrder(p.order); if (!ord) return { skipped: true };
+      var map = { 'Отгружена': 'Отгружен', 'Доставлена': 'Доставлен' }, idx = STEPS.indexOf(ord.status);
+      if (map[p.status] && STEPS.indexOf(map[p.status]) > idx) ord.status = map[p.status];
+      if (p.status === 'Отгружена') { ord.shipped = today(); ord.eta = p.eta || addDays(today(), 3); ord.carrier = p.carrier || ''; ord.track = p.track || '—'; ord.busNote = 'В пути' + (p.track ? ' · трек ' + p.track : ''); }
+      else if (p.status === 'Доставлена') { ord.delivered = today(); ord.eta = null; ord.busNote = 'Доставлен'; }
+      else if (VSTATE[p.status]) ord.busNote = VSTATE[p.status] + (p.confirmedShip ? ' · отгрузка ' + fdate(p.confirmedShip) : '');
+      if (p.skus && p.vendor) ord.items.forEach(function (i) { if (p.skus.indexOf(prod(i.slug).sku) >= 0) i.vendor = p.vendor; });
+      save('orders');
+      return { order: ord.id, status: ord.status };
+    }
+    if (ev.type === 'quote.answered') {
+      var q = ST.quotes.filter(function (x) { return x.id === p.id; })[0]; if (!q) return { skipped: true };
+      if (/Принято|Отозван/.test(q.status)) return { skipped: true };
+      q.status = 'КП получено'; q.total = +p.total || q.total || null; q.due = today(); q.validUntil = p.validUntil || addDays(today(), 14); q.engineer = p.by ? 'Ответил ' + p.by : q.engineer;
+      save('quotes');
+      return { quote: q.id };
+    }
+    return { ignored: true };
+  }
+  function busConnect(B) {
+    BUS = B;
+    function run(list) {
+      var n = 0;
+      list.forEach(function (ev) { var r = busApply(ev); B.ack(ev.id, 'buyer', r); if (!r.ignored && !r.skipped && !r.dup) n++; });
+      if (n) { if (RERENDER) RERENDER(); paintCounts(); }
+      return n;
+    }
+    var extra = lsGet('busprod'); if (extra) Object.keys(extra).forEach(function (k) { if (!SEED.products[k]) SEED.products[k] = extra[k]; });
+    var n = run(B.pending('buyer'));
+    if (n) toast('Новых событий из других кабинетов: ' + n);
+    B.on('*', function (ev) { if (ev.to.indexOf('buyer') < 0) return; var k = run([ev]); if (k) toast(B.describe(ev, 'buyer').t); });
+  }
+
   // ═════════ старт ═════════
-  var VIEWS = { orders: viewOrders, order: viewOrder, approvals: viewApprovals, regular: viewRegular, quotes: viewQuotes, documents: viewDocuments, specs: viewSpecs, employees: viewEmployees, requisites: viewRequisites };
+  var VIEWS = { overview: viewOverview, notify: viewNotify, orders: viewOrders, order: viewOrder, approvals: viewApprovals, regular: viewRegular, quotes: viewQuotes, documents: viewDocuments, specs: viewSpecs, employees: viewEmployees, requisites: viewRequisites };
   function start() {
     loadState();
-    if (AUTH) { var e1 = ST.employees.filter(function (e) { return e.you; })[0]; if (e1 && AUTH.name && e1.name.indexOf(AUTH.name) !== 0) { e1.name = AUTH.name; } if (AUTH.company && AUTH.company !== ST.company.name && lsGet('company') === undefined) ST.company.name = AUTH.company; }
+    if (AUTH && !IS_NEW) { var e1 = ST.employees.filter(function (e) { return e.you; })[0]; if (e1 && AUTH.name && e1.name.indexOf(AUTH.name) !== 0) { e1.name = AUTH.name; } }
     var view = $('[data-cab-view]');
     if (view && VIEWS[view.getAttribute('data-cab-view')]) {
-      try { VIEWS[view.getAttribute('data-cab-view')](view); }
+      try { RERENDER = VIEWS[view.getAttribute('data-cab-view')](view); } // bus: RERENDER
       catch (err) { view.textContent = ''; add(view, empty('Не удалось показать раздел: ' + err.message)); if (window.console) console.warn(err); }
-    } else {
-      legacyNav();
-      if (/^kabinet\/?$/.test(PATH)) legacyOverview();
-      if (/^kabinet\/zakaz-pk-10428\/?$/.test(PATH)) legacyOrderPage();
-      if (/^kabinet\/uvedomleniya\/?$/.test(PATH)) legacyNotify();
     }
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('[data-cab-act="export-orders"], [data-cab-act="export-docs"]'); if (!b) return;
+      e.preventDefault(); if (b.getAttribute('data-cab-act') === 'export-orders') exportOrders(); else exportDocs();
+    });
     paintCounts();
-    window.addEventListener('storage', function (e) { if (e.key && e.key.indexOf(PREFIX) === 0) { KEYS.forEach(function (k) { var v = lsGet(k); if (v !== undefined) ST[k] = v; }); paintCounts(); } });
+    syncSession();
+    window.addEventListener('storage', function (e) { if (e.key && e.key.indexOf(PREFIX) === 0) { KEYS.forEach(function (k) { var v = lsGet(k); if (v !== undefined) ST[k] = v; }); paintCounts(); if (RERENDER && !(document.activeElement && /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))) RERENDER(); } });
+    if (window.PK_BUS_READY) PK_BUS_READY(busConnect); // bus
   }
   function boot() {
     if (window.PK_AUTH && typeof PK_AUTH.require === 'function') { AUTH = PK_AUTH.require('buyer'); if (!AUTH) return; }
     else if (window.PK_AUTH && PK_AUTH.get) AUTH = PK_AUTH.get();
     var el = document.getElementById('pk-cab-data');
     if (el) { try { SEED = JSON.parse(el.textContent); } catch (e) { SEED = null; } }
-    if (SEED) { start(); return; }
-    // экраны макета не содержат данных — берём их со страницы раздела «Заказы»
-    fetch(BASE + 'kabinet/zakazy/', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
-      var m = /<script type="application\/json" id="pk-cab-data">([\s\S]*?)<\/script>/.exec(html);
-      if (!m) return;
-      SEED = JSON.parse(m[1]); start();
-    }).catch(function () {});
+    if (SEED) start();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

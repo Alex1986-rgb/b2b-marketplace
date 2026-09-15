@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-15T13:47:21.838Z",
+  "generatedAt": "2026-09-15T17:29:08.953Z",
   "site": "/Users/alexandr/projects/b2b-marketplace/site",
-  "origin": "http://127.0.0.1:56503/b2b-marketplace/",
-  "durationSec": 28,
+  "origin": "http://127.0.0.1:49255/b2b-marketplace/",
+  "durationSec": 31,
   "dataFiles": {
     "products": 24,
     "articles": 15,
@@ -16,21 +16,21 @@
     "brands": 16
   },
   "stats": {
-    "pages": 201,
+    "pages": 202,
     "publicPages": 130,
-    "privatePages": 71,
-    "links": 16779,
+    "privatePages": 72,
+    "links": 17253,
     "cardLinks": 2003,
-    "demoElements": 463,
+    "demoElements": 466,
     "uniqueTargets": 132
   },
   "summary": {
     "errors": 0,
-    "warnings": 5,
+    "warnings": 14,
     "byType": {
       "resource_404": {
         "severity": "warning",
-        "count": 3
+        "count": 12
       },
       "page_not_in_data": {
         "severity": "warning",
@@ -52,7 +52,7 @@
       "target": "katalog/nasosy/grundfos-cr-32-4/",
       "point": [
         195,
-        492
+        494
       ],
       "landed": "katalog/nasosy/grundfos-cr-32-4/",
       "h1": "Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE",
@@ -67,7 +67,7 @@
       "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
       "point": [
         195,
-        425
+        426
       ],
       "landed": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
       "h1": "Как подобрать насос по рабочей точке и не переплатить за напор",
@@ -138,21 +138,84 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/zakaz/pk-10331/",
+      "page": "kabinet-postavshchika/zayavka/zv-4760/",
+      "target": "/b2b-marketplace/assets/vendor.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet-postavshchika/zayavka/zv-4821/",
+      "target": "/b2b-marketplace/assets/vendor.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/zakaz/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/zaprosy-kp/",
+      "page": "kabinet/zakaz/pk-10377/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/ekonomika/",
+      "page": "kabinet/zakaz/pk-10384/",
+      "target": "/b2b-marketplace/assets/cabinet.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/zakaz/pk-10428/",
+      "target": "/b2b-marketplace/assets/cabinet.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/klienty/agroprom-t/",
+      "target": "/b2b-marketplace/assets/admin.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/klienty/energomash-servis/",
+      "target": "/b2b-marketplace/assets/admin.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/klienty/hlebozavod-zarechye/",
+      "target": "/b2b-marketplace/assets/admin.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/klienty/litmash-servis/",
+      "target": "/b2b-marketplace/assets/admin.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/sdelki/sd-2229/",
+      "target": "/b2b-marketplace/assets/admin.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "panel/sdelki/sd-2230/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },

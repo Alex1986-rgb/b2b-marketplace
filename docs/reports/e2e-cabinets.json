@@ -1,0 +1,233 @@
+{
+ "started": "2026-09-15T17:32:57.664Z",
+ "url": "http://localhost:8151/b2b-marketplace/",
+ "login": [
+  {
+   "name": "Главная: видны ссылки входа",
+   "ok": true,
+   "detail": "[{\"t\":\"Кабинет поставщика\",\"href\":\"/b2b-marketplace/kabinet-postavshchika/\",\"y\":8,\"fs\":\"13px\"},{\"t\":\"Войти\",\"href\":\"/b2b-marketplace/vhod/\",\"y\":8,\"fs\":\"13px\"},{\"t\":\"Личный кабинет\",\"href\":\"/b2b-marketplace/kabinet/\",\"y\":3435,\"fs\":\"14px\"},{\"t\":\"Вход и регистрация\",\"href\":\"/b2b-marketplace/vhod/\",\"y\":3296,\"fs\":\"14px\"},{\"t\":\"Кабинет поставщика\",\"href\":\"/b2b-marketplace/kabinet-postavshchika/\",\"y\":3324,\"fs\":\"14px\"}]"
+  },
+  {
+   "name": "Клик «Войти» ведёт на /vhod/",
+   "ok": true,
+   "detail": "http://localhost:8151/b2b-marketplace/vhod/"
+  },
+  {
+   "name": "На /vhod/ есть переключатель ролей",
+   "ok": true,
+   "detail": "{\"h1\":\"Вход в ПРОМКОНТУР\",\"roles\":[\"Закупщик\",\"Поставщик\",\"Оператор\"],\"codeHint\":true}"
+  },
+  {
+   "name": "buyer: пустой телефон → ошибка",
+   "ok": true,
+   "detail": "Введите номер полностью: +7 и 10 цифр"
+  },
+  {
+   "name": "buyer: маска телефона",
+   "ok": true,
+   "detail": "+7 (916) 123-45-67"
+  },
+  {
+   "name": "buyer: код показан на экране",
+   "ok": true,
+   "detail": "Код в MAX: 4 8 1 5 (демо)"
+  },
+  {
+   "name": "buyer: неверный код → ошибка, остаёмся",
+   "ok": true,
+   "detail": "Неверный код. Демо-код: 4815"
+  },
+  {
+   "name": "buyer: код 4815 → свой раздел",
+   "ok": true,
+   "detail": "/b2b-marketplace/kabinet/"
+  },
+  {
+   "name": "buyer: в шапке кнопка пользователя",
+   "ok": true,
+   "detail": "ООО «Метизный завод» / Меню пользователя: Кузнецов Андрей, ООО «Метизный завод»"
+  },
+  {
+   "name": "buyer: открыть чужой раздел kabinet-postavshchika/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fkabinet-postavshchika%2F&role=vendor · Вы вошли: Кузнецов Андрей, ООО «Метизный завод» (закупщик).Войти как поставщикВернуться в свой разделВыйти"
+  },
+  {
+   "name": "buyer: открыть чужой раздел panel/avtopilot/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fpanel%2Favtopilot%2F&role=operator · Вы вошли: Кузнецов Андрей, ООО «Метизный завод» (закупщик).Войти как операторВернуться в свой разделВыйти"
+  },
+  {
+   "name": "vendor: пустой телефон → ошибка",
+   "ok": true,
+   "detail": "Введите номер полностью: +7 и 10 цифр"
+  },
+  {
+   "name": "vendor: маска телефона",
+   "ok": true,
+   "detail": "+7 (916) 123-45-67"
+  },
+  {
+   "name": "vendor: код показан на экране",
+   "ok": true,
+   "detail": "Код в MAX: 4 8 1 5 (демо)"
+  },
+  {
+   "name": "vendor: неверный код → ошибка, остаёмся",
+   "ok": true,
+   "detail": "Неверный код. Демо-код: 4815"
+  },
+  {
+   "name": "vendor: код 4815 → свой раздел",
+   "ok": true,
+   "detail": "/b2b-marketplace/kabinet-postavshchika/"
+  },
+  {
+   "name": "vendor: в шапке кнопка пользователя",
+   "ok": true,
+   "detail": "ГМООО «Гидромаш» / Меню пользователя: Семёнова Ольга, ООО «Гидромаш»"
+  },
+  {
+   "name": "vendor: открыть чужой раздел kabinet/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fkabinet%2F&role=buyer · Вы вошли: Семёнова Ольга, ООО «Гидромаш» (поставщик).Войти как закупщикВернуться в свой разделВыйти"
+  },
+  {
+   "name": "vendor: открыть чужой раздел panel/avtopilot/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fpanel%2Favtopilot%2F&role=operator · Вы вошли: Семёнова Ольга, ООО «Гидромаш» (поставщик).Войти как операторВернуться в свой разделВыйти"
+  },
+  {
+   "name": "operator: пустой телефон → ошибка",
+   "ok": true,
+   "detail": "Введите номер полностью: +7 и 10 цифр"
+  },
+  {
+   "name": "operator: маска телефона",
+   "ok": true,
+   "detail": "+7 (916) 123-45-67"
+  },
+  {
+   "name": "operator: код показан на экране",
+   "ok": true,
+   "detail": "Код в MAX: 4 8 1 5 (демо)"
+  },
+  {
+   "name": "operator: неверный код → ошибка, остаёмся",
+   "ok": true,
+   "detail": "Неверный код. Демо-код: 4815"
+  },
+  {
+   "name": "operator: код 4815 → свой раздел",
+   "ok": true,
+   "detail": "/b2b-marketplace/panel/avtopilot/"
+  },
+  {
+   "name": "operator: в шапке кнопка пользователя",
+   "ok": true,
+   "detail": "ПАПетров А. · админ / Меню пользователя: Петров А., ПРОМКОНТУР"
+  },
+  {
+   "name": "operator: открыть чужой раздел kabinet/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fkabinet%2F&role=buyer · Вы вошли: Петров А., ПРОМКОНТУР (оператор).Войти как закупщикВернуться в свой разделВыйти"
+  },
+  {
+   "name": "operator: открыть чужой раздел kabinet-postavshchika/ → вход с пояснением",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fkabinet-postavshchika%2F&role=vendor · Вы вошли: Петров А., ПРОМКОНТУР (оператор).Войти как поставщикВернуться в свой разделВыйти"
+  },
+  {
+   "name": "Меню пользователя открывается",
+   "ok": true,
+   "detail": "[\"Личный кабинет\",\"Заказы\",\"Уведомления\",\"Сменить роль (демо)\",\"Сбросить демо-данные\",\"Выйти\"]"
+  },
+  {
+   "name": "«Сменить роль» → /vhod/ с текущей сессией",
+   "ok": true,
+   "detail": "{\"url\":\"/b2b-marketplace/vhod/?role=buyer&switch=1\",\"h1\":\"Вход в ПРОМКОНТУР\",\"already\":\"Вы вошли: Кузнецов Андрей, ООО «Метизный завод» (закупщик).ПродолжитьВыйти\",\"role\":\"Закупщик\"}"
+  },
+  {
+   "name": "«Сменить роль»: при выборе другой роли видно, как переключиться",
+   "ok": true,
+   "detail": "Вы вошли: Кузнецов Андрей, ООО «Метизный завод» (закупщик).Войти как поставщикВернуться в свой разделВыйти"
+  },
+  {
+   "name": "«Войти в демо без кода» за поставщика → кабинет поставщика",
+   "ok": true,
+   "detail": "/b2b-marketplace/kabinet-postavshchika/"
+  },
+  {
+   "name": "Выход из панели → главная, сессия удалена",
+   "ok": true,
+   "detail": "{\"url\":\"/b2b-marketplace/\",\"session\":null}"
+  },
+  {
+   "name": "Без входа /kabinet/dokumenty/ → /vhod/?next=…",
+   "ok": true,
+   "detail": "/b2b-marketplace/vhod/?next=%2Fb2b-marketplace%2Fkabinet%2Fdokumenty%2F&role=buyer"
+  },
+  {
+   "name": "После входа возврат на исходную страницу (next)",
+   "ok": true,
+   "detail": "/b2b-marketplace/kabinet/dokumenty/ · h1 входа: Вход в ПРОМКОНТУР"
+  },
+  {
+   "name": "Регистрация: форма найдена",
+   "ok": true,
+   "detail": "[{\"ph\":\"10 или 12 цифр\",\"label\":\"ИНН компании или ИП\",\"v\":\"\"},{\"ph\":\"+7 (___) ___-__-__\",\"label\":\"Телефон\",\"v\":\"\"},{\"ph\":\"Имя, должность\",\"label\":\"Контактное лицо\",\"v\":\"\"},{\"ph\":\"zakupki@\",\"label\":\"Рабочая почта\",\"v\":\"\"},{\"ph\":\"\",\"label\":\"Что нужно в первую очередь\",\"v\":\"on\"},{\"ph\":\"\",\"label\":\"Отсрочка платежа\",\"v\":\"on\"}]"
+  },
+  {
+   "name": "Регистрация: пустая форма → ошибки полей",
+   "ok": true,
+   "detail": "ИНН — 10 или 12 цифр | Введите телефон полностью: +7 и 10 цифр | Укажите контактное лицо | Проверьте адрес почты"
+  },
+  {
+   "name": "Регистрация → кабинет закупщика с новой компанией (по ИНН из демо-справочника)",
+   "ok": true,
+   "detail": "{\"url\":\"/b2b-marketplace/kabinet/\",\"name\":\"Иванов Пётр\",\"company\":\"ООО «Северный механический завод»\",\"header\":\"ООО «Северный механический завод»\"}"
+  },
+  {
+   "name": "Регистрация: в кабинете отражено новое имя/компания (не демо «Метизный завод»)",
+   "ok": true,
+   "detail": "в тексте кабинета «Иванов»: true"
+  },
+  {
+   "name": "390: «Войти» видна без открытия меню",
+   "ok": true,
+   "detail": "[{\"t\":\"Войти\",\"aria\":null,\"vis\":false,\"inDrawer\":false},{\"t\":\"Меню\",\"aria\":\"Меню\",\"vis\":true,\"inDrawer\":false},{\"t\":\"Войти\",\"aria\":null,\"vis\":true,\"inDrawer\":false},{\"t\":\"Вход и регистрация\",\"aria\":null,\"vis\":true,\"inDrawer\":false},{\"t\":\"×\",\"aria\":\"Закрыть меню\",\"vis\":false,\"inDrawer\":true},{\"t\":\"Войти\",\"aria\":null,\"vis\":false,\"inDrawer\":true}]"
+  },
+  {
+   "name": "Точки входа в кабинеты на витрине (для справки)",
+   "ok": true,
+   "detail": ": [\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\",\"Войти → /b2b-marketplace/vhod/\",\"Личный кабинет → /b2b-marketplace/kabinet/\",\"Вход и регистрация → /b2b-marketplace/vhod/\",\"Панель оператора (демо) → /b2b-marketplace/vhod/?role=operator\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\"] ;; postavshchikam/: [\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\",\"Войти → /b2b-marketplace/vhod/\",\"Личный кабинет → /b2b-marketplace/kabinet/\",\"Вход и регистрация → /b2b-marketplace/vhod/\",\"Панель оператора (демо) → /b2b-marketplace/vhod/?role=operator\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\"] ;; o-servise/: [\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\",\"Войти → /b2b-marketplace/vhod/\",\"Личный кабинет → /b2b-marketplace/kabinet/\",\"Вход и регистрация → /b2b-marketplace/vhod/\",\"Панель оператора (демо) → /b2b-marketplace/vhod/?role=operator\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Кабинет поставщика → /b2b-marketplace/kabinet-postavshchika/\",\"Войти → /b2b-marketplace/vhod/\"]"
+  }
+ ],
+ "pages": [],
+ "links404": [],
+ "jsErrors": [],
+ "scenarios": [],
+ "visual": [],
+ "a11y": [],
+ "summary": {
+  "pages": 0,
+  "pageLoads": 0,
+  "elements": 0,
+  "clicked": 0,
+  "dead": 0,
+  "stubToasts": 0,
+  "inputNoReaction": 0,
+  "covered": 0,
+  "nav404": 0,
+  "links404": 0,
+  "jsErrors": 0,
+  "badResources": 0,
+  "loginFailed": 0,
+  "scenariosFailed": 0,
+  "scenarios": 0,
+  "visualIssues": 0,
+  "a11yIssues": 0,
+  "byResult": {}
+ },
+ "finished": "2026-09-15T17:33:40.937Z"
+}

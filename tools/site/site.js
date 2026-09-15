@@ -485,6 +485,16 @@
       b.removeAttribute('data-demo');
       b.addEventListener('click', function () { track.scrollBy({ left: +b.getAttribute('data-dir') * track.clientWidth * 0.9, behavior: 'smooth' }); });
     });
+    // стрелки неактивны на краях ленты
+    function edges() {
+      if (!track) return;
+      var max = track.scrollWidth - track.clientWidth - 2;
+      $$('[data-dir]', wrap).forEach(function (b) {
+        var off = +b.getAttribute('data-dir') < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+        b.disabled = off; b.setAttribute('aria-disabled', off ? 'true' : 'false'); b.style.opacity = off ? '.45' : '';
+      });
+    }
+    if (track) { track.addEventListener('scroll', edges, { passive: true }); window.addEventListener('resize', edges); edges(); }
   });
 
   // ── вкладки админки: якоря ──

@@ -1,8 +1,8 @@
 {
  "label": null,
- "date": "2026-09-15T13:45:18.990Z",
+ "date": "2026-09-15T17:29:09.389Z",
  "site": "site",
- "total": 202,
+ "total": 203,
  "public": {
   "pages": 131,
   "h1_not_1": 0,
@@ -15,7 +15,7 @@
   "empty": 0,
   "dup_h1": 1,
   "weak": 0,
-  "self_links": 50,
+  "self_links": 51,
   "ilinks": 72,
   "pages_with_ilinks": 36,
   "out_avg": 38.9,
@@ -46,7 +46,7 @@
   "ilinks_per_page": 0.57
  },
  "closed": {
-  "pages": 71,
+  "pages": 72,
   "h1_not_1": 0,
   "h1_zero": 0,
   "h1_multi": 0,
@@ -57,10 +57,10 @@
   "empty": 0,
   "dup_h1": 0,
   "weak": 0,
-  "self_links": 29,
+  "self_links": 32,
   "ilinks": 0,
   "pages_with_ilinks": 0,
-  "out_avg": 36.5,
+  "out_avg": 21.8,
   "in_avg": 3.5,
   "orphans": [
    "kabinet-postavshchika/nastrojki/",
@@ -98,6 +98,7 @@
    "kabinet/zakaz/pk-10390/",
    "kabinet/zakaz/pk-10411/",
    "kabinet/zakaz/pk-10425/",
+   "kabinet/zakaz/pk-10428/",
    "kabinet/zakaz/pk-10432/",
    "kabinet/zakaz/pk-10436/",
    "kabinet/zakazy/",
@@ -327,7 +328,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 202
   },
   "blog/": {
    "key": "blog/",
@@ -412,7 +413,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/": {
    "key": "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/",
@@ -486,7 +487,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 31,
-   "inAll": 35
+   "inAll": 33
   },
   "blog/chugun-nerzhavejka-ili-plastik/": {
    "key": "blog/chugun-nerzhavejka-ili-plastik/",
@@ -562,7 +563,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 25,
-   "inAll": 29
+   "inAll": 27
   },
   "blog/kak-podobrat-nasos-po-rabochej-tochke/": {
    "key": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
@@ -715,7 +716,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 26,
-   "inAll": 30
+   "inAll": 28
   },
   "blog/kak-vybrat-elektrodvigatel/": {
    "key": "blog/kak-vybrat-elektrodvigatel/",
@@ -865,7 +866,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 45,
-   "inAll": 49
+   "inAll": 47
   },
   "blog/motor-reduktor-ili-reduktor-s-dvigatelem/": {
    "key": "blog/motor-reduktor-ili-reduktor-s-dvigatelem/",
@@ -939,7 +940,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 28,
-   "inAll": 32
+   "inAll": 30
   },
   "blog/plastinchatyj-ili-kozhuhotrubnyj-teploobmennik/": {
    "key": "blog/plastinchatyj-ili-kozhuhotrubnyj-teploobmennik/",
@@ -1162,7 +1163,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 42,
-   "inAll": 46
+   "inAll": 44
   },
   "blog/priznaki-iznosa-podshipnika/": {
    "key": "blog/priznaki-iznosa-podshipnika/",
@@ -1311,7 +1312,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 24,
-   "inAll": 28
+   "inAll": 26
   },
   "blog/torcevoe-uplotnenie-priznaki-iznosa/": {
    "key": "blog/torcevoe-uplotnenie-priznaki-iznosa/",
@@ -1387,7 +1388,7 @@
     "h2 подобрать оборудование"
    ],
    "inPublic": 43,
-   "inAll": 47
+   "inAll": 45
   },
   "blog/umyagchenie-ili-obratnyj-osmos-dlya-kotelnoj/": {
    "key": "blog/umyagchenie-ili-obratnyj-osmos-dlya-kotelnoj/",
@@ -1679,7 +1680,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 163
   },
   "garantiya/": {
    "key": "garantiya/",
@@ -1749,7 +1750,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "kabinet-postavshchika/": {
    "key": "kabinet-postavshchika/",
@@ -1763,53 +1764,34 @@
    "out": [
     "",
     "postavshchikam/usloviya/",
-    "katalog/nasosy/cnp-nis-80-65-160/",
-    "blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/",
-    "blog/torcevoe-uplotnenie-priznaki-iznosa/",
-    "blog/motor-reduktor-ili-reduktor-s-dvigatelem/",
-    "blog/skolko-vozduha-nuzhno-cehu/",
-    "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/",
-    "blog/chugun-nerzhavejka-ili-plastik/",
-    "blog/kak-prodlit-resurs-podshipnika/",
-    "blog/postavka-oborudovaniya-iz-kitaya/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
+    "kabinet-postavshchika/zayavki/",
+    "kabinet-postavshchika/prajs/",
+    "kabinet-postavshchika/vygruzka/",
+    "kabinet-postavshchika/raschety/",
+    "kabinet-postavshchika/nastrojki/",
+    "kabinet-postavshchika/zayavka/zv-4823/",
+    "kabinet-postavshchika/zayavka/zv-4822/",
+    "kabinet-postavshchika/zayavka/zv-4821/",
+    "kabinet-postavshchika/zayavka/zv-4818/",
+    "kabinet-postavshchika/zayavka/zv-4816/",
+    "kabinet-postavshchika/zayavka/zv-4809/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 2,
    "ilinks": 0,
    "headings": [
-    "h1 заявки и выгрузка прайса",
+    "h1 сводка",
+    "h2 последние заявки",
     "h2 состояние выгрузки",
-    "h3 прайс и остатки",
-    "h2 кабинет поставщика: заявки, прайс, расчёты",
-    "h3 статусы заявки в кабинете",
-    "h2 работа в кабинете",
-    "h2 статьи по теме"
+    "h3 фид",
+    "h3 приём заявок",
+    "h2 быстрые действия",
+    "h2 прайс: требует внимания"
    ],
    "inPublic": 126,
-   "inAll": 201
+   "inAll": 172
   },
   "kabinet-postavshchika/nastrojki/": {
    "key": "kabinet-postavshchika/nastrojki/",
@@ -1828,29 +1810,8 @@
     "kabinet-postavshchika/prajs/",
     "kabinet-postavshchika/vygruzka/",
     "kabinet-postavshchika/raschety/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 1,
@@ -1862,7 +1823,7 @@
     "h2 уведомления"
    ],
    "inPublic": 0,
-   "inAll": 16
+   "inAll": 17
   },
   "kabinet-postavshchika/prajs/": {
    "key": "kabinet-postavshchika/prajs/",
@@ -1904,29 +1865,8 @@
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
     "katalog/privod/nord-sk-02/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 1,
@@ -1935,7 +1875,7 @@
     "h1 прайс и остатки"
    ],
    "inPublic": 0,
-   "inAll": 16
+   "inAll": 17
   },
   "kabinet-postavshchika/raschety/": {
    "key": "kabinet-postavshchika/raschety/",
@@ -1958,29 +1898,8 @@
     "kabinet-postavshchika/zayavka/zv-4790/",
     "kabinet-postavshchika/zayavka/zv-4771/",
     "kabinet-postavshchika/zayavka/zv-4760/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 1,
@@ -1992,7 +1911,7 @@
     "h2 акты сверки"
    ],
    "inPublic": 0,
-   "inAll": 16
+   "inAll": 17
   },
   "kabinet-postavshchika/vygruzka/": {
    "key": "kabinet-postavshchika/vygruzka/",
@@ -2011,29 +1930,8 @@
     "kabinet-postavshchika/prajs/",
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 1,
@@ -2046,7 +1944,7 @@
     "h2 ошибки строк в последнем обмене"
    ],
    "inPublic": 0,
-   "inAll": 16
+   "inAll": 17
   },
   "kabinet-postavshchika/zayavka/zv-4760/": {
    "key": "kabinet-postavshchika/zayavka/zv-4760/",
@@ -2067,29 +1965,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2123,29 +2000,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2178,29 +2034,8 @@
     "kabinet-postavshchika/vygruzka/",
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2234,29 +2069,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/zapchasti/vibroopora-m12/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2289,29 +2103,8 @@
     "kabinet-postavshchika/vygruzka/",
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2345,29 +2138,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/nasosy/cnp-nis-80-65-160/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2401,29 +2173,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/elektrika/innovert-vr-15/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2436,7 +2187,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavka/zv-4816/": {
    "key": "kabinet-postavshchika/zayavka/zv-4816/",
@@ -2457,29 +2208,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2492,7 +2222,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavka/zv-4818/": {
    "key": "kabinet-postavshchika/zayavka/zv-4818/",
@@ -2512,29 +2242,8 @@
     "kabinet-postavshchika/vygruzka/",
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2547,7 +2256,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavka/zv-4821/": {
    "key": "kabinet-postavshchika/zayavka/zv-4821/",
@@ -2568,29 +2277,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/nasosy/cnp-cdlf-42-30/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2603,7 +2291,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavka/zv-4822/": {
    "key": "kabinet-postavshchika/zayavka/zv-4822/",
@@ -2625,29 +2313,8 @@
     "kabinet-postavshchika/nastrojki/",
     "katalog/podshipniki/skf-6205-2rs/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2660,7 +2327,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavka/zv-4823/": {
    "key": "kabinet-postavshchika/zayavka/zv-4823/",
@@ -2681,29 +2348,8 @@
     "kabinet-postavshchika/raschety/",
     "kabinet-postavshchika/nastrojki/",
     "katalog/nasosy/grundfos-cr-32-4/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 0,
@@ -2716,7 +2362,7 @@
     "h2 документы"
    ],
    "inPublic": 0,
-   "inAll": 1
+   "inAll": 2
   },
   "kabinet-postavshchika/zayavki/": {
    "key": "kabinet-postavshchika/zayavki/",
@@ -2747,29 +2393,8 @@
     "kabinet-postavshchika/zayavka/zv-4784/",
     "kabinet-postavshchika/zayavka/zv-4771/",
     "kabinet-postavshchika/zayavka/zv-4760/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
     "kontakty/",
-    "postavshchikam/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "politika-konfidencialnosti/"
    ],
    "weak": [],
    "self": 1,
@@ -2778,7 +2403,7 @@
     "h1 заявки"
    ],
    "inPublic": 0,
-   "inAll": 16
+   "inAll": 17
   },
   "kabinet/": {
    "key": "kabinet/",
@@ -2793,6 +2418,7 @@
     "kabinet-postavshchika/",
     "postavshchikam/",
     "o-servise/",
+    "vhod/",
     "chat/",
     "",
     "napravleniya/",
@@ -2806,11 +2432,19 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "kabinet/zakazy/",
+    "kabinet/soglasovanie/",
+    "kabinet/regulyarnye-zakupki/",
+    "kabinet/zaprosy-kp/",
+    "kabinet/dokumenty/",
+    "kabinet/specifikacii/",
+    "kabinet/sotrudniki/",
+    "kabinet/rekvizity/",
+    "kabinet/uvedomleniya/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
     "napravleniya/chastotniki-i-avtomatika/",
     "garantiya/",
-    "vhod/",
     "proizvoditeli/",
     "kontakty/",
     "postavshchikam/usloviya/",
@@ -2822,13 +2456,10 @@
    "self": 2,
    "ilinks": 0,
    "headings": [
-    "h1 заказы и запросы",
-    "h2 автозакупка регулярных позиций",
-    "h3 согласование заявок",
-    "h3 что вы закупаете регулярно"
+    "h1 кабинет закупщика"
    ],
    "inPublic": 126,
-   "inAll": 201
+   "inAll": 154
   },
   "kabinet/dokumenty/": {
    "key": "kabinet/dokumenty/",
@@ -2884,7 +2515,7 @@
     "h1 счета и упд"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/regulyarnye-zakupki/": {
    "key": "kabinet/regulyarnye-zakupki/",
@@ -2940,7 +2571,7 @@
     "h1 регулярные закупки"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/rekvizity/": {
    "key": "kabinet/rekvizity/",
@@ -2996,7 +2627,7 @@
     "h1 реквизиты и адреса"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/soglasovanie/": {
    "key": "kabinet/soglasovanie/",
@@ -3052,7 +2683,7 @@
     "h1 согласование заявок"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/sotrudniki/": {
    "key": "kabinet/sotrudniki/",
@@ -3108,7 +2739,7 @@
     "h1 сотрудники и роли"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/specifikacii/": {
    "key": "kabinet/specifikacii/",
@@ -3164,7 +2795,7 @@
     "h1 спецификации"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/uvedomleniya/": {
    "key": "kabinet/uvedomleniya/",
@@ -3179,7 +2810,7 @@
     "kabinet-postavshchika/",
     "postavshchikam/",
     "o-servise/",
-    "kabinet/",
+    "vhod/",
     "chat/",
     "",
     "napravleniya/",
@@ -3193,11 +2824,19 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
+    "kabinet/",
+    "kabinet/zakazy/",
+    "kabinet/soglasovanie/",
+    "kabinet/regulyarnye-zakupki/",
+    "kabinet/zaprosy-kp/",
+    "kabinet/dokumenty/",
+    "kabinet/specifikacii/",
+    "kabinet/sotrudniki/",
+    "kabinet/rekvizity/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
     "napravleniya/chastotniki-i-avtomatika/",
     "garantiya/",
-    "vhod/",
     "proizvoditeli/",
     "kontakty/",
     "postavshchikam/usloviya/",
@@ -3206,15 +2845,13 @@
     "karta-sajta/"
    ],
    "weak": [],
-   "self": 0,
+   "self": 1,
    "ilinks": 0,
    "headings": [
-    "h1 уведомления",
-    "h2 куда отправлять",
-    "h3 следить за ценами"
+    "h1 уведомления"
    ],
    "inPublic": 0,
-   "inAll": 20
+   "inAll": 22
   },
   "kabinet/zakaz-pk-10428/": {
    "key": "kabinet/zakaz-pk-10428/",
@@ -3229,7 +2866,7 @@
     "kabinet-postavshchika/",
     "postavshchikam/",
     "o-servise/",
-    "kabinet/",
+    "vhod/",
     "chat/",
     "",
     "napravleniya/",
@@ -3243,19 +2880,12 @@
     "proekty/",
     "blog/",
     "oplata-i-dostavka/",
-    "blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/",
-    "blog/torcevoe-uplotnenie-priznaki-iznosa/",
-    "blog/motor-reduktor-ili-reduktor-s-dvigatelem/",
-    "blog/skolko-vozduha-nuzhno-cehu/",
-    "blog/chastotnyj-preobrazovatel-kogda-okupaetsya/",
-    "blog/chugun-nerzhavejka-ili-plastik/",
-    "blog/kak-prodlit-resurs-podshipnika/",
-    "blog/postavka-oborudovaniya-iz-kitaya/",
+    "kabinet/zakaz/pk-10428/",
     "napravleniya/kompressory/",
     "napravleniya/podshipniki-i-komplektuyushchie/",
     "napravleniya/chastotniki-i-avtomatika/",
     "garantiya/",
-    "vhod/",
+    "kabinet/",
     "proizvoditeli/",
     "kontakty/",
     "postavshchikam/usloviya/",
@@ -3267,12 +2897,7 @@
    "self": 0,
    "ilinks": 0,
    "headings": [
-    "h1 в пути, доставка 18 сентября",
-    "h2 документы по заказу",
-    "h2 статус заказа, отгрузка и документы",
-    "h3 шаги заказа и сроки",
-    "h2 заказ и отгрузка",
-    "h2 статьи по теме"
+    "h1 заказ пк-10428"
    ],
    "inPublic": 0,
    "inAll": 1
@@ -3847,6 +3472,63 @@
    "inPublic": 0,
    "inAll": 0
   },
+  "kabinet/zakaz/pk-10428/": {
+   "key": "kabinet/zakaz/pk-10428/",
+   "closed": true,
+   "noindex": true,
+   "h1": 1,
+   "gaps": [],
+   "inChrome": [],
+   "empty": 0,
+   "dupH1": [],
+   "out": [
+    "kabinet-postavshchika/",
+    "postavshchikam/",
+    "o-servise/",
+    "vhod/",
+    "chat/",
+    "",
+    "napravleniya/",
+    "poisk-po-foto/",
+    "katalog/kompressory/kaishan-lgcy-75/",
+    "sravnenie/",
+    "korzina/",
+    "napravleniya/nasosy/",
+    "proizvoditeli/grundfos/",
+    "zayavka-spiskom/",
+    "proekty/",
+    "blog/",
+    "oplata-i-dostavka/",
+    "kabinet/",
+    "kabinet/zakazy/",
+    "kabinet/soglasovanie/",
+    "kabinet/regulyarnye-zakupki/",
+    "kabinet/zaprosy-kp/",
+    "kabinet/dokumenty/",
+    "kabinet/specifikacii/",
+    "kabinet/sotrudniki/",
+    "kabinet/rekvizity/",
+    "kabinet/uvedomleniya/",
+    "napravleniya/kompressory/",
+    "napravleniya/podshipniki-i-komplektuyushchie/",
+    "napravleniya/chastotniki-i-avtomatika/",
+    "garantiya/",
+    "proizvoditeli/",
+    "kontakty/",
+    "postavshchikam/usloviya/",
+    "politika-konfidencialnosti/",
+    "usloviya-ispolzovaniya/",
+    "karta-sajta/"
+   ],
+   "weak": [],
+   "self": 0,
+   "ilinks": 0,
+   "headings": [
+    "h1 заказ пк-10428"
+   ],
+   "inPublic": 0,
+   "inAll": 1
+  },
   "kabinet/zakaz/pk-10432/": {
    "key": "kabinet/zakaz/pk-10432/",
    "closed": true,
@@ -4015,7 +3697,7 @@
     "h1 заказы"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "kabinet/zaprosy-kp/": {
    "key": "kabinet/zaprosy-kp/",
@@ -4071,7 +3753,7 @@
     "h1 запросы кп"
    ],
    "inPublic": 0,
-   "inAll": 19
+   "inAll": 22
   },
   "karta-sajta/": {
    "key": "karta-sajta/",
@@ -4263,7 +3945,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "katalog/armatura/": {
    "key": "katalog/armatura/",
@@ -4708,7 +4390,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 156
+   "inAll": 157
   },
   "katalog/nasosy/": {
    "key": "katalog/nasosy/",
@@ -5026,7 +4708,7 @@
     "h2 смотрите также"
    ],
    "inPublic": 13,
-   "inAll": 16
+   "inAll": 15
   },
   "katalog/nasosy/ebara-3m-65-160/": {
    "key": "katalog/nasosy/ebara-3m-65-160/",
@@ -6577,7 +6259,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 202
   },
   "korzina/": {
    "key": "korzina/",
@@ -6629,7 +6311,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 126,
-   "inAll": 201
+   "inAll": 155
   },
   "napravleniya/": {
    "key": "napravleniya/",
@@ -6788,7 +6470,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "napravleniya/3d-pechat-dlya-proizvodstva/": {
    "key": "napravleniya/3d-pechat-dlya-proizvodstva/",
@@ -6932,7 +6614,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "napravleniya/dizel-generatory/": {
    "key": "napravleniya/dizel-generatory/",
@@ -7553,7 +7235,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "napravleniya/konvejernoe-oborudovanie/": {
    "key": "napravleniya/konvejernoe-oborudovanie/",
@@ -7848,7 +7530,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "napravleniya/oborudovanie-dlya-metalloobrabotki/": {
    "key": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
@@ -8329,7 +8011,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "napravleniya/pozharnoe-oborudovanie/": {
    "key": "napravleniya/pozharnoe-oborudovanie/",
@@ -9977,7 +9659,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "oplata-i-dostavka/": {
    "key": "oplata-i-dostavka/",
@@ -10047,7 +9729,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "panel/admin/": {
    "key": "panel/admin/",
@@ -10075,31 +9757,8 @@
     "katalog/elektrika/innovert-vr-15/",
     "katalog/kompressory/kaishan-lgcy-75/",
     "katalog/privod/nord-sk-02/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10152,27 +9811,8 @@
     "chat/",
     "kabinet/zakaz-pk-10428/",
     "vhod/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10211,34 +9851,11 @@
     "panel/ekonomika/",
     "panel/prava/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
-   "self": 1,
+   "self": 2,
    "ilinks": 0,
    "headings": [
     "h1 сделки",
@@ -10271,31 +9888,8 @@
     "panel/oshibki/",
     "panel/prava/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10331,31 +9925,8 @@
     "panel/ekonomika/",
     "panel/prava/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10395,28 +9966,8 @@
     "zayavka-spiskom/",
     "katalog/kompressory/kaishan-lgcy-75/",
     "korzina/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10461,31 +10012,7 @@
     "panel/klienty/specmontazh/",
     "panel/klienty/gidroseti/",
     "panel/klienty/hlebozavod-zarechye/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -10523,30 +10050,7 @@
     "panel/sdelki/sd-2224/",
     "katalog/nasosy/grundfos-cr-20-5/",
     "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10590,30 +10094,7 @@
     "panel/sdelki/sd-2185/",
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10653,30 +10134,7 @@
     "panel/postavshchiki/",
     "panel/zhurnal/",
     "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10718,30 +10176,7 @@
     "chat/",
     "katalog/nasosy/grundfos-cr-32-2/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10785,30 +10220,7 @@
     "panel/sdelki/sd-2219/",
     "katalog/podshipniki/skf-6205-2rs/",
     "katalog/elektrika/innovert-vr-15/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10850,30 +10262,7 @@
     "chat/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10919,30 +10308,7 @@
     "katalog/nasosy/grundfos-cr-32-4/",
     "katalog/podshipniki/skf-6205-2rs/",
     "katalog/privod/nord-sk-02/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -10979,31 +10345,8 @@
     "panel/ekonomika/",
     "panel/prava/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -11039,31 +10382,8 @@
     "panel/ekonomika/",
     "panel/prava/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -11098,31 +10418,7 @@
     "panel/admin/",
     "panel/klienty/",
     "panel/zhurnal/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -11154,31 +10450,8 @@
     "panel/oshibki/",
     "panel/ekonomika/",
     "panel/admin/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "panel/zhurnal/",
+    "kontakty/"
    ],
    "weak": [],
    "self": 1,
@@ -11216,31 +10489,7 @@
     "katalog/zapchasti/manzheta-45x65x10-nbr/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "panel/klienty/energomash-servis/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11280,31 +10529,7 @@
     "panel/postavshchiki/",
     "panel/zhurnal/",
     "katalog/elektrika/innovert-vr-15/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11344,31 +10569,7 @@
     "panel/postavshchiki/",
     "panel/zhurnal/",
     "katalog/podshipniki/skf-6205-2rs/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11409,31 +10610,7 @@
     "panel/zhurnal/",
     "katalog/podshipniki/skf-6205-2rs/",
     "panel/klienty/teplomash/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11474,31 +10651,7 @@
     "panel/zhurnal/",
     "katalog/nasosy/grundfos-cr-32-4/",
     "panel/klienty/teplomash/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11541,31 +10694,7 @@
     "katalog/zapchasti/komplekt-prokladok-dn65/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
     "panel/klienty/teplomash/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11606,31 +10735,7 @@
     "panel/zhurnal/",
     "katalog/elektrika/innovert-vr-15/",
     "panel/klienty/litmash-servis/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11672,31 +10777,7 @@
     "katalog/kompressory/kaishan-lgcy-75/",
     "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
     "panel/klienty/agroprom-t/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11740,31 +10821,7 @@
     "katalog/armatura/zadvizhka-dn100-pn16-chugun/",
     "katalog/armatura/klapan-obratnyj-dn65-pn16/",
     "katalog/zapchasti/komplekt-prokladok-dn65/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11805,31 +10862,7 @@
     "panel/zhurnal/",
     "katalog/privod/nord-sk-02/",
     "panel/klienty/litmash-servis/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11872,31 +10905,7 @@
     "katalog/nasosy/cnp-cdlf-32-40/",
     "katalog/nasosy/wilo-helix-v-3604/",
     "panel/klienty/energomash-servis/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
    "self": 0,
@@ -11934,40 +10943,16 @@
     "panel/admin/",
     "panel/klienty/",
     "panel/postavshchiki/",
-    "chat/",
-    "napravleniya/",
-    "napravleniya/nasosy/",
-    "napravleniya/kompressory/",
-    "napravleniya/podshipniki-i-komplektuyushchie/",
-    "napravleniya/chastotniki-i-avtomatika/",
-    "sravnenie/",
-    "oplata-i-dostavka/",
-    "garantiya/",
-    "proekty/",
-    "kabinet/",
-    "korzina/",
-    "o-servise/",
-    "vhod/",
-    "proizvoditeli/",
-    "kontakty/",
-    "postavshchikam/usloviya/",
-    "postavshchikam/",
-    "kabinet-postavshchika/",
-    "blog/",
-    "poisk-po-foto/",
-    "zayavka-spiskom/",
-    "politika-konfidencialnosti/",
-    "usloviya-ispolzovaniya/",
-    "karta-sajta/"
+    "kontakty/"
    ],
    "weak": [],
-   "self": 1,
+   "self": 2,
    "ilinks": 0,
    "headings": [
     "h1 журнал изменений"
    ],
    "inPublic": 0,
-   "inAll": 20
+   "inAll": 29
   },
   "poisk-po-foto/": {
    "key": "poisk-po-foto/",
@@ -12038,7 +11023,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 155
   },
   "poisk/": {
    "key": "poisk/",
@@ -12168,7 +11153,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 172
   },
   "postavshchikam/": {
    "key": "postavshchikam/",
@@ -12241,7 +11226,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "postavshchikam/usloviya/": {
    "key": "postavshchikam/usloviya/",
@@ -12310,7 +11295,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 172
   },
   "proekty/": {
    "key": "proekty/",
@@ -12385,7 +11370,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "proizvoditeli/": {
    "key": "proizvoditeli/",
@@ -12476,7 +11461,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "proizvoditeli/cnp/": {
    "key": "proizvoditeli/cnp/",
@@ -12851,7 +11836,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 153
+   "inAll": 154
   },
   "proizvoditeli/innovert/": {
    "key": "proizvoditeli/innovert/",
@@ -13711,7 +12696,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 126,
-   "inAll": 201
+   "inAll": 154
   },
   "usloviya-ispolzovaniya/": {
    "key": "usloviya-ispolzovaniya/",
@@ -13768,7 +12753,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 154
   },
   "vhod/": {
    "key": "vhod/",
@@ -13809,7 +12794,7 @@
     "karta-sajta/"
    ],
    "weak": [],
-   "self": 2,
+   "self": 3,
    "ilinks": 0,
    "headings": [
     "h1 вход для закупщика",
@@ -13821,7 +12806,7 @@
     "h2 вопросы и ответы"
    ],
    "inPublic": 126,
-   "inAll": 201
+   "inAll": 155
   },
   "zayavka-spiskom/": {
    "key": "zayavka-spiskom/",
@@ -13891,7 +12876,7 @@
     "h3 аналог из китая: на что смотреть"
    ],
    "inPublic": 125,
-   "inAll": 201
+   "inAll": 156
   },
   "404.html": {
    "key": "404.html",

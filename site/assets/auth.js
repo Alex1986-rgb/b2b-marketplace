@@ -6,6 +6,24 @@
   var KEY = 'pk:session';
   var DEMO_CODE = '4815';
   var DEMO_NOTE = 'Демо-режим: данные хранятся только в этом браузере';
+  // та же подпись, что в поповере «Что нового» (bus.js NOTE) — одна строка в меню пользователя
+  var BUS_NOTE = 'Демо: события передаются между кабинетами только в этом браузере';
+  // демо-справочник ИНН (контрольные цифры верные) → название и адрес для карточки «Найдено по ИНН»
+  var INN_DIR = {
+    '5003123458': ['ООО «Энергомаш-Сервис»', 'Московская обл., г. Видное · действующая, с 2011 года'],
+    '7707123458': ['ООО «Северный механический завод»', 'г. Москва · действующая, с 2008 года'],
+    '6671234569': ['АО «Уральская котельная компания»', 'г. Екатеринбург · действующая, с 2004 года'],
+    '5260123451': ['ООО «Волжский насосный комбинат»', 'г. Нижний Новгород · действующая, с 2014 года'],
+    '7801234564': ['ООО «ТеплоСтройМонтаж»', 'г. Санкт-Петербург · действующая, с 2017 года'],
+    '771234567859': ['ИП Соколов Дмитрий Игоревич', 'г. Москва · действующий, с 2019 года']
+  };
+  function innValid(v) {
+    var d = String(v || '').split('').map(Number);
+    function sum(c) { var t = 0; for (var i = 0; i < c.length; i++) t += c[i] * d[i]; return t % 11 % 10; }
+    if (d.length === 10) return sum([2, 4, 10, 3, 5, 9, 4, 6, 8]) === d[9];
+    if (d.length === 12) return sum([7, 2, 4, 10, 3, 5, 9, 4, 6, 8]) === d[10] && sum([3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8]) === d[11];
+    return false;
+  }
 
   var PROFILES = {
     buyer: { role: 'buyer', name: 'Кузнецов Андрей', company: 'ООО «Метизный завод»', phone: '+7 910 000-00-14', initials: 'КА', title: 'закупщик' },
@@ -135,7 +153,7 @@
       a.appendChild(ic); a.appendChild(el('span', null, i.text));
       m.appendChild(a);
     });
-    m.appendChild(el('div', 'pk-umenu-note', DEMO_NOTE));
+    m.appendChild(el('div', 'pk-umenu-note', BUS_NOTE));
     m.addEventListener('click', function (e) {
       var b = e.target.closest('[data-act]');
       if (!b) return;
@@ -189,9 +207,17 @@
     b.setAttribute('aria-haspopup', 'menu'); b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', 'pk-umenu');
     b.setAttribute('aria-label', 'Меню пользователя: ' + s.name + ', ' + s.company);
     if (kind === 'ops') b.appendChild(el('span', 'pk-ubtn-av', s.initials || initialsOf(s.name)));
+    else if (kind === 'icon') {
+      // мобильная строка иконок витрины: иконка как у «Корзины», подпись под ней (на телефоне скрыта)
+      var box = el('span', 'pk-uacc-ico'), ai = el('span', 'ico i-ui-account'); ai.setAttribute('aria-hidden', 'true');
+      box.appendChild(ai); box.appendChild(el('span', 'pk-uacc-dot')); b.appendChild(box);
+      b.appendChild(el('span', 'pk-uacc-lbl', 'Кабинет'));
+    }
     else { var ic = el('span', 'ico ico-16 i-ui-account'); ic.setAttribute('aria-hidden', 'true'); b.appendChild(ic); }
-    b.appendChild(el('span', 'pk-ubtn-name', kind === 'ops' ? (s.role === 'operator' ? s.name + ' · ' + s.title : s.company) : (s.role === 'buyer' ? s.company : s.name)));
-    b.appendChild(el('span', 'pk-ubtn-caret'));
+    if (kind !== 'icon') {
+      b.appendChild(el('span', 'pk-ubtn-name', kind === 'ops' ? (s.role === 'operator' ? s.name + ' · ' + s.title : s.company) : (s.role === 'buyer' ? s.company : s.name)));
+      b.appendChild(el('span', 'pk-ubtn-caret'));
+    }
     b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); if (menu && menuBtn === b) closeMenu(); else openMenu(b, e.detail === 0); });
     b.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); openMenu(b, true); } });
     return b;
@@ -201,7 +227,10 @@
   var slots = null;
   function findSlots() {
     if (slots) return slots;
-    slots = { store: [], ops: [], drawer: [] };
+    slots = { store: [], ops: [], drawer: [], row: null };
+    // витрина: строка иконок «Чат · Запросы КП · Сравнение · Корзина» — сюда на телефоне ставим вход/аккаунт
+    var cart = $$('header a').filter(function (a) { return $('.i-ui-cart', a); })[0];
+    if (cart) slots.row = cart.parentElement;
     // витрина: ссылка с иконкой аккаунта в верхней тёмной полосе («Войти» или имя компании)
     $$('a').forEach(function (a) {
       if (!$('.i-ui-account', a) || a.closest('main, [role="main"], footer, .pk-umenu')) return;
@@ -229,6 +258,20 @@
     if (!document.body) return;
     var s = get(), S = findSlots();
     closeMenu();
+    document.documentElement.classList.toggle('pk-authed', !!s);
+    if (S.row) {
+      // вход/аккаунт в строке иконок (видна на телефоне без бургера; на широком экране — в верхней полосе)
+      var acc;
+      if (s) acc = userButton(s, 'icon');
+      else {
+        acc = el('a'); acc.href = BASE + 'vhod/';
+        var box = el('span', 'pk-uacc-ico'), ai = el('span', 'ico i-ui-account'); ai.setAttribute('aria-hidden', 'true');
+        box.appendChild(ai); acc.appendChild(box); acc.appendChild(el('span', 'pk-uacc-lbl', 'Войти'));
+      }
+      acc.classList.add('pk-uacc');
+      var prev = $('.pk-uacc', S.row);
+      if (prev) prev.replaceWith(acc); else S.row.appendChild(acc);
+    }
     S.store.forEach(function (x) {
       var old = $('.pk-ubtn', x.wrap); if (old) old.remove();
       if (s) { x.a.hidden = true; x.wrap.appendChild(userButton(s, 'store')); }
@@ -290,19 +333,52 @@
     var phoneField = phoneIn.closest('.field') || phoneIn.parentNode;
     var codeField = codeIn.closest('.field') || codeIn.parentNode;
 
-    // переключатель ролей
+    // H1 общий; роль выбирается карточками «Демо-доступ» или переключателем внутри формы входа
+    if (h1) h1.textContent = 'Вход в ПРОМКОНТУР';
+    var lead = h1 && h1.nextElementSibling && h1.nextElementSibling.tagName === 'P' ? h1.nextElementSibling : null;
+    if (lead) lead.textContent = 'Три демо-кабинета: закупщик, поставщик и оператор площадки. Войдите одним нажатием или по номеру телефона.';
+
+    // «Демо-доступ»: основной путь — вход в любую роль одним нажатием
+    var DEMO_CARDS = [
+      ['buyer', 'i-ui-account', 'Кабинет закупщика', 'ООО «Метизный завод»', 'Заказы, согласование заявок цеха, регулярные закупки, запросы КП, счета и УПД, сотрудники.'],
+      ['vendor', 'i-channel-vendor', 'Кабинет поставщика', 'ООО «Гидромаш»', 'Новые заявки и отгрузка, редактор прайса, выгрузка фида, расчёты и настройки.'],
+      ['operator', 'i-op-admin', 'Панель оператора', 'Петров А., админ', 'CRM-сделки, автопилот, правила наценки, поставщики, права и журнал изменений.']
+    ];
+    var demo = el('section', 'pk-demo-access'); demo.setAttribute('aria-labelledby', 'pk-demo-h');
+    var dh = el('h2', null, 'Демо-доступ: войти одним нажатием'); dh.id = 'pk-demo-h'; demo.appendChild(dh);
+    demo.appendChild(el('p', 'pk-demo-sub', 'Выберите роль — откроется её кабинет. Или войдите по телефону ниже: любой номер, код из «сообщения» — ' + DEMO_CODE + '.'));
+    var grid = el('div', 'pk-demo-grid');
+    DEMO_CARDS.forEach(function (c) {
+      var box = el('div', 'pk-demo-card'); box.setAttribute('data-role', c[0]);
+      var top = el('div', 'pk-demo-top'); var ic = el('span', 'ico ico-28 ' + c[1]); ic.setAttribute('aria-hidden', 'true'); top.appendChild(ic);
+      var tt = el('div'); tt.appendChild(el('strong', null, c[2])); tt.appendChild(el('span', null, c[3])); top.appendChild(tt); box.appendChild(top);
+      box.appendChild(el('p', null, c[4]));
+      var go = el('button', 'btn btn-primary', 'Войти как ' + ROLE_LABEL[c[0]].toLowerCase()); go.type = 'button';
+      go.addEventListener('click', function (e) { e.stopPropagation(); login(c[0], ''); location.href = target(c[0]); });
+      box.appendChild(go); grid.appendChild(box);
+    });
+    demo.appendChild(grid);
+    // единственная демо-подпись на странице
+    demo.appendChild(el('p', 'pk-demo-foot', DEMO_NOTE + '. «Сбросить демо-данные» — в меню пользователя.'));
+    (card.closest('[style*="grid"]') || card).insertAdjacentElement('beforebegin', demo);
+
+    var already = el('div', 'pk-already'); already.hidden = true; already.setAttribute('role', 'status');
+    demo.insertAdjacentElement('beforebegin', already);
+
+    // форма «Вход по телефону»: переключатель роли внутри карточки
+    var cardH = $('h2, h3, [role="heading"]', card);
+    if (cardH) { var hn = cardH.lastChild; if (hn && hn.nodeType === 3) hn.textContent = 'Вход по телефону'; else cardH.appendChild(document.createTextNode('Вход по телефону')); }
     var pills = el('div', 'pk-roles'); pills.setAttribute('role', 'radiogroup'); pills.setAttribute('aria-label', 'Роль для входа');
     ['buyer', 'vendor', 'operator'].forEach(function (r) {
       var b = el('button', 'pk-role', ROLE_LABEL[r]); b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('data-role', r);
       pills.appendChild(b);
     });
-    var note = el('p', 'pk-demo-note', DEMO_NOTE + '. Код для входа показывается на экране.');
-    var anchor = h1 || card;
-    anchor.insertAdjacentElement('beforebegin', pills);
-    (h1 && h1.nextElementSibling ? h1.nextElementSibling : anchor).insertAdjacentElement('afterend', note);
-
-    var already = el('div', 'pk-already'); already.hidden = true;
-    note.insertAdjacentElement('afterend', already);
+    var roleField = el('div', 'field pk-rolefield');
+    var rl = el('span', 'pk-rolefield-l', 'Роль'); rl.id = 'pk-role-l'; pills.removeAttribute('aria-label'); pills.setAttribute('aria-labelledby', 'pk-role-l');
+    roleField.appendChild(rl); roleField.appendChild(pills);
+    phoneField.insertAdjacentElement('beforebegin', roleField);
+    // «Войти через MAX» и «по почте» в демо не работают — в карточке остаётся одна форма
+    $$('button', card).forEach(function (b) { if (b !== loginBtn && /через MAX|почте и/i.test(txt(b))) { b.hidden = true; var hr = b.previousElementSibling; if (hr && hr.classList.contains('hr')) hr.style.display = 'none'; } });
 
     function setRole(r) {
       role = r;
@@ -310,8 +386,8 @@
         var on = b.getAttribute('data-role') === r;
         b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
       });
-      if (h1) h1.textContent = 'Вход для ' + { buyer: 'закупщика', vendor: 'поставщика', operator: 'оператора' }[r];
-            renderAlready();
+      $$('.pk-demo-card', grid).forEach(function (c) { c.classList.toggle('on', !!q.get('role') && c.getAttribute('data-role') === r); });
+      renderAlready();
     }
     pills.addEventListener('click', function (e) { var b = e.target.closest('.pk-role'); if (b) setRole(b.getAttribute('data-role')); });
     pills.addEventListener('keydown', function (e) {
@@ -326,10 +402,19 @@
       if (!s) { already.hidden = true; return; }
       already.hidden = false;
       already.appendChild(el('span', null, 'Вы вошли: ' + s.name + ', ' + s.company + ' (' + ROLE_LABEL[s.role].toLowerCase() + ').'));
-      var go = el('a', 'btn btn-secondary', s.role === role ? 'Продолжить' : 'Вернуться в свой раздел'); go.href = s.role === role ? target(s.role) : BASE + HOME[s.role];
+      if (s.role === role) {
+        var cont = el('a', 'btn btn-primary', 'Продолжить'); cont.href = target(s.role);
+        already.appendChild(cont);
+      } else {
+        // смена роли без повторного ввода телефона
+        var sw = el('button', 'btn btn-primary', 'Войти как ' + ROLE_LABEL[role].toLowerCase()); sw.type = 'button';
+        sw.addEventListener('click', function () { finish(login(role, s.phone)); });
+        var back = el('a', 'btn btn-secondary', 'Вернуться в свой раздел'); back.href = BASE + HOME[s.role];
+        already.appendChild(sw); already.appendChild(back);
+      }
       var out = el('button', 'btn btn-secondary', 'Выйти'); out.type = 'button';
       out.addEventListener('click', function () { logout(); renderAlready(); });
-      already.appendChild(go); already.appendChild(out);
+      already.appendChild(out);
     }
 
     // сообщения об ошибках
@@ -406,25 +491,70 @@
     again.addEventListener('click', function (e) { e.stopPropagation(); step(false); err(codeIn, ''); phoneIn.focus(); });
     quick.addEventListener('click', function (e) { e.stopPropagation(); finish(login(role, digits(phoneIn.value).length === 10 ? phoneIn.value : '')); });
 
-    // регистрация компании → сессия закупщика
+    // регистрация компании → сессия закупщика (новый кабинет: inn, company, newCompany)
     if (regBtn) {
       regBtn.removeAttribute('data-demo'); regBtn.type = 'button';
       var rcard = regBtn.closest('.blueprint') || regBtn.parentNode;
+      var rins = $$('input', rcard);
+      var innIn = rins.filter(function (i) { return /цифр/.test(i.placeholder || ''); })[0];
+      var person = rins.filter(function (i) { return /имя/i.test(i.placeholder || ''); })[0];
+      var mail = rins.filter(function (i) { return /@/.test(i.placeholder || ''); })[0];
+      // карточка «Найдено по ИНН» из макета: заполняем по введённому ИНН
+      var found = $$('div', rcard).filter(function (d) { return /^Найдено по ИНН/.test(txt(d.firstElementChild)); })[0];
+      var fName = null, fAddr = null, fHead = null, fRest = [];
+      if (found) {
+        fHead = found.firstElementChild;
+        var kids = Array.prototype.slice.call(found.children);
+        fName = kids[1] || null; fAddr = kids[2] || null; fRest = kids.slice(3);
+      }
+      function lookup(n) { return INN_DIR[n] || null; }
+      function paintFound() {
+        if (!found) return;
+        var n = innIn ? innIn.value.replace(/\D/g, '') : '';
+        if (!((n.length === 10 || n.length === 12) && innValid(n))) { found.style.display = 'none'; return; }
+        var hit = lookup(n);
+        found.style.display = '';
+        if (fHead) { var t = fHead.lastChild; var head = hit ? 'Найдено по ИНН · демо-справочник' : 'Нет в демо-справочнике'; if (t && t.nodeType === 3) t.textContent = head; else fHead.appendChild(document.createTextNode(head)); }
+        if (fName) fName.textContent = hit ? hit[0] : 'Компания (ИНН ' + n + ')';
+        if (fAddr) fAddr.textContent = hit ? hit[1] : 'Реквизиты подтянутся из ЕГРЮЛ после подключения сервиса';
+        fRest.forEach(function (x) { if (x.getAttribute('data-pk-d') == null) x.setAttribute('data-pk-d', x.style.display); x.style.display = hit ? x.getAttribute('data-pk-d') : 'none'; });
+      }
+      if (innIn) {
+        innIn.value = ''; innIn.removeAttribute('value');
+        innIn.inputMode = 'numeric'; innIn.maxLength = 12; innIn.autocomplete = 'off';
+        innIn.id = innIn.id || 'pk-reg-inn';
+        var il = $('label', innIn.closest('.field') || innIn.parentNode); if (il) il.setAttribute('for', innIn.id);
+        innIn.addEventListener('input', function () { innIn.value = innIn.value.replace(/\D/g, '').slice(0, 12); err(innIn, ''); paintFound(); });
+      }
+      // телефон обязателен: поле перед «Контактным лицом»
+      var regPhone = el('input', 'input mono'); regPhone.type = 'tel'; regPhone.id = 'pk-reg-phone'; regPhone.setAttribute('data-pk', 'reg-phone');
+      regPhone.autocomplete = 'tel'; regPhone.inputMode = 'tel'; regPhone.maxLength = 18; regPhone.placeholder = '+7 (___) ___-__-__';
+      var rpf = el('div', 'field'); var rpl = el('label', null, 'Телефон'); rpl.setAttribute('for', regPhone.id);
+      rpf.appendChild(rpl); rpf.appendChild(regPhone);
+      var personField = person && (person.closest('.field') || person.parentNode);
+      if (personField) personField.insertAdjacentElement('beforebegin', rpf); else regBtn.insertAdjacentElement('beforebegin', rpf);
+      regPhone.addEventListener('focus', function () { if (!regPhone.value) regPhone.value = '+7 '; });
+      regPhone.addEventListener('blur', function () { if (!digits(regPhone.value).length) regPhone.value = ''; });
+      regPhone.addEventListener('input', function () { regPhone.value = formatPhone(regPhone.value); err(regPhone, ''); });
+      [person, mail].forEach(function (i) { if (i) { i.id = i.id || 'pk-reg-' + (i === person ? 'person' : 'mail'); var l = $('label', i.closest('.field') || i.parentNode); if (l) l.setAttribute('for', i.id); i.addEventListener('input', function () { err(i, ''); }); } });
+      paintFound();
+
       regBtn.addEventListener('click', function (e) {
         e.preventDefault(); e.stopPropagation();
-        var ins = $$('input', rcard);
-        var inn = ins.filter(function (i) { return /цифр/.test(i.placeholder || ''); })[0];
-        var person = ins.filter(function (i) { return /имя/i.test(i.placeholder || ''); })[0];
-        var mail = ins.filter(function (i) { return /@/.test(i.placeholder || ''); })[0];
-        var ok = true;
-        if (inn) { var n = inn.value.replace(/\D/g, ''); if (n.length !== 10 && n.length !== 12) { err(inn, 'ИНН — 10 или 12 цифр'); ok = false; } else err(inn, ''); }
+        var ok = true, n = innIn ? innIn.value.replace(/\D/g, '') : '';
+        if (innIn) {
+          if (n.length !== 10 && n.length !== 12) { err(innIn, 'ИНН — 10 или 12 цифр'); ok = false; }
+          else if (!innValid(n)) { err(innIn, 'Контрольная цифра не сходится — проверьте ИНН'); ok = false; }
+          else err(innIn, '');
+        }
+        if (digits(regPhone.value).length !== 10) { err(regPhone, 'Введите телефон полностью: +7 и 10 цифр'); ok = false; } else err(regPhone, '');
         if (person) { if (txt({ textContent: person.value }).length < 2) { err(person, 'Укажите контактное лицо'); ok = false; } else err(person, ''); }
         if (mail) { if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.value.trim())) { err(mail, 'Проверьте адрес почты'); ok = false; } else err(mail, ''); }
         if (!ok) { var bad = $('.pk-invalid', rcard); if (bad) bad.focus(); return; }
-        // название компании — из карточки проверки по ИНН
-        var company = $$('div', rcard).map(txt).filter(function (t) { return /^(ООО|АО|ПАО|ЗАО|ИП)\s/.test(t) && t.length < 80; })[0] || 'Новая компания';
-        var name = person.value.split(',')[0].trim();
-        var s = login('buyer', digits(phoneIn.value).length === 10 ? phoneIn.value : '', { name: name, company: company, email: mail ? mail.value.trim() : '', inn: inn ? inn.value.replace(/\D/g, '') : '' });
+        var hit = lookup(n);
+        var company = hit ? hit[0] : 'Компания (ИНН ' + n + ')';
+        var name = person ? person.value.split(',')[0].trim() : 'Новый пользователь';
+        var s = login('buyer', regPhone.value, { name: name, company: company, email: mail ? mail.value.trim() : '', inn: n, newCompany: true });
         regBtn.textContent = 'Компания зарегистрирована · переходим в кабинет';
         setTimeout(function () { location.href = q.get('role') && q.get('role') !== 'buyer' ? BASE + HOME.buyer : target(s.role); }, 400);
       });

@@ -172,6 +172,7 @@
   function rollback(rec) {
     var rolled = LS.get('rolled', {});
     if (rolled[rec.id]) { toast('Эта правка уже откачена.'); return; }
+    if (rec.macro || !rec.undo) { toast('Эту запись откатить нельзя: ' + (rec.macro ? 'она из истории до демо.' : 'это действие, а не настройка.')); return; }
     var u = rec.undo;
     if (u) {
       if (u.k === 'st') { if (u.prev === undefined) { delete ST[u.key]; LS.set('st', ST); } else stSet(u.key, u.prev); }
@@ -179,8 +180,10 @@
     }
     rolled[rec.id] = true; LS.set('rolled', rolled);
     log(rec.section, 'Откат: ' + rec.what, rec.to, rec.from, null);
-    toast('Откачено: ' + rec.what + ' — ' + rec.to + ' → ' + rec.from + (rec.macro ? ' (демо: в макете значение не хранится)' : '') + '.');
+    toast('Откачено: ' + rec.what + ' — ' + rec.to + ' → ' + rec.from + '.');
   }
+  // откат для состояния в одном ключе localStorage: копия объекта с прежним значением поля
+  function undoField(key, obj, field, prevVal) { var o = JSON.parse(JSON.stringify(obj || {})); if (prevVal === undefined) delete o[field]; else o[field] = prevVal; return { k: 'ls', key: key, prev: o }; }
   function sectionTag(s) { return /Цены|CRM|Права/.test(s) ? 'tag-accent' : /Источники|Контент|Логистика/.test(s) ? 'tag-outline' : 'tag-neutral'; }
   function journalRow(r, onRoll) {
     var tr = el('tr', { 'data-sec': r.section, 'data-who': r.who });
@@ -188,6 +191,8 @@
     var cell = tr.lastChild;
     if (/^Откат: /.test(r.what)) cell.innerHTML = '<span class="mono pk-adm-muted">откат</span>';
     else if (r.rolled) cell.innerHTML = '<span class="tag tag-neutral">откачено</span>';
+    else if (r.macro) cell.innerHTML = '<span class="mono pk-adm-muted" title="Запись из истории до демо: значение хранится на сервере, откат — в рабочей версии">история</span>';
+    else if (!r.undo) cell.innerHTML = '<span class="mono pk-adm-muted" title="Действие, а не настройка (звонок, синхронизация, документ): отменяется новым действием в разделе">без отката</span>';
     else { var b = btn('Откатить'); b.setAttribute('aria-label', 'Откатить: ' + r.what); b.addEventListener('click', function () { onRoll(r); }); cell.appendChild(b); }
     return tr;
   }
@@ -195,24 +200,38 @@
   // ═════════ шапка панели: пункты меню и активный раздел ═════════
   function chrome() {
     var nav = $('header nav[aria-label]');
-    if (nav) {
+    if (nav && !nav.hasAttribute('data-adm-nav')) {
+      nav.setAttribute('data-adm-nav', '1');
       var links = $$('a', nav);
       var active = links.filter(function (a) { return /background/.test(a.getAttribute('style') || ''); })[0];
       var idle = links.filter(function (a) { return a !== active; })[0];
       var activeStyle = active ? active.getAttribute('style') : '', idleStyle = idle ? idle.getAttribute('style') : '';
       var activeIco = active && $('.ico', active) ? $('.ico', active).getAttribute('style') : '', idleIco = idle && $('.ico', idle) ? $('.ico', idle).getAttribute('style') : '';
-      // «Клиенты», «Поставщики», «Журнал» — в подменю рабочих списков под шапкой: в шапке 12 пунктов не помещаются в одну строку
-      var map = { 'panel/sdelki/': 'panel/crm/', 'panel/klienty/': 'panel/klienty/', 'panel/klient/': 'panel/klient/' };
+      // «Карточка клиента» — один клиент; в шапке не нужна: она открывается из подменю «Клиенты»
+      links.forEach(function (a) { if (a.getAttribute('href') === BASE + 'panel/klient/') a.remove(); });
+      // «Админка»: подпись у шестерёнки видна всегда (класс для CSS, подпись — в title/aria-label на случай ужатия)
+      links.forEach(function (a) { if (a.getAttribute('href') === BASE + 'panel/admin/') { a.classList.add('pk-adm-nav-admin'); a.setAttribute('title', 'Админка'); } });
+      // ссылка на витрину — как в кабинете поставщика
+      if (!$('.pk-adm-nav-home', nav)) {
+        var home = el('a', { href: BASE, class: 'pk-adm-nav-home', style: idleStyle }, '<span class="ico ico-16 i-ui-home" style="' + esc(idleIco) + '"></span>Витрина');
+        nav.appendChild(home);
+      }
+      // «Клиенты», «Поставщики», «Журнал» — в подменю рабочих списков под шапкой; сделки и клиенты — раздел CRM
+      var map = { 'panel/sdelki/': 'panel/crm/', 'panel/klienty/': 'panel/crm/', 'panel/klient/': 'panel/crm/' };
       var cur = Object.keys(map).filter(function (p) { return PATH.indexOf(p) === 0; }).map(function (p) { return map[p]; })[0] || PATH.replace(/^(panel\/[^/]+\/).*$/, '$1');
       $$('a', nav).forEach(function (a) {
+        if (a.classList.contains('pk-adm-nav-home')) return;
         var is = a.getAttribute('href') === BASE + cur;
         a.setAttribute('style', is ? activeStyle : idleStyle);
         var ic = $('.ico', a); if (ic) ic.setAttribute('style', is ? activeIco : idleIco);
         if (is) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
       });
+      // лента разделов на узком экране: текущий раздел в поле зрения
+      var curA = $('a[aria-current]', nav);
+      if (curA) setTimeout(function () { if (nav.scrollWidth > nav.clientWidth + 2) nav.scrollLeft = Math.max(0, curA.offsetLeft - nav.offsetLeft - 16); }, 0);
     }
-    // блоки целиком не должны уводить на товар: data-href оставляем только строкам таблиц
-    $$(M + ' .blueprint[data-href]').forEach(function (b) { if ($('h2, h3, table, button', b)) b.removeAttribute('data-href'); });
+    // блоки целиком не должны уводить на товар: data-href снимаем вместе с курсором-рукой
+    $$(M + ' .blueprint[data-href]').forEach(function (b) { if ($('h2, h3, table, button', b)) { b.removeAttribute('data-href'); b.style.cursor = ''; } });
     // таблицы макета — горизонтальный скролл на узком экране
     $$(M + ' table.table').forEach(function (t) { var p = t.parentElement; if (p && !p.classList.contains('pk-adm-scroll')) p.classList.add('pk-adm-scrollx'); });
     // подменю рабочих списков на экранах макета
@@ -221,10 +240,33 @@
       var inner = screen.firstElementChild;
       var sub = el('nav', { class: 'pk-adm-sub pk-adm-sub-macro', 'aria-label': 'Рабочие списки панели' });
       [['panel/crm/', 'Сделки', 'op-crm'], ['panel/klienty/', 'Клиенты', 'op-client'], ['panel/postavshchiki/', 'Поставщики', 'tier-sync'], ['panel/zhurnal/', 'Журнал изменений', 'doc-generic']].forEach(function (x) {
-        var a = el('a', { href: BASE + x[0] }, '<span class="ico ico-16 i-' + x[2] + '"></span>' + x[1]); if (PATH === x[0]) a.setAttribute('aria-current', 'page'); sub.appendChild(a);
+        var a = el('a', { href: BASE + x[0] }, '<span class="ico ico-16 i-' + x[2] + '"></span>' + x[1]); if (PATH === x[0] || (x[0] === 'panel/klienty/' && PATH === 'panel/klient/')) a.setAttribute('aria-current', 'page'); sub.appendChild(a);
       });
       if (inner) inner.insertBefore(sub, inner.firstChild);
     }
+  }
+  // после оживления экрана: ни одного ложно-кликабельного блока или строки
+  function tidyClickables() {
+    var screen = $('[data-screen-label]'); if (!screen) return;
+    // строка таблицы макета со ссылкой на товар: ссылка — на названии, строка не кликается (с клавиатуры строка недостижима)
+    $$('tr[data-href]', screen).forEach(function (tr) {
+      if (tr.closest('.pk-kb')) return;
+      var href = tr.getAttribute('data-href'), first = tr.cells[0];
+      var hasSame = $$('a', tr).some(function (x) { return x.getAttribute('href') === href; });
+      if (first && !hasSame && !$('a, button, input, select, textarea', first)) {
+        var target = first.firstChild && first.firstChild.nodeType === 3 && first.childNodes.length > 1 ? first.firstChild : null;
+        var a = el('a', { href: href, class: 'pk-adm-rowlink' });
+        if (target) { first.insertBefore(a, target); a.appendChild(target); }
+        else { while (first.firstChild) a.appendChild(first.firstChild); first.appendChild(a); }
+      }
+      tr.removeAttribute('data-href'); tr.style.cursor = '';
+    });
+    // курсор-рука без действия (блоки, строки, подписи из макета)
+    $$('[style*="cursor"]', screen).forEach(function (e) {
+      if (!/pointer/.test(e.style.cursor)) return;
+      if (e.matches('a, button, label, summary, input, select, textarea, [data-href], [role="button"], [tabindex], .pk-kb-card')) return;
+      e.style.cursor = '';
+    });
   }
 
   // ═════════ общие поля экранов: тумблеры, поля и списки сохраняются и пишут журнал ═════════
@@ -241,11 +283,13 @@
   function sectionFor(c) { return (typeof SECTION_BY_PAGE[PATH] === 'string' && PATH !== 'panel/admin/') ? SECTION_BY_PAGE[PATH] : adminSection(c); }
   function valueOf(c) { return c.type === 'checkbox' || c.type === 'radio' ? c.checked : c.value; }
   function show(c, v) { return c.type === 'checkbox' ? (v ? 'вкл' : 'выкл') : c.type === 'radio' ? (v ? 'выбрано' : '—') : String(v); }
+  // слово целиком: «ключ», но не «от-ключ-ения» / «под-ключ-ение»
+  var SECRET_RE = /(^|[^а-яё])(ключ|токен|пароль)|api key|secret/i;
   function persistControls() {
     var main = $('[data-screen-label]'); if (!main) return;
     // секреты (API-ключи, токены) не сохраняем и не показываем открытым текстом
-    $$('input', main).forEach(function (c) { if (/ключ|токен|пароль/i.test(controlLabel(c)) && c.type === 'text') { c.type = 'password'; c.autocomplete = 'off'; } });
-    var ctrls = $$('input, select, textarea', main).filter(function (c) { return !c.closest('[data-adm-skip]') && !c.hasAttribute('data-adm-skip') && c.type !== 'search' && c.type !== 'password' && !/ключ|токен|логин|пароль|api key|secret/i.test(controlLabel(c) + ' ' + (c.placeholder || '')); });
+    $$('input', main).forEach(function (c) { if (SECRET_RE.test(controlLabel(c)) && c.type === 'text') { c.type = 'password'; c.autocomplete = 'off'; } });
+    var ctrls = $$('input, select, textarea', main).filter(function (c) { return !c.closest('[data-adm-skip]') && !c.hasAttribute('data-adm-skip') && c.type !== 'search' && c.type !== 'password' && !SECRET_RE.test(controlLabel(c) + ' ' + (c.placeholder || '')) && !/(^|[^а-яё])логин/i.test(controlLabel(c)); });
     ctrls.forEach(function (c, i) {
       var label = controlLabel(c);
       var key = PATH + '#' + hash(headingOf(c) + '|' + label + '|' + i);
@@ -332,12 +376,24 @@
       if (st.closed) { card.remove(); return; }
       if (st.col != null && COLS[st.col] && card.parentElement !== COLS[st.col].el) COLS[st.col].el.appendChild(card);
     });
+    // заголовок колонки: сколько карточек видно и на какую сумму; строкой ниже — всего в этапе (остальные сделки — вне демо-доски)
+    COLS.forEach(function (c) {
+      c.total = el('div', { class: 'pk-kb-total' }); c.counter.parentElement.insertAdjacentElement('afterend', c.total);
+      c.empty = el('div', { class: 'pk-kb-empty', hidden: '' }); c.el.appendChild(c.empty);
+    });
     function recalc() {
+      var ch = sel && sel.selectedIndex > 0 ? sel.value : '';
       COLS.forEach(function (c) {
-        var cards = $$('.pk-kb-card', c.el);
-        var sum = cards.reduce(function (a, card) { var d = dealById(card.getAttribute('data-deal')); return a + (d ? d.sum || 0 : 0); }, 0);
-        c.counter.textContent = (c.baseCount + cards.length) + ' · ' + short(Math.max(0, c.baseSum + sum));
-        c.counter.setAttribute('aria-label', (c.baseCount + cards.length) + ' сделок на ' + money(Math.max(0, c.baseSum + sum)));
+        var cards = $$('.pk-kb-card', c.el), shown = cards.filter(function (x) { return !x.hidden; });
+        var sumOf = function (list) { return list.reduce(function (a, card) { var d = dealById(card.getAttribute('data-deal')); return a + (d ? d.sum || 0 : 0); }, 0); };
+        var total = c.baseCount + cards.length, totalSum = Math.max(0, c.baseSum + sumOf(cards)), shownSum = sumOf(shown);
+        c.counter.textContent = shown.length + ' · ' + short(shownSum);
+        c.counter.setAttribute('aria-label', 'На доске ' + shown.length + ' из ' + total + ' сделок, ' + money(shownSum));
+        c.total.textContent = (ch ? 'канал «' + ch + '» · ' : 'последние ' + shown.length + ' · ') + 'всего в этапе ' + total + ' на ' + short(totalSum);
+        c.total.title = 'Всего сделок в этапе: ' + total + ' на ' + money(totalSum) + '. На доске показаны последние; полный список — в «Клиентах» и выгрузке CRM.';
+        if (c.el.lastElementChild !== c.empty) c.el.appendChild(c.empty);
+        c.empty.hidden = shown.length > 0;
+        c.empty.textContent = ch ? 'Сделок по каналу «' + ch + '» нет' : 'Сделок нет';
       });
     }
     function move(card, to, how) {
@@ -408,6 +464,7 @@
     function applyFilter() {
       var ch = sel && sel.selectedIndex > 0 ? sel.value : '';
       $$('.pk-kb-card', board).forEach(function (card) { var d = dealById(card.getAttribute('data-deal')); card.hidden = !!ch && d && d.channel !== ch; });
+      recalc();
     }
     if (sel) { sel.setAttribute('data-adm-skip', '1'); sel.setAttribute('aria-label', 'Фильтр по каналу'); sel.value = LS.get('crmFilter', sel.value) || sel.options[0].value; sel.addEventListener('change', function () { LS.set('crmFilter', sel.value); applyFilter(); var n = $$('.pk-kb-card', board).filter(function (c) { return !c.hidden; }).length; live('Показано сделок: ' + n); }); }
 
@@ -429,8 +486,9 @@
         ] });
       function setOwner(id2, o) {
         var prev = dealState(id2).owner || d.owner; if (prev === o) { toast('Ответственный уже: ' + o); return; }
+        var before2 = JSON.parse(JSON.stringify(DEAL_ST));
         saveDeal(id2, { owner: o, notes: (dealState(id2).notes || []).concat([{ time: hm(), who: whoShort(), action: o === 'робот' ? 'передал роботу' : 'взял себе', text: o === 'робот' ? 'Сделка возвращена автопилоту в границах торга.' : 'Оператор взял сделку, робот больше не пишет клиенту без подтверждения.' }]) });
-        log('CRM', 'Ответственный · «' + d.title + '»', prev, o, null);
+        log('CRM', 'Ответственный · «' + d.title + '»', prev, o, { k: 'ls', key: 'deals', prev: before2 });
         var tg = $('[data-owner]', box); if (tg) { tg.textContent = o; tg.className = 'tag ' + (o === 'робот' ? 'tag-accent' : 'tag-outline'); }
         if (card) paintOwner(card);
         toast(o === 'робот' ? 'Сделка передана роботу.' : 'Сделка ваша: ' + o + '.');
@@ -451,7 +509,7 @@
           var list = LS.get('newDeals', []);
           var d = { id: 'nd-' + Date.now().toString(36), code: 'СД-' + (2232 + list.length), col: 0, channel: val(box, 'channel'), age: 'сейчас', title: title, last: 'Создано вручную: ' + whoShort(), sum: +sumRaw || 0, owner: val(box, 'owner'), client: cl, company: co, items: [], timeline: [{ time: hm(), who: whoShort(), action: 'создал сделку', text: title + (co ? ' · ' + co : '') }] };
           list.push(d); LS.set('newDeals', list); DATA.deals.push(d);
-          var c = newCard(d); decorate(c, d); COLS[0].el.insertBefore(c, COLS[0].el.children[1] || null); recalc(); applyFilter();
+          var c = newCard(d); decorate(c, d); COLS[0].el.insertBefore(c, COLS[0].total.nextSibling); recalc(); applyFilter();
           log('CRM', 'Новая сделка «' + title + '»', '—', 'Входящие · ' + (d.sum ? money(d.sum) : 'без суммы'), { k: 'ls', key: 'newDeals', prev: list.slice(0, -1) });
           toast('Сделка создана во «Входящих».'); setTimeout(function () { c.focus(); }, 50);
         } }] });
@@ -494,7 +552,8 @@
     (st.notes || []).forEach(note);
     stage.addEventListener('change', function () {
       var from = st.col != null ? st.col : d.col, to = +stage.value;
-      saveDeal(id, { col: to }); log('CRM', 'Сделка «' + d.title + '»', DATA.columns[from], DATA.columns[to], null);
+      var before = JSON.parse(JSON.stringify(LS.get('deals', {})));
+      saveDeal(id, { col: to }); log('CRM', 'Сделка «' + d.title + '»', DATA.columns[from], DATA.columns[to], { k: 'ls', key: 'deals', prev: before });
       toast('Этап: ' + DATA.columns[to]); paint();
     });
     function addNote(action, text) { var n = { time: hm(), who: whoShort(), action: action, text: text }; saveDeal(id, { notes: (dealState(id).notes || []).concat([n]) }); note(n); }
@@ -504,7 +563,8 @@
         if (a === 'close') { closeDialog(id, function (r) { addNote('закрыл сделку', r); paint(); }); return; }
         var o = a === 'take' ? whoShort() : 'робот', prev = dealState(id).owner || d.owner;
         if (prev === o) { toast('Ответственный уже: ' + o); return; }
-        saveDeal(id, { owner: o }); log('CRM', 'Ответственный · «' + d.title + '»', prev, o, null);
+        var before3 = JSON.parse(JSON.stringify(LS.get('deals', {})));
+        saveDeal(id, { owner: o }); log('CRM', 'Ответственный · «' + d.title + '»', prev, o, { k: 'ls', key: 'deals', prev: before3 });
         addNote(a === 'take' ? 'взял себе' : 'передал роботу', a === 'take' ? 'Робот не пишет клиенту без подтверждения оператора.' : 'Сделка возвращена автопилоту в границах торга.');
         paint(); toast(a === 'take' ? 'Сделка ваша.' : 'Сделка передана роботу.');
       });
@@ -536,6 +596,11 @@
   function initAutopilot() {
     var qb = blockByTitle(/^Ждёт человека/); if (!qb) return;
     var h = $('h3', qb), list = h.parentElement.nextElementSibling;
+    busQueueRows(list); // bus
+    // очередь по времени ожидания: дольше всех ждёт — сверху (подпись макета обещала «по деньгам», но суммы и позиции несравнимы)
+    var waitMin = function (r) { var t = txt(r.firstElementChild), hh = t.match(/(\d+)\s*ч/), mm = t.match(/(\d+)\s*м/), dd = t.match(/(\d+)\s*д/); return (dd ? +dd[1] * 1440 : 0) + (hh ? +hh[1] * 60 : 0) + (mm ? +mm[1] : 0); };
+    Array.prototype.slice.call(list.children).map(function (r, i) { return { r: r, m: waitMin(r), i: i }; }).sort(function (a, c) { return c.m - a.m || a.i - c.i; }).forEach(function (x) { list.appendChild(x.r); });
+    var sortNote = h.nextElementSibling; if (sortNote && /Отсортировано/.test(txt(sortNote))) sortNote.textContent = 'Отсортировано по времени ожидания: дольше всех ждёт — сверху';
     var rows = Array.prototype.slice.call(list.children);
     var Q = LS.get('apq', {});
     var kpi = $$(M + ' .blueprint').filter(function (b) { return /ждут человека/.test(txt(b)) && !$('h3', b); })[0];
@@ -554,6 +619,7 @@
       take.setAttribute('aria-label', 'Взять задачу: ' + title); done.setAttribute('aria-label', 'Решено: ' + title);
       if (st.taken) { take.setAttribute('aria-pressed', 'true'); r.classList.add('is-taken'); }
       var who2 = el('span', { class: 'mono pk-apq-who' }, st.taken ? esc(st.taken) : '');
+      $$('a.btn', act).forEach(function (x) { x.setAttribute('aria-label', txt(x) + ': ' + title); });
       act.classList.add('pk-apq-act'); act.appendChild(take); act.appendChild(done); r.children[1].appendChild(who2);
       take.addEventListener('click', function () {
         var cur = Q[key] || {};
@@ -562,6 +628,7 @@
         Q[key] = cur; LS.set('apq', Q);
       });
       done.addEventListener('click', function () {
+        if (r.hasAttribute('data-bus-quote') && !r._busAnswered) { busAnswerQuote(r, function () { r._busAnswered = true; done.click(); }); return; } // bus
         var prev = JSON.parse(JSON.stringify(Q));
         Q[key] = Object.assign({}, Q[key], { done: true, by: whoShort(), at: nowStr() }); LS.set('apq', Q);
         log('Автоматизация', 'Задача «' + title + '»', (prev[key] && prev[key].taken) ? 'в работе' : 'в очереди', 'решено', { k: 'ls', key: 'apq', prev: prev });
@@ -620,7 +687,7 @@
       function paint() { var s = L[key]; acc.hidden = rej.hidden = !!s; status.hidden = undoB.hidden = !s; if (s) setTag(status, s === 'accepted' ? 'tag-accent' : 'tag-neutral', s === 'accepted' ? 'Правило действует' : 'Отклонено'); row.classList.toggle('is-resolved', !!s); }
       function set(s) {
         var prev = L[key]; if (s) L[key] = s; else delete L[key]; LS.set('learn', L); paint();
-        log('Автоматизация', 'Правило из исправлений: «' + rule + '»', prev ? (prev === 'accepted' ? 'принято' : 'отклонено') : 'предложено', s ? (s === 'accepted' ? 'принято' : 'отклонено') : 'предложено', null);
+        log('Автоматизация', 'Правило из исправлений: «' + rule + '»', prev ? (prev === 'accepted' ? 'принято' : 'отклонено') : 'предложено', s ? (s === 'accepted' ? 'принято' : 'отклонено') : 'предложено', undoField('learn', L, key, prev));
         toast(s === 'accepted' ? 'Правило принято: подбор будет учитывать его сразу.' : s ? 'Правило отклонено.' : 'Решение отменено.');
         (s ? undoB : acc).focus();
       }
@@ -792,7 +859,11 @@
       var f = sel.selectedIndex > 0 ? sel.value : '';
       var rows = allJournal().filter(function (r) { return !f || r.section === f || (f === 'Цены' && r.section === 'Цены'); }).slice(0, 12);
       if (!rows.length) tbody.appendChild(el('tr', {}, '<td colspan="6" class="pk-adm-muted">В этом разделе изменений нет.</td>'));
-      rows.forEach(function (r) { tbody.appendChild(journalRow(r, function (rec) { rollback(rec); applyAll(); render(); })); });
+      rows.forEach(function (r) { tbody.appendChild(journalRow(r, function (rec) {
+        rollback(rec);
+        if (rec.undo && rec.undo.k === 'ls' && rec.undo.key !== 'rules') { try { sessionStorage.setItem('pk:adm:after', 'Откачено: ' + rec.what + ' — ' + rec.to + ' → ' + rec.from + '.'); } catch (e) {} setTimeout(function () { location.reload(); }, 400); return; }
+        applyAll(); render();
+      })); });
     }
     sel.addEventListener('change', render);
     document.addEventListener('pk:adm:log', render);
@@ -822,8 +893,11 @@
         var act = tr.lastChild;
         var up = btn('↑', 'btn-secondary pk-adm-icon'), dn = btn('↓', 'btn-secondary pk-adm-icon'), ed = btn('Изменить'), del = btn('Удалить');
         up.setAttribute('aria-label', 'Выше: ' + r.cat + ' ' + r.range); dn.setAttribute('aria-label', 'Ниже: ' + r.cat + ' ' + r.range); ed.setAttribute('aria-label', 'Изменить: ' + r.cat + ' ' + r.range); del.setAttribute('aria-label', 'Удалить: ' + r.cat + ' ' + r.range);
-        up.disabled = i === 0 || isBase; dn.disabled = isBase || i >= list.length - 2; del.disabled = isBase;
-        if (isBase) { del.title = 'Базовое правило всегда последнее и не удаляется'; }
+        var baseAt = function (j) { return list[j] && /базовое/.test(list[j].cat); };
+        // базовое правило не двигается и не меняется местами с соседями: стрелка к нему — неактивна
+        up.disabled = i === 0 || isBase || baseAt(i - 1); dn.disabled = isBase || i >= list.length - 1 || baseAt(i + 1); del.disabled = isBase;
+        if (isBase) { del.title = up.title = dn.title = 'Базовое правило не перемещается и не удаляется'; }
+        else { if (up.disabled) up.title = 'Выше — только базовое правило'; if (dn.disabled) dn.title = i >= list.length - 1 ? 'Правило уже последнее' : 'Ниже — только базовое правило'; }
         up.setAttribute('data-f', 'up' + i); dn.setAttribute('data-f', 'dn' + i); ed.setAttribute('data-f', 'ed' + i);
         up.addEventListener('click', function () { reorder(i, -1); }); dn.addEventListener('click', function () { reorder(i, 1); });
         ed.addEventListener('click', function () { edit(i); }); del.addEventListener('click', function () { remove(i); });
@@ -833,7 +907,7 @@
       if (focusSel) { var f = $('[data-f="' + focusSel + '"]', tbody); if (f && !f.disabled) f.focus(); else { var ff = $('button:not([disabled])', tbody); if (ff) ff.focus(); } }
     }
     window._pkRulesRender = function () { render(); };
-    function commit(list, what, from, to) { var prev = rules(); LS.set('rules', list); log('Цены', what, from, to, { k: 'ls', key: 'rules', prev: prev }); }
+    function commit(list, what, from, to) { var prev = rules(); LS.set('rules', list); log('Цены', what, from, to, { k: 'ls', key: 'rules', prev: prev }); busEmit('price.rule.changed', { what: what + ': ' + from + ' → ' + to }); } // bus
     function reorder(i, d) {
       var list = rules(), j = i + d; if (j < 0 || j >= list.length || /базовое/.test(list[j].cat)) return;
       var r = list.splice(i, 1)[0]; list.splice(j, 0, r);
@@ -969,6 +1043,15 @@
       var urlI = $$('input', cf).filter(function (x) { return x.placeholder === 'https://'; })[0], keyI = $$('input', cf).filter(function (x) { return x.placeholder === 'API key'; })[0];
       if (keyI) { keyI.type = 'password'; keyI.autocomplete = 'off'; }
       var sels = $$('select', cf);
+      // сводка формы: каждое поле сразу видно в строке «Будет подключено»
+      var summary = el('p', { class: 'pk-adm-muted pk-adm-cfsum', 'aria-live': 'polite' });
+      var btnRow = findBtn(cf, /^Проверить и подключить$/)[0]; if (btnRow) btnRow.parentElement.insertAdjacentElement('afterend', summary); else cf.appendChild(summary);
+      var paintSum = function () {
+        var u = urlI ? urlI.value.trim() : '', k = keyI ? keyI.value : '';
+        summary.textContent = 'Будет подключено: ' + sels[1].value + ' → ' + sels[0].value + ' · ' + sels[2].value + ' · ' + sels[3].value + ' · адрес: ' + (u || 'не указан') + (k ? ' · ключ введён (в демо не сохраняется)' : '');
+      };
+      $$('input, select', cf).forEach(function (x) { x.addEventListener('change', paintSum); x.addEventListener('input', paintSum); });
+      paintSum();
       var check = function () { var u = urlI.value.trim(); if (!/^https?:\/\/[^\s.]+\.[^\s]{2,}$/i.test(u) && !/^ftp:\/\//i.test(u)) { toast('Укажите адрес источника: https://… или ftp://…'); urlI.setAttribute('aria-invalid', 'true'); urlI.focus(); return null; } urlI.removeAttribute('aria-invalid'); return u; };
       on(findBtn(cf, /^Проверить и подключить$/)[0], function (e, b) {
         var u = check(); if (!u) return;
@@ -979,7 +1062,7 @@
           var f = { name: host.replace(/^www\./, '').split('.')[0].replace(/^./, function (c) { return c.toUpperCase(); }), url: u.replace(/^https?:\/\//, ''), format: sels[2].value.split(' ')[0], freq: sels[3].value.replace('каждые ', 'каждые ').replace(' часа', ' ч').replace(' часов', ' ч'), time: nowStr() };
           var list = LS.get('newFeeds', []); list.push(f); LS.set('newFeeds', list);
           log('Источники', 'Подключён источник «' + f.name + '» → ' + sels[0].value, '—', f.format + ', ' + f.freq, { k: 'ls', key: 'newFeeds', prev: list.slice(0, -1) });
-          if (keyI) keyI.value = ''; urlI.value = '';
+          if (keyI) keyI.value = ''; urlI.value = ''; paintSum();
           toast('Источник «' + f.name + '» подключён (демо) и добавлен в «Источники и синхронизация».');
           if (sb) { var tr = el('tr', { class: 'pk-adm-added' }, '<td>' + esc(f.name) + '<div class="mono">' + esc(f.url) + '</div></td><td class="mono">' + esc(f.format) + '</td><td>' + esc(f.freq) + '</td><td>' + esc(f.time) + '</td><td class="mono">—</td><td><span class="tag tag-accent">Успешно</span></td><td><button class="btn btn-secondary" type="button">Обновить</button></td>'); $('tbody', sb).appendChild(tr); var bb = $('button', tr); on(bb, function () { runSync($('.tag', tr), tr.cells[3], 'Успешно', bb, f.name); }); }
         }, 1100);
@@ -997,6 +1080,7 @@
     var head = $$(M + ' .mono').filter(function (m) { return /^Отзывы: модерация/.test(txt(m)); })[0]; if (!head) return;
     var box = head.nextElementSibling, table = $('table', box); if (!table) return;
     var R = LS.get('reviews', {});
+    table.classList.add('pk-adm-reviews');
     var onlyBought = function () { var l = $$('label.radio', box).filter(function (x) { return /Только подтверждённые покупки/.test(txt(x)); })[0]; return l ? $('input', l).checked : true; };
     var modInput = $$('input', box).filter(function (x) { return /На модерации/.test(controlLabel(x)); })[0];
     var TEXTS = { 5: 'Всё совпало по рабочей точке, отгрузили за два дня, документы пришли по ЭДО.', 4: 'Работает, но пришлось отдельно докупать комплект прокладок — стоит предлагать сразу.', 3: 'Сам мотор-редуктор в порядке, но паспорт пришёл позже груза.', 2: 'Подшипники шумят после месяца работы, прошу разобраться с партией.' };
@@ -1017,7 +1101,7 @@
       function set(s) {
         if (s === 'pub' && !bought && onlyBought()) { toast('Нельзя опубликовать: покупка не подтверждена, включено «Только подтверждённые покупки».'); return; }
         var prev = R[key]; if (s) R[key] = s; else delete R[key]; LS.set('reviews', R); paint();
-        log('Контент', 'Отзыв ' + company + ' · ' + item + ' (' + String(score).replace('.', ',') + ')', prev === 'pub' ? 'опубликован' : prev ? 'отклонён' : 'на модерации', s === 'pub' ? 'опубликован' : s ? 'отклонён' : 'на модерации', null);
+        log('Контент', 'Отзыв ' + company + ' · ' + item + ' (' + String(score).replace('.', ',') + ')', prev === 'pub' ? 'опубликован' : prev ? 'отклонён' : 'на модерации', s === 'pub' ? 'опубликован' : s ? 'отклонён' : 'на модерации', undoField('reviews', R, key, prev));
         toast(s === 'pub' ? 'Отзыв опубликован — попадёт в рейтинг карточки.' : s ? 'Отзыв отклонён.' : 'Отзыв вернулся на модерацию.');
         (s ? back : pub).focus();
       }
@@ -1040,7 +1124,7 @@
       cb.checked = I[name] === undefined ? initialOn : I[name];
       cell.insertBefore(lab, tag);
       function paint() { if (cb.checked) { if (I[name] === undefined || initialOn) { tag.className = origCls; tag.textContent = initialOn ? origLabel : onLabel; } else setTag(tag, 'tag-accent', onLabel); } else setTag(tag, 'tag-neutral', offLabel); tr.classList.toggle('is-off', !cb.checked); }
-      cb.addEventListener('change', function () { var prev = I[name]; I[name] = cb.checked; LS.set('integr', I); paint(); log(section, name, cb.checked ? 'выкл' : 'вкл', cb.checked ? 'вкл' : 'выкл', null); toast(name + (cb.checked ? ' — включено.' : ' — отключено. Автоматика на этом шаге передаёт задачу человеку.')); });
+      cb.addEventListener('change', function () { var prev = I[name]; I[name] = cb.checked; LS.set('integr', I); paint(); log(section, name, cb.checked ? 'выкл' : 'вкл', cb.checked ? 'вкл' : 'выкл', undoField('integr', I, name, prev)); toast(name + (cb.checked ? ' — включено.' : ' — отключено. Автоматика на этом шаге передаёт задачу человеку.')); });
       paint();
     }
     if (ib) {
@@ -1114,7 +1198,7 @@
         var b = el('button', { type: 'button', class: 'pk-adm-tagbtn', 'aria-pressed': 'true' }); tag.parentElement.insertBefore(b, tag); b.appendChild(tag);
         var initOn = /Включено|Работает|Активно/.test(txt(tag)), orig = { cls: tag.className, t: txt(tag) };
         function paint() { var onv = S[name] === undefined ? initOn : S[name]; b.setAttribute('aria-pressed', String(onv)); b.setAttribute('aria-label', 'Сценарий «' + name + '»: ' + (onv ? 'включён' : 'выключен') + '. Переключить'); if (onv === initOn) { tag.className = orig.cls; tag.textContent = orig.t; } else setTag(tag, onv ? 'tag-accent' : 'tag-neutral', onv ? 'Включено' : 'Выключено'); }
-        b.addEventListener('click', function () { var cur = S[name] === undefined ? initOn : S[name]; S[name] = !cur; LS.set('scen', S); paint(); log('Автоматизация', 'Сценарий «' + name + '»', cur ? 'вкл' : 'выкл', !cur ? 'вкл' : 'выкл', null); toast('Сценарий «' + name + '» ' + (!cur ? 'включён.' : 'выключен — заявки уходят человеку.')); });
+        b.addEventListener('click', function () { var cur = S[name] === undefined ? initOn : S[name], prevS = S[name]; S[name] = !cur; LS.set('scen', S); paint(); log('Автоматизация', 'Сценарий «' + name + '»', cur ? 'вкл' : 'выкл', !cur ? 'вкл' : 'выкл', undoField('scen', S, name, prevS)); toast('Сценарий «' + name + '» ' + (!cur ? 'включён.' : 'выключен — заявки уходят человеку.')); });
         paint();
       }
       LS.get('newScen', []).forEach(function (s) { $('tbody', ab).appendChild(el('tr', { class: 'pk-adm-added' }, '<td>' + esc(s.name) + '</td><td>' + esc(s.trigger) + '</td><td>' + esc(s.action) + '</td><td class="mono">' + esc(s.limit) + '</td><td><span class="tag tag-accent">Включено</span></td>')); });
@@ -1148,7 +1232,7 @@
         var paint = function () { var s = Q[topic]; if (!s) return; if (s === 'paused') { setTag(tag, 'tag-neutral', 'На паузе'); b.textContent = 'Запустить'; } else if (s === 'running') { setTag(tag, 'tag-accent', 'В работе'); b.textContent = 'Пауза'; } else if (s === 'checked') { setTag(tag, 'tag-accent', 'Проверено'); b.textContent = 'Смотреть'; } };
         on(b, function () {
           var l = txt(b), prevT = txt(tag);
-          if (l === 'Пауза' || l === 'Запустить') { Q[topic] = l === 'Пауза' ? 'paused' : 'running'; LS.set('topics', Q); paint(); log('Контент', 'Тема «' + topic + '»', prevT, txt(tag), null); toast(l === 'Пауза' ? 'Тема поставлена на паузу.' : 'Генерация темы запущена (демо).'); return; }
+          if (l === 'Пауза' || l === 'Запустить') { var prevQ = Q[topic]; Q[topic] = l === 'Пауза' ? 'paused' : 'running'; LS.set('topics', Q); paint(); log('Контент', 'Тема «' + topic + '»', prevT, txt(tag), undoField('topics', Q, topic, prevQ)); toast(l === 'Пауза' ? 'Тема поставлена на паузу.' : 'Генерация темы запущена (демо).'); return; }
           modal({ title: topic, html: '<p class="mono">' + esc(txt(tr.cells[1])) + ' · ' + esc(txt(tr.cells[2])) + ' · ' + esc(txt(tr.cells[4])) + '</p><p>Черновик статьи: вводная, таблица подбора, 4 раздела, FAQ из вопросов чата, перелинковка на карточки и направление. Фото — ' + esc(txt(tr.cells[3])) + '.</p><p class="pk-adm-muted">Демо-превью: полный текст появится после генерации.</p>',
             buttons: l === 'Проверить' ? [{ label: 'Вернуть на доработку', onClick: function () { log('Контент', 'Тема «' + topic + '»', prevT, 'на доработке', null); toast('Отправлено на доработку.'); } }, { label: 'Проверено, в публикацию', primary: true, onClick: function () { Q[topic] = 'checked'; LS.set('topics', Q); paint(); log('Контент', 'Тема «' + topic + '»', prevT, 'проверено', null); toast('Статья проверена и ушла в публикацию (демо).'); } }] : [{ label: 'Закрыть', primary: true }] });
         });
@@ -1168,8 +1252,8 @@
       var name = txt(tr.cells[0]); var td = el('td'); var bb = btn('Выбрать'); bb.setAttribute('aria-label', 'Выбрать вариант: ' + name); td.appendChild(bb); tr.appendChild(td);
       bb.addEventListener('click', function () {
         var prevI = chosen == null ? 0 : chosen; if (prevI === i) return;
-        chosen = i; LS.set('logChoice', i); paint();
-        log('Логистика', 'Заказ ПК-10428: вариант доставки', txt(rows[prevI].cells[0]), name + ', ' + txt(tr.cells[4]), null);
+        var prevChosen = chosen; chosen = i; LS.set('logChoice', i); paint();
+        log('Логистика', 'Заказ ПК-10428: вариант доставки', txt(rows[prevI].cells[0]), name + ', ' + txt(tr.cells[4]), { k: 'ls', key: 'logChoice', prev: prevChosen });
         toast('Выбрано: ' + name + ' — ' + txt(tr.cells[3]) + ', ' + txt(tr.cells[4]) + '. Клиенту уйдёт уведомление (демо).');
       });
     });
@@ -1371,8 +1455,8 @@
       pause.addEventListener('click', function () {
         if (!P[slug]) {
           modal({ title: 'Приостановить «' + name + '»?', html: '<p>Позиции поставщика перестанут участвовать в выборе предложения, открытые резервы сохранятся.</p>' + field('Причина', select('why', ['срыв сроков', 'точность остатков ниже порога', 'ошибки фида', 'по просьбе поставщика'], '')),
-            buttons: [{ label: 'Отмена' }, { label: 'Приостановить', primary: true, onClick: function (box) { P[slug] = { why: val(box, 'why'), at: nowStr() }; LS.set('sup', P); paint(); log('Источники', 'Поставщик «' + name + '»', 'активен', 'приостановлен: ' + P[slug].why, null); toast('«' + name + '» приостановлен.'); } }] });
-        } else { var why = P[slug].why; delete P[slug]; LS.set('sup', P); tag.className = 'tag tag-accent'; tag.textContent = 'Успешно'; paint(); log('Источники', 'Поставщик «' + name + '»', 'приостановлен: ' + why, 'активен', null); toast('«' + name + '» снова в работе.'); }
+            buttons: [{ label: 'Отмена' }, { label: 'Приостановить', primary: true, onClick: function (box) { P[slug] = { why: val(box, 'why'), at: nowStr() }; LS.set('sup', P); paint(); log('Источники', 'Поставщик «' + name + '»', 'активен', 'приостановлен: ' + P[slug].why, null); if (slug === 'gidromash') busEmit('vendor.suspended', { slug: slug, name: name, why: P[slug].why }); /* bus */ toast('«' + name + '» приостановлен.'); } }] });
+        } else { var why = P[slug].why; delete P[slug]; LS.set('sup', P); tag.className = 'tag tag-accent'; tag.textContent = 'Успешно'; paint(); log('Источники', 'Поставщик «' + name + '»', 'приостановлен: ' + why, 'активен', null); if (slug === 'gidromash') busEmit('vendor.resumed', { slug: slug, name: name }); /* bus */ toast('«' + name + '» снова в работе.'); }
       });
       paint();
     });
@@ -1416,8 +1500,94 @@
     });
   }
 
+  // ═════════ bus: события витрины, закупщика и поставщика ═════════
+  function busEmit(type, payload) { try { if (window.PK_BUS) PK_BUS.emit(type, payload); } catch (e) {} }
+  function clientSlugByName(name) { var c = (DATA.clients || []).filter(function (x) { return name && x.name === name; })[0]; return c ? c.slug : ''; }
+  function busDeal(d) { // новая сделка в колонке «Счёт выставлен» (индекс 3)
+    var list = LS.get('newDeals', []);
+    if (list.some(function (x) { return x.id === d.id; })) return false;
+    d.code = 'СД-' + (2232 + list.length);
+    list.push(d); LS.set('newDeals', list); if (DATA.deals) DATA.deals.push(d);
+    saveDeal(d.id, { col: 3 });
+    return true;
+  }
+  function busApply(ev) {
+    var p = ev.payload || {}, t = hm(new Date(ev.ts)), author = ev.author && ev.author.name || 'закупщик';
+    if (ev.type === 'order.created') {
+      var ok = busDeal({ id: 'bus-' + String(p.order).replace(/\D/g, ''), col: 3, channel: 'Сайт', age: 'сейчас', title: 'Заказ ' + p.order + (p.company ? ' · ' + p.company : ''), last: 'Оформлен в корзине, счёт выставлен · ' + (p.payment || ''), sum: p.total || 0, owner: 'робот', client: clientSlugByName(p.company), company: p.company || '', pkOrder: p.order,
+        items: (p.items || []).map(function (i) { return { name: i.name + (i.sku ? ' (' + i.sku + ')' : ''), qty: i.qty }; }),
+        timeline: [{ time: t, who: 'Сайт · корзина', action: 'заказ оформлен', text: (p.items || []).length + ' поз. на ' + money(p.total) + (p.address ? ' · ' + p.address : '') }, { time: t, who: 'Робот', action: 'выставил счёт', text: 'Счёт по заказу ' + p.order + ' отправлен в кабинет закупщика (демо).' }] });
+      if (ok) log('CRM', 'Заказ с витрины ' + p.order + (p.company ? ' · ' + p.company : ''), '—', 'Счёт выставлен · ' + money(p.total), null);
+      return { deal: ok };
+    }
+    if (ev.type === 'vendor.order.status') {
+      var deal = LS.get('newDeals', []).filter(function (x) { return p.order && x.pkOrder === p.order; })[0];
+      var moved = deal && /Подтверждена|Собрана|Отгружена|Доставлена|К расчёту|Оплачена/.test(p.status);
+      if (deal) {
+        var st = dealState(deal.id), patch = { notes: (st.notes || []).concat([{ time: t, who: (p.vendor || 'Поставщик') + ' · кабинет', action: 'заявка ' + p.request, text: p.status + (p.track ? ', трек ' + p.track : '') + (p.carrier ? ' · ' + p.carrier : '') + (p.reject ? ' · причина: ' + p.reject : '') }]) };
+        if (moved && st.col !== 4) patch.col = 4;
+        saveDeal(deal.id, patch);
+      }
+      log('CRM', 'Заявка поставщика ' + p.request + (p.order ? ' · заказ ' + p.order : ''), '—', p.status + (moved ? ' → сделка в «' + ((DATA.columns || [])[4] || 'Оплачено') + '»' : '') + (p.track ? ' · трек ' + p.track : ''), null);
+      return { deal: deal ? deal.id : null };
+    }
+    if (ev.type === 'approval.done') {
+      var ok2 = busDeal({ id: 'bus-' + String(p.id).replace(/[^\dA-Za-z]/g, '') + '-' + ev.ts.toString(36), col: 3, channel: 'Сайт', age: 'сейчас', title: 'Заявка цеха ' + p.id + ' согласована' + (p.order ? ' → ' + p.order : ''), last: (p.name || '') + ' · ' + (p.company || ''), sum: p.total || 0, owner: whoShort(), client: clientSlugByName(p.company), pkOrder: p.order || null,
+        items: (p.items || []).map(function (i) { return { name: i.name, qty: i.qty }; }), timeline: [{ time: t, who: author + ' · кабинет', action: 'согласовал заявку', text: 'Маршрут Цех → Бюджет → Закупка пройден' + (p.order ? ', оформлен заказ ' + p.order : '') }] });
+      if (ok2) log('CRM', 'Заявка цеха ' + p.id + ' · ' + (p.company || ''), 'на согласовании', 'согласована' + (p.order ? ' · заказ ' + p.order : ''), null);
+      return { deal: ok2 };
+    }
+    if (ev.type === 'approval.rejected') { log('CRM', 'Заявка цеха ' + p.id + ' · ' + (p.company || ''), 'на согласовании', 'отклонена на этапе «' + (p.stage || '') + '»' + (p.comment ? ': ' + p.comment : ''), null); return { logged: true }; }
+    if (ev.type === 'quote.requested') {
+      var qs = LS.get('busQuotes', []);
+      if (qs.some(function (x) { return x.id === p.id && x.ev === ev.id; })) return { dup: true };
+      qs.unshift({ ev: ev.id, id: p.id, name: p.name, note: p.note, company: p.company, author: author, specTotal: p.specTotal || 0, ts: ev.ts });
+      LS.set('busQuotes', qs);
+      log('Автоматизация', 'Запрос КП ' + p.id + ' от ' + (p.company || author), '—', 'в очереди «Ждёт человека»', null);
+      return { queued: true };
+    }
+    return { ignored: true };
+  }
+  function busQueueRows(list) {
+    LS.get('busQuotes', []).slice().reverse().forEach(function (q) {
+      var mins = Math.max(0, Math.round((Date.now() - q.ts) / 60000));
+      var r = el('div', { style: 'display: grid; grid-template-columns: auto minmax(0px, 1fr) auto; gap: 14px; align-items: center; border-top: 1px solid var(--color-divider); padding: 10px 0px;', 'data-bus-quote': q.id, 'data-bus-ev': q.ev },
+        '<span class="mono" style="font-size: 11px; color: var(--color-accent-700); min-width: 52px;">' + (mins < 60 ? mins + '\u00a0м' : Math.floor(mins / 60) + '\u00a0ч ' + (mins % 60) + '\u00a0м') + '</span>' +
+        '<div><div style="font-size: 14px; font-weight: 500;">' + esc('Запрос КП от ' + (q.company || q.author) + ': ' + q.id) + '</div>' +
+        '<div style="font-size: 12px; color: var(--color-neutral-700);">' + esc((q.name || '') + (q.note ? ' · ' + q.note : '') + ' · из кабинета закупщика') + '</div></div>' +
+        '<div style="display: flex; gap: 8px; align-items: center;"><span class="mono" style="font-size: 13px; white-space: nowrap;">' + (q.specTotal ? '≈ ' + money(q.specTotal) : 'расчёт') + '</span></div>');
+      list.insertBefore(r, list.firstChild);
+    });
+  }
+  function busAnswerQuote(r, done) {
+    var q = LS.get('busQuotes', []).filter(function (x) { return x.ev === r.getAttribute('data-bus-ev'); })[0];
+    if (!q) { done(); return; }
+    modal({ title: 'Ответ на запрос ' + q.id, html: '<p class="pk-adm-muted">' + esc((q.company || q.author) + ' · ' + (q.name || '')) + '</p>' + field('Сумма КП, ₽', input('total', q.specTotal ? String(q.specTotal) : '', 'inputmode="numeric" maxlength="10"'), 'Уйдёт закупщику: запрос сменит статус на «КП получено»') + field('КП действует, дней', input('days', '14', 'inputmode="numeric" maxlength="3"')),
+      buttons: [{ label: 'Отмена' }, { label: 'Отправить КП', primary: true, onClick: function (box) {
+        var total = +val(box, 'total').replace(/\s/g, ''), days = +val(box, 'days');
+        if (!(total > 0)) return 'Укажите сумму КП — целое число рублей.';
+        if (!(days >= 1 && days <= 90)) return 'Срок действия — от 1 до 90 дней.';
+        var d = new Date(); d.setDate(d.getDate() + days);
+        busEmit('quote.answered', { id: q.id, name: q.name, total: total, validUntil: d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()), by: whoShort() });
+        LS.set('busQuotes', LS.get('busQuotes', []).map(function (x) { return x.ev === q.ev ? Object.assign({}, x, { answered: total }) : x; }));
+        log('Автоматизация', 'КП ' + q.id + ' для ' + (q.company || q.author), 'запрос', 'КП на ' + money(total), null);
+        setTimeout(done, 0);
+      } }] });
+  }
+  function busConnect(B) {
+    var n = 0;
+    B.pending('operator').forEach(function (ev) { var r = busApply(ev); B.ack(ev.id, 'operator', r); if (!r.ignored && !r.dup) n++; });
+    B.on('*', function (ev) {
+      if (ev.to.indexOf('operator') < 0) return;
+      var r = busApply(ev); B.ack(ev.id, 'operator', r);
+      if (!r.ignored && !r.dup) toast(B.describe(ev, 'operator').t + (/^panel\/(crm|avtopilot)\/$/.test(PATH) ? ' — обновите страницу, чтобы увидеть' : ''));
+    });
+    return n;
+  }
+
   // ═════════ запуск ═════════
   function start() {
+    try { var after = sessionStorage.getItem('pk:adm:after'); if (after) { sessionStorage.removeItem('pk:adm:after'); setTimeout(function () { toast(after); }, 300); } } catch (e) {}
     chrome();
     if (PATH === 'panel/crm/') initCrm();
     if (PATH === 'panel/avtopilot/') initAutopilot();
@@ -1434,6 +1604,15 @@
     initTables(); initClientCommon();
     persistControls();
     leftovers();
+    tidyClickables();
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  // bus: сначала забрать непрочитанные события (новые сделки, очередь КП), потом рисовать; без шины — через 1,5 с как раньше
+  var started = false;
+  function go() { if (started) return; started = true; start(); }
+  function boot() {
+    if (!window.PK_BUS_READY) { go(); return; }
+    PK_BUS_READY(function (B) { try { var n = busConnect(B); if (n && started) toast('Новых событий: ' + n + ' — обновите страницу, чтобы увидеть'); } catch (e) { if (window.console) console.warn('pk-bus', e); } go(); });
+    setTimeout(go, 1500);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

@@ -87,6 +87,27 @@ function seoPost(file, html) {
 }
 const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(seoPost(file, injectSeo(file, html))));
 
+
+// ── служебный каркас закрытых разделов (кабинет поставщика, панель оператора) ──
+function serviceFooter(kind) {
+  const who = kind === 'ops' ? 'Панель оператора' : kind === 'vendor' ? 'Кабинет поставщика' : 'Личный кабинет';
+  const links = kind === 'ops'
+    ? [['', 'Витрина'], ['panel/crm/', 'CRM'], ['panel/zhurnal/', 'Журнал'], ['kontakty/', 'Контакты']]
+    : kind === 'vendor'
+      ? [['', 'Витрина'], ['postavshchikam/usloviya/', 'Условия для поставщиков'], ['kontakty/', 'Контакты'], ['politika-konfidencialnosti/', 'Политика']]
+      : [['', 'Витрина'], ['oplata-i-dostavka/', 'Оплата и доставка'], ['garantiya/', 'Гарантия'], ['kontakty/', 'Контакты']];
+  return `<footer class="pk-svc-footer" style="background:var(--color-neutral-900);color:var(--color-neutral-300)"><div style="max-width:1360px;margin:0 auto;padding:18px 28px;display:flex;gap:10px 22px;align-items:center;flex-wrap:wrap;font-size:13px">
+  <span style="color:#fff;font-weight:600">ПРОМКОНТУР · ${who}</span>
+  ${links.map(([h, t]) => `<a href="${BASE}${h}" style="color:var(--color-neutral-300)">${t}</a>`).join('')}
+  <span style="margin-left:auto;opacity:.7">Демо-режим: данные хранятся только в этом браузере</span>
+</div></footer>`;
+}
+const swapFooter = (html, kind) => { const at = html.lastIndexOf('<footer'); if (at < 0) return html; const end = html.indexOf('</footer>', at); return end < 0 ? html : html.slice(0, at) + serviceFooter(kind) + html.slice(end + 9); };
+const stripSeoBlock = html => { // SEO-текст, FAQ и «Статьи по теме» на закрытых страницах не нужны
+  const at = html.lastIndexOf('<section style="border-top: 1px solid var(--color-divider)'); const ft = html.lastIndexOf('<footer');
+  return at > 0 && ft > at && /faq-item|seo-more/.test(html.slice(at, ft)) ? html.slice(0, at) + html.slice(ft) : html;
+};
+
 // ── то, что выполняется внутри страницы макета ────────────────────────────────
 function inPage(routes, base, L) {
   const P = DCLogic.prototype, orig = P.setState; let cap;
@@ -133,6 +154,7 @@ function inPage(routes, base, L) {
     else if (a.closest('[data-track]')) a.setAttribute('href', base + (/рабочей точке/.test(t) ? routes.article.path : routes.blog.path));
   }
   for (const a of c.querySelectorAll('footer a')) if (a.textContent.trim() === 'Контакты') a.setAttribute('href', base + 'kontakty/');
+  for (const a of [...c.querySelectorAll('footer a')]) if (a.textContent.replace(/[\s\u00A0]+/g, ' ').trim() === 'Вход и регистрация' && !c.querySelector('footer a[data-ops-demo]')) { const x = a.cloneNode(true); x.textContent = 'Панель оператора (демо)'; x.setAttribute('href', base + 'vhod/?role=operator'); x.setAttribute('data-ops-demo', '1'); a.insertAdjacentElement('afterend', x); }
   // карточки → их собственные страницы (товары, статьи, направления, производители)
   const norm = t => (t || '').replace(/[\s\u00A0\u202F]+/g, ' ').trim().toLowerCase();
   const matches = (list, text) => list.filter(it => it.names.some(n => text.includes(norm(n))));
@@ -348,6 +370,7 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
     const snap = await p.evaluate(inPage, ROUTES, BASE, { ...LINKS, current: BASE + r.path });
     styles = snap.styles;
     let bodyHtml = snap.html;
+    if (/^(kabinet|panel\/)/.test(r.path)) { bodyHtml = stripSeoBlock(bodyHtml); if (/^(kabinet-postavshchika|panel\/)/.test(r.path)) bodyHtml = swapFooter(bodyHtml, r.path.startsWith('panel/') ? 'ops' : 'vendor'); }
     if (id === 'blog') { // все статьи из данных — в конец ленты, перед SEO-блоком
       const extra = genPages.blogExtra(BASE, bodyHtml).replace(/IMGBASE/g, BASE + 'img/');
       const at = bodyHtml.lastIndexOf('<section style="border-top: 1px solid var(--color-divider)');
@@ -413,7 +436,8 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
       let pages = [];
       try { pages = require('./' + f)(ctx) || []; } catch (e) { console.error('! генератор ' + f + ': ' + e.message); continue; }
       for (const g of pages) {
-        const ch = CHROMES[g.chrome || 'store'] || CHROMES.store;
+        const ch0 = CHROMES[g.chrome || 'store'] || CHROMES.store;
+        const ch = g.chrome === 'ops' || g.chrome === 'vendor' ? { head: ch0.head, tail: swapFooter(ch0.tail, g.chrome) } : ch0;
         const file = path.join(OUT, g.path, 'index.html'); fs.mkdirSync(path.dirname(file), { recursive: true });
         const body = String(g.html).replace(/IMGBASE/g, BASE + 'img/');
         writePage(file, page({ id: g.path, r: { index: false, ...g }, body: ch.head + (/<main\b/.test(body) ? body : `<main id="main" class="pk-main">${body}</main>`) + ch.tail, scripts: g.scripts || [] }));
