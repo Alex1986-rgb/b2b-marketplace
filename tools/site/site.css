@@ -57,3 +57,4 @@ html.pk-lock { overflow: hidden; }
 .pk-drawer-sub { display: flex; align-items: center; gap: 8px; }
 .cartrow .seg { flex: none; display: inline-flex; }
 .cartrow .pk-sum { margin-left: auto; }
+@media (max-width: 760px) { .cartrow > :last-child { flex-wrap: wrap; gap: 10px !important; } .cartrow .pk-sum { min-width: 0 !important; font-size: 17px !important; } }

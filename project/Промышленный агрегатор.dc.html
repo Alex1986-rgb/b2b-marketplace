@@ -29,7 +29,18 @@
   .only-m { display:none !important; }
   .thumb { display:block; flex:none; background-color:var(--color-neutral-200); }
   .gal { display:flex; gap:10px; margin:0 0 28px; }
-  .gal > span { width:80px; height:80px; display:block; border:1px solid var(--color-divider); }
+  .gal > span { width:80px; height:80px; display:block; border:1px solid var(--color-divider); border-radius:8px; background-color:#fff; }
+  /* пачка 6 */
+  .spec-zebra tbody tr:nth-child(odd) td { background:var(--color-bg); }
+  .spec-zebra td { border-top:0 !important; }
+  details.rubric > summary::-webkit-details-marker { display:none; }
+  details.rubric[open] > summary .rubric-rot { transform:rotate(180deg); }
+  .rubric-rot { transition:transform .15s ease; }
+  .pill-dark { transition:background .15s ease; }
+  .pill-dark:hover { background:rgba(255,255,255,.16) !important; }
+  @media (min-width:761px) and (max-width:1180px) {
+    .footer-grid { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  }
   .gal > span.on { border:2px solid var(--color-accent); }
   .cartrow { display:grid; gap:16px; align-items:center; grid-template-columns:92px minmax(0,1fr) auto; padding:16px; border-bottom:1px solid var(--color-divider); }
   @media (max-width:1040px) {
@@ -73,6 +84,14 @@
     .hide-m { display:none !important; }
     .only-m-block { display:block !important; }
     .ph-side { height:200px !important; }
+    .pk-stepper { grid-auto-flow:row !important; }
+    .pk-step { flex-direction:row !important; align-items:flex-start !important; text-align:left !important; gap:12px !important; padding:0 0 18px !important; }
+    .pk-step:last-child { padding-bottom:0 !important; }
+    .pk-step-l { top:0 !important; left:15px !important; right:auto !important; width:2px !important; height:16px !important; }
+    .pk-step-r { top:16px !important; bottom:0; left:15px !important; right:auto !important; width:2px !important; height:auto !important; }
+    .dir-banner-ph { min-height:160px !important; border-radius:14px 14px 0 0 !important; }
+    .footer-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    .footer-grid > :first-child { grid-column:1 / -1; }
   }
 </style>
 </helmet>
@@ -169,14 +188,14 @@
       <div style="max-width:1360px;margin:0 auto;padding:44px 28px 40px;position:relative">
         <h1 style="color:#fff;font-size:44px;max-width:900px;text-wrap:pretty">Промышленное оборудование от производителей и поставщиков в одном месте</h1>
         <p style="font-size:17px;color:var(--color-accent-200);max-width:720px">Более 115 000 моделей. Подбор по характеристикам, артикулу или фотографии. Доставка по России.</p>
-        <div style="display:flex;margin-top:22px;max-width:900px">
-          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:54px;font-size:16px;background:#fff;border-right:0">
-          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:54px;background:#fff;border-right:0;white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
-          <button class="btn btn-primary" style="min-height:54px;padding-inline:30px;font-size:16px;color:#fff;gap:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
+        <div style="display:flex;margin-top:22px;max-width:900px;align-items:center;gap:4px;padding:5px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(8,16,26,.28)">
+          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:48px;font-size:16px;background:transparent;border:0;box-shadow:none;flex:1;min-width:0;padding-left:12px">
+          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:48px;background:transparent;border:0;border-radius:8px;color:var(--color-accent-700);white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
+          <button class="btn btn-primary" style="min-height:48px;padding-inline:28px;font-size:16px;color:#fff;gap:8px;border-radius:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
         </div>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
           <sc-for list="{{ examples }}" as="e" hint-placeholder-count="4">
-            <span class="mono" style="font-size:12px;padding:5px 10px;border:1px solid var(--color-accent-700);color:var(--color-accent-200)">{{ e }}</span>
+            <span class="pill-dark" style="font-size:13px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--color-accent-200)">{{ e }}</span>
           </sc-for>
         </div>
         <div style="display:flex;gap:40px;margin-top:30px;padding-top:22px;border-top:1px solid var(--color-accent-700);flex-wrap:wrap">
@@ -208,22 +227,29 @@
     </div>
 
     <section style="max-width:1360px;margin:0 auto;padding:28px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;align-items:start">
-      <nav class="blueprint" style="padding:6px 0">
+      <nav class="blueprint" style="padding:6px 0;position:sticky;top:124px">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="display:flex;justify-content:space-between;align-items:baseline;padding:10px 16px 8px">
-          <span class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Каталог</span>
-          <a href="#" onClick="{{ goDirections }}" style="font-size:12px">все 45</a>
+          <span style="font-family:var(--font-heading);font-weight:600;font-size:16px">Каталог</span>
+          <a href="#" onClick="{{ goDirections }}" style="font-size:13px">все 45 разделов</a>
         </div>
         <sc-for list="{{ directionGroups }}" as="g" hint-placeholder-count="6">
-          <div>
-            <div class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700);padding:10px 16px 4px;border-top:1px solid var(--color-divider);display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ g.icon }}"></span>{{ g.title }}</div>
+          <details class="rubric" open="{{ g.open }}" style="border-top:1px solid var(--color-divider)">
+            <summary style="display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;list-style:none;font-family:var(--font-heading);font-weight:600;font-size:14px;line-height:1.25">
+              <span class="ico ico-16 {{ g.icon }}" style="color:var(--color-accent-700)"></span>
+              <span style="flex:1;min-width:0">{{ g.title }}</span>
+              <span style="font-family:var(--font-body);font-weight:400;font-size:12px;color:var(--color-neutral-600)">{{ g.cnt }}</span>
+              <span class="ico ico-16 i-ui-faq-toggle rubric-rot" style="color:var(--color-neutral-600)"></span>
+            </summary>
+            <div style="padding-bottom:6px">
             <sc-for list="{{ g.items }}" as="c" hint-placeholder-count="8">
               <a href="#" onClick="{{ goDirection }}" class="row-hover" style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 16px;font-size:13px;color:inherit;text-decoration:none">
                 <span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ c.icon }}" style="color:var(--color-accent-700)"></span>{{ c.name }}</span>
-                <span class="mono" style="font-size:10px;color:var(--color-neutral-600);white-space:nowrap">{{ c.count }}</span>
+                <span style="font-size:12px;color:var(--color-neutral-600);white-space:nowrap">{{ c.count }}</span>
               </a>
             </sc-for>
-          </div>
+            </div>
+          </details>
         </sc-for>
       </nav>
 
@@ -270,11 +296,11 @@
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <h3 style="margin:0;display:flex;align-items:center;gap:10px"><span class="ico ico-28 i-step-one-price" style="color:var(--color-accent-700)"></span>Одна цена вместо десятков продавцов</h3>
             <p style="font-size:15px;color:var(--color-neutral-800);margin:0">Система сама сравнивает прайсы поставщиков по цене, остатку и сроку, добавляет наценку и показывает одну цену. Оборудование едет напрямую со склада поставщика.</p>
-            <div style="border:1px solid var(--color-divider);padding:14px 16px;margin-top:4px">
-              <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">Внутренний подбор · Grundfos CR 32-4</div>
+            <div style="background:var(--color-bg);border-radius:10px;padding:14px 16px;margin-top:4px">
+              <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:8px">Внутренний подбор · Grundfos CR 32-4</div>
               <sc-for list="{{ suppliersLight }}" as="s" hint-placeholder-count="3">
-                <div style="display:flex;justify-content:space-between;font-size:14px;padding:4px 0;color:{{ s.color }}">
-                  <span>{{ s.name }}</span><span class="mono" style="font-size:15px">{{ s.price }}</span>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;padding:7px 10px;border-radius:8px;background: {{ s.bg }};color: {{ s.color }};font-weight: {{ s.weight }}">
+                  <span style="display:flex;align-items:center;gap:8px"><span style="width:18px;height:18px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:11px;line-height:1;background: {{ s.dotBg }};color:#fff;box-shadow: {{ s.dotRing }}">{{ s.mark }}</span>{{ s.name }}</span><span class="mono" style="font-size:15px">{{ s.price }}</span>
                 </div>
               </sc-for>
               <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--color-divider);margin-top:8px;padding-top:10px">
@@ -409,22 +435,25 @@
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
           <span>Артикул 96122802</span><span>Grundfos · Дания</span><span style="display:inline-flex;align-items:center;gap:6px"><span class="ico ico-16 i-warranty-maker" style="color:var(--color-accent-700);width:14px;height:14px"></span>Гарантия 24 мес. (условия поставщика)</span>
         </div>
-        <figure class="blueprint ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:12px" data-photo="1">
+        <figure class="blueprint ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #ffffff;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:12px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         </figure>
         <div class="gal" role="list" aria-label="Фото товара">
-          <span class="on" role="listitem" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5"></span>
-          <span role="listitem" style="background:url(img/p-cr32-flange.jpg) center/contain no-repeat #c6c4c1"></span>
-          <span role="listitem" style="background:url(img/p-cr32-motor.jpg) center/contain no-repeat #bebebe"></span>
+          <span class="on" role="listitem" style="background:url(img/p-cr32.jpg) center/contain no-repeat #ffffff"></span>
+          <span role="listitem" style="background:url(img/p-cr32-flange.jpg) center/contain no-repeat #ffffff"></span>
+          <span role="listitem" style="background:url(img/p-cr32-motor.jpg) center/contain no-repeat #ffffff"></span>
         </div>
         <h3>Характеристики</h3>
-        <table class="table">
+        <div class="blueprint" style="padding:6px 8px">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <table class="table spec-zebra" style="width:100%">
           <tbody>
             <sc-for list="{{ specs }}" as="s" hint-placeholder-count="7">
               <tr><td style="width:280px;color:var(--color-neutral-700)">{{ s.k }}</td><td style="font-weight:500">{{ s.v }}</td></tr>
             </sc-for>
           </tbody>
         </table>
+        </div>
 
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:30px 0 14px">
           <div>
@@ -436,8 +465,11 @@
         <div class="blueprint" style="padding:18px 20px;margin-bottom:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;align-items:center">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div>
-            <div class="mono" style="font-size:36px;line-height:1">4,7</div>
-            <div style="font-size:13px;color:var(--color-neutral-700)">на основе 34 отзывов</div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <span class="mono" style="font-size:36px;line-height:1">4,7</span>
+              <span class="stars" role="img" aria-label="Рейтинг 4,7 из 5" style="position:relative;display:inline-block;font-size:20px;line-height:1;letter-spacing:2px;white-space:nowrap"><span style="color:var(--color-neutral-300)">★★★★★</span><span style="position:absolute;left:0;top:0;width:94%;overflow:hidden;color:#e0a526">★★★★★</span></span>
+            </div>
+            <div style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">на основе 34 отзывов</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
             <sc-for list="{{ reviewBars }}" as="b" hint-placeholder-count="4">
@@ -466,7 +498,7 @@
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600);margin-left:8px">{{ r.role }}</span>
                 </div>
                 <div style="display:flex;gap:10px;align-items:baseline">
-                  <span class="mono" style="font-size:16px">{{ r.score }}</span>
+                  <span style="display:inline-flex;align-items:center;gap:6px"><span style="color:#e0a526;font-size:15px;line-height:1" aria-hidden="true">★</span><span class="mono" style="font-size:16px">{{ r.score }}</span></span>
                   <span class="tag tag-outline" style="font-size:11px;gap:5px"><span class="ico i-doc-certificates" style="color:var(--color-accent-700);width:12px;height:12px"></span>{{ r.verified }}</span>
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ r.date }}</span>
                 </div>
@@ -570,9 +602,8 @@
       <h1 style="font-size:38px">Поиск по фото шильдика</h1>
       <p style="font-size:17px;color:var(--color-neutral-800);max-width:640px">Сфотографируйте табличку на оборудовании. Система распознаёт модель и артикул и подбирает точное совпадение или аналог.</p>
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:26px;align-items:start">
-        <div class="blueprint" style="padding:36px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;min-height:320px;justify-content:center">
-          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span style="width:160px;height:110px;display:block;background:url(img/nameplate.jpg) center/cover no-repeat;border:1px solid var(--color-divider)" role="img" aria-label="Пример снимка шильдика" data-photo="1"></span>
+        <div class="dropzone" style="padding:36px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;min-height:320px;justify-content:center;border:2px dashed color-mix(in srgb, var(--color-accent) 35%, transparent);background:color-mix(in srgb, var(--color-accent) 4%, #fff);border-radius:14px">
+          <span class="ico ico-40 i-entry-upload" style="color:var(--color-accent-700)"></span>
           <span style="font-family:var(--font-heading);font-weight:600;font-size:21px">Перетащите фото шильдика</span>
           <span style="font-size:14px;color:var(--color-neutral-700);max-width:340px">JPG или PNG до 10 МБ. Снимайте так, чтобы модель и серийный номер читались.</span>
           <div style="display:flex;gap:10px;margin-top:4px">
@@ -582,10 +613,16 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:16px">
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Распознано · 0,8 с</div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="width:64px;height:64px;flex:none;border-radius:8px;background:url(img/nameplate.jpg) center/cover no-repeat" role="img" aria-label="Загруженное фото шильдика" data-photo="1"></span>
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:16px;display:flex;align-items:center;gap:8px"><span class="ico ico-16 i-ui-approval" style="color:var(--color-accent-700)"></span>Распознано за 0,8 с</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">shildik-nasos.jpg · 2,4 МБ</div>
+            </div>
+          </div>
           <div class="blueprint" style="display:grid;grid-template-columns:120px minmax(0,1fr)">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;border-right:1px solid var(--color-divider)" data-photo="1"></div>
+            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #ffffff;border-right:1px solid var(--color-divider)" data-photo="1"></div>
             <div style="padding:16px 18px;display:flex;flex-direction:column;gap:6px">
               <span class="mono" style="font-size:12px;color:var(--color-neutral-600)">GRUNDFOS · 96122802</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">CR 32-4 A-F-A-E-HQQE</span>
@@ -600,9 +637,12 @@
           <sc-for list="{{ analogs }}" as="a" hint-placeholder-count="3">
             <div class="blueprint row-hover" style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 16px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div>
+              <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                <span class="thumb" style="width:48px;height:48px;border-radius:8px;background: {{ a.bg }}"></span>
+                <div>
                 <div style="font-weight:500">{{ a.name }}</div>
                 <div style="font-size:13px;color:var(--color-neutral-700)">{{ a.spec }}</div>
+                </div>
               </div>
               <div style="text-align:right;white-space:nowrap">
                 <div class="mono" style="font-size:17px">{{ a.price }}</div>
@@ -627,10 +667,10 @@
           <h1 style="color:#fff;font-size:46px;max-width:640px">Загрузите прайс — заказы придут готовыми</h1>
           <p style="font-size:17px;color:var(--color-accent-200);max-width:600px">Мы приводим клиента, оформляем сделку и документы. Вы отгружаете напрямую с вашего склада. Никакой витрины, тендеров и переписки с розницей.</p>
           <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-sync" style="color:var(--color-accent-300);width:14px;height:14px"></span>XML / YML</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>REST API</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-file" style="color:var(--color-accent-300);width:14px;height:14px"></span>Excel / CSV</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>Обмен с 1С</span>
+            <span class="pill-dark" style="font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-sync" style="color:var(--color-accent-300);width:14px;height:14px"></span>XML / YML</span>
+            <span class="pill-dark" style="font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>REST API</span>
+            <span class="pill-dark" style="font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-file" style="color:var(--color-accent-300);width:14px;height:14px"></span>Excel / CSV</span>
+            <span class="pill-dark" style="font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>Обмен с 1С</span>
           </div>
         </div>
         <div class="card" style="background:var(--color-bg);color:var(--color-text);border-color:transparent;padding:22px">
@@ -920,8 +960,8 @@
     <div style="max-width:1360px;margin:0 auto;padding:28px 28px 48px;display:flex;flex-direction:column;gap:26px">
       <sc-for list="{{ directionGroups }}" as="g" hint-placeholder-count="6">
         <div>
-          <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:0;margin-bottom:14px;border:1px solid var(--color-divider)">
-            <div class="duotone" style="background: {{ g.photo }};min-height:112px" data-photo="1"></div>
+          <div class="dir-banner" style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:0;margin-bottom:14px;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(22,38,58,.08), 0 6px 20px rgba(22,38,58,.06)">
+            <div class="duotone dir-banner-ph" style="background: {{ g.photo }};min-height:112px;border-radius:14px 0 0 14px" data-photo="1"></div>
             <div style="padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:6px">
               <div style="display:flex;align-items:center;gap:12px">
                 <span class="ico ico-28 {{ g.icon }}" style="color:var(--color-accent-700)"></span>
@@ -969,16 +1009,17 @@
         <div class="blueprint" style="padding:0;display:flex;flex-direction:column;min-height:560px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--color-divider)">
-            <span style="width:9px;height:9px;background:var(--color-accent);display:block"></span>
+            <span style="width:9px;height:9px;border-radius:50%;background:var(--color-accent);display:block"></span>
             <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">Подбор · насос для оборотной воды</span>
             <span class="mono" style="margin-left:auto;font-size:11px;color:var(--color-neutral-600)">ответ 4 сек</span>
           </div>
 
-          <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:16px">
+          <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:16px;background:var(--color-bg)">
             <sc-for list="{{ chat }}" as="m" hint-placeholder-count="6">
-              <div style="display:flex;justify-content: {{ m.align }}">
-                <div style="max-width:88%;border:1px solid {{ m.border }};background: {{ m.bg }};color: {{ m.color }};padding:12px 14px;display:flex;flex-direction:column;gap:6px">
-                  <span class="mono" style="font-size:10px;text-transform:uppercase;opacity:0.65">{{ m.who }}</span>
+              <div style="display:flex;gap:8px;align-items:flex-end;justify-content: {{ m.align }}">
+                <span style="width:28px;height:28px;border-radius:50%;flex:none;background:url(img/mark.svg) center/cover;display: {{ m.avatar }};margin-bottom:20px" aria-hidden="true"></span>
+                <div style="max-width:88%;display:flex;flex-direction:column;gap:4px;align-items: {{ m.align }}">
+                <div style="background: {{ m.bg }};color: {{ m.color }};border-radius: {{ m.radius }};box-shadow: {{ m.shadow }};padding:12px 14px;display:flex;flex-direction:column;gap:6px">
                   <span style="font-size:15px;line-height:1.5">{{ m.text }}</span>
                   <sc-if value="{{ m.hasRows }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
@@ -998,6 +1039,8 @@
                     </div>
                   </sc-if>
                 </div>
+                <span style="font-size:11px;color:var(--color-neutral-600);padding:0 4px">{{ m.time }}</span>
+                </div>
               </div>
             </sc-for>
           </div>
@@ -1008,10 +1051,10 @@
                 <span class="tag tag-outline" style="font-size:12px;padding:6px 10px;cursor:pointer">{{ c }}</span>
               </sc-for>
             </div>
-            <div style="display:flex">
-              <input class="input" placeholder="Например: насос 40 м³/ч, напор 35 м, вода +60 °C, нужен аналог Grundfos" style="min-height:46px;border-right:0">
-              <button class="btn btn-secondary" style="min-height:46px;border-right:0">Файл</button>
-              <button class="btn btn-primary" style="min-height:46px;padding-inline:22px">Отправить</button>
+            <div class="chat-input" style="display:flex;align-items:center;gap:4px;border:1px solid var(--color-divider);border-radius:12px;background:#fff;padding:4px">
+              <button class="btn btn-secondary" aria-label="Прикрепить файл" title="Прикрепить файл" style="min-height:42px;min-width:42px;padding:0;border:0;background:transparent;color:var(--color-neutral-700)"><span class="ico ico-20 i-entry-upload"></span></button>
+              <input class="input" placeholder="Например: насос 40 м³/ч, напор 35 м, вода +60 °C, нужен аналог Grundfos" style="min-height:42px;border:0;background:transparent;box-shadow:none;flex:1;min-width:0;padding-left:4px">
+              <button class="btn btn-primary" style="min-height:42px;padding-inline:20px;border-radius:8px">Отправить</button>
             </div>
           </div>
         </div>
@@ -1072,7 +1115,6 @@
             <div style="display:flex;flex-direction:column;gap:10px">
               <sc-for list="{{ chatSkills }}" as="s" hint-placeholder-count="6">
                 <div style="display:flex;gap:10px;align-items:flex-start">
-                  <span style="width:7px;height:7px;background:var(--color-accent);flex:none;margin-top:7px;display: {{ s.dot }}"></span>
                   <span class="ico ico-20 {{ s.icon }}" style="color:var(--color-accent-700);margin-top:1px"></span>
                   <div>
                     <div style="font-family:var(--font-heading);font-weight:600;font-size:16px">{{ s.t }}</div>
@@ -2488,9 +2530,9 @@
               <span class="card-kicker">{{ s.n }}</span>
               <span class="card-title">{{ s.t }}</span>
               <p class="card-body" style="font-size:14px">{{ s.d }}</p>
-              <div style="display:flex;gap:12px;color:var(--color-accent-700)">
+              <div style="display:flex;gap:8px 14px;flex-wrap:wrap">
                 <sc-for list="{{ s.entries }}" as="e" hint-placeholder-count="5">
-                  <span class="ico ico-20 {{ e.icon }}" title="{{ e.t }}"></span>
+                  <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--color-neutral-700)"><span class="ico ico-16 {{ e.icon }}" style="color:var(--color-accent-700)"></span>{{ e.t }}</span>
                 </sc-for>
               </div>
             </div>
@@ -2508,11 +2550,11 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 10px">Контакты</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Мессенджер</span><a href="#" onClick="{{ goChat }}" class="mono">Чат в MAX</a></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-channel-max" style="color:var(--color-accent-700)"></span>Мессенджер</span><a href="#" onClick="{{ goChat }}">Чат в MAX</a></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-channel-mail" style="color:var(--color-accent-700)"></span>Снабжение</span><span class="mono">zakaz@promkontur.example</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-channel-mail" style="color:var(--color-accent-700)"></span>Поставщикам</span><span class="mono">partner@promkontur.example</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Часы работы</span><span>пн–пт 08:00–19:00 МСК</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Юрлицо</span><span>ООО «Промконтур», ИНН 7701234567</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-ui-history" style="color:var(--color-accent-700)"></span>Часы работы</span><span>пн–пт 08:00–19:00 МСК</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-ui-requisites" style="color:var(--color-accent-700)"></span>Юрлицо</span><span>ООО «Промконтур», ИНН 7701234567</span></div>
           </div>
           <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
             <button onClick="{{ goChat }}" class="btn btn-primary">Написать в чат</button>
@@ -2776,7 +2818,7 @@
             <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);padding:8px 14px;display:flex;justify-content:space-between;font-size:11px">
               <span class="mono">09:48</span><span class="mono">CR 32-4</span>
             </div>
-            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;height:180px" data-photo="1"></div>
+            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #ffffff;height:180px" data-photo="1"></div>
             <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
               <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">Артикул 96122802 · Grundfos</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.2">Насос Grundfos CR 32-4</span>
@@ -2813,14 +2855,18 @@
               <span class="mono">09:44</span><span class="mono">MAX</span>
             </div>
             <div style="padding:12px 14px;border-bottom:1px solid var(--color-divider);display:flex;align-items:center;gap:10px">
-              <span style="width:9px;height:9px;background:var(--color-accent);display:block"></span>
+              <span style="width:9px;height:9px;border-radius:50%;background:var(--color-accent);display:block"></span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">@promkontur_bot</span>
               <span class="mono" style="margin-left:auto;font-size:11px;color:var(--color-neutral-600)">онлайн</span>
             </div>
-            <div style="padding:14px;display:flex;flex-direction:column;gap:10px;min-height:300px">
+            <div style="padding:14px;display:flex;flex-direction:column;gap:10px;min-height:300px;background:var(--color-bg)">
               <sc-for list="{{ mobileChat }}" as="m" hint-placeholder-count="4">
-                <div style="display:flex;justify-content: {{ m.align }}">
-                  <div style="max-width:86%;border:1px solid {{ m.border }};background: {{ m.bg }};color: {{ m.color }};padding:10px 12px;font-size:14px;line-height:1.45">{{ m.text }}</div>
+                <div style="display:flex;gap:6px;align-items:flex-end;justify-content: {{ m.align }}">
+                  <span style="width:28px;height:28px;border-radius:50%;flex:none;background:url(img/mark.svg) center/cover;display: {{ m.avatar }};margin-bottom:18px" aria-hidden="true"></span>
+                  <div style="max-width:86%;display:flex;flex-direction:column;gap:3px;align-items: {{ m.align }}">
+                    <div style="background: {{ m.bg }};color: {{ m.color }};border-radius: {{ m.radius }};box-shadow: {{ m.shadow }};padding:10px 12px;font-size:14px;line-height:1.45">{{ m.text }}</div>
+                    <span style="font-size:11px;color:var(--color-neutral-600);padding:0 4px">{{ m.time }}</span>
+                  </div>
                 </div>
               </sc-for>
               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
@@ -2829,9 +2875,12 @@
                 <span class="tag tag-outline" style="font-size:12px;padding:8px 10px">Счёт</span>
               </div>
             </div>
-            <div style="border-top:1px solid var(--color-divider);padding:10px 14px;display:flex;gap:8px">
-              <input class="input" placeholder="Сообщение" style="min-height:46px">
-              <button class="btn btn-primary" style="min-height:46px;padding-inline:18px">→</button>
+            <div style="border-top:1px solid var(--color-divider);padding:10px 14px">
+              <div class="chat-input" style="display:flex;align-items:center;gap:4px;border:1px solid var(--color-divider);border-radius:12px;background:#fff;padding:4px">
+                <button class="btn btn-secondary" aria-label="Прикрепить файл" style="min-height:44px;min-width:44px;padding:0;border:0;background:transparent;color:var(--color-neutral-700)"><span class="ico ico-20 i-entry-upload"></span></button>
+                <input class="input" placeholder="Сообщение" style="min-height:44px;border:0;background:transparent;box-shadow:none;flex:1;min-width:0;padding-left:4px">
+                <button class="btn btn-primary" aria-label="Отправить" style="min-height:44px;min-width:44px;padding:0;border-radius:8px"><span class="ico ico-20 i-ui-arrow-right"></span></button>
+              </div>
             </div>
           </div>
         </div>
@@ -2980,15 +3029,20 @@
 
       <div class="blueprint" style="padding:20px 22px;margin-bottom:20px">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--color-divider)">
-          <sc-for list="{{ orderSteps }}" as="s" hint-placeholder-count="5">
-            <div style="background:var(--color-bg);padding:14px 16px;display:flex;flex-direction:column;gap:6px;border-top:3px solid {{ s.bar }}">
-              <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ s.date }}</span>
-              <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color: {{ s.color }};display:flex;align-items:center;gap:8px"><span class="ico ico-20 {{ s.icon }}"></span>{{ s.t }}</span>
-              <span style="font-size:13px;color:var(--color-neutral-700)">{{ s.d }}</span>
-            </div>
+        <ol class="pk-stepper" aria-label="Этапы заказа" style="list-style:none;margin:0;padding:4px 0 0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)">
+          <sc-for list="{{ orderSteps }}" as="s" hint-placeholder-count="6">
+            <li class="pk-step" style="position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:0 6px">
+              <span class="pk-step-l" style="position:absolute;top:15px;left:0;right:50%;height:2px;background: {{ s.lineL }}"></span>
+              <span class="pk-step-r" style="position:absolute;top:15px;left:50%;right:0;height:2px;background: {{ s.lineR }}"></span>
+              <span class="pk-step-dot" style="position:relative;z-index:1;width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background: {{ s.dotBg }};color: {{ s.dotColor }};box-shadow: {{ s.dotRing }}"><span class="ico ico-16 {{ s.icon }}"></span></span>
+              <span style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-family:var(--font-heading);font-weight:600;font-size:14px;line-height:1.3;color: {{ s.tColor }}">{{ s.t }}</span>
+                <span style="font-size:12px;color:var(--color-neutral-600)">{{ s.date }}</span>
+                <span style="font-size:12px;color:var(--color-neutral-600);line-height:1.4">{{ s.d }}</span>
+              </span>
+            </li>
           </sc-for>
-        </div>
+        </ol>
       </div>
 
       <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;align-items:start">
@@ -3036,7 +3090,7 @@
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 48px">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px">
         <div>
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Заявка · zayavka_cex4_sentyabr.xlsx</div>
+          <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--color-neutral-800);background:#fff;border:1px solid var(--color-divider);border-radius:999px;padding:4px 12px 4px 8px;margin-bottom:6px"><span class="ico ico-16 i-doc-generic" style="color:var(--color-accent-700)"></span>Заявка цех 4, сентябрь.xlsx · 20 строк</div>
           <h1 style="font-size:32px;margin:2px 0 0">Разбор заявки</h1>
           <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:720px">Строки сопоставлены с артикулами в базе. Позиции с точным совпадением уходят в корзину, спорные — на подтверждение, строки без аналога уходят закупщику как пробел ассортимента.</p>
         </div>
@@ -3228,7 +3282,7 @@
           <tbody>
             <sc-for list="{{ emptySuggest }}" as="p" hint-placeholder-count="4">
               <tr>
-                <td style="font-weight:500;font-size:14px"><span style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5"></span>{{ p.name }}</span></td>
+                <td style="font-weight:500;font-size:14px"><span style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background: {{ p.bg }}"></span>{{ p.name }}</span></td>
                 <td style="font-size:13px;color:var(--color-neutral-700)">{{ p.spec }}</td>
                 <td style="font-size:13px">{{ p.stock }}</td>
                 <td class="mono" style="text-align:right;font-size:15px;white-space:nowrap">{{ p.price }}</td>
@@ -3666,7 +3720,7 @@
 
       <div data-admin-tabs="1" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--color-divider);padding-bottom:12px">
         <sc-for list="{{ adminSections }}" as="s" hint-placeholder-count="7">
-          <button onClick="{{ s.go }}" style="{{ s.style }}"><span class="ico ico-16 i-op-admin"></span>{{ s.t }}</button>
+          <button onClick="{{ s.go }}" style="{{ s.style }}"><span class="ico ico-16 {{ s.icon }}"></span>{{ s.t }}</button>
         </sc-for>
       </div>
 
@@ -4489,7 +4543,7 @@
   </sc-if>
 
   <footer style="background:var(--color-neutral-900);color:var(--color-neutral-300)">
-    <div style="max-width:1360px;margin:0 auto;padding:36px 28px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px">
+    <div class="footer-grid" style="max-width:1360px;margin:0 auto;padding:36px 28px 28px;display:grid;grid-template-columns:minmax(0,1.6fr) repeat(5,minmax(0,1fr));gap:28px">
       <div>
         <div style="display:flex;align-items:center;gap:10px;color:#fff">
           <span style="width:18px;height:18px;background:url(img/mark.svg) center/contain no-repeat;display:block"></span>
@@ -4497,17 +4551,16 @@
         </div>
         <p style="font-size:14px;margin:10px 0 0;max-width:330px;line-height:1.55">Промышленное оборудование от поставщиков по всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
         <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px">
-          <a href="#" onClick="{{ goChat }}" class="mono" style="color:#fff;font-size:19px;white-space:nowrap">Чат в MAX</a>
           <span style="font-size:13px;display:flex;align-items:center;gap:6px"><span class="ico i-channel-mail" style="color:var(--color-accent-300);width:14px;height:14px"></span>zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
         </div>
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><span class="ico i-channel-max" style="color:var(--color-accent-300);width:14px;height:14px"></span>Чат в MAX</span>
-          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><span class="ico i-channel-mail" style="color:var(--color-accent-300);width:14px;height:14px"></span>Почта снабжения</span>
+          <a href="#" onClick="{{ goChat }}" style="font-size:13px;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 12px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none"><span class="ico i-channel-max" style="color:var(--color-accent-300);width:14px;height:14px"></span>Чат в MAX</a>
+          <a href="mailto:zakaz@promkontur.example" style="font-size:13px;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 12px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;color:#fff;text-decoration:none"><span class="ico i-channel-mail" style="color:var(--color-accent-300);width:14px;height:14px"></span>Почта снабжения</a>
         </div>
       </div>
       <sc-for list="{{ footerCols }}" as="f" hint-placeholder-count="5">
         <div>
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-500);margin-bottom:10px">{{ f.title }}</div>
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:14px;color:#fff;margin-bottom:10px">{{ f.title }}</div>
           <sc-for list="{{ f.links }}" as="l" hint-placeholder-count="5">
             <a href="#" onClick="{{ l.go }}" style="display:block;font-size:14px;padding:3px 0;color:var(--color-neutral-300);text-decoration:none">{{ l.t }}</a>
           </sc-for>
@@ -4610,16 +4663,16 @@ class Component extends DCLogic {
     }));
 
     const catalogProducts = [
-      { bg: "url(img/p-cr32.jpg) center/cover no-repeat", bgc: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #b3b3b4", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #6a6663", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
-      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
+      { bg: "url(img/p-cr32.jpg) center/cover no-repeat", bgc: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #ffffff", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #ffffff", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #ffffff", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
+      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #ffffff", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #ffffff", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go(p.cta === "Запросить КП" ? "quote" : "product") }));
 
-    const pbg = {"p-cr32": "#c7c5c5", "p-cr32-flange": "#c6c4c1", "p-cr32-motor": "#bebebe", "p-nb40": "#b3b3b4", "p-nis80": "#bdb8b3", "p-lgcy75": "#6a6663", "p-vr15": "#d9d9d9", "p-6205": "#c3c1c2"};
-    const pb = n => ({ bg: "url(img/" + n + ".jpg) center/cover no-repeat", bgc: "url(img/" + n + ".jpg) center/contain no-repeat " + (pbg[n] || "#bfbfc1") });
+    const pbg = {};
+    const pb = n => ({ bg: "url(img/" + n + ".jpg) center/cover no-repeat", bgc: "url(img/" + n + ".jpg) center/contain no-repeat " + (pbg[n] || "#ffffff") });
     const pumpProducts = [
       { ...pb("p-cr32"), sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
       { ...pb("p-nb40"), sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
@@ -5400,17 +5453,17 @@ class Component extends DCLogic {
         { v: "11", k: "срывов предупреждено заранее", color: "var(--color-text)" }
       ],
       logOptions: [
-        { icon: "i-log-consolidated", name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Перевозчик 1", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
-        { icon: "i-log-direct", name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "Перевозчики 3 и 2", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
-        { icon: "i-log-urgent", name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Перевозчик 1", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
+        { icon: "i-log-consolidated", name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Деловые Линии", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
+        { icon: "i-log-direct", name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "СДЭК-Грузы и ПЭК", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
+        { icon: "i-log-urgent", name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Деловые Линии", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
         { icon: "i-log-pickup", name: "Самовывоз с терминала", scheme: "клиент забирает в Туле", carrier: "—", term: "3 дня", cost: "0 ₽", pick: "Предложено клиенту", tagClass: "tag-neutral" }
       ],
       logCarriers: [
-        { name: "Перевозчик 1", zone: "вся РФ, габарит", term: "2–5 дней", otd: "95,2%", color: "var(--color-neutral-700)", share: "42%" },
-        { name: "Перевозчик 2", zone: "ЦФО, Поволжье", term: "2–4 дня", otd: "92,8%", color: "var(--color-neutral-700)", share: "24%" },
-        { name: "Перевозчик 3", zone: "мелкие грузы, вся РФ", term: "1–3 дня", otd: "96,4%", color: "var(--color-neutral-700)", share: "19%" },
-        { name: "Перевозчик 4", zone: "Урал, Сибирь", term: "4–8 дней", otd: "88,1%", color: "#b3261e", share: "9%" },
-        { name: "Перевозчик 5 · своя машина", zone: "Москва и 200 км", term: "в день заказа", otd: "99,1%", color: "var(--color-neutral-700)", share: "6%" }
+        { name: "Деловые Линии", zone: "вся РФ, габарит", term: "2–5 дней", otd: "95,2%", color: "var(--color-neutral-700)", share: "42%" },
+        { name: "ПЭК", zone: "ЦФО, Поволжье", term: "2–4 дня", otd: "92,8%", color: "var(--color-neutral-700)", share: "24%" },
+        { name: "СДЭК-Грузы", zone: "мелкие грузы, вся РФ", term: "1–3 дня", otd: "96,4%", color: "var(--color-neutral-700)", share: "19%" },
+        { name: "Байкал-Сервис", zone: "Урал, Сибирь", term: "4–8 дней", otd: "88,1%", color: "#b3261e", share: "9%" },
+        { name: "Своя машина", zone: "Москва и 200 км", term: "в день заказа", otd: "99,1%", color: "var(--color-neutral-700)", share: "6%" }
       ],
       logDelay: [
         { n: "01", t: "Замечает отклонение", d: "сравнивает фактический статус перевозчика с обещанной датой каждые 30 минут" },
@@ -5673,7 +5726,7 @@ class Component extends DCLogic {
         { n: "01", t: "Повторить загрузку", d: "три попытки с интервалом", after: "10 мин" },
         { n: "02", t: "Перепарсить другой схемой", d: "YML → XML → CSV", after: "сразу" },
         { n: "03", t: "Подставить прошлые значения", d: "пометить «требует проверки»", after: "сразу" },
-        { n: "04", t: "Написать поставщику в MAX", d: "с примером битой строки", after: "30 мин" },
+        { n: "04", t: "Написать поставщику в MAX", d: "Файл с ошибкой: строка 14, нет цены", after: "30 мин" },
         { n: "05", t: "Снять позиции с публикации", d: "если поставщик молчит", after: "24 ч" },
         { n: "06", t: "Передать оператору", d: "с журналом попыток", after: "24 ч" }
       ],
@@ -5721,9 +5774,9 @@ class Component extends DCLogic {
         "Самостоятельный ремонт и вскрытие без согласования с сервисом."
       ],
       projectStats: [
-        { v: "2 часа", k: "предварительный расчёт" },
-        { v: "до 6 дней", k: "полное КП с монтажом" },
-        { v: "14 дней", k: "срок действия цены" },
+        { icon: "i-ui-history", v: "2 часа", k: "предварительный расчёт" },
+        { icon: "i-quote-install", v: "до 6 дней", k: "полное КП с монтажом" },
+        { icon: "i-step-one-price", v: "14 дней", k: "срок действия цены" },
         { icon: "i-pay-stages", v: "до 45%", k: "аванс по графику проекта" }
       ],
       projectKits: [
@@ -5735,8 +5788,8 @@ class Component extends DCLogic {
       projectSteps: [
         { icon: "i-step-request", a: "01 · Запрос", b: "принимает спецификацию или опросный лист", c: "2 часа", d: "—" },
         { icon: "i-quote-engineering", a: "02 · Инженерный подбор", b: "проверяет рабочие точки, подбирает комплект", c: "1–3 дня", d: "—" },
-        { a: "03 · КП и согласование", b: "расчёт с доставкой, монтажом и ПНР", c: "3 дня", d: "—" },
-        { a: "04 · Поставка", b: "контроль сроков по каждому поставщику", c: "по графику", d: "аванс 30–45%" },
+        { icon: "i-ui-quote", a: "03 · КП и согласование", b: "расчёт с доставкой, монтажом и ПНР", c: "3 дня", d: "—" },
+        { icon: "i-step-direct-ship", a: "04 · Поставка", b: "контроль сроков по каждому поставщику", c: "по графику", d: "аванс 30–45%" },
         { icon: "i-quote-install", a: "05 · Монтаж и ПНР", b: "подрядчик в регионе, акты и документы", c: "по объекту", d: "остаток после ПНР" }
       ],
       brandStats: [
@@ -5791,9 +5844,9 @@ class Component extends DCLogic {
         { who: "Робот", text: "«Оформляю. Счёт придёт в MAX за 15 минут, резерв поставил. Добавить ответные фланцы?»", bar: "var(--color-accent)" }
       ],
       mobileCatalog: [
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
-        { bg: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
-        { bg: "url(img/p-lgcy75.jpg) center/contain no-repeat #6a6663", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
+        { bg: "url(img/p-nis80.jpg) center/contain no-repeat #ffffff", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
+        { bg: "url(img/p-lgcy75.jpg) center/contain no-repeat #ffffff", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
       ],
       mobileCart: [
         { name: "Grundfos CR 32-4", qty: "2 шт. × 104 900 ₽", sum: "209 800 ₽" },
@@ -5811,7 +5864,7 @@ class Component extends DCLogic {
         { text: "Присоединение фланцевое DN65?", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)" },
         { text: "Да, DN65 PN16", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff" },
         { text: "CNP CDLF 42-30 — 74 800 ₽, 12 шт., отгрузка 2 дня. Есть два аналога дороже. Оформить?", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)" }
-      ],
+      ].map((m, i) => ({ ...m, ...(m.align === "flex-start" ? { bot: true, bg: "#fff", color: "var(--color-text)", radius: "16px 16px 16px 4px", shadow: "0 1px 3px rgba(22,38,58,.08)", avatar: "block" } : { bot: false, bg: "var(--color-accent)", color: "#fff", radius: "16px 16px 4px 16px", shadow: "none", avatar: "none" }), time: ["09:41", "09:41", "09:42", "09:42"][i] })),
       goUpload: this.go("upload"), goOrder: this.go("order"), goClient: this.go("client"),
       goAbout: this.go("about"), goAuth: this.go("auth"), goBrand: this.go("brand"),
       moneyStats: [
@@ -5881,14 +5934,25 @@ class Component extends DCLogic {
         "Мотор-редукторы берут по ремонту: предложить ЗИП-комплект на складе под их типоразмер."
       ],
       orderSteps: [
-        { icon: "i-order-created", date: "12 сент", t: "Оформлен", d: "счёт выставлен, 15 минут", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { icon: "i-order-paid", date: "12 сент", t: "Счёт принят · отсрочка", d: "оплата до 15 октября", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { icon: "i-order-handed", date: "13 сент", t: "Передан поставщикам", d: "Гидромаш и ПромАрматура, подтверждено", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { icon: "i-order-shipped", date: "15 сент", t: "Отгружен", d: "сборный груз, 2 отгрузки · трек 4512 8890 3341", color: "var(--color-accent-700)", bar: "var(--color-accent)" },
-        { icon: "i-order-delivery", date: "18 сент", t: "Доставка", d: "терминал Тула, ожидается", color: "var(--color-neutral-700)", bar: "var(--color-neutral-300)" }
-      ],
+        { icon: "i-order-created", date: "12 сентября", t: "Оформлен", d: "счёт выставлен за 15 минут", st: "done" },
+        { icon: "i-order-paid", date: "12 сентября", t: "Счёт принят", d: "отсрочка, оплата до 15 октября", st: "done" },
+        { icon: "i-order-handed", date: "13 сентября", t: "Передан поставщикам", d: "Гидромаш и ПромАрматура", st: "done" },
+        { icon: "i-order-shipped", date: "15 сентября", t: "Отгружен", d: "сборный груз, 2 отгрузки", st: "done" },
+        { icon: "i-order-delivery", date: "в пути", t: "Доставка", d: "терминал Тула, 18 сентября", st: "cur" },
+        { icon: "i-ui-approval", date: "ожидается", t: "Получен", d: "приёмка и подпись УПД", st: "fut" }
+      ].map((s, i, a) => {
+        const on = x => x && x.st !== "fut";
+        const A = "var(--color-accent)", L = "var(--color-divider)";
+        return { ...s,
+          dotBg: s.st === "done" ? A : "#fff",
+          dotColor: s.st === "done" ? "#fff" : s.st === "cur" ? A : "var(--color-neutral-500)",
+          dotRing: s.st === "done" ? "none" : s.st === "cur" ? "0 0 0 2px " + A : "inset 0 0 0 2px var(--color-neutral-300)",
+          tColor: s.st === "fut" ? "var(--color-neutral-700)" : "var(--color-text)",
+          lineL: i === 0 ? "transparent" : (on(s) ? A : L),
+          lineR: i === a.length - 1 ? "transparent" : (on(a[i + 1]) ? A : L) };
+      }),
       orderItems: [
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", vendor: "Гидромаш", sum: "209 800 ₽" },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", vendor: "Гидромаш", sum: "209 800 ₽" },
         { bg: "url(img/p-check-valve.jpg) center/cover no-repeat", name: "Обратный клапан DN65 PN16", sku: "ARM-OK-65", qty: "2", vendor: "ПромАрматура", sum: "8 400 ₽" },
         { bg: "url(img/p-gasket-kit.jpg) center/cover no-repeat", name: "Комплект прокладок DN65", sku: "PRK-65-SET", qty: "1", vendor: "Гидромаш", sum: "4 400 ₽" }
       ],
@@ -5958,10 +6022,10 @@ class Component extends DCLogic {
         { icon: "i-engineer", hasPh: false, t: "Запрос инженеру", d: "Нестандартная позиция или изделие по чертежу — ответ в течение двух часов.", cta: "Отправить запрос", go: this.go("quote") }
       ],
       emptySuggest: [
-        { name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", stock: "8 шт. в наличии", price: "104 900 ₽" },
-        { name: "Grundfos CR 32-2", spec: "32 м³/ч · 23 м · 3,0 кВт", stock: "5 шт. в наличии", price: "78 400 ₽" },
-        { name: "CNP CDLF 32-40", spec: "32 м³/ч · 44 м · 5,5 кВт", stock: "12 шт. в наличии", price: "71 300 ₽" },
-        { name: "Wilo Helix V 3604", spec: "36 м³/ч · 48 м · 5,5 кВт", stock: "3 шт. в наличии", price: "98 700 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", stock: "8 шт. в наличии", price: "104 900 ₽" },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-2", spec: "32 м³/ч · 23 м · 3,0 кВт", stock: "5 шт. в наличии", price: "78 400 ₽" },
+        { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 32-40", spec: "32 м³/ч · 44 м · 5,5 кВт", stock: "12 шт. в наличии", price: "71 300 ₽" },
+        { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 3604", spec: "36 м³/ч · 48 м · 5,5 кВт", stock: "3 шт. в наличии", price: "98 700 ₽" }
       ],
       goCart: this.go("cart"), goDirections: this.go("directions"),
       goArticle: this.go("article"), goChat: this.go("chat"),
@@ -5992,10 +6056,10 @@ class Component extends DCLogic {
         { section: "Сравнение · Насосы", title: "Нержавейка или чугун: где экономия мнимая", meta: "1 сентября · 6 мин" }
       ],
       compareModels: [
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30", sku: "CNP-CDLF-42-30", price: "74 800 ₽", cta: "В корзину", open: this.go("product") },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Wilo Helix V 4204", sku: "4198470", price: "96 300 ₽", cta: "В корзину", open: this.go("product") },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
-        { bg: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
+        { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 42-30", sku: "CNP-CDLF-42-30", price: "74 800 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 4204", sku: "4198470", price: "96 300 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-ebara-3m.jpg) center/contain no-repeat #ffffff", name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
       ],
       compareRows: [
         { k: "Подача в точке, м³/ч", cells: [{ v: "40", weight: "600", color: "var(--color-text)" }, { v: "42", weight: "400", color: "var(--color-text)" }, { v: "45", weight: "400", color: "var(--color-text)" }, { v: "33 · не проходит по точке", weight: "400", color: "#b3261e" }] },
@@ -6071,9 +6135,9 @@ class Component extends DCLogic {
         { a: "более 35%", b: "Вне рабочей зоны", c: "более 20%", d: "Снижение вдвое и более" }
       ],
       articleProducts: [
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", price: "104 900 ₽" },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30", spec: "40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
-        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", name: "INNOVERT VR 15 кВт", spec: "частотник · 380 В", price: "62 300 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", price: "104 900 ₽" },
+        { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 42-30", spec: "40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #ffffff", name: "INNOVERT VR 15 кВт", spec: "частотник · 380 В", price: "62 300 ₽" }
       ],
       contentQueue: [
         { topic: "Подбор насоса по рабочей точке", dir: "Насосы", key: "как подобрать насос · 4 800/мес", photos: "3", size: "8 400", status: "Опубликовано", tagClass: "tag-accent", action: "Открыть" },
@@ -6172,20 +6236,20 @@ class Component extends DCLogic {
             { icon: "i-dir-safety", name: "Средства безопасности", sub: "газоанализаторы, СИЗ, промышленная сигнализация", count: "2 480" }
           ]
         }
-      ],
+      ].map((g, i) => ({ ...g, cnt: g.items.length, open: i === 0 })),
       chat: [
         { who: "Закупщик", text: "Нужен насос на оборотную воду: 40 м³/ч, напор 35 м, температура до +60 °C. Grundfos дорого, нужен аналог.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Уточню два параметра: среда — техническая вода без абразива? И присоединение фланцевое DN65 или резьбовое?", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false },
         { who: "Закупщик", text: "Вода техническая, фланец DN65 PN16.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Подобрал три варианта по рабочей точке 40 м³/ч / 35 м. Все в наличии, цены с доставкой:", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: true, hasActions: true,
           rows: [
-            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30 · 40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
-            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Wilo Helix V 4204 · 42 м³/ч · 38 м · 7,5 кВт", price: "96 300 ₽" },
-            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
+            { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 42-30 · 40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
+            { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 4204 · 42 м³/ч · 38 м · 7,5 кВт", price: "96 300 ₽" },
+            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
           ] },
         { who: "Закупщик", text: "Берём CNP, две штуки. И добавь обратные клапаны DN65 и виброопоры.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Собрал спецификацию справа: 2 насоса, 2 клапана, 8 виброопор и комплект прокладок. Проверил остатки у трёх поставщиков, всё отгружается в один день. Счёт выставлю сразу после подтверждения.", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false }
-      ],
+      ].map((m, i) => ({ ...m, ...(m.who === "Чат" ? { bot: true, bg: "#fff", color: "var(--color-text)", radius: "16px 16px 16px 4px", shadow: "0 1px 3px rgba(22,38,58,.08)", avatar: "block" } : { bot: false, bg: "var(--color-accent)", color: "#fff", radius: "16px 16px 4px 16px", shadow: "none", avatar: "none" }), time: ["10:02", "10:02", "10:03", "10:03", "10:05", "10:05"][i] })),
       maxFeatures: [
         "Подбор и аналоги в переписке: параметры, три варианта, цены с наличием.",
         "Фото шильдика из галереи или камеры — распознавание за секунду.",
@@ -6276,12 +6340,12 @@ class Component extends DCLogic {
         { name: "Комплект прокладок DN65", sku: "PRK-65-SET", qty: "1", sum: "4 400 ₽" }
       ],
       chatSkills: [
-        { dot: "block", t: "Уточняет параметры", d: "Задаёт только те вопросы, без которых подбор неоднозначен: среда, присоединение, режим работы." },
-        { icon: "i-entry-list", dot: "none", t: "Читает заявку списком", d: "Принимает XLSX, письмо или фото шильдиков и сопоставляет строки с артикулами в базе." },
-        { dot: "block", t: "Проверяет остатки в реальном времени", d: "Опрашивает прайсы и API поставщиков, отбрасывает позиции с нулевым остатком." },
-        { icon: "i-analog", dot: "none", t: "Предлагает аналоги", d: "Подбирает замену по рабочей точке и присоединительным размерам с разницей в цене." },
-        { dot: "block", t: "Собирает спецификацию и счёт", d: "Формирует документ, выставляет счёт и отправляет заказ поставщику по API." },
-        { icon: "i-engineer", dot: "none", t: "Передаёт инженеру", d: "Проектные комплекты, позиции дороже порога и нестандартные среды уходят человеку с историей диалога." }
+        { icon: "i-ui-specs", t: "Уточняет параметры", d: "Задаёт только те вопросы, без которых подбор неоднозначен: среда, присоединение, режим работы." },
+        { icon: "i-entry-list", t: "Читает заявку списком", d: "Принимает XLSX, письмо или фото шильдиков и сопоставляет строки с артикулами в базе." },
+        { icon: "i-ui-search", t: "Проверяет остатки в реальном времени", d: "Опрашивает прайсы и API поставщиков, отбрасывает позиции с нулевым остатком." },
+        { icon: "i-analog", t: "Предлагает аналоги", d: "Подбирает замену по рабочей точке и присоединительным размерам с разницей в цене." },
+        { icon: "i-ui-quote", t: "Собирает спецификацию и счёт", d: "Формирует документ, выставляет счёт и отправляет заказ поставщику по API." },
+        { icon: "i-engineer", t: "Передаёт инженеру", d: "Проектные комплекты, позиции дороже порога и нестандартные среды уходят человеку с историей диалога." }
       ],
       directionFeeds: (() => {
         const ruF = ["XML", "REST API", "Excel / FTP", "1С:Обмен", "YML", "парсер сайта"];
@@ -6336,12 +6400,12 @@ class Component extends DCLogic {
         { name: "Счёт и документы", trigger: "подтверждение заказа", action: "счёт, УПД, ЭДО", limit: "новый контрагент", status: "Включено", tagClass: "tag-accent" },
         { name: "Обмен с 1С клиента", trigger: "заказ оформлен", action: "выгрузка заказа и документов", limit: "—", status: "Пилот", tagClass: "tag-neutral" }
       ],
-      adminSections: [{ t: "Всё", id: "all" },
-        { t: "Обзор", id: "overview" }, { t: "Цены и наценка", id: "prices" },
-        { t: "Источники", id: "sources" }, { t: "Автоматизация", id: "auto" },
-        { t: "Каналы и MAX", id: "channels" }, { t: "Контент и SEO", id: "content" }
+      adminSections: [{ t: "Всё", id: "all", icon: "i-op-admin" },
+        { t: "Обзор", id: "overview", icon: "i-op-economy" }, { t: "Цены и наценка", id: "prices", icon: "i-price-upload" },
+        { t: "Источники", id: "sources", icon: "i-tier-sync" }, { t: "Автоматизация", id: "auto", icon: "i-op-autopilot" },
+        { t: "Каналы и MAX", id: "channels", icon: "i-channel-max" }, { t: "Контент и SEO", id: "content", icon: "i-doc-generic" }
       ].map(s => ({
-        t: s.t,
+        t: s.t, icon: s.icon,
         go: () => this.setState({ adminTab: s.id }),
         style: "display:inline-flex;align-items:center;gap:8px;font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;padding:7px 14px;border:1px solid " +
           ((this.state.adminTab || "all") === s.id ? "var(--color-accent)" : "var(--color-divider)") +
@@ -6428,10 +6492,12 @@ class Component extends DCLogic {
         { name: "Поставщик В · выбран", price: "86 000 ₽", color: "#fff" }
       ],
       suppliersLight: [
-        { name: "Поставщик А", price: "91 000 ₽", color: "var(--color-neutral-700)" },
-        { name: "Поставщик Б", price: "88 500 ₽", color: "var(--color-neutral-700)" },
-        { name: "Поставщик В · выбран", price: "86 000 ₽", color: "var(--color-text)" }
-      ],
+        { name: "Склад в Москве", price: "91 000 ₽", on: false },
+        { name: "Склад в Туле", price: "88 500 ₽", on: false },
+        { name: "Склад в Казани · выбран", price: "86 000 ₽", on: true }
+      ].map(x => ({ ...x, color: x.on ? "var(--color-text)" : "var(--color-neutral-700)", weight: x.on ? "600" : "400",
+        bg: x.on ? "color-mix(in srgb, var(--color-accent) 8%, transparent)" : "transparent",
+        dotBg: x.on ? "var(--color-accent)" : "transparent", dotRing: x.on ? "none" : "inset 0 0 0 1.5px var(--color-neutral-300)", mark: x.on ? "✓" : "" })),
       products: catalogProducts,
       pumpProducts,
       filters: (x => x)([
@@ -6469,9 +6535,9 @@ class Component extends DCLogic {
         { icon: "i-order-paid", t: "Условия оплаты", d: "Аванс, отсрочка или поэтапная оплата под график проекта." }
       ],
       analogs: [
-        { name: "Wilo Helix V 3604", spec: "Подача 36 м³/ч · напор 48 м", price: "98 700 ₽", lead: "Отгрузка 3 дня" },
-        { name: "CNP CDLF 32-40", spec: "Подача 32 м³/ч · напор 44 м", price: "71 300 ₽", lead: "Отгрузка 2 дня" },
-        { name: "Ebara 3M 65-160", spec: "Подача 33 м³/ч · напор 42 м", price: "84 100 ₽", lead: "Под заказ 9 дней" }
+        { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 3604", spec: "Подача 36 м³/ч · напор 48 м", price: "98 700 ₽", lead: "Отгрузка 3 дня" },
+        { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 32-40", spec: "Подача 32 м³/ч · напор 44 м", price: "71 300 ₽", lead: "Отгрузка 2 дня" },
+        { bg: "url(img/p-ebara-3m.jpg) center/contain no-repeat #ffffff", name: "Ebara 3M 65-160", spec: "Подача 33 м³/ч · напор 42 м", price: "84 100 ₽", lead: "Под заказ 9 дней" }
       ],
       supplierSteps: [
         { icon: "i-step-deal", n: "01", t: "Договор и доступ", d: "Подписываем агентский договор, открываем кабинет поставщика." },
@@ -6480,14 +6546,14 @@ class Component extends DCLogic {
         { icon: "i-payout", n: "04", t: "Отгрузка и расчёты", d: "Вы отгружаете напрямую, мы закрываем документы и переводим оплату." }
       ],
       supplierStats: [
-        { v: "0 ₽", k: "стоимость размещения прайса" },
-        { v: "1–5 дней", k: "срок подключения выгрузки" },
+        { icon: "i-vendor-price", v: "0 ₽", k: "стоимость размещения прайса" },
+        { icon: "i-tier-sync", v: "1–5 дней", k: "срок подключения выгрузки" },
         { icon: "i-payout", v: "3–7 дней", k: "расчёт после отгрузки" }
       ],
       autoBuy: [
-        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "7 октября", tagClass: "tag-accent", mode: "выше лимита — подтверждение в MAX", on: true },
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #ffffff", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "7 октября", tagClass: "tag-accent", mode: "выше лимита — подтверждение в MAX", on: true },
         { bg: "url(img/p-lip-seal.jpg) center/cover no-repeat", name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", price: "140 ₽", period: "ежемесячно", qty: "100", next: "1 октября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", sku: "96122802", price: "104 900 ₽", period: "раз в квартал", qty: "1", next: "декабрь", tagClass: "tag-neutral", mode: "подтверждение в MAX", on: true },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4", sku: "96122802", price: "104 900 ₽", period: "раз в квартал", qty: "1", next: "декабрь", tagClass: "tag-neutral", mode: "подтверждение в MAX", on: true },
         { bg: "url(img/p-air-filter.jpg) center/cover no-repeat", name: "Фильтр-элемент воздушный 2 мкм", sku: "FLT-AIR-2", price: "3 200 ₽", period: "каждые 6 недель", qty: "6", next: "26 сентября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
         { bg: "url(img/p-gasket-kit.jpg) center/cover no-repeat", name: "Комплект прокладок DN65", sku: "PRK-65-SET", price: "4 400 ₽", period: "по наработке", qty: "2", next: "пауза", tagClass: "tag-outline", mode: "выключена", on: false }
       ],
@@ -6520,10 +6586,10 @@ class Component extends DCLogic {
         ];
       })(),
       accountRepeat: [
-        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", price: "540 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #ffffff", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", price: "540 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
         { bg: "url(img/p-lip-seal.jpg) center/cover no-repeat", name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", times: "7", period: "раз в месяц", last: "13 сентября", price: "140 ₽", delta: "−4% к прошлой закупке", deltaColor: "var(--color-accent-700)" },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", price: "104 900 ₽", delta: "+2% к прошлой закупке", deltaColor: "var(--color-neutral-700)" },
-        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", price: "104 900 ₽", delta: "+2% к прошлой закупке", deltaColor: "var(--color-neutral-700)" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #ffffff", name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
         { bg: "url(img/p-gearmotor.jpg) center/cover no-repeat", name: "Мотор-редуктор NORD SK 02", sku: "NRD-SK02", times: "2", period: "по ремонту", last: "28 августа", price: "48 200 ₽", delta: "−7% к прошлой закупке", deltaColor: "var(--color-accent-700)" }
       ],
       accountNav: [
@@ -6543,9 +6609,9 @@ class Component extends DCLogic {
         { id: "КП-2198", items: "Комплекс водоподготовки", status: "КП получено", tagClass: "tag-accent", date: "—", sum: "684 000 ₽" }
       ],
       cart: [
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
-        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
-        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #ffffff", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #ffffff", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
       ],
       footerCols: [
         { title: "Каталог", links: [

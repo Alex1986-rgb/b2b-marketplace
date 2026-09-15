@@ -17,7 +17,8 @@ const ROUTES = require('./routes');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'project');
-const OUT = path.join(ROOT, 'site');
+const FINAL = path.join(ROOT, 'site');
+const OUT = path.join(ROOT, '.site-build-' + process.pid); // собираем во временную папку, в конце подмена — site/ никогда не бывает полупустым
 const BASE = process.env.BASE || '/b2b-marketplace/';
 const ORIGIN = process.env.ORIGIN || 'https://alex1986-rgb.github.io';
 const PORT = 8150;
@@ -64,7 +65,7 @@ function inPage(routes, base) {
 
   for (const el of [...c.querySelectorAll('[data-go]')]) {
     const r = routes[el.getAttribute('data-go')];
-    const href = base + (r ? r.path : '');
+    const href = base + (r && !r.skip ? r.path : '');
     el.removeAttribute('data-go');
     if (el.tagName === 'A') { el.setAttribute('href', href); continue; }
     if (el.tagName === 'BUTTON') {
@@ -190,6 +191,7 @@ ${body}
   let styles = '';
   const report = [];
   for (const [id, r] of Object.entries(ROUTES)) {
+    if (r.skip) continue;
     await p.evaluate(id => { for (const s of document.querySelectorAll('select')) for (const o of s.options) if (o.value === id) { s.value = id; s.dispatchEvent(new Event('change', { bubbles: true })); return; } }, id);
     await new Promise(res => setTimeout(res, 450));
     const snap = await p.evaluate(inPage, ROUTES, BASE);
@@ -242,10 +244,15 @@ ${body}
   copyDir(path.join(__dirname, 'site', 'static'), OUT);
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 
-  const idx = Object.values(ROUTES).filter(r => r.index).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
+  const idx = Object.values(ROUTES).filter(r => r.index && !r.skip).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     idx.map(r => `  <url><loc>${url(r.path)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n') + '\n</urlset>\n');
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('sitemap.xml')}\n`);
+
+  const old = FINAL + '.old-' + process.pid;
+  if (fs.existsSync(FINAL)) fs.renameSync(FINAL, old);
+  fs.renameSync(OUT, FINAL);
+  rmrf(old);
 
   console.log(report.join('\n'));
   console.log(`\nстраниц: ${report.length}, в sitemap: ${idx.length}, ошибок в макете: ${errors.length}${errors.length ? '\n' + errors.slice(0, 5).join('\n') : ''}`);

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alex1986-rgb.github.io/b2b-marketplace/sitemap.xml

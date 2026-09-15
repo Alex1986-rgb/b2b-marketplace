@@ -10,8 +10,13 @@ STYLE = ("Real documentary photograph, shot on Sony A7R IV with 35mm f/2.8 lens,
          "subtle film grain across the whole frame including background, true-to-life colors, slight wear, new but not sterile. "
          "No text overlays, no watermarks, no brand logos, no readable brand names, blank nameplates only. "
          "Not a 3D render, not octane, not keyshot, not blender, not CGI, not illustration.")
-PRODUCT = ("Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left, "
-           "nearly black contact shadow under the base, object centered with margin. ")
+PRODUCT = ("Catalog packshot product photo on a pure white seamless background #FFFFFF, even soft light, "
+           "subtle soft contact shadow directly under the object, object centered with generous margin. ")
+# Для товарных снимков без «зерна по фону»: фон должен остаться ровно белым
+STYLE_PRODUCT = ("Real product photograph, shot on a medium format camera with a macro-capable lens, true-to-life colors and materials, "
+                 "clean pure white background with no grain, no gradient, no vignette. "
+                 "No text overlays, no watermarks, no brand logos, no readable brand names, blank nameplates only. "
+                 "Not a 3D render, not CGI, not illustration.")
 
 T = {  # name: (size, prompt)
  "warehouse": ("1536x1024", "Industrial equipment distribution warehouse interior: tall pallet racks with boxed centrifugal pumps, electric motors and valves on wooden pallets, a forklift in the aisle, LED high-bay lights, concrete floor."),
@@ -51,12 +56,15 @@ T = {  # name: (size, prompt)
  "nameplate-phone": ("1536x1024", "Hand holding a smartphone in front of a worn blue electric pump motor in a plant, phone camera view framing the riveted metal nameplate with a rectangular focus frame on screen, nameplate engraving unreadable, shallow depth of field. No logos, no brand names, no readable text; blank nameplates."),
  "supplier-dock": ("1536x1024", "Distributor warehouse with a truck at the loading dock, pallets of boxed industrial valves and electric motors being staged, a worker with a handheld barcode scanner seen from behind, high racks, LED light, deep perspective. No logos, no brand names, no readable text; blank nameplates."),
  "supplier-stock-count": ("1536x1024", "Close view of a warehouse rack aisle: a gloved hand scanning a blank barcode label on a box containing a gear motor with a rugged handheld terminal, shelves with boxed bearings and pumps behind, cool light, shallow depth of field. No logos, no brand names, no readable text; blank nameplates."),
- "p-cr32-flange": ("1024x1024", "Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left. Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left: close-up of the blue cast iron base of a vertical multistage pump showing the inline flanged inlet and outlet ports with bolt holes and the stainless steel sleeve above. No logos, no brand names, no readable text; blank nameplates."),
- "p-cr32-motor": ("1024x1024", "Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left. Catalog product photo on a light grey seamless studio backdrop, soft key light from upper left: upper part of a vertical multistage pump, blue electric motor with cooling fins, terminal box and a blank riveted metal nameplate, coupling guard below. No logos, no brand names, no readable text; blank nameplates."),
+ "p-cr32-flange": ("1024x1024", PRODUCT + "close-up of the blue cast iron base of a vertical multistage pump showing the inline flanged inlet and outlet ports with bolt holes and the stainless steel sleeve above. No logos, no brand names, no readable text; blank nameplates."),
+ "p-cr32-motor": ("1024x1024", PRODUCT + "upper part of a vertical multistage pump, blue electric motor with cooling fins, terminal box and a blank riveted metal nameplate, coupling guard below. No logos, no brand names, no readable text; blank nameplates."),
  "p-check-valve": ("1024x1024", PRODUCT + "Flanged swing check valve DN65 PN16, grey-blue painted cast iron body with two round bolted flanges and a bolted cover on top, cast direction arrow on the body, no text."),
  "p-gasket-kit": ("1024x1024", PRODUCT + "Set of flange gaskets DN65 for a pump: several flat black rubber and grey paronite ring gaskets of the same size stacked and fanned out, with a small bag of galvanized bolts and nuts next to them."),
  "p-lip-seal": ("1024x1024", PRODUCT + "Several black NBR rotary shaft lip seals (radial oil seals) 45x65x10 mm with visible metal spring inside the lip, one standing on edge, others lying flat, macro product photo."),
  "p-gearmotor": ("1024x1024", PRODUCT + "Compact helical gear motor, grey painted aluminium gearbox housing with foot mounting and solid output shaft with key, small grey three-phase electric motor attached, blank nameplate."),
+ "p-cnp-cdlf": ("1024x1024", PRODUCT + "Vertical multistage stainless steel centrifugal pump of CDLF type: tall polished silver stainless steel pump stack with tie rods, stainless base with two inline flanged ports, grey electric motor on top, blank nameplate, no logos."),
+ "p-wilo-helix": ("1024x1024", PRODUCT + "Vertical multistage inline centrifugal pump: red-painted electric motor and red-painted cast iron base with inline flanges, brushed stainless steel pump stack between them with tie rods, blank nameplate, no logos, no brand names."),
+ "p-ebara-3m": ("1024x1024", PRODUCT + "End-suction close-coupled stainless steel centrifugal pump: polished stainless steel volute casing with threaded or flanged suction and discharge ports, grey electric motor with cooling fins, compact feet, blank nameplate, no logos."),
  "p-air-filter": ("1024x1024", PRODUCT + "Cylindrical pleated compressed-air filter element with white pleated media, grey plastic end caps and black O-ring, standing upright, second one lying behind."),
 }
 
@@ -66,7 +74,7 @@ def job(name):
     if os.path.exists(path): return name, "skip"
     for a in range(4):
         try:
-            gen(prompt + " " + STYLE, path, size=size, tries=1); return name, "ok"
+            gen(prompt + " " + (STYLE_PRODUCT if name.startswith("p-") else STYLE), path, size=size, tries=1); return name, "ok"
         except Exception as e:
             err = str(e)[:160]; time.sleep(5 * (a + 1))
     return name, "FAIL " + err
