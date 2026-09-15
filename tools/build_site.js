@@ -77,7 +77,15 @@ function injectSeo(file, html) {
   const at = html.lastIndexOf('<footer');
   return at > 0 ? html.slice(0, at) + `<div class="pk-main" style="padding-top:0">${block}</div>` + html.slice(at) : html;
 }
-const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(injectSeo(file, html)));
+// SEO-пост-обработка (иерархия заголовков, контекстные ссылки): tools/seo_postprocess.js, если есть
+let SEO_CTX = null;
+function seoPost(file, html) {
+  const mod = path.join(__dirname, 'seo_postprocess.js');
+  if (!fs.existsSync(mod) || !SEO_CTX) return html;
+  try { return require(mod)(html, { ...SEO_CTX, key: path.relative(OUT, file).replace(/index\.html$/, '').replace(/\\/g, '/') }); }
+  catch (e) { console.error('! seo_postprocess ' + file + ': ' + e.message); return html; }
+}
+const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(seoPost(file, injectSeo(file, html))));
 
 // ── то, что выполняется внутри страницы макета ────────────────────────────────
 function inPage(routes, base, L) {
@@ -192,6 +200,9 @@ function inPage(routes, base, L) {
     const name = (a.querySelector('span') || a).textContent.replace(/[\d\s\u00A0\u202F]+$/, '').trim();
     if (name && !/₽|^от /.test(name) && /\d/.test(a.textContent)) a.setAttribute('href', base + routes.catalog.path + '?tip=' + encodeURIComponent(name));
   }
+  // подвал: разделы каталога → страницы направлений, «Производители» → хаб
+  { const F = { 'Насосы': 'napravleniya/nasosy/', 'Компрессоры': 'napravleniya/kompressory/', 'Подшипники': 'napravleniya/podshipniki-i-komplektuyushchie/', 'Частотники': 'napravleniya/chastotniki-i-avtomatika/', 'Производители': 'proizvoditeli/', 'Как заказать': 'oplata-i-dostavka/', 'Бот в MAX': 'chat/' };
+    for (const a of c.querySelectorAll('footer a')) { const t = a.textContent.replace(/[\s\u00A0]+/g, ' ').trim(); if (F[t]) a.setAttribute('href', base + F[t]); } }
   // плашки брендов без своей страницы — не ссылка (иначе вели бы на чужой бренд)
   for (const a of [...c.querySelectorAll('a.brand-logo')]) {
     if (a.getAttribute('href') === base + routes.brand.path && norm(a.textContent) !== 'grundfos') {
@@ -315,8 +326,18 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
   const genPages = require('./gen_pages');
   const LINKS = genPages.linkIndex(BASE);
   LINKS.articles.push({ names: ['Как подобрать насос по рабочей точке'], href: BASE + ROUTES.article.path });
+  SEO_CTX = { BASE, ROUTES, LINKS };
   const GENERATED = genPages(BASE);
   p.on('pageerror', e => errors.push(e.message));
+  // React для движка макета — из node_modules, а не с unpkg (обрывы CDN роняли сборку)
+  const LOCAL = { 'react.production.min.js': path.join(ROOT, 'node_modules/react/umd/react.production.min.js'), 'react-dom.production.min.js': path.join(ROOT, 'node_modules/react-dom/umd/react-dom.production.min.js') };
+  await p.setRequestInterception(true);
+  p.on('request', rq => {
+    const u = rq.url();
+    const hit = /unpkg\.com\/react(-dom)?@/.test(u) && Object.keys(LOCAL).find(k => u.endsWith(k));
+    if (hit && fs.existsSync(LOCAL[hit])) return rq.respond({ status: 200, contentType: 'application/javascript', headers: { 'Access-Control-Allow-Origin': '*' }, body: fs.readFileSync(LOCAL[hit]) });
+    rq.continue();
+  });
   await p.goto(DOC, { waitUntil: 'networkidle0' });
 
   let styles = '';

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-15T11:30:11.117Z",
+  "generatedAt": "2026-09-15T12:08:22.887Z",
   "site": "/Users/alexandr/projects/b2b-marketplace/site",
-  "origin": "http://127.0.0.1:60947/b2b-marketplace/",
-  "durationSec": 27,
+  "origin": "http://127.0.0.1:54559/b2b-marketplace/",
+  "durationSec": 28,
   "dataFiles": {
     "products": 24,
     "articles": 15,
@@ -19,22 +19,18 @@
     "pages": 194,
     "publicPages": 123,
     "privatePages": 71,
-    "links": 16216,
-    "cardLinks": 1966,
+    "links": 16200,
+    "cardLinks": 1965,
     "demoElements": 456,
     "uniqueTargets": 125
   },
   "summary": {
-    "errors": 2,
-    "warnings": 55,
+    "errors": 1,
+    "warnings": 57,
     "byType": {
-      "wrong_target": {
-        "severity": "error",
-        "count": 1
-      },
       "resource_404": {
         "severity": "warning",
-        "count": 9
+        "count": 11
       },
       "many_cards_same_target": {
         "severity": "warning",
@@ -144,29 +140,16 @@
   ],
   "issues": [
     {
-      "type": "wrong_target",
-      "severity": "error",
-      "page": "blog/kak-vybrat-elektrodvigatel/",
-      "text": "насосов",
-      "card": "Подбор · Электродвигатели Как выбрать электродвигатель по мощности и исполнению 10 сентября 2026 г. 8 мин чтения Проверено инженером сервис…",
-      "cardSel": "article.pk-prose-col",
-      "target": "napravleniya/nasosy/",
-      "expected": [
-        "napravleniya/elektrodvigateli/"
-      ],
-      "detail": "направление: в карточке «Электродвигатели», ссылка на «Насосы»"
-    },
-    {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet-postavshchika/zayavka/zv-4797/",
+      "page": "kabinet-postavshchika/vygruzka/",
       "target": "/b2b-marketplace/assets/vendor.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet-postavshchika/zayavka/zv-4818/",
+      "page": "kabinet-postavshchika/zayavka/zv-4771/",
       "target": "/b2b-marketplace/assets/vendor.js",
       "detail": "net::ERR_ABORTED"
     },
@@ -180,7 +163,28 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/soglasovanie/",
+      "page": "kabinet-postavshchika/zayavka/zv-4823/",
+      "target": "/b2b-marketplace/assets/vendor.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/",
+      "target": "/b2b-marketplace/assets/cabinet.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/rekvizity/",
+      "target": "/b2b-marketplace/assets/cabinet.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/uvedomleniya/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
@@ -194,7 +198,7 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/zakaz/pk-10425/",
+      "page": "kabinet/zaprosy-kp/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
@@ -702,22 +706,6 @@
     {
       "type": "many_cards_same_target",
       "severity": "warning",
-      "page": "napravleniya/promyshlennyj-instrument/",
-      "target": "chat/",
-      "text": "6 разных карточек",
-      "detail": "6 разных карточек ведут на один адрес chat/: «Пневмоинструмент 810», «Аккумуляторный и сетевой электроинструм…», «Гидравлические домкраты, съёмники и пре…», «Динамометрический инструмент 410»…",
-      "examples": [
-        "Пневмоинструмент 810",
-        "Аккумуляторный и сетевой электроинструмент 980",
-        "Гидравлические домкраты, съёмники и прессы 570",
-        "Динамометрический инструмент 410",
-        "Наборы ручного инструмента 650",
-        "Абразивы и расходные материалы 650"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "warning",
       "page": "napravleniya/promyshlennyj-holod/",
       "target": "chat/",
       "text": "7 разных карточек",
@@ -730,6 +718,22 @@
         "Рефрижераторные контейнеры 60",
         "Чиллеры для технологического охлаждения 90",
         "Автоматика, компрессоры и хладагенты 110"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennyj-instrument/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Пневмоинструмент 810», «Аккумуляторный и сетевой электроинструм…», «Гидравлические домкраты, съёмники и пре…», «Динамометрический инструмент 410»…",
+      "examples": [
+        "Пневмоинструмент 810",
+        "Аккумуляторный и сетевой электроинструмент 980",
+        "Гидравлические домкраты, съёмники и прессы 570",
+        "Динамометрический инструмент 410",
+        "Наборы ручного инструмента 650",
+        "Абразивы и расходные материалы 650"
       ]
     },
     {
@@ -972,21 +976,14 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/ekonomika/",
+      "page": "panel/avtopilot/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/klienty/agroprom-t/",
-      "target": "/b2b-marketplace/assets/admin.js",
-      "detail": "net::ERR_ABORTED"
-    },
-    {
-      "type": "resource_404",
-      "severity": "warning",
-      "page": "panel/sdelki/sd-2206/",
+      "page": "panel/klienty/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },

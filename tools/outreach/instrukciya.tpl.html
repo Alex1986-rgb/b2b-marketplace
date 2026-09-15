@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ПРОМКОНТУР — кому и что писать о партнёрстве</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Fira+Sans+Condensed:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--paper:#f5f6f8;--text:#1d1f20;--muted:#5d5d60;--soft:#7a7a7d;--line:rgba(29,31,32,.16);--line2:rgba(29,31,32,.08);
+--a:#5980a6;--a100:#eef6ff;--a200:#d6ebff;--a300:#b5d9fd;--a700:#416180;--a800:#2c455d;--a900:#1d2d3d;
+--ok:#3f7d5a;--ok-bg:#e5f1ea;--bad:#a24b3f;--bad-bg:#f6e6e3;--warn:#9a7020;--warn-bg:#f6eedb;
+--h:"Fira Sans Condensed","Arial Narrow",sans-serif;--b:"Fira Sans",system-ui,sans-serif;--m:"Fira Code",monospace}
+@page{size:1600px 900px}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;padding:0 60px;font-family:var(--b);color:var(--text);font-size:15px;line-height:1.42;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h2,h3,h4{font-family:var(--h);font-weight:600;margin:0;letter-spacing:-.01em}
+h2{font-size:40px;line-height:1.05;margin-bottom:22px}h3{font-size:21px}h4{font-size:19px}
+p{margin:0}
+.mono{font-family:var(--m);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--soft)}
+.eyebrow{display:flex;gap:10px;align-items:center;margin-bottom:10px}.eyebrow .num{font-family:var(--m);font-size:12px;color:#fff;background:var(--a);padding:2px 7px}
+.card{background:var(--paper);border:1px solid var(--line2);border-radius:8px;box-shadow:0 1px 2px rgba(29,31,32,.05),0 5px 14px rgba(29,31,32,.04)}
+.pill{display:inline-block;font-family:var(--m);font-size:11.5px;padding:3px 9px;border-radius:99px;background:var(--a100);color:var(--a700);white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.warn{background:var(--warn-bg);color:var(--warn)}
+table{border-collapse:collapse;width:100%}td,th{padding:8px 10px;border-bottom:1px solid var(--line2);text-align:left;vertical-align:top;font-size:14px}
+th{font-family:var(--m);font-weight:400;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--soft);border-bottom:1px solid var(--line)}
+ul.clean{list-style:none;margin:0;padding:0}ul.clean li{padding:6px 0 6px 20px;position:relative;border-bottom:1px solid var(--line2);font-size:14px}
+ul.clean li::before{content:"";position:absolute;left:3px;top:12px;width:8px;height:8px;background:var(--a);transform:rotate(45deg)}ul.clean.bad li::before{background:var(--bad)}
+/* обложка */
+.cover{height:814px;margin:0 -60px;position:relative;overflow:hidden;background:#1d2d3d;color:#fff;break-after:page}
+.cover .ph{position:absolute;inset:0;background:url(../../project/img/supplier-dock.jpg) center/cover;background-color:#5980a6;background-blend-mode:luminosity;opacity:.5}
+.cover .sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,45,61,.97),rgba(29,45,61,.88) 50%,rgba(29,45,61,.3))}
+.cover .in{position:absolute;inset:70px 96px 64px;display:flex;flex-direction:column}
+.cover h1{font-family:var(--h);font-size:84px;line-height:.98;margin:auto 0 0;max-width:1000px;font-weight:600}
+.cover .sub{font-size:22px;color:var(--a200);max-width:880px;margin-top:20px}
+.kpis{display:flex;margin-top:46px;border-top:1px solid rgba(214,235,255,.25)}.kpi{padding:20px 44px 0 0;margin-right:44px;border-right:1px solid rgba(214,235,255,.18)}.kpi:last-child{border:0}
+.kpi b{display:block;font-family:var(--h);font-size:50px;font-weight:600;line-height:1}.kpi span{font-family:var(--m);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--a300)}
+.brand{display:flex;gap:10px;align-items:center;font-family:var(--h);font-weight:700;font-size:21px;letter-spacing:.06em}
+/* разделы */
+.block{padding-top:8px;break-after:page}
+.weeks{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.week{padding:16px 18px}.week h3{font-size:19px;margin:6px 0 8px}.week ul{margin:0;padding-left:17px;font-size:13.5px}.week li{margin-bottom:6px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.pad{padding:18px 20px}.pad h3{margin-bottom:10px}.pad ol{margin:0;padding-left:18px;font-size:14px}.pad ol li{margin-bottom:8px}
+.matrix{break-after:page;padding-top:8px}
+.cluster{break-before:page;padding-top:8px;border-bottom:3px solid var(--a);margin-bottom:18px}
+.cluster h2{margin-bottom:14px}
+.dir{margin:0 0 22px;break-inside:auto}
+.dir>header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:14px;break-after:avoid}
+.dir>header h3{font-size:28px}.dir>header p{color:var(--muted);font-size:14.5px;max-width:1100px;margin-top:4px}
+.partners{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pc{padding:12px 14px;font-size:13px;break-inside:avoid;display:flex;flex-direction:column;gap:6px;border-top:3px solid var(--line)}
+.pc.p1{border-top-color:var(--a)}.pc.p2{border-top-color:#94bce3}
+.pc .top{display:flex;justify-content:space-between;gap:8px}.prio{font-family:var(--m);font-size:11px;color:#fff;background:var(--a);padding:2px 7px;border-radius:3px}
+.pc.p2 .prio{background:#7e9cb8}.pc.p3 .prio{background:#98989b}
+.tpl{font-family:var(--m);font-size:11px;color:var(--soft)}
+.role{font-size:12.5px;color:var(--soft)}
+.covers{display:flex;flex-wrap:wrap;gap:4px}.covers span{font-size:11.5px;background:var(--a100);color:var(--a700);padding:2px 7px;border-radius:4px}
+.k{font-size:13px;color:var(--muted)}.k b{color:var(--text);font-weight:600}
+.lev b{color:var(--ok)}.risk b{color:var(--bad)}
+.pc ul{margin:0;padding-left:16px;font-size:13px}.pc li{margin-bottom:2px}
+.ch{margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;font-family:var(--m);color:var(--a800);word-break:break-word}.ch b{font-family:var(--b)}
+.url{color:var(--soft)}
+.gap{margin-top:10px;font-size:13px;color:var(--warn);background:var(--warn-bg);padding:7px 12px;border-radius:6px}
+.tpls{break-before:page;padding-top:26px}
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tcard{padding:16px 20px;break-inside:avoid}.tcard h3{margin:4px 0}.when{font-size:13px;color:var(--muted)}.subj{font-family:var(--m);font-size:12.5px;color:var(--a700);margin:8px 0}
+pre{white-space:pre-wrap;font-family:var(--b);font-size:13px;line-height:1.45;margin:0;background:#fff;border:1px solid var(--line2);border-radius:6px;padding:12px 14px}
+</style>
+</head>
+<body>
+<section class="cover">
+  <div class="ph"></div><div class="sh"></div>
+  <div class="in">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="brand"><svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" fill="#5980a6"/><path d="M4 9V4h5M23 4h5v5M28 23v5h-5M9 28H4v-5" fill="none" stroke="#d6ebff" stroke-width="1.5"/><path d="M10.5 23.5V9.5h11v14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="square"/></svg>ПРОМКОНТУР</div>
+      <span class="mono" style="color:var(--a300)">инструкция · {{DATE}}</span>
+    </div>
+    <h1>Кому и что писать о партнёрстве</h1>
+    <p class="sub">Пошаговый план рассылки на весь ассортимент площадки: партнёр по каждой подкатегории, публичный контакт, что спросить, готовое письмо и порядок на четыре недели.</p>
+    <div class="kpis">
+      <div class="kpi"><b>{{N_DIRS}}</b><span>направлений</span></div>
+      <div class="kpi"><b>{{N_PARTNERS}}</b><span>партнёров и сервисов</span></div>
+      <div class="kpi"><b>{{N_P1}}</b><span>писем в первую неделю</span></div>
+      <div class="kpi"><b>4</b><span>недели до договоров</span></div>
+    </div>
+  </div>
+</section>
+
+{{PROCESS}}
+
+<section class="matrix">
+  <div class="eyebrow"><span class="num">03</span><span class="mono">покрытие</span></div>
+  <h2>Весь ассортимент: стратегия и первые письма</h2>
+  <div class="card" style="padding:10px 16px"><table><thead><tr><th>Направление</th><th>Стратегия</th><th>Неделя 1</th><th>Партнёров</th><th>Покрытие</th></tr></thead><tbody>{{MATRIX}}</tbody></table></div>
+</section>
+
+{{BODY}}
+
+<section class="tpls">
+  <div class="eyebrow"><span class="num">✉</span><span class="mono">шаблоны</span></div>
+  <h2>Шаблоны писем</h2>
+  <p style="color:var(--muted);margin:-10px 0 18px">Готовые письма с персонализацией под каждого партнёра — в docs/outreach/INSTRUKCIYA.md. [[…]] заполнить перед отправкой.</p>
+  <div class="tgrid">{{TEMPLATES}}</div>
+</section>
+</body>
+</html>

@@ -70,7 +70,7 @@ function productCard(BASE, p) {
   ${img((p.photos || ['p-cr32'])[0], 150, 'contain', 'border-bottom:1px solid var(--color-divider)')}
   <div style="padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px">
     <span style="font-size:11px;color:var(--color-neutral-600)">${esc(p.sku)}</span>
-    <span style="font-family:var(--font-heading);font-weight:600;font-size:17px">${esc(p.name)}</span>
+    <h3 style="font-family:var(--font-heading);font-weight:600;font-size:17px;line-height:1.3;margin:0">${esc(p.name)}</h3>
     <span style="font-size:13px;color:var(--color-neutral-700)">${esc(p.stock || '')}</span>
     <span class="mono" style="font-size:19px;margin-top:4px">${rub(p.price)}</span>
   </div></a>`;
@@ -80,16 +80,47 @@ function articleCard(BASE, a) {
   ${img(a.cover || 'blog-boiler', 140, 'cover')}
   <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px">
     <span style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-accent-700)">${esc(a.section)}</span>
-    <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.25">${esc(a.title)}</span>
+    <h3 style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.25;margin:0">${esc(a.title)}</h3>
     <span style="font-size:13px;color:var(--color-neutral-700)">${esc(cut(a.lead, 140))}</span>
   </div></a>`;
 }
 
 const CAT2DIR = { nasosy: 'Насосы', armatura: 'Промышленная арматура', privod: 'Редукторы и мотор-редукторы', podshipniki: 'Подшипники и комплектующие', kompressory: 'Компрессоры', elektrika: 'Частотники и автоматика', pnevmatika: 'Пневматика', zapchasti: 'Запчасти для производства' };
 const dirName = p => CAT2DIR[p.category] || p.categoryName;
+// «подбор <чего>» по категории товара — для анкоров с ключом
+const CAT2PL = { nasosy: 'насосов', privod: 'мотор-редукторов', podshipniki: 'подшипников', kompressory: 'компрессоров', elektrika: 'частотных преобразователей' };
+const CAT2GEN = { nasosy: 'насоса', armatura: 'арматуры', privod: 'мотор-редуктора', podshipniki: 'подшипника', kompressory: 'компрессора', elektrika: 'частотного преобразователя', pnevmatika: 'пневмооборудования', zapchasti: 'запчастей' };
+
+// ── общие данные и хелперы перелинковки ──
+const H2 = (t, extra = '') => `<h2 style="font-size:26px;margin:40px 0 14px${extra}">${t}</h2>`;
+const H3 = 'font-family:var(--font-heading);font-weight:600;margin:0;';
+const dirHref = (BASE, d) => BASE + (d.existing ? 'napravleniya/nasosy/' : `napravleniya/${d.slug}/`);
+const brandProfile = b => /подшип/i.test(b.h1 || '') ? ['Подшипники', 'dir-bearings'] : /частот|преобраз/i.test(b.h1 || '') ? ['Частотные преобразователи', 'dir-vfd'] : /компресс/i.test(b.h1 || '') ? ['Компрессоры', 'dir-compressors'] : /редукт|привод/i.test(b.h1 || '') ? ['Мотор-редукторы', 'dir-gearboxes'] : ['Насосы', 'dir-pumps'];
+const nf = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+// плитка-ссылка: иконка + анкор + подпись
+const tile = (href, text, sub, ico) => `<a href="${href}" class="blueprint" style="padding:12px 14px;display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit">${ico ? `<span class="ico ico-20 i-${esc(ico)}" style="color:var(--color-accent-700);flex:none"></span>` : ''}<span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600;font-size:15px;line-height:1.3">${esc(text)}</span>${sub ? `<span style="font-size:12px;color:var(--color-neutral-600)">${esc(sub)}</span>` : ''}</span></a>`;
+const tiles = items => `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px">${items.join('')}</div>`;
+const tags = items => `<div style="display:flex;gap:8px;flex-wrap:wrap">${items.join('')}</div>`;
+const tagLink = (href, text) => `<a class="tag tag-outline" href="${href}" style="text-decoration:none;font-size:13px;padding:6px 12px">${esc(text)}</a>`;
+// статья из макета (экран «article»), которой нет в articles.json
+const ROUTE_ARTICLE = { slug: 'kak-podobrat-nasos-po-rabochej-tochke', title: 'Как подобрать насос по рабочей точке и не переплатить за напор', section: 'Подбор · Насосы', cover: 'art-hero', lead: 'Расчёт рабочей точки по факту, кавитация и NPSH, частотное регулирование, материалы и чек-лист из 7 пунктов.', relatedDirections: ['nasosy', 'chastotniki-i-avtomatika'], body: [] };
+const topic = a => ((a.section || '').split('·')[1] || a.section || '').trim();
+const brandNames = b => [b.name, ...(b.aliases || [])].filter(Boolean);
+const mentions = (text, names) => names.some(n => new RegExp(`(^|[^A-Za-zА-Яа-яЁё0-9])${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[^A-Za-zА-Яа-яЁё0-9])`, n.length <= 4 ? '' : 'i').test(text));
+const articleText = a => [a.title, a.lead, ...(a.body || []).map(b => b.h2 || b.p || b.note || (b.ul || []).join(' ') || (b.table ? [...b.table.head, ...b.table.rows.flat()].join(' ') : '')), ...(a.checklist || [])].join(' ');
+// направления бренда: где бренд указан в списке brands направления + категории его товаров
+function brandDirections(b, directions, products) {
+  const names = brandNames(b);
+  const fromProducts = products.filter(p => p.brandSlug === b.slug || p.brand === b.name).map(p => directions.find(d => d.name === dirName(p))).filter(Boolean);
+  const fromList = directions.filter(d => (d.brands || []).some(n => names.includes(n)));
+  const fromProfile = directions.filter(d => d.icon === brandProfile(b)[1]);
+  return [...new Set([...fromProfile, ...fromProducts, ...fromList])];
+}
+
 module.exports = function genPages(BASE) {
   const P = paths();
   const products = load('products.json'), articles = load('articles.json'), directions = load('directions.json'), brands = load('brands.json');
+  const allArticles = articles.some(a => a.slug === ROUTE_ARTICLE.slug) ? articles : [...articles, ROUTE_ARTICLE];
   const bySlug = (arr, s) => arr.find(x => x.slug === s);
   const out = [];
   const home = { name: 'Главная', href: BASE };
@@ -140,7 +171,22 @@ module.exports = function genPages(BASE) {
 </div>
 ${seoSection(p.seo || { heading: (p.name) + ': характеристики и применение', intro: p.lead_text, paras: p.description }, p.faq)}
 ${related.length ? `<h2 style="font-size:26px;margin:40px 0 14px">С этим товаром смотрят</h2><div class="pk-lonegrid">${related.map(r => productCard(BASE, r)).join('')}</div>` : ''}
-${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(p.slug)).slice(0, 4); return arts.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Статьи по теме</h2><div class="pk-lonegrid">${arts.map(x => articleCard(BASE, x)).join('')}</div>` : ''; })()}`);
+${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(p.slug)).slice(0, 4); return arts.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Статьи по теме</h2><div class="pk-lonegrid">${arts.map(x => articleCard(BASE, x)).join('')}</div>` : ''; })()}
+${(() => { // ещё в разделе: та же категория, иначе тот же бренд; без позиций из «С этим товаром смотрят»
+      const skip = new Set([p.slug, ...related.map(r => r.slug)]);
+      let more = products.filter(x => x.category === p.category && !skip.has(x.slug)).slice(0, 6), head = `Ещё в разделе «${esc(dir ? dir.name : dirName(p))}»`;
+      if (!more.length && brand) { more = products.filter(x => x.brandSlug === brand.slug && !skip.has(x.slug)).slice(0, 6); head = `Ещё ${esc(brand.name)} в каталоге`; }
+      return more.length ? H2(head) + `<div class="pk-lonegrid">${more.map(x => productCard(BASE, x)).join('')}</div>` : ''; })()}
+${(() => { // смотрите также: направление, бренд, хаб производителей, подбор
+      const gen = CAT2GEN[p.category] || 'оборудования';
+      const items = [];
+      if (dir) items.push(tile(dirHref(BASE, dir), dir.name, `${nf(dir.count)} позиций в каталоге`, dir.icon));
+      if (brand) items.push(tile(BASE + P.brand(brand), `${brand.name}: ${brandProfile(brand)[0].toLowerCase()} — серии и цены`, 'Производитель: модели и аналоги', brandProfile(brand)[1]));
+      if (p.category === 'nasosy') items.push(tile(BASE + 'katalog/nasosy/', 'Каталог насосов с фильтрами', 'Тип, подача, напор, наличие', 'entry-catalog'));
+      items.push(tile(BASE + 'proizvoditeli/', `Производители ${CAT2PL[p.category] || 'оборудования'}`, `${brands.length} производителей в каталоге`, 'entry-list'));
+      items.push(tile(BASE + 'chat/', `Подбор ${gen} в чате`, 'Аналог по характеристикам за 2 часа', 'entry-chat'));
+      items.push(tile(BASE + 'poisk-po-foto/', `Подбор ${gen} по фото шильдика`, 'Модель и артикул по фото', 'entry-photo'));
+      return H2('Смотрите также') + tiles(items.slice(0, 6)); })()}`);
     out.push({ path: P.product(p), index: true, h1: p.fullName || p.name, raw: true, html,
       title: cut(`${p.name}${p.sku ? ' (' + p.sku + ')' : ''}: ${p.price == null ? 'цена по запросу' : 'цена ' + rub(p.price).replace(/ /g, ' ').replace(/ /g, ' ')} — ПРОМКОНТУР`, 70),
       desc: cut(`${p.fullName || p.name}. ${p.lead_text || ''} ${p.stock ? p.stock + '.' : ''} ${p.lead || ''}`.replace(/\s+/g, ' '), 158),
@@ -157,10 +203,12 @@ ${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(
       : b.table ? `<div class="blueprint" style="padding:4px 14px;margin:6px 0 18px;overflow-x:auto"><table class="table" style="width:100%"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`
       : b.note ? `<div style="display:flex;gap:12px;background:color-mix(in srgb,var(--color-accent) 9%,transparent);border-radius:12px;padding:14px 16px;margin:8px 0 18px"><span class="ico i-engineer" style="color:var(--color-accent-700)"></span><p style="margin:0;font-size:16px;line-height:1.6">${esc(b.note)}</p></div>` : '').join('\n');
     const rp = (a.relatedProducts || []).map(s => bySlug(products, s)).filter(Boolean).slice(0, 4);
-    const ra = articles.filter(x => x.slug !== a.slug).sort((x, y) => (y.section.split('·')[1] === a.section.split('·')[1]) - (x.section.split('·')[1] === a.section.split('·')[1])).slice(0, 4);
+    // дальше по теме: тот же раздел, затем общие направления, затем прочие (порядок данных сохраняется)
+    const score = x => (topic(x) === topic(a) ? 4 : 0) + (x.relatedDirections || []).filter(s => (a.relatedDirections || []).includes(s)).length;
+    const ra = allArticles.filter(x => x.slug !== a.slug).map((x, i) => [x, score(x), i]).sort((x, y) => y[1] - x[1] || x[2] - y[2]).map(x => x[0]).slice(0, 6);
     const rd = (a.relatedDirections || []).map(s => bySlug(directions, s)).filter(Boolean);
     const date = new Date(a.date + 'T12:00:00').toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-    const html = wrap(`${crumbs(BASE, [home, { name: 'Блог', href: BASE + 'blog/' }, { name: (a.section.split('·')[1] || '').trim() || 'Статья' }, { name: cut(a.title, 42) }])}
+    const html = wrap(`${crumbs(BASE, [home, { name: 'Блог', href: BASE + 'blog/' }, { name: cut(a.title, 42) }])}
 <div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start" class="pk-article">
 <article class="pk-prose-col">
   <span class="tag tag-accent">${esc(a.section)}</span>
@@ -178,7 +226,13 @@ ${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(
 </aside>
 </div>
 ${seoSection(a.seoBlock, a.faq, a.title)}
-${ra.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Читайте также</h2><div class="pk-lonegrid">${ra.map(x => articleCard(BASE, x)).join('')}</div>` : ''}`);
+${ra.length ? H2(`Что почитать дальше по теме «${esc(topic(a))}»`) + `<div class="pk-lonegrid">${ra.map(x => articleCard(BASE, x)).join('')}</div>` : ''}
+${H2('Подобрать оборудование') + tiles([
+  ...rd.slice(0, 3).map(d => tile(dirHref(BASE, d), `${d.name}: цены и наличие`, `${nf(d.count)} позиций · ${d.cluster}`, d.icon)),
+  tile(BASE + 'chat/', 'Подбор оборудования в чате', `${topic(a)}: опишите задачу — чат подберёт позиции`, 'entry-chat'),
+  tile(BASE + 'poisk-po-foto/', 'Поиск оборудования по фото шильдика', 'Модель и аналог по фото', 'entry-photo'),
+  tile(BASE + 'zayavka-spiskom/', 'Заявка на оборудование списком', 'Excel → спецификация с ценами', 'entry-upload'),
+])}`);
     out.push({ path: P.article(a), index: true, h1: a.title, raw: true, html, type: 'article',
       title: cut(`${a.title} — ПРОМКОНТУР`, 72), desc: cut(a.lead, 158), faq: a.faq, og: a.cover,
       ld: { '@type': 'Article', headline: a.title, description: cut(a.lead, 200), datePublished: a.date, inLanguage: 'ru', image: 'IMGABS' + (a.cover || 'blog-boiler') + '.jpg', author: { '@type': 'Organization', name: 'ПРОМКОНТУР' } } });
@@ -209,9 +263,16 @@ ${ra.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Читайте та
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">${(d.subcats || []).map(s => `<a href="${BASE}chat/?q=${encodeURIComponent(s.name)}" class="blueprint" style="padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;text-decoration:none;color:inherit"><span style="font-weight:600">${esc(s.name)}</span><span style="font-size:13px;color:var(--color-neutral-600);white-space:nowrap">${String(s.count).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</span></a>`).join('')}</div>
 ${(d.tasks || []).length ? `<h2 style="font-size:26px;margin:32px 0 12px">Типовые задачи</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">${d.tasks.map(t => `<div class="blueprint" style="padding:18px 20px;display:flex;flex-direction:column;gap:8px"><span style="font-family:var(--font-heading);font-weight:600;font-size:18px">${esc(t.t)}</span><span style="font-size:14px;color:var(--color-neutral-700)">${esc(t.d || '')}</span><span class="mono" style="font-size:18px;margin-top:auto">${esc(t.from || '')}</span></div>`).join('')}</div>` : ''}
 ${dirProducts.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Популярные позиции</h2><div class="pk-lonegrid">${dirProducts.map(p => productCard(BASE, p)).join('')}</div>` : ''}
-${dirBrands.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Производители</h2><div style="display:flex;gap:8px;flex-wrap:wrap">${dirBrands.map(({ n, b }) => b ? `<a class="tag tag-outline" href="${BASE}proizvoditeli/${b.slug}/" style="text-decoration:none;font-size:13px;padding:6px 12px">${esc(n)}</a>` : `<span class="tag tag-outline" style="font-size:13px;padding:6px 12px;opacity:.7">${esc(n)}</span>`).join('')}</div>` : ''}
+${dirBrands.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Производители в разделе «${esc(d.name)}»</h2><div style="display:flex;gap:8px;flex-wrap:wrap">${dirBrands.map(({ n, b }) => b ? `<a class="tag tag-outline" href="${BASE}proizvoditeli/${b.slug}/" style="text-decoration:none;font-size:13px;padding:6px 12px">${esc(n)}</a>` : `<span class="tag tag-outline" style="font-size:13px;padding:6px 12px;opacity:.7">${esc(n)}</span>`).join('')}</div>` : ''}
 ${(d.howto || []).length ? `<h2 style="font-size:26px;margin:32px 0 12px">Что указать в заявке</h2><ol style="font-size:16px;line-height:1.8;padding-left:22px;margin:0">${d.howto.map(h => `<li>${esc(h)}</li>`).join('')}</ol>` : ''}
 ${dirArticles.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Статьи по направлению</h2><div class="pk-lonegrid">${dirArticles.map(x => articleCard(BASE, x)).join('')}</div>` : ''}
+${(() => { // смежные направления кластера и другие кластеры
+      const same = directions.filter(x => x.cluster === d.cluster && x.slug !== d.slug);
+      const clusters = [...new Set(directions.map(x => x.cluster))].filter(c => c !== d.cluster);
+      const other = clusters.slice(0, 5).map(c => { const first = directions.find(x => x.cluster === c); return tile(dirHref(BASE, first), first.name, c, first.clusterIcon); });
+      other.push(tile(BASE + 'napravleniya/', `Все ${directions.length} направлений каталога`, 'Каталог промышленного оборудования', 'entry-catalog'));
+      return (same.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Смежные направления кластера «${esc(d.cluster)}»</h2>` + tiles(same.slice(0, 12).map(x => tile(dirHref(BASE, x), x.name, `${nf(x.count)} позиций`, x.icon))) : '')
+        + `<h2 style="font-size:26px;margin:32px 0 12px">Другие кластеры каталога</h2>` + tiles(other); })()}
 ${seoSection(d.seoBlock || { heading: d.name + ': цены, наличие и подбор', intro: (d.seo || [])[0], paras: (d.seo || []).slice(1) }, d.faq)}`);
     out.push({ path: P.direction(d), index: true, h1: d.h1 || d.name, raw: true, html, faq: d.faq, og: d.cover,
       title: cut(`${d.h1 || d.name}: купить с доставкой, ${d.count} позиций — ПРОМКОНТУР`, 72), desc: cut(d.intro, 158) });
@@ -231,25 +292,42 @@ ${bp.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Модели в к�
   <div class="blueprint" style="padding:18px 20px"><div style="display:flex;gap:10px;align-items:center;font-weight:600;margin-bottom:8px"><span class="ico i-dir-spares" style="color:var(--color-accent-700)"></span>Запчасти</div><ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.7">${(b.spares || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
   <div class="blueprint" style="padding:18px 20px"><div style="display:flex;gap:10px;align-items:center;font-weight:600;margin-bottom:8px"><span class="ico i-analog" style="color:var(--color-accent-700)"></span>Аналоги и поставки</div><p style="font-size:15px;line-height:1.6;margin:0 0 8px">${esc(b.analogs)}</p><p style="font-size:14px;color:var(--color-neutral-700);margin:0">${esc(b.availability)}</p></div>
 </div>
+${(() => { // направления бренда, производители того же профиля, статьи с упоминанием
+      const bd = brandDirections(b, directions, products).slice(0, 9);
+      const [prof] = brandProfile(b);
+      let peers = brands.filter(x => x.slug !== b.slug && brandProfile(x)[0] === prof), peersHead = `Другие производители: ${prof.toLowerCase()}`;
+      if (!peers.length) { peers = brands.filter(x => x.slug !== b.slug && brandProfile(x)[0] !== prof).filter((x, i, arr) => arr.findIndex(y => brandProfile(y)[0] === brandProfile(x)[0]) === i); peersHead = 'Производители других направлений'; }
+      const names = brandNames(b);
+      // статьи: прямое упоминание бренда в тексте → статьи о его позициях → статьи по его направлениям
+      const bSlugs = products.filter(p => p.brandSlug === b.slug).map(p => p.slug), bdSlugs = bd.map(x => x.slug);
+      let arts = allArticles.filter(a => a.body.length && mentions(articleText(a), names)), artsHead = `Статьи, где упоминается ${esc(b.name)}`;
+      if (!arts.length) { arts = articles.filter(a => (a.relatedProducts || []).some(s => bSlugs.includes(s))); artsHead = `Статьи о продукции ${esc(b.name)}`; }
+      if (!arts.length) { arts = allArticles.filter(a => (a.relatedDirections || [])[0] && bdSlugs.includes(a.relatedDirections[0])); artsHead = `Статьи по теме «${esc(bd[0] ? bd[0].name : prof)}»`; }
+      arts = arts.slice(0, 4);
+      return (bd.length ? `<h2 style="font-size:26px;margin:36px 0 12px">Направления с продукцией ${esc(b.name)}</h2>` + tiles(bd.map(x => tile(dirHref(BASE, x), x.name, `${nf(x.count)} позиций · ${x.cluster}`, x.icon))) : '')
+        + (peers.length ? `<h2 style="font-size:26px;margin:36px 0 12px">${esc(peersHead)}</h2>` + tags([...peers.slice(0, 11).map(x => tagLink(BASE + P.brand(x), x.h1 || x.name)), tagLink(BASE + 'proizvoditeli/', `Все ${brands.length} производителей`)]) : '')
+        + (arts.length ? `<h2 style="font-size:26px;margin:36px 0 12px">${artsHead}</h2><div class="pk-lonegrid">${arts.map(x => articleCard(BASE, x)).join('')}</div>` : ''); })()}
 ${seoSection(b.seo || { heading: (b.h1 || b.name) + ': серии, цены и аналоги', intro: b.positioning }, b.faq)}`);
     out.push({ path: P.brand(b), index: true, h1: b.h1 || b.name, raw: true, html, faq: b.faq,
       title: cut(`${b.h1 || b.name}: серии, цены и аналоги — ПРОМКОНТУР`, 70), desc: cut(b.intro, 158) });
   }
   // ── хаб производителей ──
   {
-    const prof = b => /подшип/i.test(b.h1 || '') ? ['Подшипники', 'dir-bearings'] : /частот|преобраз/i.test(b.h1 || '') ? ['Частотные преобразователи', 'dir-vfd'] : /компресс/i.test(b.h1 || '') ? ['Компрессоры', 'dir-compressors'] : /редукт|привод/i.test(b.h1 || '') ? ['Мотор-редукторы', 'dir-gearboxes'] : ['Насосы', 'dir-pumps'];
     const groups = {};
-    for (const b of brands) { const [g, ic] = prof(b); (groups[g] = groups[g] || { ic, items: [] }).items.push(b); }
+    for (const b of brands) { const [g, ic] = brandProfile(b); (groups[g] = groups[g] || { ic, items: [] }).items.push(b); }
     const html = wrap(`${crumbs(BASE, [home, { name: 'Производители' }])}
 <h1 style="font-size:40px;margin:0 0 10px">Производители оборудования</h1>
 <p style="font-size:17px;line-height:1.6;color:var(--color-neutral-800);max-width:820px;margin:0 0 26px">${brands.length} производителей в каталоге: серии, рабочие диапазоны, запчасти и аналоги. Поставки через независимых поставщиков в РФ, цена с НДС и доставкой.</p>
 ${Object.entries(groups).map(([g, { ic, items }]) => `<h2 style="font-size:24px;margin:28px 0 12px;display:flex;gap:10px;align-items:center"><span class="ico ico-28 i-${ic}" style="color:var(--color-accent-700)"></span>${esc(g)} <span style="font-size:15px;color:var(--color-neutral-600);font-weight:400">${items.length}</span></h2>
-<div class="pk-lonegrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${items.map(b => `<a href="${BASE}proizvoditeli/${b.slug}/" class="blueprint" style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit">
-  <span style="display:flex;gap:12px;align-items:center"><span style="width:40px;height:40px;border-radius:10px;background:var(--color-accent);color:#fff;display:grid;place-items:center;flex:none"><span class="ico ico-20 i-${ic}"></span></span><span style="font-family:var(--font-heading);font-weight:600;font-size:21px">${esc(b.name)}</span></span>
+<div class="pk-lonegrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${items.map(b => { const bd = brandDirections(b, directions, products).slice(0, 3); return `<div class="blueprint" style="padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+  <a href="${BASE}proizvoditeli/${b.slug}/" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;flex:1">
+  <span style="display:flex;gap:12px;align-items:center"><span style="width:40px;height:40px;border-radius:10px;background:var(--color-accent);color:#fff;display:grid;place-items:center;flex:none"><span class="ico ico-20 i-${ic}"></span></span><h3 style="${H3}font-size:21px;line-height:1.2">${esc(b.name)}</h3></span>
   <span style="font-size:13px;color:var(--color-neutral-700)">${esc([b.country, b.founded ? 'с ' + b.founded + ' г.' : ''].filter(Boolean).join(' · '))}</span>
   <span style="font-size:14px;line-height:1.5;color:var(--color-neutral-800)">${esc(cut(b.intro, 130))}</span>
   <span style="font-size:13px;color:var(--color-accent-700);margin-top:auto">${(b.series || []).length} серий · ${(b.series || []).reduce((t, x) => t + (+x.count || 0), 0)} позиций</span>
-</a>`).join('')}</div>`).join('\n')}`);
+  </a>
+  ${bd.length ? `<span style="font-size:12px;line-height:1.5;color:var(--color-neutral-600);border-top:1px solid var(--color-divider);padding-top:8px">Направления: ${bd.map(x => `<a href="${dirHref(BASE, x)}" style="color:var(--color-neutral-700)">${esc(x.name)}</a>`).join(', ')}</span>` : ''}
+</div>`; }).join('')}</div>`).join('\n')}`);
     out.push({ path: 'proizvoditeli/', index: true, h1: 'Производители оборудования', raw: true, html, og: 'brand',
       title: 'Производители промышленного оборудования: насосы, подшипники, приводы — ПРОМКОНТУР', desc: cut(`${brands.length} производителей в каталоге ПРОМКОНТУР: Grundfos, Wilo, CNP, Ebara, SKF, NORD, INNOVERT, Kaishan и отечественные заводы. Серии, цены и аналоги.`, 158) });
   }
@@ -260,8 +338,13 @@ module.exports.linkIndex = linkIndex;
 module.exports.blogExtra = (BASE, pageHtml) => {
   const norm = t => String(t).replace(/[\s\u00A0\u202F]+/g, ' ').toLowerCase();
   const page = norm(pageHtml);
-  const rest = load('articles.json').filter(a => !page.includes(norm(a.title)));
-  return rest.length ? `<section style="max-width:1360px;margin:0 auto;padding:8px 28px 40px"><h2 style="font-size:26px;margin:0 0 14px">Ещё статьи</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">${rest.map(a => articleCard(BASE, a)).join('')}</div></section>` : '';
+  // уже есть на экране блога — по ссылке или по заголовку (&nbsp; в разметке макета → пробел)
+  const rest = load('articles.json').filter(a => !pageHtml.includes(`blog/${a.slug}/"`) && !page.replace(/&nbsp;|&#160;/g, ' ').includes(norm(a.title)));
+  if (!rest.length) return '';
+  // группы по разделу (вторая часть section): h2 — раздел, h3 — заголовки карточек
+  const groups = new Map();
+  for (const a of rest) { const t = topic(a) || 'Статьи'; if (!groups.has(t)) groups.set(t, []); groups.get(t).push(a); }
+  return `<section style="max-width:1360px;margin:0 auto;padding:8px 28px 40px"><p style="font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--color-neutral-600);margin:0 0 4px">Ещё статьи по разделам</p>${[...groups].map(([t, list], i) => `<h2 style="font-size:24px;margin:${i ? 28 : 0}px 0 14px">${esc(t)} <span style="font-size:15px;color:var(--color-neutral-600);font-weight:400">${list.length}</span></h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">${list.map(a => articleCard(BASE, a)).join('')}</div>`).join('')}</section>`;
 };
 
 module.exports.helpers = { esc, rub, cut, crumbs, img, faqBlock, seoSection, productCard, articleCard };

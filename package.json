@@ -7,7 +7,10 @@
   },
   "devDependencies": {
     "lucide-static": "^1.46.0",
+    "node-html-parser": "^9.0.4",
     "puppeteer-core": "^23.11.1",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
