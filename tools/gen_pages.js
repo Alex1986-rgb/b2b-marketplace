@@ -198,7 +198,7 @@ ${faqBlock(d.faq)}`);
   for (const b of brands) {
     if (b.existing || b.slug === 'grundfos') continue;
     const bp = products.filter(p => p.brandSlug === b.slug || p.brand === b.name).slice(0, 8);
-    const html = wrap(`${crumbs(BASE, [home, { name: 'Производители' }, { name: b.name }])}
+    const html = wrap(`${crumbs(BASE, [home, { name: 'Производители', href: BASE + 'proizvoditeli/' }, { name: b.name }])}
 <section class="pk-hero"><div style="display:flex;flex-direction:column;gap:12px;justify-content:center"><h1 style="font-size:40px;margin:0">${esc(b.h1 || b.name)}</h1><p style="font-size:17px;line-height:1.6;margin:0">${esc(b.intro)}</p><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" href="#series" style="text-decoration:none">Серии ${esc(b.name)}</a><a class="btn btn-secondary" href="${BASE}chat/" style="text-decoration:none">Подобрать аналог</a><a class="btn btn-secondary" href="${BASE}poisk-po-foto/" style="text-decoration:none">Найти по шильдику</a></div><div class="pk-kpi" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--color-divider);padding-top:14px">${b.country ? `<div><div class="mono" style="font-size:24px">${esc(b.country)}</div><div style="font-size:13px;color:var(--color-neutral-700)">страна</div></div>` : ''}${b.founded ? `<div><div class="mono" style="font-size:24px">${b.founded}</div><div style="font-size:13px;color:var(--color-neutral-700)">год основания</div></div>` : ''}<div><div class="mono" style="font-size:24px">${(b.series || []).reduce((t, x) => t + (+x.count || 0), 0)}</div><div style="font-size:13px;color:var(--color-neutral-700)">позиций в сериях</div></div></div></div><div class="duotone ph" data-photo="1" style="min-height:260px;border-radius:14px;background:url(IMGBASE${bp[0] && bp[0].photos ? bp[0].photos[0] : 'brand'}.jpg) center/contain no-repeat #fff"></div></section>
 <p style="font-size:15px;line-height:1.7;color:var(--color-neutral-800);max-width:920px;margin:0 0 24px">${esc(b.positioning)}</p>
 <h2 id="series" style="font-size:26px;margin:0 0 12px">Серии</h2>
@@ -212,6 +212,31 @@ ${faqBlock(b.faq)}`);
     out.push({ path: P.brand(b), index: true, h1: b.h1 || b.name, raw: true, html, faq: b.faq,
       title: cut(`${b.h1 || b.name}: серии, цены и аналоги — ПРОМКОНТУР`, 70), desc: cut(b.intro, 158) });
   }
+  // ── хаб производителей ──
+  {
+    const prof = b => /подшип/i.test(b.h1 || '') ? ['Подшипники', 'dir-bearings'] : /частот|преобраз/i.test(b.h1 || '') ? ['Частотные преобразователи', 'dir-vfd'] : /компресс/i.test(b.h1 || '') ? ['Компрессоры', 'dir-compressors'] : /редукт|привод/i.test(b.h1 || '') ? ['Мотор-редукторы', 'dir-gearboxes'] : ['Насосы', 'dir-pumps'];
+    const groups = {};
+    for (const b of brands) { const [g, ic] = prof(b); (groups[g] = groups[g] || { ic, items: [] }).items.push(b); }
+    const html = wrap(`${crumbs(BASE, [home, { name: 'Производители' }])}
+<h1 style="font-size:40px;margin:0 0 10px">Производители оборудования</h1>
+<p style="font-size:17px;line-height:1.6;color:var(--color-neutral-800);max-width:820px;margin:0 0 26px">${brands.length} производителей в каталоге: серии, рабочие диапазоны, запчасти и аналоги. Поставки через независимых поставщиков в РФ, цена с НДС и доставкой.</p>
+${Object.entries(groups).map(([g, { ic, items }]) => `<h2 style="font-size:24px;margin:28px 0 12px;display:flex;gap:10px;align-items:center"><span class="ico ico-28 i-${ic}" style="color:var(--color-accent-700)"></span>${esc(g)} <span style="font-size:15px;color:var(--color-neutral-600);font-weight:400">${items.length}</span></h2>
+<div class="pk-lonegrid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">${items.map(b => `<a href="${BASE}proizvoditeli/${b.slug}/" class="blueprint" style="padding:18px 20px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit">
+  <span style="display:flex;gap:12px;align-items:center"><span style="width:40px;height:40px;border-radius:10px;background:var(--color-accent);color:#fff;display:grid;place-items:center;flex:none"><span class="ico ico-20 i-${ic}"></span></span><span style="font-family:var(--font-heading);font-weight:600;font-size:21px">${esc(b.name)}</span></span>
+  <span style="font-size:13px;color:var(--color-neutral-700)">${esc([b.country, b.founded ? 'с ' + b.founded + ' г.' : ''].filter(Boolean).join(' · '))}</span>
+  <span style="font-size:14px;line-height:1.5;color:var(--color-neutral-800)">${esc(cut(b.intro, 130))}</span>
+  <span style="font-size:13px;color:var(--color-accent-700);margin-top:auto">${(b.series || []).length} серий · ${(b.series || []).reduce((t, x) => t + (+x.count || 0), 0)} позиций</span>
+</a>`).join('')}</div>`).join('\n')}`);
+    out.push({ path: 'proizvoditeli/', index: true, h1: 'Производители оборудования', raw: true, html, og: 'brand',
+      title: 'Производители промышленного оборудования: насосы, подшипники, приводы — ПРОМКОНТУР', desc: cut(`${brands.length} производителей в каталоге ПРОМКОНТУР: Grundfos, Wilo, CNP, Ebara, SKF, NORD, INNOVERT, Kaishan и отечественные заводы. Серии, цены и аналоги.`, 158) });
+  }
   return out;
 };
 module.exports.linkIndex = linkIndex;
+// карточки статей, которых нет на экране блога из макета
+module.exports.blogExtra = (BASE, pageHtml) => {
+  const norm = t => String(t).replace(/[\s\u00A0\u202F]+/g, ' ').toLowerCase();
+  const page = norm(pageHtml);
+  const rest = load('articles.json').filter(a => !page.includes(norm(a.title)));
+  return rest.length ? `<section style="max-width:1360px;margin:0 auto;padding:8px 28px 40px"><h2 style="font-size:26px;margin:0 0 14px">Ещё статьи</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">${rest.map(a => articleCard(BASE, a)).join('')}</div></section>` : '';
+};

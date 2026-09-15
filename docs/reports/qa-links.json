@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-15T02:08:32.369Z",
+  "generatedAt": "2026-09-15T02:35:15.728Z",
   "site": "/Users/alexandr/projects/b2b-marketplace/site",
-  "origin": "http://127.0.0.1:54267/b2b-marketplace/",
-  "durationSec": 21,
+  "origin": "http://127.0.0.1:61532/b2b-marketplace/",
+  "durationSec": 22,
   "dataFiles": {
     "products": 24,
     "articles": 15,
@@ -16,13 +16,13 @@
     "brands": 16
   },
   "stats": {
-    "pages": 135,
-    "publicPages": 122,
+    "pages": 136,
+    "publicPages": 123,
     "privatePages": 13,
-    "links": 10685,
-    "cardLinks": 980,
-    "demoElements": 400,
-    "uniqueTargets": 135
+    "links": 10793,
+    "cardLinks": 1003,
+    "demoElements": 401,
+    "uniqueTargets": 136
   },
   "summary": {
     "errors": 1,
@@ -52,7 +52,7 @@
       "target": "katalog/nasosy/grundfos-cr-32-4/",
       "point": [
         195,
-        492
+        478
       ],
       "landed": "katalog/nasosy/grundfos-cr-32-4/",
       "h1": "Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE",

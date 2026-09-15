@@ -67,6 +67,10 @@ T = {  # name: (size, prompt)
  "p-ebara-3m": ("1024x1024", PRODUCT + "End-suction close-coupled stainless steel centrifugal pump: polished stainless steel volute casing with threaded or flanged suction and discharge ports, grey electric motor with cooling fins, compact feet, blank nameplate, no logos."),
  "p-air-filter": ("1024x1024", PRODUCT + "Cylindrical pleated compressed-air filter element with white pleated media, grey plastic end caps and black O-ring, standing upright, second one lying behind."),
  "p-vibro-mount": ("1024x1024", PRODUCT + "Set of four anti-vibration rubber mounts with M12 threaded studs: cylindrical black rubber bodies bonded between two zinc-plated steel plates, one standing, others lying, with nuts and washers."),
+ "p-cr32-2": ("1024x1024", PRODUCT + "Short vertical multistage inline centrifugal pump with only 2 stainless steel stages (compact low stack), blue-painted cast iron base with two flanged ports, small blue electric motor 3 kW on top, blank nameplate."),
+ "p-cr32-6": ("1024x1024", PRODUCT + "Tall vertical multistage inline centrifugal pump with 6 stainless steel stages (tall stack with long tie rods), blue-painted cast iron base with flanged ports, blue electric motor 7.5 kW on top, blank nameplate."),
+ "p-cr45-3": ("1024x1024", PRODUCT + "Large vertical multistage inline centrifugal pump with 3 wide stainless steel stages of larger diameter, heavy blue cast iron base with DN65 flanges, bigger blue electric motor on top, blank nameplate."),
+ "p-cr20-5": ("1024x1024", PRODUCT + "Slim vertical multistage inline centrifugal pump with 5 narrow stainless steel stages, small blue cast iron base with DN50 oval flanges, blue electric motor 4 kW on top, blank nameplate."),
 }
 
 def job(name):

@@ -4676,8 +4676,8 @@ class Component extends DCLogic {
     const pumpProducts = [
       { ...pb("p-cr32"), sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
       { ...pb("p-nb40"), sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
-      { ...pb("p-cr32"), sku: "96122804", name: "Grundfos CR 45-3", spec: "Подача 45 м³/ч · напор 40 м · 7,5 кВт", price: "156 700 ₽", lead: "Отгрузка 2–4 дня", stock: "5 шт. в наличии", cta: "В корзину" },
-      { ...pb("p-cr32"), sku: "96511845", name: "Grundfos CR 20-5", spec: "Подача 21 м³/ч · напор 52 м · 4 кВт", price: "86 300 ₽", lead: "Отгрузка 2 дня", stock: "11 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-cr45-3"), sku: "96122804", name: "Grundfos CR 45-3", spec: "Подача 45 м³/ч · напор 40 м · 7,5 кВт", price: "156 700 ₽", lead: "Отгрузка 2–4 дня", stock: "5 шт. в наличии", cta: "В корзину" },
+      { ...pb("p-cr20-5"), sku: "96511845", name: "Grundfos CR 20-5", spec: "Подача 21 м³/ч · напор 52 м · 4 кВт", price: "86 300 ₽", lead: "Отгрузка 2 дня", stock: "11 шт. в наличии", cta: "В корзину" },
       { ...pb("p-nb40"), sku: "97760170", name: "Grundfos NBG 65-50-160", spec: "Подача 60 м³/ч · напор 32 м · 7,5 кВт", price: "173 900 ₽", lead: "Отгрузка 3–5 дней", stock: "3 шт. в наличии", cta: "В корзину" },
       { ...pb("p-nis80"), sku: "98124543", name: "Grundfos TP 65-230/2", spec: "Подача 38 м³/ч · напор 20 м · 4 кВт", price: "142 600 ₽", lead: "Отгрузка 4–6 дней", stock: "2 шт. в наличии", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go("product") }));
@@ -6023,7 +6023,7 @@ class Component extends DCLogic {
       ],
       emptySuggest: [
         { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", stock: "8 шт. в наличии", price: "104 900 ₽" },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-2", spec: "32 м³/ч · 23 м · 3,0 кВт", stock: "5 шт. в наличии", price: "78 400 ₽" },
+        { bg: "url(img/p-cr32-2.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 32-2", spec: "32 м³/ч · 23 м · 3,0 кВт", stock: "5 шт. в наличии", price: "78 400 ₽" },
         { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 32-40", spec: "32 м³/ч · 44 м · 5,5 кВт", stock: "12 шт. в наличии", price: "71 300 ₽" },
         { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 3604", spec: "36 м³/ч · 48 м · 5,5 кВт", stock: "3 шт. в наличии", price: "98 700 ₽" }
       ],
@@ -6058,7 +6058,7 @@ class Component extends DCLogic {
       compareModels: [
         { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 42-30", sku: "CNP-CDLF-42-30", price: "74 800 ₽", cta: "В корзину", open: this.go("product") },
         { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 4204", sku: "4198470", price: "96 300 ₽", cta: "В корзину", open: this.go("product") },
-        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-cr45-3.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
         { bg: "url(img/p-ebara-3m.jpg) center/contain no-repeat #ffffff", name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
       ],
       compareRows: [
@@ -6245,7 +6245,7 @@ class Component extends DCLogic {
           rows: [
             { bg: "url(img/p-cnp-cdlf.jpg) center/contain no-repeat #ffffff", name: "CNP CDLF 42-30 · 40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
             { bg: "url(img/p-wilo-helix.jpg) center/contain no-repeat #ffffff", name: "Wilo Helix V 4204 · 42 м³/ч · 38 м · 7,5 кВт", price: "96 300 ₽" },
-            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
+            { bg: "url(img/p-cr45-3.jpg) center/contain no-repeat #ffffff", name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
           ] },
         { who: "Закупщик", text: "Берём CNP, две штуки. И добавь обратные клапаны DN65 и виброопоры.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Собрал спецификацию справа: 2 насоса, 2 клапана, 8 виброопор и комплект прокладок. Проверил остатки у трёх поставщиков, всё отгружается в один день. Счёт выставлю сразу после подтверждения.", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false }

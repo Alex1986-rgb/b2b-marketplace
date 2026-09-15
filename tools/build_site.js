@@ -107,7 +107,7 @@ function inPage(routes, base, L) {
   // служебные обёртки движка
   for (const x of [...c.querySelectorAll('span.sc-interp')]) x.replaceWith(...x.childNodes);
   // ссылки, которым в макете не назначен экран
-  const byText = { 'Политика конфиденциальности': 'politika-konfidencialnosti/', 'Условия использования': 'usloviya-ispolzovaniya/', 'Карта сайта': 'karta-sajta/', 'Весь каталог': 'napravleniya/', 'Блог': 'blog/', 'Контакты': 'kontakty/' };
+  const byText = { 'Политика конфиденциальности': 'politika-konfidencialnosti/', 'Условия использования': 'usloviya-ispolzovaniya/', 'Карта сайта': 'karta-sajta/', 'Весь каталог': 'napravleniya/', 'Блог': 'blog/', 'Производители': 'proizvoditeli/', 'Контакты': 'kontakty/' };
   for (const a of c.querySelectorAll('a[href="#"]')) {
     const t = a.textContent.trim();
     if (byText[t]) a.setAttribute('href', base + byText[t]);
@@ -281,6 +281,7 @@ ${extraHead}</head>
 <a class="pk-skip" href="#main">К содержимому</a>
 ${body}
 <script src="${BASE}assets/site.js" defer></script>
+<script src="${BASE}assets/search.js" defer></script>
 </body>
 </html>
 `;
@@ -313,7 +314,13 @@ ${body}
     await new Promise(res => setTimeout(res, 450));
     const snap = await p.evaluate(inPage, ROUTES, BASE, { ...LINKS, current: BASE + r.path });
     styles = snap.styles;
-    const html = page({ id, r, body: snap.html, extraHead: jsonLd(id, r, snap) + '\n' });
+    let bodyHtml = snap.html;
+    if (id === 'blog') { // все статьи из данных — в конец ленты, перед SEO-блоком
+      const extra = genPages.blogExtra(BASE, bodyHtml).replace(/IMGBASE/g, BASE + 'img/');
+      const at = bodyHtml.lastIndexOf('<section style="border-top: 1px solid var(--color-divider)');
+      bodyHtml = at > 0 ? bodyHtml.slice(0, at) + extra + bodyHtml.slice(at) : bodyHtml.replace('<footer', extra + '<footer');
+    }
+    const html = page({ id, r, body: bodyHtml, extraHead: jsonLd(id, r, snap) + '\n' });
     const file = path.join(OUT, r.path, 'index.html');
     fs.mkdirSync(path.dirname(file), { recursive: true });
     writePage(file, html);
@@ -367,6 +374,23 @@ ${body}
   fs.copyFileSync(path.join(SRC, '_ds', dsDir, 'styles.css'), path.join(OUT, 'assets', 'ds.css'));
   fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'skin.css'), 'utf8') + '\n' + (fs.existsSync(path.join(SRC, 'icons.css')) ? fs.readFileSync(path.join(SRC, 'icons.css'), 'utf8') : ''));
   fs.copyFileSync(path.join(__dirname, 'site', 'site.js'), path.join(OUT, 'assets', 'site.js'));
+  const searchJs = path.join(__dirname, 'site', 'search.js');
+  fs.writeFileSync(path.join(OUT, 'assets', 'search.js'), fs.existsSync(searchJs) ? fs.readFileSync(searchJs) : '');
+  // индекс поиска: товары, статьи, направления, производители, разделы
+  {
+    const D = f => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', f), 'utf8')); } catch (e) { return []; } };
+    const cat = p => p.quote ? 'katalog/' + (p.category || 'kompressory') + '/' + p.slug + '/' : 'katalog/' + p.category + '/' + p.slug + '/';
+    const idx = [];
+    for (const p of D('products.json')) idx.push({ type: 'Товар', title: p.name, sub: [p.brand && p.brand !== 'Без бренда' ? p.brand : '', p.sku ? 'арт. ' + p.sku : '', p.stock || ''].filter(Boolean).join(' · '), href: BASE + cat(p), img: BASE + 'img/' + ((p.photos || [])[0] || 'p-cr32') + '.jpg', price: p.price, keys: [p.name, ...(p.aliases || []), p.fullName, p.sku, p.brand, p.categoryName].filter(Boolean).join(' ') });
+    for (const a of D('articles.json')) idx.push({ type: 'Статья', title: a.title, sub: a.section, href: BASE + 'blog/' + a.slug + '/', img: BASE + 'img/' + (a.cover || 'blog-boiler') + '.jpg', keys: [a.title, ...(a.aliases || []), a.section, a.lead].join(' ') });
+    idx.push({ type: 'Статья', title: 'Как подобрать насос по рабочей точке и не переплатить за напор', sub: 'Подбор · Насосы', href: BASE + ROUTES.article.path, img: BASE + 'img/art-hero.jpg', keys: 'подбор насоса рабочая точка напор npsh кавитация частотник' });
+    for (const d of D('directions.json')) idx.push({ type: 'Направление', title: d.name, sub: (d.count ? d.count.toLocaleString('ru-RU') + ' позиций · ' : '') + (d.cluster || ''), href: BASE + (d.existing ? 'napravleniya/nasosy/' : 'napravleniya/' + d.slug + '/'), icon: d.icon ? 'i-' + d.icon : '', keys: [d.name, d.h1, d.sub, (d.subcats || []).map(x => x.name).join(' '), (d.brands || []).join(' ')].filter(Boolean).join(' ') });
+    for (const b of D('brands.json')) idx.push({ type: 'Производитель', title: b.name, sub: [b.country, (b.series || []).map(x => x.name).slice(0, 4).join(', ')].filter(Boolean).join(' · '), href: BASE + 'proizvoditeli/' + b.slug + '/', keys: [b.name, ...(b.aliases || []), (b.series || []).map(x => x.name).join(' ')].join(' ') });
+    for (const [id, label] of [['payment', 'Оплата и доставка'], ['warranty', 'Гарантия и возврат'], ['project', 'Проектные закупки'], ['photo', 'Поиск по фото шильдика'], ['chat', 'Умный чат'], ['upload', 'Заявка списком'], ['supplier', 'Поставщикам'], ['about', 'О сервисе']])
+      idx.push({ type: 'Раздел', title: label, sub: ROUTES[id].desc.slice(0, 90), href: BASE + ROUTES[id].path, keys: label + ' ' + ROUTES[id].title });
+    idx.push({ type: 'Раздел', title: 'Контакты', sub: 'Чат в MAX, почта, часы работы', href: BASE + 'kontakty/', keys: 'контакты телефон почта max связаться' });
+    fs.writeFileSync(path.join(OUT, 'search-index.json'), JSON.stringify(idx));
+  }
   copyDir(path.join(SRC, 'img'), path.join(OUT, 'img'), s => s.includes(path.sep + 'src'));
   copyDir(path.join(__dirname, 'site', 'static'), OUT);
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
