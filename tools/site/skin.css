@@ -119,17 +119,17 @@ details.faq-item > summary { display: grid !important; grid-template-columns: 1f
   [style*="background: var(--color-neutral-900); color: var(--color-neutral-300); font-size: 13px"] > div > a:nth-of-type(-n+3) { display: none !important; }
   [style*="background: var(--color-neutral-900); color: var(--color-neutral-300); font-size: 13px"] > div > a { margin-left: 0 !important; min-height: 40px; display: inline-flex !important; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  header > div:first-child { gap: 8px 10px !important; padding-top: 8px !important; padding-bottom: 10px !important; }
-  header > div:first-child > a:first-child { order: 1; margin-right: auto !important; }
-  header > div:first-child > a:first-child span[style*="font-size: 22px"] { font-size: 19px !important; }
-  header [style*="display: flex; gap: 16px; font-size: 12px"] { order: 2; gap: 0 !important; font-size: 0 !important; }
-  header [style*="display: flex; gap: 16px; font-size: 12px"] > a { min-width: 40px; min-height: 44px; display: grid !important; place-items: center; }
-  header [style*="display: flex; gap: 16px; font-size: 12px"] > a:first-child { display: none !important; }
-  header .pk-menu-btn { order: 3; margin-left: 0 !important; min-height: 44px; width: 44px; padding: 0 !important; justify-content: center; }
-  header .pk-menu-btn > span:not(.ico) { display: none; }
-  header > div:first-child > a.btn[href$="/napravleniya/"] { display: none !important; }
-  header [style*="min-width: 280px; display: flex"] { order: 4; flex: 1 1 100% !important; min-width: 0 !important; }
-  header nav { display: none !important; }
+  header[style*="z-index: 20"] > div:first-child { gap: 8px 10px !important; padding-top: 8px !important; padding-bottom: 10px !important; }
+  header[style*="z-index: 20"] > div:first-child > a:first-child { order: 1; margin-right: auto !important; }
+  header[style*="z-index: 20"] > div:first-child > a:first-child span[style*="font-size: 22px"] { font-size: 19px !important; }
+  header[style*="z-index: 20"] [style*="display: flex; gap: 16px; font-size: 12px"] { order: 2; gap: 0 !important; font-size: 0 !important; }
+  header[style*="z-index: 20"] [style*="display: flex; gap: 16px; font-size: 12px"] > a { min-width: 40px; min-height: 44px; display: grid !important; place-items: center; }
+  header[style*="z-index: 20"] [style*="display: flex; gap: 16px; font-size: 12px"] > a:first-child { display: none !important; }
+  header[style*="z-index: 20"] .pk-menu-btn { order: 3; margin-left: 0 !important; min-height: 44px; width: 44px; padding: 0 !important; justify-content: center; }
+  header[style*="z-index: 20"] .pk-menu-btn > span:not(.ico) { display: none; }
+  header[style*="z-index: 20"] > div:first-child > a.btn[href$="/napravleniya/"] { display: none !important; }
+  header[style*="z-index: 20"] [style*="min-width: 280px; display: flex"] { order: 4; flex: 1 1 100% !important; min-width: 0 !important; }
+  header[style*="z-index: 20"] nav { display: none !important; }
 
   [style*="min-width: 280px; display: flex"] > .input,
   [style*="display: flex; margin-top: 22px; max-width: 900px"] > .input { flex: 1 1 auto; min-width: 0; font-size: 16px !important; }
@@ -178,13 +178,13 @@ details.faq-item > summary { display: grid !important; grid-template-columns: 1f
   .blueprint { border-radius: 12px; }
 }
 @media (max-width: 380px) {
-  header > div:first-child { gap: 6px !important; }
-  header > div:first-child > a:first-child span[style*="font-size: 22px"] { font-size: 17px !important; }
-  header [style*="display: flex; gap: 16px; font-size: 12px"] > a { min-width: 38px; }
+  header[style*="z-index: 20"] > div:first-child { gap: 6px !important; }
+  header[style*="z-index: 20"] > div:first-child > a:first-child span[style*="font-size: 22px"] { font-size: 17px !important; }
+  header[style*="z-index: 20"] [style*="display: flex; gap: 16px; font-size: 12px"] > a { min-width: 38px; }
 }
 @media (min-width: 761px) and (max-width: 1100px) {
-  header [style*="min-width: 280px; display: flex"] { order: 10; flex: 1 1 100% !important; }
-  header [style*="min-width: 280px; display: flex"] > .input { flex: 1 1 auto; min-width: 0; }
+  header[style*="z-index: 20"] [style*="min-width: 280px; display: flex"] { order: 10; flex: 1 1 100% !important; }
+  header[style*="z-index: 20"] [style*="min-width: 280px; display: flex"] > .input { flex: 1 1 auto; min-width: 0; }
 }
 @media (max-width: 900px) { .pk-article { grid-template-columns: minmax(0, 1fr) !important; } .pk-article > aside { position: static !important; } }
 
@@ -232,3 +232,35 @@ header span.mono[style*="position: absolute"] { background: var(--pk-accent-ink)
 
 /* CSS-4: степпер в корзине не меньше 32×32 */
 .cartrow .seg > button.seg-opt, .seg > [role="button"].seg-opt { min-width: 32px; min-height: 32px; }
+
+/* ══ SEO-блок и 8 вопросов (две колонки по 4) — на всех публичных страницах ══ */
+.pk-seo .seo-p { font-size: 15px; line-height: 1.65; color: var(--color-neutral-800); margin: 0 0 12px; max-width: 920px; }
+.pk-seo .seo-more > summary, .pk-seo .faq-item > summary { list-style: none; cursor: pointer; }
+.pk-seo .seo-more > summary::-webkit-details-marker, .pk-seo .faq-item > summary::-webkit-details-marker { display: none; }
+.pk-seo .seo-caret { display: inline-block; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid currentColor; transition: transform .18s; }
+.pk-seo details[open] > summary .seo-caret { transform: rotate(180deg); }
+.pk-seo .seo-more[open] > summary .seo-more-open, .pk-seo .seo-more:not([open]) > summary .seo-more-close { display: none; }
+.pk-seo .seo-more > summary { display: inline-flex; align-items: center; gap: 10px; margin: 4px 0 14px; }
+.pk-faq-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+@media (max-width: 760px) { .pk-faq-cols { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+
+/* служебная шапка (панель оператора, кабинет поставщика) на телефоне: лого слева, пользователь справа, меню лентой */
+@media (max-width: 760px) {
+  header:not([style*="z-index: 20"]) > div:first-child { flex-wrap: wrap; gap: 8px 12px !important; padding: 10px 16px !important; }
+  header:not([style*="z-index: 20"]) > div:first-child > a:first-child { order: 1; }
+  header:not([style*="z-index: 20"]) > div:first-child > span.mono { order: 2; font-size: 11px; }
+  header:not([style*="z-index: 20"]) > div:first-child > :last-child { order: 3; margin-left: auto !important; }
+  header:not([style*="z-index: 20"]) nav { order: 4; flex: 1 1 100%; margin-left: 0 !important; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; }
+  header:not([style*="z-index: 20"]) nav a { white-space: nowrap; }
+}
+
+/* служебная шапка на десктопе: всё в одну строку (9 разделов панели + пользователь) */
+@media (min-width: 761px) and (max-width: 1560px) {
+  header:not([style*="z-index: 20"]) > div:first-child { flex-wrap: nowrap !important; gap: 12px !important; }
+  header:not([style*="z-index: 20"]) > div:first-child > span.mono { display: none; }
+  header:not([style*="z-index: 20"]) nav { margin-left: 4px !important; gap: 0 !important; flex-wrap: nowrap !important; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  header:not([style*="z-index: 20"]) nav a { padding: 6px 8px !important; font-size: 13px !important; white-space: nowrap; }
+}
+@media (min-width: 761px) and (max-width: 1280px) {
+  header:not([style*="z-index: 20"]) nav a .ico { display: none; }
+}

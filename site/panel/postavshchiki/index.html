@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Поставщики и фиды — панель оператора</title>
+<meta name="description" content="Поставщики: уровень подключения, рейтинг, точность остатков, срыв сроков и статус фида.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://alex1986-rgb.github.io/b2b-marketplace/panel/postavshchiki/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ПРОМКОНТУР">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Поставщики и фиды — панель оператора">
+<meta property="og:description" content="Поставщики: уровень подключения, рейтинг, точность остатков, срыв сроков и статус фида.">
+<meta property="og:url" content="https://alex1986-rgb.github.io/b2b-marketplace/panel/postavshchiki/">
+<meta property="og:image" content="https://alex1986-rgb.github.io/b2b-marketplace/img/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16263a">
+<link rel="icon" href="/b2b-marketplace/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/b2b-marketplace/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/b2b-marketplace/apple-touch-icon.png">
+<link rel="manifest" href="/b2b-marketplace/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/b2b-marketplace/assets/ds.css">
+<link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
+</head>
+<body>
+<a class="pk-skip" href="#main">К содержимому</a>
+<div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
+
+  
+
+  
+
+  
+  <header style="background: var(--color-neutral-900); color: var(--color-neutral-300); border-bottom: 1px solid rgb(0, 0, 0);">
+    <div style="max-width: 1360px; margin: 0px auto; padding: 12px 28px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+      <a href="/b2b-marketplace/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: rgb(255, 255, 255);">
+        <span style="width: 18px; height: 18px; background: url(&quot;/b2b-marketplace/img/mark.svg&quot;) center center / contain no-repeat; display: block;"></span>
+        <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">ПРОМКОНТУР</span>
+      </a>
+      <span class="mono" style="font-size: 12px; text-transform: uppercase; color: var(--color-accent-300);">Панель оператора</span>
+      <nav style="display: flex; gap: 4px; flex-wrap: wrap; margin-left: 12px;" aria-label="Разделы сайта">
+        
+          <a href="/b2b-marketplace/panel/crm/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: rgb(255, 255, 255); background: var(--color-accent-700);"><span class="ico ico-16 i-op-crm" style="color: var(--color-accent-300);"></span>CRM</a>
+        
+          <a href="/b2b-marketplace/panel/klient/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-client" style="color: var(--color-accent-300);"></span>Карточка клиента</a>
+        
+          <a href="/b2b-marketplace/panel/avtopilot/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-autopilot" style="color: var(--color-accent-300);"></span>Автопилот</a>
+        
+          <a href="/b2b-marketplace/panel/golosovoj-robot/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-voice" style="color: var(--color-accent-300);"></span>Голосовой робот</a>
+        
+          <a href="/b2b-marketplace/panel/logistika/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-logistics" style="color: var(--color-accent-300);"></span>Логистика</a>
+        
+          <a href="/b2b-marketplace/panel/oshibki/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-errors" style="color: var(--color-accent-300);"></span>Ошибки</a>
+        
+          <a href="/b2b-marketplace/panel/ekonomika/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-economy" style="color: var(--color-accent-300);"></span>Экономика</a>
+        
+          <a href="/b2b-marketplace/panel/prava/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-roles" style="color: var(--color-accent-300);"></span>Права</a>
+        
+          <a href="/b2b-marketplace/panel/admin/" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; text-decoration: none; color: var(--color-neutral-300);"><span class="ico ico-16 i-op-admin" style="color: var(--color-accent-300);"></span>Админка</a>
+        
+      </nav>
+      <span style="margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 13px;">
+        <span style="width: 28px; height: 28px; background: var(--color-accent-700); color: rgb(255, 255, 255); display: grid; place-items: center; font-size: 12px; font-weight: 600;">ПА</span>Петров А. · админ
+      </span>
+    </div>
+  </header>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <main id="main" class="pk-main"><div class="pk-adm" data-adm-page><nav class="pk-adm-sub" aria-label="Рабочие списки панели"><a href="/b2b-marketplace/panel/crm/"><span class="ico ico-16 i-op-crm"></span>Сделки</a><a href="/b2b-marketplace/panel/klienty/"><span class="ico ico-16 i-op-client"></span>Клиенты</a><a href="/b2b-marketplace/panel/postavshchiki/" aria-current="page"><span class="ico ico-16 i-tier-sync"></span>Поставщики</a><a href="/b2b-marketplace/panel/zhurnal/"><span class="ico ico-16 i-doc-generic"></span>Журнал изменений</a></nav><nav class="pk-adm-crumbs" aria-label="Хлебные крошки"><a href="/b2b-marketplace/panel/avtopilot/">Панель</a><span aria-hidden="true">/</span><span aria-current="page">Поставщики</span></nav><div class="pk-adm-head">
+  <div><div class="mono pk-adm-kicker">Источники · 18 подключённых</div><h1>Поставщики</h1><p>Уровень подключения, качество остатков и дисциплина сроков. Приостановленный поставщик не участвует в выборе предложения.</p></div>
+  <div class="pk-adm-actions"><a class="btn btn-secondary" href="/b2b-marketplace/panel/admin/#sources">Правила выбора</a><button class="btn btn-primary" type="button" data-sup-syncall>Синхронизировать все</button></div>
+</div>
+<div class="pk-adm-kpis"><div class="blueprint pk-adm-kpi"><div class="mono pk-adm-kpi-v">18</div><div>подключённых источников</div><div class="mono pk-adm-kpi-d">РФ и импорт</div></div><div class="blueprint pk-adm-kpi"><div class="mono pk-adm-kpi-v">210 525</div><div>позиций в фидах</div></div><div class="blueprint pk-adm-kpi"><div class="mono pk-adm-kpi-v">4</div><div>фида требуют внимания</div><div class="mono pk-adm-kpi-d">ошибки и устаревшие</div></div><div class="blueprint pk-adm-kpi"><div class="mono pk-adm-kpi-v">4,3</div><div>средний рейтинг</div><div class="mono pk-adm-kpi-d">метрики — демо</div></div></div>
+<section class="blueprint pk-adm-card">
+  <div class="pk-adm-toolbar"><label class="pk-vh" for="sup-q">Поиск поставщика</label><input class="input" id="sup-q" type="search" data-table-search="sup" placeholder="Поставщик, направление, город">
+    <label class="pk-vh" for="sup-f">Статус фида</label><select class="input" id="sup-f" data-table-filter="sup"><option value="">Все статусы</option><option value="ok">Успешно</option><option value="errors">С ошибками</option><option value="stale">Устарело</option><option value="manual">Ручной ввод</option><option value="paused">Приостановлены</option></select>
+    <span class="mono pk-adm-muted" data-table-count="sup" aria-live="polite"></span></div>
+  <div class="pk-adm-scroll"><table class="table pk-adm-table" data-table="sup"><thead><tr><th><button type="button" data-sort="0">Поставщик</button></th><th>Подключение</th><th><button type="button" data-sort="2" data-num>Рейтинг</button></th><th><button type="button" data-sort="3" data-num>Точность остатков</button></th><th><button type="button" data-sort="4" data-num>Срыв сроков</button></th><th><button type="button" data-sort="5" data-num>Позиций</button></th><th>Фид</th><th><span class="pk-vh">Действия</span></th></tr></thead><tbody><tr data-sup="gidromash" data-feed="ok" data-q="гидромаш насосы, арматура москва">
+  <td><b>Гидромаш</b><div class="mono pk-adm-muted">Москва · насосы, арматура</div></td>
+  <td>API + фид<div class="mono pk-adm-muted">XML</div></td>
+  <td class="mono" data-v="4.8">4,8</td>
+  <td data-v="99.1"><span class="pk-adm-score is-good"><span class="mono">99,1%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:99.1%"></i></span></span></td>
+  <td class="mono" data-v="1.2">1,2%</td>
+  <td class="mono" data-v="12480">12 480</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 06:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="tehnopnevmo" data-feed="ok" data-q="технопневмо пневматика, компрессоры санкт-петербург">
+  <td><b>ТехноПневмо</b><div class="mono pk-adm-muted">Санкт-Петербург · пневматика, компрессоры</div></td>
+  <td>REST API<div class="mono pk-adm-muted">REST API</div></td>
+  <td class="mono" data-v="4.7">4,7</td>
+  <td data-v="98.6"><span class="pk-adm-score is-good"><span class="mono">98,6%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:98.6%"></i></span></span></td>
+  <td class="mono" data-v="2">2%</td>
+  <td class="mono" data-v="8910">8 910</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 06:41</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="stalkomplekt" data-feed="ok" data-q="сталькомплект крепёж, металлопрокат челябинск">
+  <td><b>СтальКомплект</b><div class="mono pk-adm-muted">Челябинск · крепёж, металлопрокат</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">Excel / FTP</div></td>
+  <td class="mono" data-v="4.4">4,4</td>
+  <td data-v="95.3"><span class="pk-adm-score is-good"><span class="mono">95,3%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:95.3%"></i></span></span></td>
+  <td class="mono" data-v="4.1">4,1%</td>
+  <td class="mono" data-v="31260">31 260</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 04:12</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="podshipnik-trejd" data-feed="errors" data-q="подшипник-трейд подшипники, рти самара">
+  <td><b>Подшипник-Трейд</b><div class="mono pk-adm-muted">Самара · подшипники, РТИ</div></td>
+  <td>обмен с 1С<div class="mono pk-adm-muted">1С</div></td>
+  <td class="mono" data-v="4.1">4,1</td>
+  <td data-v="91.8"><span class="pk-adm-score is-mid"><span class="mono">91,8%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:91.8%"></i></span></span></td>
+  <td class="mono" data-v="5.6">5,6%</td>
+  <td class="mono" data-v="42700">42 700</td>
+  <td><span class="tag tag-outline" data-sup-status>12 ошибок</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 04:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="promarmatura" data-feed="stale" data-q="промарматура арматура тула">
+  <td><b>ПромАрматура</b><div class="mono pk-adm-muted">Тула · арматура</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">YML</div></td>
+  <td class="mono" data-v="4.3">4,3</td>
+  <td data-v="93.4"><span class="pk-adm-score is-mid"><span class="mono">93,4%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:93.4%"></i></span></span></td>
+  <td class="mono" data-v="3.8">3,8%</td>
+  <td class="mono" data-v="18305">18 305</td>
+  <td><span class="tag tag-neutral" data-sup-status>Устарело</span><div class="mono pk-adm-muted" data-sup-time>13 сентября, 23:40</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="kaishan-rf" data-feed="manual" data-q="kaishan рф компрессоры москва">
+  <td><b>Kaishan РФ</b><div class="mono pk-adm-muted">Москва · компрессоры</div></td>
+  <td>ручной ввод<div class="mono pk-adm-muted">вручную</div></td>
+  <td class="mono" data-v="4.6">4,6</td>
+  <td data-v="97"><span class="pk-adm-score is-good"><span class="mono">97%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:97%"></i></span></span></td>
+  <td class="mono" data-v="2.5">2,5%</td>
+  <td class="mono" data-v="640">640</td>
+  <td><span class="tag tag-neutral" data-sup-status>Ручной ввод</span><div class="mono pk-adm-muted" data-sup-time>9 сентября</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="promreduktor" data-feed="ok" data-q="промредуктор редукторы, мотор-редукторы екатеринбург">
+  <td><b>ПромРедуктор</b><div class="mono pk-adm-muted">Екатеринбург · редукторы, мотор-редукторы</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">XML</div></td>
+  <td class="mono" data-v="4.5">4,5</td>
+  <td data-v="96.2"><span class="pk-adm-score is-good"><span class="mono">96,2%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:96.2%"></i></span></span></td>
+  <td class="mono" data-v="3.1">3,1%</td>
+  <td class="mono" data-v="6420">6 420</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 04:20</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="promnasos" data-feed="ok" data-q="промнасос насосы ливны">
+  <td><b>ПромНасос</b><div class="mono pk-adm-muted">Ливны · насосы</div></td>
+  <td>REST API<div class="mono pk-adm-muted">REST API</div></td>
+  <td class="mono" data-v="4.5">4,5</td>
+  <td data-v="97.4"><span class="pk-adm-score is-good"><span class="mono">97,4%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:97.4%"></i></span></span></td>
+  <td class="mono" data-v="2.7">2,7%</td>
+  <td class="mono" data-v="5310">5 310</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 06:15</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="td-akva" data-feed="ok" data-q="тд аква насосы, водоподготовка казань">
+  <td><b>ТД Аква</b><div class="mono pk-adm-muted">Казань · насосы, водоподготовка</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">YML</div></td>
+  <td class="mono" data-v="4">4</td>
+  <td data-v="89.5"><span class="pk-adm-score is-low"><span class="mono">89,5%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:89.5%"></i></span></span></td>
+  <td class="mono" data-v="7.9">7,9%</td>
+  <td class="mono" data-v="3870">3 870</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 02:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="elektroprivod-m" data-feed="ok" data-q="электропривод-м электродвигатели москва">
+  <td><b>Электропривод-М</b><div class="mono pk-adm-muted">Москва · электродвигатели</div></td>
+  <td>REST API<div class="mono pk-adm-muted">REST API</div></td>
+  <td class="mono" data-v="4.6">4,6</td>
+  <td data-v="98.1"><span class="pk-adm-score is-good"><span class="mono">98,1%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:98.1%"></i></span></span></td>
+  <td class="mono" data-v="2.2">2,2%</td>
+  <td class="mono" data-v="9640">9 640</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 06:30</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="innovert-distribuciya" data-feed="ok" data-q="инноверт дистрибуция частотники, автоматика москва">
+  <td><b>Инноверт Дистрибуция</b><div class="mono pk-adm-muted">Москва · частотники, автоматика</div></td>
+  <td>API + фид<div class="mono pk-adm-muted">XML</div></td>
+  <td class="mono" data-v="4.7">4,7</td>
+  <td data-v="98.8"><span class="pk-adm-score is-good"><span class="mono">98,8%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:98.8%"></i></span></span></td>
+  <td class="mono" data-v="1.5">1,5%</td>
+  <td class="mono" data-v="2140">2 140</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 06:05</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="rti-komplekt" data-feed="ok" data-q="рти-комплект манжеты, уплотнения ярославль">
+  <td><b>РТИ-Комплект</b><div class="mono pk-adm-muted">Ярославль · манжеты, уплотнения</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">Excel / FTP</div></td>
+  <td class="mono" data-v="4.2">4,2</td>
+  <td data-v="94"><span class="pk-adm-score is-mid"><span class="mono">94%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:94%"></i></span></span></td>
+  <td class="mono" data-v="4.4">4,4%</td>
+  <td class="mono" data-v="14200">14 200</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 03:10</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="filtr-servis" data-feed="ok" data-q="фильтр-сервис фильтры, пневмоподготовка нижний новгород">
+  <td><b>Фильтр-Сервис</b><div class="mono pk-adm-muted">Нижний Новгород · фильтры, пневмоподготовка</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">YML</div></td>
+  <td class="mono" data-v="4.3">4,3</td>
+  <td data-v="95.7"><span class="pk-adm-score is-good"><span class="mono">95,7%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:95.7%"></i></span></span></td>
+  <td class="mono" data-v="3.3">3,3%</td>
+  <td class="mono" data-v="4380">4 380</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 05:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="td-nordprivod" data-feed="ok" data-q="тд нордпривод мотор-редукторы nord санкт-петербург">
+  <td><b>ТД Нордпривод</b><div class="mono pk-adm-muted">Санкт-Петербург · мотор-редукторы NORD</div></td>
+  <td>обмен с 1С<div class="mono pk-adm-muted">1С</div></td>
+  <td class="mono" data-v="4.8">4,8</td>
+  <td data-v="99.3"><span class="pk-adm-score is-good"><span class="mono">99,3%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:99.3%"></i></span></span></td>
+  <td class="mono" data-v="0.9">0,9%</td>
+  <td class="mono" data-v="1960">1 960</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 04:40</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="kipia-snab" data-feed="stale" data-q="кипиа-снаб кипиа пермь">
+  <td><b>КИПиА-Снаб</b><div class="mono pk-adm-muted">Пермь · КИПиА</div></td>
+  <td>фид по расписанию<div class="mono pk-adm-muted">Excel / FTP</div></td>
+  <td class="mono" data-v="3.9">3,9</td>
+  <td data-v="88.2"><span class="pk-adm-score is-low"><span class="mono">88,2%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:88.2%"></i></span></span></td>
+  <td class="mono" data-v="8.6">8,6%</td>
+  <td class="mono" data-v="7250">7 250</td>
+  <td><span class="tag tag-neutral" data-sup-status>Устарело</span><div class="mono pk-adm-muted" data-sup-time>12 сентября, 22:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="alibaba-ningbo" data-feed="ok" data-q="alibaba.com · заводы нинбо электродвигатели, насосы (импорт) китай">
+  <td><b>Alibaba.com · заводы Нинбо</b><div class="mono pk-adm-muted">Китай · электродвигатели, насосы (импорт)</div></td>
+  <td>API площадки<div class="mono pk-adm-muted">API</div></td>
+  <td class="mono" data-v="4.2">4,2</td>
+  <td data-v="90.4"><span class="pk-adm-score is-mid"><span class="mono">90,4%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:90.4%"></i></span></span></td>
+  <td class="mono" data-v="9.8">9,8%</td>
+  <td class="mono" data-v="21400">21 400</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>14 сентября, 00:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="1688-parser" data-feed="ok" data-q="1688.com частотники, автоматика (импорт) китай">
+  <td><b>1688.com</b><div class="mono pk-adm-muted">Китай · частотники, автоматика (импорт)</div></td>
+  <td>парсер каталога<div class="mono pk-adm-muted">парсер</div></td>
+  <td class="mono" data-v="3.8">3,8</td>
+  <td data-v="86.1"><span class="pk-adm-score is-low"><span class="mono">86,1%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:86.1%"></i></span></span></td>
+  <td class="mono" data-v="11.2">11,2%</td>
+  <td class="mono" data-v="16800">16 800</td>
+  <td><span class="tag tag-accent" data-sup-status>Успешно</span><div class="mono pk-adm-muted" data-sup-time>13 сентября, 18:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr><tr data-sup="made-in-china" data-feed="errors" data-q="made-in-china кипиа (импорт) китай">
+  <td><b>Made-in-China</b><div class="mono pk-adm-muted">Китай · КИПиА (импорт)</div></td>
+  <td>менеджер площадки<div class="mono pk-adm-muted">Excel</div></td>
+  <td class="mono" data-v="3.9">3,9</td>
+  <td data-v="87"><span class="pk-adm-score is-low"><span class="mono">87%</span><span class="pk-adm-meter" aria-hidden="true"><i style="width:87%"></i></span></span></td>
+  <td class="mono" data-v="10.5">10,5%</td>
+  <td class="mono" data-v="2860">2 860</td>
+  <td><span class="tag tag-outline" data-sup-status>3 ошибок</span><div class="mono pk-adm-muted" data-sup-time>13 сентября, 12:00</div></td>
+  <td class="pk-adm-rowact"><button class="btn btn-secondary" type="button" data-sup-sync>Обновить</button><button class="btn btn-secondary" type="button" data-sup-pause aria-pressed="false">Приостановить</button></td>
+</tr></tbody></table></div>
+</section></div><script type="application/json" id="pk-adm-data">{"columns":["Входящие","Подбор","Переговоры","Счёт выставлен","Оплачено"],"deals":[{"id":"sd-2231","code":"СД-2231","col":0,"channel":"Почта","age":"2 мин","title":"Фото шильдика, насос на замену","last":"Робот: распознано 94%, подбор оригинала и 2 аналогов","sum":104900,"owner":"робот","client":"energomash-servis","items":[{"name":"Grundfos CR 32-4","qty":1},{"name":"CNP CDLF 32-40","qty":1},{"name":"Wilo Helix V 3604","qty":1}],"timeline":[{"time":"09:58","who":"Клиент · почта","action":"входящее","text":"Фото таблички насоса, «нужен такой же или аналог»."},{"time":"09:58","who":"Робот","action":"распознал шильдик","text":"Grundfos CR 32-4, артикул 96122802, уверенность 94%. 8 шт. в наличии у Гидромаш."},{"time":"09:59","who":"Робот","action":"готовит ответ","text":"Оригинал 104 900 ₽ и два аналога с таблицей отличий по рабочей точке."}]},{"id":"sd-2230","code":"СД-2230","col":0,"channel":"MAX","age":"6 мин","title":"«Нужен редуктор на конвейер, момент 400 Нм»","last":"Робот: уточняет передаточное число и вал","sum":0,"owner":"робот","client":"litmash-servis","items":[{"name":"Мотор-редуктор NORD SK 02","qty":1}],"timeline":[{"time":"09:54","who":"Клиент · MAX","action":"входящее","text":"«Нужен редуктор на конвейер, момент 400 Нм»."},{"time":"09:54","who":"Робот","action":"уточнение","text":"Спросил передаточное число, диаметр выходного вала и режим работы (часов в сутки)."}]},{"id":"sd-2229","code":"СД-2229","col":0,"channel":"Сайт","age":"11 мин","title":"Заявка списком, 20 строк","last":"Робот: разобрано 17/20, 3 без аналога","sum":1026600,"owner":"закупщик","client":"metiznyj-zavod","items":[{"name":"Grundfos CR 32-4","qty":4},{"name":"Подшипник SKF 6205-2RS","qty":400},{"name":"Задвижка DN100 PN16, чугун","qty":6},{"name":"Обратный клапан DN65 PN16","qty":8},{"name":"Комплект прокладок DN65","qty":12}],"timeline":[{"time":"09:49","who":"Клиент · сайт","action":"загрузка XLSX","text":"Заявка цеха №4, 20 строк."},{"time":"09:50","who":"Робот","action":"разбор","text":"17 строк сопоставлено с артикулами, 3 без аналога: фильтр по чертежу, шланг, редуктор Bonfiglioli."},{"time":"09:51","who":"Робот","action":"эскалация","text":"Пробел ассортимента — задача закупщику в очереди «Ждёт человека»."}]},{"id":"sd-2224","code":"СД-2224","col":1,"channel":"MAX","age":"18 мин","title":"Компрессор 10 бар, 75 кВт","last":"Робот: сравнение Kaishan / Remeza / Atlas отправлено","sum":1280000,"owner":"инженер","client":"agroprom-t","items":[{"name":"Kaishan LGCY-75","qty":1},{"name":"Фильтр-элемент воздушный 2 мкм","qty":4}],"timeline":[{"time":"09:42","who":"Клиент · MAX","action":"входящее","text":"Нужен винтовой компрессор 10 бар, 75 кВт, замена старого."},{"time":"09:43","who":"Робот","action":"подбор","text":"Сравнение Kaishan LGCY-75 / Remeza / Atlas Copco по расходу и цене владения отправлено."},{"time":"09:44","who":"Робот","action":"эскалация","text":"Сумма выше 500 000 ₽ — сделка передана инженеру Ковалёву И."}]},{"id":"sd-2219","code":"СД-2219","col":1,"channel":"Почта","age":"40 мин","title":"Частотник 15 кВт, 4 шт.","last":"Робот: оригинал и аналог, разница 18%","sum":249200,"owner":"робот","client":"litmash-servis","items":[{"name":"INNOVERT VR 15 кВт","qty":4}],"timeline":[{"time":"09:20","who":"Клиент · почта","action":"входящее","text":"Частотник 15 кВт, 4 шт., линия 2."},{"time":"09:21","who":"Робот","action":"подбор","text":"Оригинал и аналог INNOVERT VR 15, разница в цене 18%."}]},{"id":"sd-2214","code":"СД-2214","col":2,"channel":"Почта","age":"1 ч","title":"ООО «Тепломаш» просит −8%","last":"Робот: предложил −4% и аналог дешевле на 22%","sum":168640,"owner":"робот","client":"teplomash","items":[{"name":"Grundfos CR 45-3","qty":1},{"name":"Комплект прокладок DN65","qty":2},{"name":"Обратный клапан DN65 PN16","qty":1}],"timeline":[{"time":"08:58","who":"Клиент · почта","action":"торг","text":"«Можете дать −8%? У конкурента дешевле»."},{"time":"08:59","who":"Робот","action":"торг в границах","text":"Предложил −4% (в пределах 6%) и аналог CNP дешевле на 22%, аргументировал сроком отгрузки."}]},{"id":"sd-2208","code":"СД-2208","col":2,"channel":"MAX","age":"3 ч","title":"Отсрочка 45 дней на подшипники","last":"Робот: 30 дней в рамках лимита, 45 — человеку","sum":108000,"owner":"оператор","client":"teplomash","items":[{"name":"Подшипник SKF 6205-2RS","qty":200}],"timeline":[{"time":"07:02","who":"Клиент · MAX","action":"запрос","text":"Отсрочка 45 дней на партию SKF 6205."},{"time":"07:03","who":"Робот","action":"проверка скоринга","text":"Скоринг 78: 30 дней доступны автоматически, 45 дней — сверх стандарта."},{"time":"07:03","who":"Робот","action":"эскалация","text":"Решение по отсрочке 45 дней передано оператору."}]},{"id":"sd-2211","code":"КП-2211","col":3,"channel":"MAX","age":"вчера","title":"Grundfos CR 32-4 × 2","last":"Робот: счёт и договор отправлены, напоминание завтра","sum":201400,"owner":"робот","client":"teplomash","items":[{"name":"Grundfos CR 32-4","qty":2}],"timeline":[{"time":"10:22","who":"Робот","action":"торг в границах","text":"Маржа позволяет −4% (100 700 ₽) при минимуме 9%. Предложил 100 700 ₽ за штуку с доставкой и отгрузкой через 2 дня против 7 у конкурента."},{"time":"10:36","who":"Клиент · почта","action":"согласие","text":"«Хорошо, выставляйте счёт на ООО «Тепломаш», ИНН 7104056789.»"},{"time":"10:37","who":"Робот","action":"проверил и оформил","text":"Скоринг 78, отсрочка доступна. Счёт на 201 400 ₽ и договор отправлены, резерв у Гидромаш на 2 шт. Напоминание клиенту завтра в 10:00."},{"time":"10:43","who":"Робот","action":"предложил правило","text":"«Линия стоит» встретилось 6 раз за месяц — при этих словах сразу показывать только позиции в наличии со сроком до 3 дней."}]},{"id":"sd-2206","code":"СД-2206","col":3,"channel":"Сайт","age":"вчера","title":"Автозакупка SKF 6205 × 200","last":"Робот: выше лимита — подтверждение кнопкой в MAX","sum":108000,"owner":"робот","client":"metiznyj-zavod","items":[{"name":"Подшипник SKF 6205-2RS","qty":200}],"timeline":[{"time":"вчера 16:10","who":"Робот","action":"автозакупка","text":"Регулярная закупка SKF 6205 по графику раз в 3–4 недели."},{"time":"вчера 16:10","who":"Робот","action":"лимит","text":"Сумма выше лимита автозакупки — подтверждение кнопкой в MAX."}]},{"id":"sd-2190","code":"ПК-10390","col":4,"channel":"Почта","age":"2 дня","title":"INNOVERT VR 15 × 4","last":"Робот: передано поставщику, трек ожидается","sum":249200,"owner":"робот","client":"metiznyj-zavod","items":[{"name":"INNOVERT VR 15 кВт","qty":4}],"timeline":[{"time":"12 сент","who":"Банк","action":"оплата","text":"Платёж сопоставлен со счётом автоматически."},{"time":"12 сент","who":"Робот","action":"передача поставщику","text":"Заказ передан по API, трек ожидается."}]},{"id":"sd-2185","code":"СД-2185","col":4,"channel":"MAX","age":"3 дня","title":"Манжеты и прокладки, ЗИП","last":"Робот: отгружено, УПД отправлено по ЭДО","sum":27000,"owner":"робот","client":"energomash-servis","items":[{"name":"Манжета 45×65×10 NBR","qty":120},{"name":"Комплект прокладок DN65","qty":2}],"timeline":[{"time":"11 сент","who":"Робот","action":"отгрузка","text":"Отгружено, УПД отправлено по ЭДО."}]}],"clients":[{"slug":"metiznyj-zavod","name":"ООО «Метизный завод»","limit":600000,"used":222600,"score":82,"existing":true},{"slug":"teplomash","name":"ООО «Тепломаш»","limit":400000,"used":201400,"score":78,"existing":false},{"slug":"agroprom-t","name":"АО «Агропром-Т»","limit":500000,"used":0,"score":71,"existing":false},{"slug":"energomash-servis","name":"ООО «Энергомаш-Сервис»","limit":250000,"used":27000,"score":66,"existing":false},{"slug":"litmash-servis","name":"ООО «Литмаш-Сервис»","limit":150000,"used":96000,"score":58,"existing":false},{"slug":"specmontazh","name":"ООО «Спецмонтаж»","limit":800000,"used":310000,"score":88,"existing":false},{"slug":"gidroseti","name":"ООО «Гидросети»","limit":0,"used":0,"score":54,"existing":false},{"slug":"hlebozavod-zarechye","name":"АО «Хлебозавод Заречье»","limit":300000,"used":64000,"score":74,"existing":false}],"suppliers":[{"slug":"gidromash","name":"Гидромаш","feed":"ok"},{"slug":"tehnopnevmo","name":"ТехноПневмо","feed":"ok"},{"slug":"stalkomplekt","name":"СтальКомплект","feed":"ok"},{"slug":"podshipnik-trejd","name":"Подшипник-Трейд","feed":"errors"},{"slug":"promarmatura","name":"ПромАрматура","feed":"stale"},{"slug":"kaishan-rf","name":"Kaishan РФ","feed":"manual"},{"slug":"promreduktor","name":"ПромРедуктор","feed":"ok"},{"slug":"promnasos","name":"ПромНасос","feed":"ok"},{"slug":"td-akva","name":"ТД Аква","feed":"ok"},{"slug":"elektroprivod-m","name":"Электропривод-М","feed":"ok"},{"slug":"innovert-distribuciya","name":"Инноверт Дистрибуция","feed":"ok"},{"slug":"rti-komplekt","name":"РТИ-Комплект","feed":"ok"},{"slug":"filtr-servis","name":"Фильтр-Сервис","feed":"ok"},{"slug":"td-nordprivod","name":"ТД Нордпривод","feed":"ok"},{"slug":"kipia-snab","name":"КИПиА-Снаб","feed":"stale"},{"slug":"alibaba-ningbo","name":"Alibaba.com · заводы Нинбо","feed":"ok"},{"slug":"1688-parser","name":"1688.com","feed":"ok"},{"slug":"made-in-china","name":"Made-in-China","feed":"errors"}],"audit":[{"id":"m1","when":"14 сент, 05:12","section":"Цены","what":"Базовая наценка","from":"20%","to":"18%","who":"Петров А. · админ"},{"id":"m2","when":"14 сент, 04:20","section":"Источники","what":"Подключён фид «ПромРедуктор»","from":"—","to":"XML, 4 ч","who":"система"},{"id":"m3","when":"13 сент, 18:44","section":"Автоматизация","what":"Автоответ на рекламации","from":"вкл","to":"человеку","who":"Смирнова Е. · оператор"},{"id":"m4","when":"13 сент, 11:02","section":"Цены","what":"Правило «Подшипники»","from":"+30%","to":"+37%","who":"Петров А. · админ"},{"id":"m5","when":"12 сент, 16:30","section":"Контент","what":"Норма публикаций","from":"8","to":"12 в неделю","who":"Иванов К. · контент"},{"id":"m6","when":"12 сент, 09:15","section":"Цены","what":"Порог КП","from":"400 000","to":"500 000 ₽","who":"Петров А. · админ"}],"staff":["Петров А. · админ","Смирнова Е. · оператор","Ковалёв И. · инженер","Гаврилов С. · инженер","Иванов К. · контент","Никитина О. · бухгалтер"],"bounds":[["Макс. скидка от цены сайта","6%"],["Не ниже маржи","9%"],["Шагов уступки","2"],["Скидка за объём","от 5 шт · 3%"],["Отсрочка без человека","до 30 дней"],["Скидка за предоплату","2%"]]}</script></main><footer style="background: var(--color-neutral-900); color: var(--color-neutral-300);">
+    <div class="footer-grid" style="max-width: 1360px; margin: 0px auto; padding: 36px 28px 28px; display: grid; grid-template-columns: minmax(0px, 1.6fr) repeat(5, minmax(0px, 1fr)); gap: 28px;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; color: rgb(255, 255, 255);">
+          <span style="width: 18px; height: 18px; background: url(&quot;/b2b-marketplace/img/mark.svg&quot;) center center / contain no-repeat; display: block;"></span>
+          <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">ПРОМКОНТУР</span>
+        </div>
+        <p style="font-size: 14px; margin: 10px 0px 0px; max-width: 330px; line-height: 1.55;">Промышленное оборудование от&nbsp;поставщиков по&nbsp;всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
+        <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 16px;">
+          <span style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+          <a href="/b2b-marketplace/chat/" style="font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 7px 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; color: rgb(255, 255, 255); text-decoration: none;"><span class="ico i-channel-max" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Чат в&nbsp;MAX</a>
+          <a href="mailto:zakaz@promkontur.example" style="font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 7px 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; color: rgb(255, 255, 255); text-decoration: none;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Почта снабжения</a>
+        </div>
+      </div>
+      
+        <div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Каталог</div>
+          
+            <a href="/b2b-marketplace/napravleniya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Все 45 направлений</a>
+          
+            <a href="/b2b-marketplace/napravleniya/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Насосы</a>
+          
+            <a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Компрессоры</a>
+          
+            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Подшипники</a>
+          
+            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Частотники</a>
+          
+            <a href="/b2b-marketplace/sravnenie/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Сравнение моделей</a>
+          
+        </div>
+      
+        <div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Клиентам</div>
+          
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Как заказать</a>
+          
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Оплата и&nbsp;документы</a>
+          
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Доставка и&nbsp;сроки</a>
+          
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Отсрочка платежа</a>
+          
+            <a href="/b2b-marketplace/garantiya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Гарантия и&nbsp;возврат</a>
+          
+            <a href="/b2b-marketplace/proekty/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Проектные закупки</a>
+          
+            <a href="/b2b-marketplace/kabinet/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Личный кабинет</a>
+          
+            <a href="/b2b-marketplace/korzina/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Корзина</a>
+          
+        </div>
+      
+        <div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Компания</div>
+          
+            <a href="/b2b-marketplace/o-servise/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">О&nbsp;сервисе</a>
+          
+            <a href="/b2b-marketplace/vhod/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Вход и&nbsp;регистрация</a>
+          
+            <a href="/b2b-marketplace/proizvoditeli/grundfos/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Производители</a>
+          
+            <a href="/b2b-marketplace/kontakty/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Контакты</a>
+          
+        </div>
+      
+        <div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Поставщикам</div>
+          
+            <a href="/b2b-marketplace/postavshchikam/usloviya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Условия работы</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Стать поставщиком</a>
+          
+            <a href="/b2b-marketplace/kabinet-postavshchika/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Кабинет поставщика</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Форматы выгрузки</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Условия расчётов</a>
+          
+        </div>
+      
+        <div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">База знаний</div>
+          
+            <a href="/b2b-marketplace/blog/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Блог</a>
+          
+            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Умный чат</a>
+          
+            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Бот в&nbsp;MAX</a>
+          
+            <a href="/b2b-marketplace/poisk-po-foto/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Поиск по&nbsp;фото шильдика</a>
+          
+            <a href="/b2b-marketplace/zayavka-spiskom/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Разбор заявки XLSX</a>
+          
+        </div>
+      
+    </div>
+    <div style="border-top: 1px solid var(--color-neutral-800);">
+      <div style="max-width: 1360px; margin: 0px auto; padding: 16px 28px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--color-neutral-500);">
+        <span>© 2026 ООО «Промконтур» · ИНН 7701234567 · ОГРН&nbsp;— после регистрации</span>
+        <span>Оплата: счёт для&nbsp;юрлиц, карта, отсрочка до&nbsp;30&nbsp;дней</span>
+        <a href="/b2b-marketplace/politika-konfidencialnosti/" style="margin-left: auto; color: var(--color-neutral-500);">Политика конфиденциальности</a>
+        <a href="/b2b-marketplace/usloviya-ispolzovaniya/" style="color: var(--color-neutral-500);">Условия использования</a>
+        <a href="/b2b-marketplace/karta-sajta/" style="color: var(--color-neutral-500);">Карта сайта</a>
+      </div>
+    </div>
+  </footer></div></div>
+<script src="/b2b-marketplace/assets/site.js" defer></script>
+<script src="/b2b-marketplace/assets/search.js" defer></script>
+<script src="/b2b-marketplace/assets/auth.js" defer></script>
+<script src="/b2b-marketplace/assets/admin.js" defer></script>
+</body>
+</html>

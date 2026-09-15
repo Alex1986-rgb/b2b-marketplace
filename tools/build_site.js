@@ -66,7 +66,18 @@ function optimizeImages(html) {
     });
   return body.replace('</head>', preload + '</head>');
 }
-const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(html));
+// SEO-блок + 8 вопросов для страниц без собственного (данные tools/data/seo_pages.json, ключ — путь страницы)
+function injectSeo(file, html) {
+  let seoPages = {};
+  try { seoPages = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'seo_pages.json'), 'utf8')); } catch (e) { return html; }
+  const key = path.relative(OUT, file).replace(/index\.html$/, '').replace(/\\/g, '/');
+  const d = seoPages[key];
+  if (!d || (html.match(/class="[^"]*faq-item/g) || []).length >= 8) return html;
+  const block = require('./gen_pages').helpers.seoSection(d.seoBlock, d.faq);
+  const at = html.lastIndexOf('<footer');
+  return at > 0 ? html.slice(0, at) + `<div class="pk-main" style="padding-top:0">${block}</div>` + html.slice(at) : html;
+}
+const writePage = (file, html) => fs.writeFileSync(file, optimizeImages(injectSeo(file, html)));
 
 // ── то, что выполняется внутри страницы макета ────────────────────────────────
 function inPage(routes, base, L) {
@@ -248,7 +259,7 @@ function jsonLd(id, r, snap) {
   return out.map(o => '<script type="application/ld+json">' + JSON.stringify(o).replace(/</g, '\\u003c') + '</script>').join('\n');
 }
 
-function page({ id, r, body, extraHead = '' }) {
+function page({ id, r, body, extraHead = '', scripts = [] }) {
   const canonical = url(r.path);
   const ogImg = url('img/' + (String(id).startsWith('gen:') ? String(id).slice(4) : ({ product: 'p-cr32', quote: 'p-lgcy75', article: 'art-hero', blog: 'blog-boiler', supplier: 'warehouse', direction: 'dir-pumps', brand: 'brand' }[id] || 'og-cover')) + '.jpg');
   return `<!doctype html>
@@ -282,6 +293,8 @@ ${extraHead}</head>
 ${body}
 <script src="${BASE}assets/site.js" defer></script>
 <script src="${BASE}assets/search.js" defer></script>
+<script src="${BASE}assets/auth.js" defer></script>
+${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`).join('\n')}
 </body>
 </html>
 `;
@@ -307,6 +320,7 @@ ${body}
   await p.goto(DOC, { waitUntil: 'networkidle0' });
 
   let styles = '';
+  const CHROMES = {};
   const report = [];
   for (const [id, r] of Object.entries(ROUTES)) {
     if (r.skip) continue;
@@ -320,12 +334,17 @@ ${body}
       const at = bodyHtml.lastIndexOf('<section style="border-top: 1px solid var(--color-divider)');
       bodyHtml = at > 0 ? bodyHtml.slice(0, at) + extra + bodyHtml.slice(at) : bodyHtml.replace('<footer', extra + '<footer');
     }
-    const html = page({ id, r, body: bodyHtml, extraHead: jsonLd(id, r, snap) + '\n' });
+    const sectionScripts = id === 'vendor' ? ['vendor.js'] : ['account', 'order', 'notify'].includes(id) ? ['cabinet.js'] : /^panel\//.test(r.path) ? ['admin.js'] : [];
+    const html = page({ id, r, body: bodyHtml, extraHead: jsonLd(id, r, snap) + '\n', scripts: sectionScripts.filter(sc => fs.existsSync(path.join(__dirname, 'site', sc))) });
     const file = path.join(OUT, r.path, 'index.html');
     fs.mkdirSync(path.dirname(file), { recursive: true });
     writePage(file, html);
     report.push(`${(html.length / 1024).toFixed(0).padStart(4)} КБ  /${r.path}  ${snap.h1.slice(0, 60)}${snap.faq.length ? '  FAQ×' + snap.faq.length : ''}`);
 
+    { // каркасы для генераторов: витрина / панель оператора / кабинет поставщика
+      const kind = { homeB: 'store', crm: 'ops', vendor: 'vendor' }[id];
+      if (kind) { const st = snap.html.indexOf('<div data-screen-label='), ft = snap.html.lastIndexOf('<footer'); if (st > 0 && ft > st) CHROMES[kind] = { head: snap.html.slice(0, st), tail: snap.html.slice(ft) }; }
+    }
     if (id === 'homeB') {
       // 404: каркас витрины без содержимого экрана
       const chrome = snap.html;
@@ -366,6 +385,22 @@ ${body}
       }
     }
   }
+  // ── страницы из генераторов tools/gen_*.js (кабинеты, админка) ──
+  {
+    const gp = require('./gen_pages');
+    const ctx = { BASE, ROUTES, ...gp.helpers, load: gp.load, products: gp.load('products.json') };
+    for (const f of fs.readdirSync(__dirname).filter(f => /^gen_(?!pages).*\.js$/.test(f)).sort()) {
+      let pages = [];
+      try { pages = require('./' + f)(ctx) || []; } catch (e) { console.error('! генератор ' + f + ': ' + e.message); continue; }
+      for (const g of pages) {
+        const ch = CHROMES[g.chrome || 'store'] || CHROMES.store;
+        const file = path.join(OUT, g.path, 'index.html'); fs.mkdirSync(path.dirname(file), { recursive: true });
+        const body = String(g.html).replace(/IMGBASE/g, BASE + 'img/');
+        writePage(file, page({ id: g.path, r: { index: false, ...g }, body: ch.head + (/<main\b/.test(body) ? body : `<main id="main" class="pk-main">${body}</main>`) + ch.tail, scripts: g.scripts || [] }));
+        report.push(`  ${f.replace(/\.js$/, '')}  /${g.path}  ${g.h1 || g.title}`);
+      }
+    }
+  }
   await b.close();
   if (server) server.kill();
 
@@ -374,6 +409,8 @@ ${body}
   fs.copyFileSync(path.join(SRC, '_ds', dsDir, 'styles.css'), path.join(OUT, 'assets', 'ds.css'));
   fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'skin.css'), 'utf8') + '\n' + (fs.existsSync(path.join(SRC, 'icons.css')) ? fs.readFileSync(path.join(SRC, 'icons.css'), 'utf8') : ''));
   fs.copyFileSync(path.join(__dirname, 'site', 'site.js'), path.join(OUT, 'assets', 'site.js'));
+  for (const f of fs.readdirSync(path.join(__dirname, 'site')).filter(f => f.endsWith('.js') && !['site.js', 'search.js'].includes(f))) fs.copyFileSync(path.join(__dirname, 'site', f), path.join(OUT, 'assets', f));
+  if (!fs.existsSync(path.join(OUT, 'assets', 'auth.js'))) fs.writeFileSync(path.join(OUT, 'assets', 'auth.js'), '');
   const searchJs = path.join(__dirname, 'site', 'search.js');
   fs.writeFileSync(path.join(OUT, 'assets', 'search.js'), fs.existsSync(searchJs) ? fs.readFileSync(searchJs) : '');
   // индекс поиска: товары, статьи, направления, производители, разделы

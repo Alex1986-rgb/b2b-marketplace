@@ -40,6 +40,30 @@ const faqBlock = faq => !faq || !faq.length ? '' : `<h2 style="font-size:26px;ma
 <div class="pk-faq2">${faq.map(f => `<details class="blueprint faq-item" style="padding:14px 16px"><summary style="font-family:var(--font-heading);font-weight:600;font-size:17px;line-height:1.3"><span>${esc(f.q)}</span><span class="seo-caret" style="margin-top:6px;color:var(--color-accent)"></span></summary><p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:10px 0 0">${esc(f.a)}</p></details>`).join('')}</div>`;
 const img = (id, h, fit = 'cover', extra = '', alt = '') => `<div class="ph${fit === 'cover' ? ' duotone' : ''}" data-photo="1" ${alt ? `role="img" aria-label="${esc(alt)}"` : 'aria-hidden="true"'} style="height:${h}px;background:url(IMGBASE${id}.jpg) center/${fit} no-repeat ${fit === 'contain' ? '#fff' : ''};${extra}"></div>`;
 
+
+// SEO-блок как в макете: заголовок, вводный абзац, «Читать полностью» (абзацы, таблица, заключение),
+// ниже — 8 вопросов двумя колонками по 4.
+const seoSection = (seo, faq, heading) => {
+  seo = seo || {};
+  const items = (faq || []).slice(0, 8);
+  const cols = items.length ? [items.slice(0, Math.ceil(items.length / 2)), items.slice(Math.ceil(items.length / 2))] : [];
+  const t = seo.table;
+  const more = (seo.paras || []).length || t || (seo.tail || []).length;
+  return `<section class="pk-seo" style="border-top:1px solid var(--color-divider);margin-top:40px;padding-top:32px;display:flex;flex-direction:column;gap:32px">
+  ${seo.heading || seo.intro ? `<div>
+    <h2 style="font-size:28px;margin:0 0 12px">${esc(seo.heading || heading || '')}</h2>
+    ${seo.intro ? `<p class="seo-p">${esc(seo.intro)}</p>` : ''}
+    ${more ? `<details class="seo-more"><summary class="btn btn-secondary"><span class="seo-more-open">Читать полностью</span><span class="seo-more-close">Свернуть текст</span><span class="seo-caret"></span></summary><div>
+      ${(seo.paras || []).map(x => `<p class="seo-p">${esc(x)}</p>`).join('')}
+      ${t ? `<h3 style="font-size:20px;margin:22px 0 10px">${esc(t.title || '')}</h3><div class="blueprint" style="padding:6px 14px 10px;overflow-x:auto;max-width:920px"><table class="table" style="width:100%"><thead><tr>${(t.head || []).map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${(t.rows || []).map(r => `<tr>${r.map(c => `<td style="font-size:14px">${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : ''}
+      ${(seo.tail || []).map(x => `<p class="seo-p" style="margin-top:14px">${esc(x)}</p>`).join('')}
+    </div></details>` : ''}
+  </div>` : ''}
+  ${cols.length ? `<div><h2 style="font-size:24px;margin:0 0 16px">Вопросы и ответы</h2>
+  <div class="pk-faq-cols">${cols.map(col => `<div style="display:flex;flex-direction:column;gap:10px">${col.map(f => `<details class="blueprint faq-item" style="padding:14px 16px"><summary style="display:grid;grid-template-columns:1fr 16px;gap:12px;align-items:flex-start;font-family:var(--font-heading);font-weight:600;font-size:17px;line-height:1.3;color:var(--color-text)"><span>${esc(f.q)}</span><span class="seo-caret" style="margin-top:6px;color:var(--color-accent)"></span></summary><p style="font-size:14px;line-height:1.6;color:var(--color-neutral-800);margin:10px 0 0">${esc(f.a)}</p></details>`).join('')}</div>`).join('')}</div></div>` : ''}
+</section>`;
+};
+
 function productCard(BASE, p) {
   const P = paths();
   return `<a href="${BASE + P.product(p)}" class="card blueprint" style="padding:0;gap:0;text-decoration:none;color:inherit">
@@ -114,7 +138,7 @@ module.exports = function genPages(BASE) {
     </div>
   </aside>
 </div>
-${faqBlock(p.faq)}
+${seoSection(p.seo || { heading: (p.name) + ': характеристики и применение', intro: p.lead_text, paras: p.description }, p.faq)}
 ${related.length ? `<h2 style="font-size:26px;margin:40px 0 14px">С этим товаром смотрят</h2><div class="pk-lonegrid">${related.map(r => productCard(BASE, r)).join('')}</div>` : ''}
 ${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(p.slug)).slice(0, 4); return arts.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Статьи по теме</h2><div class="pk-lonegrid">${arts.map(x => articleCard(BASE, x)).join('')}</div>` : ''; })()}`);
     out.push({ path: P.product(p), index: true, h1: p.fullName || p.name, raw: true, html,
@@ -146,7 +170,6 @@ ${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(
   <div class="duotone ph" data-photo="1" style="height:340px;border-radius:14px;background:url(IMGBASE${a.cover || 'blog-boiler'}.jpg) center/cover no-repeat;margin:0 0 22px"></div>
   ${body}
   ${a.checklist && a.checklist.length ? `<div class="blueprint" style="padding:18px 22px;margin:24px 0"><h2 style="font-size:22px;margin:0 0 10px">Чек-лист</h2><ul style="list-style:none;padding:0;margin:0">${a.checklist.map(c => `<li style="display:flex;gap:10px;padding:7px 0;font-size:16px"><span class="ico ico-20 i-ui-approval" style="color:var(--color-accent-700);margin-top:2px"></span>${esc(c)}</li>`).join('')}</ul></div>` : ''}
-  ${faqBlock(a.faq)}
 </article>
 <aside style="position:sticky;top:132px;display:flex;flex-direction:column;gap:16px">
   ${rp.length ? `<div class="blueprint" style="padding:16px 18px"><div style="font-weight:600;margin-bottom:8px">Позиции из статьи</div>${rp.map(p => `<a href="${BASE + P.product(p)}" style="display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--color-divider);text-decoration:none;color:inherit;font-size:14px"><span>${esc(p.name)}</span><span class="mono">${rub(p.price)}</span></a>`).join('')}</div>` : ''}
@@ -154,6 +177,7 @@ ${(() => { const arts = articles.filter(a => (a.relatedProducts || []).includes(
   <div class="blueprint" style="padding:16px 18px"><div style="font-weight:600">Спросить у чата</div><p style="font-size:14px;color:var(--color-neutral-700);margin:6px 0 10px">Чат знает эту статью и подберёт позиции под вашу задачу.</p><a class="btn btn-primary" href="${BASE}chat/" style="text-decoration:none">Открыть чат</a></div>
 </aside>
 </div>
+${seoSection(a.seoBlock, a.faq, a.title)}
 ${ra.length ? `<h2 style="font-size:26px;margin:40px 0 14px">Читайте также</h2><div class="pk-lonegrid">${ra.map(x => articleCard(BASE, x)).join('')}</div>` : ''}`);
     out.push({ path: P.article(a), index: true, h1: a.title, raw: true, html, type: 'article',
       title: cut(`${a.title} — ПРОМКОНТУР`, 72), desc: cut(a.lead, 158), faq: a.faq, og: a.cover,
@@ -187,9 +211,8 @@ ${(d.tasks || []).length ? `<h2 style="font-size:26px;margin:32px 0 12px">Тип
 ${dirProducts.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Популярные позиции</h2><div class="pk-lonegrid">${dirProducts.map(p => productCard(BASE, p)).join('')}</div>` : ''}
 ${dirBrands.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Производители</h2><div style="display:flex;gap:8px;flex-wrap:wrap">${dirBrands.map(({ n, b }) => b ? `<a class="tag tag-outline" href="${BASE}proizvoditeli/${b.slug}/" style="text-decoration:none;font-size:13px;padding:6px 12px">${esc(n)}</a>` : `<span class="tag tag-outline" style="font-size:13px;padding:6px 12px;opacity:.7">${esc(n)}</span>`).join('')}</div>` : ''}
 ${(d.howto || []).length ? `<h2 style="font-size:26px;margin:32px 0 12px">Что указать в заявке</h2><ol style="font-size:16px;line-height:1.8;padding-left:22px;margin:0">${d.howto.map(h => `<li>${esc(h)}</li>`).join('')}</ol>` : ''}
-${(d.seo || []).length ? `<h2 style="font-size:24px;margin:32px 0 10px">${esc(d.name)}: цены, наличие и подбор</h2><div style="max-width:920px">${d.seo.map(t => `<p style="font-size:15px;line-height:1.7;color:var(--color-neutral-800);margin:0 0 12px">${esc(t)}</p>`).join('')}</div>` : ''}
 ${dirArticles.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Статьи по направлению</h2><div class="pk-lonegrid">${dirArticles.map(x => articleCard(BASE, x)).join('')}</div>` : ''}
-${faqBlock(d.faq)}`);
+${seoSection(d.seoBlock || { heading: d.name + ': цены, наличие и подбор', intro: (d.seo || [])[0], paras: (d.seo || []).slice(1) }, d.faq)}`);
     out.push({ path: P.direction(d), index: true, h1: d.h1 || d.name, raw: true, html, faq: d.faq, og: d.cover,
       title: cut(`${d.h1 || d.name}: купить с доставкой, ${d.count} позиций — ПРОМКОНТУР`, 72), desc: cut(d.intro, 158) });
   }
@@ -208,7 +231,7 @@ ${bp.length ? `<h2 style="font-size:26px;margin:32px 0 12px">Модели в к�
   <div class="blueprint" style="padding:18px 20px"><div style="display:flex;gap:10px;align-items:center;font-weight:600;margin-bottom:8px"><span class="ico i-dir-spares" style="color:var(--color-accent-700)"></span>Запчасти</div><ul style="margin:0;padding-left:20px;font-size:15px;line-height:1.7">${(b.spares || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
   <div class="blueprint" style="padding:18px 20px"><div style="display:flex;gap:10px;align-items:center;font-weight:600;margin-bottom:8px"><span class="ico i-analog" style="color:var(--color-accent-700)"></span>Аналоги и поставки</div><p style="font-size:15px;line-height:1.6;margin:0 0 8px">${esc(b.analogs)}</p><p style="font-size:14px;color:var(--color-neutral-700);margin:0">${esc(b.availability)}</p></div>
 </div>
-${faqBlock(b.faq)}`);
+${seoSection(b.seo || { heading: (b.h1 || b.name) + ': серии, цены и аналоги', intro: b.positioning }, b.faq)}`);
     out.push({ path: P.brand(b), index: true, h1: b.h1 || b.name, raw: true, html, faq: b.faq,
       title: cut(`${b.h1 || b.name}: серии, цены и аналоги — ПРОМКОНТУР`, 70), desc: cut(b.intro, 158) });
   }
@@ -240,3 +263,6 @@ module.exports.blogExtra = (BASE, pageHtml) => {
   const rest = load('articles.json').filter(a => !page.includes(norm(a.title)));
   return rest.length ? `<section style="max-width:1360px;margin:0 auto;padding:8px 28px 40px"><h2 style="font-size:26px;margin:0 0 14px">Ещё статьи</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">${rest.map(a => articleCard(BASE, a)).join('')}</div></section>` : '';
 };
+
+module.exports.helpers = { esc, rub, cut, crumbs, img, faqBlock, seoSection, productCard, articleCard };
+module.exports.load = load;
