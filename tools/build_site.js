@@ -294,8 +294,6 @@ ${r.index ? '' : '<meta name="robots" content="noindex, follow">\n'}${r.path ===
 <link rel="icon" href="${BASE}favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${BASE}apple-touch-icon.png">
 <link rel="manifest" href="${BASE}site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${BASE}assets/ds.css">
 <link rel="stylesheet" href="${BASE}assets/app.css">
 ${extraHead}</head>
@@ -429,8 +427,20 @@ ${(scripts || []).map(sc => `<script src="${BASE}assets/${sc}" defer></script>`)
 
   // ── ассеты ──
   const dsDir = fs.readdirSync(path.join(SRC, '_ds'))[0];
-  fs.copyFileSync(path.join(SRC, '_ds', dsDir, 'styles.css'), path.join(OUT, 'assets', 'ds.css'));
-  fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'skin.css'), 'utf8') + '\n' + (fs.existsSync(path.join(SRC, 'icons.css')) ? fs.readFileSync(path.join(SRC, 'icons.css'), 'utf8') : ''));
+  fs.writeFileSync(path.join(OUT, 'assets', 'ds.css'), fs.readFileSync(path.join(SRC, '_ds', dsDir, 'styles.css'), 'utf8').replace(/@import\s+url\([^)]*fonts\.googleapis[^)]*\)\s*;?/g, ''));
+  // шрифты со своего хостинга (Fira Sans / Fira Sans Condensed, OFL; кириллица + латиница, только используемые начертания)
+  const FONT_SETS = [['fira-sans', 'Fira Sans', [400, 500, 600, 700]], ['fira-sans-condensed', 'Fira Sans Condensed', [400, 500, 600]]];
+  const RANGES = { cyrillic: 'U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116', latin: 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD' };
+  fs.mkdirSync(path.join(OUT, 'assets', 'fonts'), { recursive: true });
+  let fontCss = '';
+  for (const [pkg, family, weights] of FONT_SETS) for (const w of weights) for (const sub of ['cyrillic', 'latin']) {
+    const file = `${pkg}-${sub}-${w}-normal.woff2`;
+    const src = path.join(ROOT, 'node_modules', '@fontsource', pkg, 'files', file);
+    if (!fs.existsSync(src)) continue;
+    fs.copyFileSync(src, path.join(OUT, 'assets', 'fonts', file));
+    fontCss += `@font-face{font-family:'${family}';font-style:normal;font-display:swap;font-weight:${w};src:url(fonts/${file}) format('woff2');unicode-range:${RANGES[sub]}}\n`;
+  }
+  fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), fontCss + styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'skin.css'), 'utf8') + '\n' + (fs.existsSync(path.join(SRC, 'icons.css')) ? fs.readFileSync(path.join(SRC, 'icons.css'), 'utf8') : ''));
   fs.copyFileSync(path.join(__dirname, 'site', 'site.js'), path.join(OUT, 'assets', 'site.js'));
   for (const f of fs.readdirSync(path.join(__dirname, 'site')).filter(f => f.endsWith('.js') && !['site.js', 'search.js'].includes(f))) fs.copyFileSync(path.join(__dirname, 'site', f), path.join(OUT, 'assets', f));
   if (!fs.existsSync(path.join(OUT, 'assets', 'auth.js'))) fs.writeFileSync(path.join(OUT, 'assets', 'auth.js'), '');

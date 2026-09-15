@@ -6,6 +6,8 @@
     "build": "node tools/build_site.js"
   },
   "devDependencies": {
+    "@fontsource/fira-sans": "^5.3.0",
+    "@fontsource/fira-sans-condensed": "^5.3.0",
     "chrome-launcher": "^1.2.1",
     "lighthouse": "^13.4.1",
     "lucide-static": "^1.46.0",
