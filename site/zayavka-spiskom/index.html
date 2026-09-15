@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Разбор заявки списком из Excel — ПРОМКОНТУР</title>
-<meta name="description" content="Загрузите заявку цеха в XLSX: строки сопоставляются с артикулами, спорные уходят на подтверждение, итоговая спецификация — с суммой.">
+<title>Подбор оборудования по заявке из Excel списком — ПРОМКОНТУР</title>
+<meta name="description" content="Загрузите заявку цеха в XLSX: строки сопоставляются с артикулами в базе, спорные уходят на подтверждение, на выходе — спецификация с ценами и итоговой суммой.">
 <link rel="canonical" href="https://alex1986-rgb.github.io/b2b-marketplace/zayavka-spiskom/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ПРОМКОНТУР">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Разбор заявки списком из Excel — ПРОМКОНТУР">
-<meta property="og:description" content="Загрузите заявку цеха в XLSX: строки сопоставляются с артикулами, спорные уходят на подтверждение, итоговая спецификация — с суммой.">
+<meta property="og:title" content="Подбор оборудования по заявке из Excel списком — ПРОМКОНТУР">
+<meta property="og:description" content="Загрузите заявку цеха в XLSX: строки сопоставляются с артикулами в базе, спорные уходят на подтверждение, на выходе — спецификация с ценами и итоговой суммой.">
 <meta property="og:url" content="https://alex1986-rgb.github.io/b2b-marketplace/zayavka-spiskom/">
 <meta property="og:image" content="https://alex1986-rgb.github.io/b2b-marketplace/img/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="/b2b-marketplace/assets/ds.css">
 <link rel="stylesheet" href="/b2b-marketplace/assets/app.css">
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://alex1986-rgb.github.io/b2b-marketplace/#org","name":"ПРОМКОНТУР","url":"https://alex1986-rgb.github.io/b2b-marketplace/","logo":"https://alex1986-rgb.github.io/b2b-marketplace/assets/logo.svg","email":"zakaz@promkontur.example"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какие форматы принимаются?","acceptedAnswer":{"@type":"Answer","text":"XLSX, CSV, текст письма и фотографии шильдиков. До 500 строк в одном файле."}},{"@type":"Question","name":"Нужен ли шаблон таблицы?","acceptedAnswer":{"@type":"Answer","text":"Нет, файл разбирается в свободной форме. Если есть колонка с артикулом, точность выше."}},{"@type":"Question","name":"Что с опечатками в названиях?","acceptedAnswer":{"@type":"Answer","text":"Система исправляет частые опечатки и сокращения: «грундфос», «чугун 100» и подобные распознаются."}},{"@type":"Question","name":"Как считаются дубликаты?","acceptedAnswer":{"@type":"Answer","text":"Повторяющиеся строки объединяются, количество суммируется — это видно в итоге по заявке."}},{"@type":"Question","name":"Что будет с нераспознанными строками?","acceptedAnswer":{"@type":"Answer","text":"Они уходят инженеру вместе с исходным текстом. Ответ приходит в течение двух рабочих часов."}},{"@type":"Question","name":"Можно ли сохранить заявку?","acceptedAnswer":{"@type":"Answer","text":"Да, как шаблон в личном кабинете — для повторных закупок по той же номенклатуре."}},{"@type":"Question","name":"Видны ли остатки при разборе?","acceptedAnswer":{"@type":"Answer","text":"Да, наличие и срок отгрузки проверяются у поставщиков в момент разбора."}},{"@type":"Question","name":"Можно ли загрузить заявку через MAX?","acceptedAnswer":{"@type":"Answer","text":"Да, бот принимает файл в переписке и возвращает сопоставленную спецификацию."}}]}</script>
 </head>
 <body>
 <div class="sc-host" data-sc-name="Промышленный агрегатор"><div style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh;">
@@ -33,57 +34,57 @@
   
   <div style="background: var(--color-neutral-900); color: var(--color-neutral-300); font-size: 13px;">
     <div style="max-width: 1360px; margin: 0px auto; padding: 0px 28px; min-height: 36px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-      <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; background: var(--color-accent); display: block;"></span>Москва</span>
-      <span>Доставка по всей России</span>
-      <span>Оплата по счёту · отсрочка 30 дней</span>
-      <a href="/b2b-marketplace/kabinet-postavshchika/" style="margin-left: auto; color: var(--color-neutral-300);">Кабинет поставщика</a>
+      <span style="display: flex; align-items: center; gap: 6px;"><span class="ico ico-16 i-delivery-region" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Москва</span>
+      <span>Доставка по&nbsp;всей России</span>
+      <span style="display: flex; align-items: center; gap: 6px;"><span class="ico ico-16 i-pay-deferral" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Оплата по&nbsp;счёту · отсрочка до&nbsp;30&nbsp;дней</span>
+      <a href="/b2b-marketplace/kabinet-postavshchika/" style="margin-left: auto; color: var(--color-neutral-300); display: flex; align-items: center; gap: 6px;"><span class="ico ico-16 i-channel-vendor" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Кабинет поставщика</a>
       <a href="/b2b-marketplace/postavshchikam/" style="color: var(--color-neutral-300);">Стать поставщиком</a>
-      <a href="/b2b-marketplace/o-servise/" style="color: var(--color-neutral-300);">О сервисе</a>
-      <a href="/b2b-marketplace/vhod/" style="color: var(--color-neutral-300);"><span class="sc-interp">Войти</span></a>
-      <span class="mono" style="color: rgb(255, 255, 255); font-size: 15px;">8 800 000-00-00</span>
+      <a href="/b2b-marketplace/o-servise/" style="color: var(--color-neutral-300);">О&nbsp;сервисе</a>
+      <a href="/b2b-marketplace/vhod/" style="color: var(--color-neutral-300); display: flex; align-items: center; gap: 6px;"><span class="ico ico-16 i-ui-account" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Войти</a>
+      <a href="/b2b-marketplace/chat/" class="mono" style="color: rgb(255, 255, 255); font-size: 15px;">Чат в&nbsp;MAX</a>
     </div>
   </div>
 
   <header style="background: var(--color-bg); border-bottom: 1px solid var(--color-divider); position: relative; z-index: 20;">
     <div style="max-width: 1360px; margin: 0px auto; padding: 16px 28px 0px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
       <a href="/b2b-marketplace/" style="display: flex; align-items: center; gap: 10px; margin-right: 6px; text-decoration: none; color: inherit;">
-        <span style="width: 22px; height: 22px; background: var(--color-accent); display: block;"></span>
+        <span style="width: 22px; height: 22px; background: url(&quot;/b2b-marketplace/img/mark.svg&quot;) center center / contain no-repeat; display: block;"></span>
         <span style="font-family: var(--font-heading); font-weight: 600; font-size: 22px; letter-spacing: 0.01em;">ПРОМКОНТУР</span>
       </a>
-      <a class="btn btn-secondary" style="padding: 10px 16px; font-size: 15px; text-decoration: none;" href="/b2b-marketplace/napravleniya/">Каталог · 45 направлений</a>
+      <a class="btn btn-secondary" style="padding: 10px 16px; font-size: 15px; gap: 8px; text-decoration: none;" href="/b2b-marketplace/napravleniya/"><span class="ico ico-16 i-entry-catalog" style="color: currentcolor; width: 18px; height: 18px;"></span>Каталог · 45 направлений</a>
       <div style="flex: 1 1 0%; min-width: 280px; display: flex;">
         <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height: 44px; border-right: 0px;">
-        <a class="btn btn-secondary" style="min-height: 44px; white-space: nowrap; border-right: 0px; text-decoration: none;" href="/b2b-marketplace/poisk-po-foto/">По фото</a>
-        <button class="btn btn-primary" style="min-height: 44px; padding-inline: 24px; font-size: 15px;" data-demo="1">Найти</button>
+        <a class="btn btn-secondary" style="min-height: 44px; white-space: nowrap; border-right: 0px; gap: 8px; text-decoration: none;" href="/b2b-marketplace/poisk-po-foto/"><span class="ico ico-16 i-entry-photo" style="color: currentcolor; width: 18px; height: 18px;"></span>По&nbsp;фото</a>
+        <button class="btn btn-primary" style="min-height: 44px; padding-inline: 24px; font-size: 15px; gap: 8px;" data-demo="1"><span class="ico ico-16 i-ui-search" style="color: currentcolor; width: 18px; height: 18px;"></span><span class="hide-m">Найти</span></button>
       </div>
       <div style="display: flex; gap: 16px; font-size: 12px; color: var(--color-neutral-700); text-align: center;">
-        <a href="/b2b-marketplace/chat/" style="text-decoration: none; color: inherit;"><div class="mono" style="font-size: 17px; color: var(--color-accent-700);">MAX</div>Чат</a>
-        <a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="text-decoration: none; color: inherit;"><div class="mono" style="font-size: 17px; color: var(--color-text);">3</div>Запросы КП</a>
-        <a href="/b2b-marketplace/sravnenie/" style="text-decoration: none; color: inherit;"><div class="mono" style="font-size: 17px; color: var(--color-text);">4</div>Сравнение</a>
-        <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div class="mono" style="font-size: 17px; color: var(--color-text);">3</div>Корзина</a>
+        <a href="/b2b-marketplace/chat/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-accent-700);"><span class="ico ico-20 i-entry-chat" style="color: currentcolor;"></span></div>Чат</a>
+        <a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-quote" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Запросы КП</a>
+        <a href="/b2b-marketplace/sravnenie/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-compare" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">4</span></div>Сравнение</a>
+        <a href="/b2b-marketplace/korzina/" style="text-decoration: none; color: inherit;"><div style="position: relative; height: 24px; display: flex; align-items: center; justify-content: center; color: var(--color-text);"><span class="ico i-ui-cart" style="color: currentcolor; width: 22px; height: 22px;"></span><span class="mono" style="position: absolute; top: -5px; left: calc(50% + 5px); min-width: 16px; height: 16px; padding: 0px 4px; background: var(--color-accent); color: rgb(255, 255, 255); font-size: 10px; line-height: 16px; letter-spacing: 0px; text-align: center;">3</span></div>Корзина</a>
       </div>
     </div>
     <nav style="max-width: 1360px; margin: 0px auto; padding: 10px 28px 12px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
       
-        <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Направления</span></a>
+        <a href="/b2b-marketplace/napravleniya/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Направления</a>
       
-        <a href="/b2b-marketplace/napravleniya/nasosy/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Насосы</span></a>
+        <a href="/b2b-marketplace/napravleniya/nasosy/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Насосы</a>
       
-        <a href="/b2b-marketplace/proizvoditeli/grundfos/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Grundfos</span></a>
+        <a href="/b2b-marketplace/proizvoditeli/grundfos/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Grundfos</a>
       
-        <a href="/b2b-marketplace/chat/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Умный чат</span></a>
+        <a href="/b2b-marketplace/chat/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Умный чат</a>
       
-        <a href="/b2b-marketplace/zayavka-spiskom/" style="font-size: 14px; color: var(--color-accent-700); text-decoration: none; font-weight: 600;"><span class="sc-interp">Разбор заявки</span></a>
+        <a href="/b2b-marketplace/zayavka-spiskom/" style="font-size: 14px; color: var(--color-accent-700); text-decoration: none; font-weight: 600;">Разбор заявки</a>
       
-        <a href="/b2b-marketplace/proekty/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Проекты</span></a>
+        <a href="/b2b-marketplace/proekty/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Проекты</a>
       
-        <a href="/b2b-marketplace/blog/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Блог</span></a>
+        <a href="/b2b-marketplace/blog/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Блог</a>
       
-        <a href="/b2b-marketplace/oplata-i-dostavka/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Оплата и доставка</span></a>
+        <a href="/b2b-marketplace/oplata-i-dostavka/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Оплата и&nbsp;доставка</a>
       
-        <a href="/b2b-marketplace/postavshchikam/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;"><span class="sc-interp">Поставщикам</span></a>
+        <a href="/b2b-marketplace/postavshchikam/" style="font-size: 14px; color: var(--color-text); text-decoration: none; font-weight: 400;">Поставщикам</a>
       
-      <span style="margin-left: auto; font-size: 13px; color: var(--color-neutral-700);">Ответ на запрос КП — 2 рабочих часа</span>
+      <span style="margin-left: auto; font-size: 13px; color: var(--color-neutral-700);">Ответ на&nbsp;запрос КП&nbsp;— 2 рабочих часа</span>
     </nav>
   </header>
   
@@ -155,11 +156,11 @@
         <div>
           <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600);">Заявка · zayavka_cex4_sentyabr.xlsx</div>
           <h1 style="font-size: 32px; margin: 2px 0px 0px;">Разбор заявки</h1>
-          <p style="font-size: 15px; color: var(--color-neutral-700); margin: 6px 0px 0px; max-width: 720px;">Строки сопоставлены с артикулами в базе. Позиции с точным совпадением уходят в корзину, спорные — на подтверждение, нераспознанные — инженеру.</p>
+          <p style="font-size: 15px; color: var(--color-neutral-700); margin: 6px 0px 0px; max-width: 720px;">Строки сопоставлены с&nbsp;артикулами в&nbsp;базе. Позиции с&nbsp;точным совпадением уходят в&nbsp;корзину, спорные&nbsp;— на&nbsp;подтверждение, строки без&nbsp;аналога уходят закупщику как пробел ассортимента.</p>
         </div>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button class="btn btn-secondary" data-demo="1">Загрузить другой файл</button>
-          <a class="btn btn-primary" href="/b2b-marketplace/korzina/" style="text-decoration: none;">Перенести в корзину</a>
+          <button class="btn btn-secondary" style="gap: 8px;" data-demo="1"><span class="ico ico-16 i-entry-list" style="color: currentcolor;"></span>Загрузить другой файл</button>
+          <a class="btn btn-primary" href="/b2b-marketplace/korzina/" style="text-decoration: none;">Перенести в&nbsp;корзину</a>
         </div>
       </div>
 
@@ -167,114 +168,125 @@
         
           <div class="blueprint" style="padding: 16px 18px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-text);"><span class="sc-interp">20</span></div>
-            <div style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">строк в файле</span></div>
+            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-text);">20</div>
+            <div style="font-size: 13px; color: var(--color-neutral-700);">строк в&nbsp;файле</div>
           </div>
         
           <div class="blueprint" style="padding: 16px 18px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-accent-700);"><span class="sc-interp">14</span></div>
-            <div style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">точных совпадений</span></div>
+            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-accent-700);">14</div>
+            <div style="font-size: 13px; color: var(--color-neutral-700);">точных совпадений</div>
           </div>
         
           <div class="blueprint" style="padding: 16px 18px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-text);"><span class="sc-interp">4</span></div>
-            <div style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">требуют подтверждения</span></div>
+            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-text);">3</div>
+            <div style="font-size: 13px; color: var(--color-neutral-700);">требуют подтверждения</div>
           </div>
         
           <div class="blueprint" style="padding: 16px 18px;">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-neutral-700);"><span class="sc-interp">2</span></div>
-            <div style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">не распознано</span></div>
+            <div class="mono" style="font-size: 24px; line-height: 1.15; color: var(--color-neutral-700);">3</div>
+            <div style="font-size: 13px; color: var(--color-neutral-700);">без&nbsp;аналога</div>
           </div>
         
       </div>
 
       <div class="blueprint" style="padding: 6px 14px 12px; overflow-x: auto;">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); padding: 8px 0px 2px;">Показаны 9 из&nbsp;20 строк</div>
         <table class="table" style="width: 100%; min-width: 800px;">
-          <thead><tr><th style="width: 30px;"></th><th>Строка из заявки</th><th>Найдено в базе</th><th>Кол-во</th><th>Наличие и срок</th><th style="text-align: right;">Цена</th><th>Статус</th></tr></thead>
+          <thead><tr><th style="width: 30px;"></th><th>Строка из&nbsp;заявки</th><th>Найдено в&nbsp;базе</th><th>Кол-во</th><th>Наличие и&nbsp;срок</th><th style="text-align: right;">Цена</th><th>Статус</th></tr></thead>
           <tbody>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: var(--color-accent); display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Насос Грундфос CR32-4</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Grundfos CR 32-4 A-F-A-E-HQQE</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">96122802</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">2</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">8 шт. · 2–4 дня</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">209 800 ₽</span></td>
-                <td><span class="tag tag-accent"><span class="sc-interp">Совпадение</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Насос Грундфос CR32-4</td>
+                <td style="font-size: 14px; font-weight: 500;">Grundfos CR 32-4 A-F-A-E-HQQE<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">96122802</div></td>
+                <td class="mono" style="font-size: 14px;">2</td>
+                <td style="font-size: 13px;">8&nbsp;шт. · 2–4&nbsp;дня</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">209 800&nbsp;₽</td>
+                <td><span class="tag tag-accent">Совпадение</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: var(--color-accent); display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">подшипник 6205 2RS SKF</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">SKF 6205-2RS</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">SKF-6205</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">200</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">1 400 шт. · в день заказа</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">108 000 ₽</span></td>
-                <td><span class="tag tag-accent"><span class="sc-interp">Совпадение</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">подшипник 6205 2RS SKF</td>
+                <td style="font-size: 14px; font-weight: 500;">SKF 6205-2RS<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">SKF-6205</div></td>
+                <td class="mono" style="font-size: 14px;">200</td>
+                <td style="font-size: 13px;">1 400&nbsp;шт. · в&nbsp;день заказа</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">108 000&nbsp;₽</td>
+                <td><span class="tag tag-accent">Совпадение</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: var(--color-accent); display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Частотник 15 кВт 380В</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">INNOVERT VR 15 kW</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">INV-VR-15</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">4</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">26 шт. · 1–2 дня</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">249 200 ₽</span></td>
-                <td><span class="tag tag-accent"><span class="sc-interp">Совпадение</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Частотник 15&nbsp;кВт 380В</td>
+                <td style="font-size: 14px; font-weight: 500;">INNOVERT VR 15&nbsp;кВт<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">INV-VR-15</div></td>
+                <td class="mono" style="font-size: 14px;">4</td>
+                <td style="font-size: 13px;">26&nbsp;шт. · 1–2&nbsp;дня</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">249 200&nbsp;₽</td>
+                <td><span class="tag tag-accent">Совпадение</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: var(--color-accent); display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Задвижка 100 мм чугун</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Задвижка DN100 PN16, чугун</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">ARM-ZD-100</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">3</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">12 шт. · 2 дня</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">58 400 ₽</span></td>
-                <td><span class="tag tag-accent"><span class="sc-interp">Совпадение</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Задвижка 100&nbsp;мм чугун</td>
+                <td style="font-size: 14px; font-weight: 500;">Задвижка DN100 PN16, чугун<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">ARM-ZD-100</div></td>
+                <td class="mono" style="font-size: 14px;">3</td>
+                <td style="font-size: 13px;">12&nbsp;шт. · 2&nbsp;дня</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">58 400&nbsp;₽</td>
+                <td><span class="tag tag-accent">Совпадение</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: var(--color-accent); display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Манжета 45х65х10</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Манжета 45×65×10 NBR</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">MNZ-456510</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">30</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">480 шт. · в день заказа</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">4 200 ₽</span></td>
-                <td><span class="tag tag-accent"><span class="sc-interp">Совпадение</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Манжета 45х65х10</td>
+                <td style="font-size: 14px; font-weight: 500;">Манжета 45×65×10 NBR<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">MNZ-456510</div></td>
+                <td class="mono" style="font-size: 14px;">30</td>
+                <td style="font-size: 13px;">480&nbsp;шт. · в&nbsp;день заказа</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">4 200&nbsp;₽</td>
+                <td><span class="tag tag-accent">Совпадение</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: transparent; display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Насос дозирующий 0,5 м3</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">3 варианта исполнения</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">нужно уточнить материал</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">1</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">под заказ · 9 дней</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">от 22 900 ₽</span></td>
-                <td><span class="tag tag-outline"><span class="sc-interp">Уточнить</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Насос дозировочный 0,5&nbsp;м3</td>
+                <td style="font-size: 14px; font-weight: 500;">3 варианта исполнения<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">нужно уточнить материал</div></td>
+                <td class="mono" style="font-size: 14px;">1</td>
+                <td style="font-size: 13px;">под заказ · 9&nbsp;дней</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">от&nbsp;22 900&nbsp;₽</td>
+                <td><span class="tag tag-outline">Уточнить</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: transparent; display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Компрессор винтовой 75 кВт</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Kaishan LGCY-75</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">KSN-LGCY-75-10</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">1</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">срок от 21 дня</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">по запросу</span></td>
-                <td><span class="tag tag-outline"><span class="sc-interp">На КП</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Компрессор винтовой 75&nbsp;кВт</td>
+                <td style="font-size: 14px; font-weight: 500;">Kaishan LGCY-75<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">KSN-LGCY-75-10</div></td>
+                <td class="mono" style="font-size: 14px;">1</td>
+                <td style="font-size: 13px;">срок от&nbsp;21&nbsp;дня</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">по&nbsp;запросу</td>
+                <td><span class="tag tag-outline">На&nbsp;КП</span></td>
               </tr>
             
               <tr>
                 <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: transparent; display: block;"></span></td>
-                <td style="font-size: 13px; color: var(--color-neutral-700);"><span class="sc-interp">Фильтр ФВ-12 (по чертежу цеха)</span></td>
-                <td style="font-size: 14px; font-weight: 500;"><span class="sc-interp">—</span><div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;"><span class="sc-interp">не распознано</span></div></td>
-                <td class="mono" style="font-size: 14px;"><span class="sc-interp">2</span></td>
-                <td style="font-size: 13px;"><span class="sc-interp">—</span></td>
-                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;"><span class="sc-interp">—</span></td>
-                <td><span class="tag tag-neutral"><span class="sc-interp">Инженеру</span></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Фильтр ФВ-12 (по&nbsp;чертежу цеха)</td>
+                <td style="font-size: 14px; font-weight: 500;">—<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">нет аналога в&nbsp;базе</div></td>
+                <td class="mono" style="font-size: 14px;">2</td>
+                <td style="font-size: 13px;">—</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">—</td>
+                <td><span class="tag tag-neutral">Без&nbsp;аналога</span></td>
+              </tr>
+            
+              <tr>
+                <td><span style="width: 14px; height: 14px; border: 1.5px solid var(--color-divider); background: transparent; display: block;"></span></td>
+                <td style="font-size: 13px; color: var(--color-neutral-700);">Шланг 3/4 20&nbsp;м</td>
+                <td style="font-size: 14px; font-weight: 500;">46 похожих, точного аналога нет<div class="mono" style="font-size: 11px; color: var(--color-neutral-600); font-weight: 400;">нужны давление и&nbsp;армирование</div></td>
+                <td class="mono" style="font-size: 14px;">5</td>
+                <td style="font-size: 13px;">—</td>
+                <td class="mono" style="font-size: 14px; text-align: right; white-space: nowrap;">—</td>
+                <td><span class="tag tag-neutral">Без&nbsp;аналога</span></td>
               </tr>
             
           </tbody>
@@ -288,29 +300,29 @@
           <div style="display: flex; flex-direction: column; gap: 12px;">
             
               <div style="border-top: 1px solid var(--color-divider); padding-top: 10px;">
-                <div style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Насос дозирующий 0,5 м³/ч</span></div>
-                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;"><span class="sc-interp">Не указан материал головки: PP, PVDF или нержавейка. От этого зависит цена и срок.</span></div>
+                <div style="font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px;"><span class="ico ico-16 i-state-warning" style="color: var(--color-accent-700);"></span>Насос дозировочный 0,5&nbsp;м³/ч</div>
+                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;">Не&nbsp;указан материал головки: PP, PVDF или нержавейка. От&nbsp;этого зависит цена и&nbsp;срок.</div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Выбрать PVDF</span></button>
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Спросить в чате</span></button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Выбрать PVDF</button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Спросить в&nbsp;чате</button>
                 </div>
               </div>
             
               <div style="border-top: 1px solid var(--color-divider); padding-top: 10px;">
-                <div style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Фильтр ФВ-12 (по чертежу цеха)</span></div>
-                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;"><span class="sc-interp">Нет совпадений по артикулу. Похоже на изделие по чертежу — нужен инженер.</span></div>
+                <div style="font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px;"><span class="ico ico-16 i-state-warning" style="color: var(--color-accent-700);"></span>Фильтр ФВ-12 (по&nbsp;чертежу цеха)</div>
+                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;">Нет совпадений по&nbsp;артикулу. Похоже на&nbsp;изделие по&nbsp;чертежу&nbsp;— нужен инженер.</div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Отправить инженеру</span></button>
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Приложить чертёж</span></button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Отправить инженеру</button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Приложить чертёж</button>
                 </div>
               </div>
             
               <div style="border-top: 1px solid var(--color-divider); padding-top: 10px;">
-                <div style="font-size: 14px; font-weight: 500;"><span class="sc-interp">Шланг 3/4 20 м</span></div>
-                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;"><span class="sc-interp">Найдено 46 позиций. Уточните давление и материал армирования.</span></div>
+                <div style="font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px;"><span class="ico ico-16 i-state-warning" style="color: var(--color-accent-700);"></span>Шланг 3/4 20&nbsp;м</div>
+                <div style="font-size: 13px; color: var(--color-neutral-700); margin: 2px 0px 8px;">Найдено 46 позиций. Уточните давление и&nbsp;материал армирования.</div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Показать варианты</span></button>
-                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1"><span class="sc-interp">Удалить строку</span></button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Показать варианты</button>
+                  <button class="btn btn-secondary" style="font-size: 13px;" data-demo="1">Удалить строку</button>
                 </div>
               </div>
             
@@ -318,20 +330,20 @@
         </div>
         <div class="blueprint" style="padding: 18px 20px;">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin: 0px 0px 8px;">Итог по заявке</h3>
+          <h3 style="margin: 0px 0px 8px;">Итог по&nbsp;заявке</h3>
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
-            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Распознано и в наличии</span><span class="mono">14 позиций · 812 600 ₽</span></div>
-            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Под заказ</span><span class="mono">3 позиции · 214 000 ₽</span></div>
-            <div style="display: flex; justify-content: space-between;"><span class="text-muted">На запрос КП</span><span class="mono">1 позиция</span></div>
-            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Нераспознано</span><span class="mono">2 строки</span></div>
+            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Распознано и&nbsp;в наличии</span><span class="mono">14 позиций · 812 600&nbsp;₽</span></div>
+            <div style="display: flex; justify-content: space-between;"><span class="text-muted">После подтверждения</span><span class="mono">3 позиции · 214 000&nbsp;₽</span></div>
+            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Из&nbsp;них на&nbsp;запрос КП</span><span class="mono">1 позиция</span></div>
+            <div style="display: flex; justify-content: space-between;"><span class="text-muted">Без&nbsp;аналога</span><span class="mono">3 строки</span></div>
           </div>
           <div class="hr" style="margin: 12px 0px;"></div>
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
-            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px;">К оформлению</span>
-            <span class="mono" style="font-size: 26px;">1 026 600 ₽</span>
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px;">К&nbsp;оформлению</span>
+            <span class="mono" style="font-size: 26px;">1 026 600&nbsp;₽</span>
           </div>
           <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
-            <a class="btn btn-primary" href="/b2b-marketplace/korzina/" style="text-decoration: none;">В корзину</a>
+            <a class="btn btn-primary" href="/b2b-marketplace/korzina/" style="text-decoration: none;">В&nbsp;корзину</a>
             <a class="btn btn-secondary" href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="text-decoration: none;">Отправить инженеру</a>
             <button class="btn btn-secondary" data-demo="1">Сохранить как шаблон</button>
           </div>
@@ -361,219 +373,292 @@
     <div class="sc-host" data-sc-name="SeoBlock"><section style="border-top: 1px solid var(--color-divider); background: var(--color-bg);">
   <div style="max-width: 1360px; margin: 0px auto; padding: 40px 28px 48px; display: flex; flex-direction: column; gap: 36px;">
 
-    <div>
-      <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 8px;">Информация о разделе</div>
-      <h2 style="font-size: 28px; margin: 0px 0px 12px;"><span class="sc-interp">Разбор заявки из Excel: как это работает</span></h2>
-      <p class="seo-p"><span class="sc-interp">Заявка от цеха приходит в свободной форме: сокращения, опечатки, размеры вперемешку с артикулами. Система сопоставляет строки с номенклатурой поставщиков, показывает совпадения с ценой и сроком, отдельно выносит позиции, где нужно решение, и строки, которые требуют инженера.</span></p>
+    <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
+    <div style="flex: 1 1 520px; min-width: 0px;">
+      <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 8px;">Информация о&nbsp;разделе</div>
+      <h2 style="font-size: 28px; margin: 0px 0px 12px;">Разбор заявки из&nbsp;Excel: как это работает</h2>
+      <p class="seo-p">Заявка от&nbsp;цеха приходит в&nbsp;свободной форме: сокращения, опечатки, размеры вперемешку с&nbsp;артикулами. Система сопоставляет строки с&nbsp;номенклатурой поставщиков, показывает совпадения с&nbsp;ценой и&nbsp;сроком, отдельно выносит позиции, где нужно решение, и&nbsp;строки, которые требуют инженера.</p>
 
-      
+      <details class="seo-more">
+        <summary class="btn btn-secondary"><span class="seo-more-open">Читать полностью</span><span class="seo-more-close">Свернуть текст</span><span class="seo-caret"></span></summary>
+        <div>
+          
+            <p class="seo-p">Совпадение считается точным, когда сходятся производитель и&nbsp;артикул или полный набор параметров модели. Если параметров не&nbsp;хватает&nbsp;— например не&nbsp;указан материал головки дозировочного насоса&nbsp;— строка помечается «уточнить» и&nbsp;предлагаются варианты исполнения с&nbsp;разницей в&nbsp;цене и&nbsp;сроке.</p>
+          
+            <p class="seo-p">Распознанные позиции переносятся в&nbsp;корзину одним действием, проектные уходят в&nbsp;запрос КП, нераспознанные&nbsp;— инженеру вместе с&nbsp;исходной строкой заявки. Разобранную заявку можно сохранить как шаблон: при&nbsp;повторной закупке она повторяется одной кнопкой.</p>
+          
 
-      <button class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 4px;">
-        <span class="sc-interp">Читать полностью</span>
-        <span style="display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid; transition: transform 0.18s; transform: rotate(0deg);"></span>
-      </button>
+          <h3 style="font-size: 20px; margin: 22px 0px 10px;">Статусы строк при&nbsp;разборе</h3>
+          <div class="blueprint" style="padding: 6px 14px 10px; overflow-x: auto; max-width: 920px;">
+            <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <table class="table" style="width: 100%;">
+              <thead>
+                <tr>
+                  
+                    <th>Статус</th>
+                  
+                    <th>Что означает</th>
+                  
+                    <th>Что происходит дальше</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                
+                  <tr>
+                    
+                      <td style="font-size: 14px;">Совпадение</td>
+                    
+                      <td style="font-size: 14px;">производитель и&nbsp;артикул сошлись</td>
+                    
+                      <td style="font-size: 14px;">в&nbsp;корзину с&nbsp;ценой и&nbsp;сроком</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    
+                      <td style="font-size: 14px;">Уточнить</td>
+                    
+                      <td style="font-size: 14px;">не&nbsp;хватает параметра исполнения</td>
+                    
+                      <td style="font-size: 14px;">выбор варианта или вопрос в&nbsp;чат</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    
+                      <td style="font-size: 14px;">На&nbsp;КП</td>
+                    
+                      <td style="font-size: 14px;">проектная позиция или сумма выше порога</td>
+                    
+                      <td style="font-size: 14px;">запрос с&nbsp;расчётом, ответ 2 часа</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    
+                      <td style="font-size: 14px;">Инженеру</td>
+                    
+                      <td style="font-size: 14px;">нет совпадений, изделие по&nbsp;чертежу</td>
+                    
+                      <td style="font-size: 14px;">передача человеку с&nbsp;исходной строкой</td>
+                    
+                  </tr>
+                
+                  <tr>
+                    
+                      <td style="font-size: 14px;">Дубликат</td>
+                    
+                      <td style="font-size: 14px;">строка повторяется в&nbsp;файле</td>
+                    
+                      <td style="font-size: 14px;">объединение количества</td>
+                    
+                  </tr>
+                
+              </tbody>
+            </table>
+          </div>
+
+          
+            <p class="seo-p" style="margin-top: 14px;">Форматы: XLSX, CSV, текст из&nbsp;письма или фото шильдиков пачкой. Ограничение&nbsp;— 500 строк на&nbsp;файл.</p>
+          
+        </div>
+      </details>
+    </div>
+    
     </div>
 
     <div>
       <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 8px;">Частые вопросы</div>
-      <h2 style="font-size: 24px; margin: 0px 0px 16px;"><span class="sc-interp">О разборе заявок</span></h2>
+      <h2 style="font-size: 24px; margin: 0px 0px 16px;">О&nbsp;разборе заявок</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start;">
         
           <div style="display: flex; flex-direction: column; gap: 10px;">
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Какие форматы принимаются?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(180deg);"></span>
-                </button>
-                
-                  <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;"><span class="sc-interp">XLSX, CSV, текст письма и фотографии шильдиков. До 500 строк в одном файле.</span></p>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Какие форматы принимаются?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">XLSX, CSV, текст письма и&nbsp;фотографии шильдиков. До&nbsp;500 строк в&nbsp;одном файле.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Нужен ли шаблон таблицы?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Нужен ли шаблон таблицы?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Нет, файл разбирается в&nbsp;свободной форме. Если есть колонка с&nbsp;артикулом, точность выше.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Что с опечатками в названиях?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Что с&nbsp;опечатками в&nbsp;названиях?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Система исправляет частые опечатки и&nbsp;сокращения: «грундфос», «чугун 100» и&nbsp;подобные распознаются.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Как считаются дубликаты?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Как считаются дубликаты?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Повторяющиеся строки объединяются, количество суммируется&nbsp;— это видно в&nbsp;итоге по&nbsp;заявке.</p>
+              </details>
             
           </div>
         
           <div style="display: flex; flex-direction: column; gap: 10px;">
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Что будет с нераспознанными строками?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Что будет с&nbsp;нераспознанными строками?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Они уходят инженеру вместе с&nbsp;исходным текстом. Ответ приходит в&nbsp;течение двух рабочих часов.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Можно ли сохранить заявку?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Можно ли сохранить заявку?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Да, как шаблон в&nbsp;личном кабинете&nbsp;— для&nbsp;повторных закупок по&nbsp;той же номенклатуре.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Видны ли остатки при разборе?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Видны ли остатки при&nbsp;разборе?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Да, наличие и&nbsp;срок отгрузки проверяются у&nbsp;поставщиков в&nbsp;момент разбора.</p>
+              </details>
             
-              <div class="blueprint" style="padding: 14px 16px;">
+              <details class="blueprint faq-item" style="padding: 14px 16px;">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <button style="color-scheme: unset; forced-color-adjust: unset; math-depth: unset; position: unset; position-anchor: unset; text-size-adjust: unset; appearance: unset; font-feature-settings: unset; font-kerning: unset; font-language-override: unset; font-optical-sizing: unset; font-palette: unset; font-size-adjust: unset; font-stretch: unset; font-style: unset; font-synthesis: unset; font-variant: unset; font-variation-settings: unset; position-area: unset; text-orientation: unset; text-rendering: unset; text-spacing-trim: unset; -webkit-font-smoothing: unset; -webkit-locale: unset; -webkit-text-orientation: unset; -webkit-writing-mode: unset; writing-mode: unset; zoom: unset; accent-color: unset; align-content: unset; place-self: unset; alignment-baseline: unset; anchor-name: unset; anchor-scope: unset; animation-composition: unset; animation: unset; animation-trigger: unset; app-region: unset; aspect-ratio: unset; backdrop-filter: unset; backface-visibility: unset; background: unset; background-blend-mode: unset; baseline-shift: unset; baseline-source: unset; block-size: unset; border-block: unset; border: unset; border-radius: unset; border-collapse: unset; border-end-end-radius: unset; border-end-start-radius: unset; border-inline: unset; border-shape: unset; border-start-end-radius: unset; border-start-start-radius: unset; inset: unset; box-decoration-break: unset; box-shadow: unset; box-sizing: unset; break-after: unset; break-before: unset; break-inside: unset; buffered-rendering: unset; caption-side: unset; caret-animation: unset; caret-color: unset; caret-shape: unset; clear: unset; clip: unset; clip-path: unset; clip-rule: unset; color-interpolation: unset; color-interpolation-filters: unset; color-rendering: unset; columns: unset; column-fill: unset; rule-break: unset; rule: unset; rule-inset: unset; rule-visibility-items: unset; column-span: unset; contain: unset; contain-intrinsic-block-size: unset; contain-intrinsic-size: unset; contain-intrinsic-inline-size: unset; container: unset; content: unset; content-visibility: unset; corner-shape: unset; corner-block-end-shape: unset; corner-block-start-shape: unset; counter-increment: unset; counter-reset: unset; counter-set: unset; cx: unset; cy: unset; d: unset; dominant-baseline: unset; dynamic-range-limit: unset; empty-cells: unset; field-sizing: unset; fill: unset; fill-opacity: unset; fill-rule: unset; filter: unset; flex: unset; flex-flow: unset; flex-line-count: unset; float: unset; flood-color: unset; flood-opacity: unset; grid: unset; grid-area: unset; height: unset; hyphenate-character: unset; hyphenate-limit-chars: unset; hyphens: unset; image-orientation: unset; image-rendering: unset; initial-letter: unset; inline-size: unset; inset-block: unset; inset-inline: unset; interactivity: unset; interest-delay: unset; interpolate-size: unset; isolation: unset; justify-items: unset; letter-spacing: unset; lighting-color: unset; line-break: unset; list-style: unset; margin-block: unset; margin: unset; margin-inline: unset; marker: unset; mask: unset; mask-type: unset; math-shift: unset; math-style: unset; max-block-size: unset; max-height: unset; max-inline-size: unset; max-width: unset; min-block-size: unset; min-height: unset; min-inline-size: unset; min-width: unset; mix-blend-mode: unset; object-fit: unset; object-position: unset; object-view-box: unset; offset: unset; opacity: unset; order: unset; orphans: unset; outline: unset; outline-offset: unset; overflow-anchor: unset; overflow-block: unset; overflow-clip-margin: unset; overflow-inline: unset; overflow-wrap: unset; overflow: unset; overlay: unset; overscroll-behavior-block: unset; overscroll-behavior-inline: unset; overscroll-behavior: unset; padding-block: unset; padding: unset; padding-inline: unset; page: unset; page-margin-safety: unset; page-orientation: unset; paint-order: unset; perspective: unset; perspective-origin: unset; pointer-events: unset; position-try: unset; position-visibility: unset; print-color-adjust: unset; quotes: unset; r: unset; reading-flow: unset; reading-order: unset; resize: unset; rotate: unset; ruby-align: unset; ruby-overhang: unset; ruby-position: unset; rule-overlap: unset; rx: unset; ry: unset; scale: unset; scroll-behavior: unset; scroll-initial-target: unset; scroll-margin-block: unset; scroll-margin: unset; scroll-margin-inline: unset; scroll-marker-group: unset; scroll-padding-block: unset; scroll-padding: unset; scroll-padding-inline: unset; scroll-snap-align: unset; scroll-snap-stop: unset; scroll-snap-type: unset; scroll-target-group: unset; scroll-timeline: unset; scrollbar-color: unset; scrollbar-gutter: unset; scrollbar-width: unset; shape-image-threshold: unset; shape-margin: unset; shape-outside: unset; shape-rendering: unset; size: unset; speak: unset; stop-color: unset; stop-opacity: unset; stroke: unset; stroke-dasharray: unset; stroke-dashoffset: unset; stroke-linecap: unset; stroke-linejoin: unset; stroke-miterlimit: unset; stroke-opacity: unset; stroke-width: unset; tab-size: unset; table-layout: unset; text-align: unset; text-align-last: unset; text-anchor: unset; text-autospace: unset; text-box: unset; text-combine-upright: unset; text-decoration: unset; text-decoration-skip-ink: unset; text-emphasis: unset; text-emphasis-position: unset; text-fit: unset; text-indent: unset; text-justify: unset; text-overflow: unset; text-shadow: unset; text-transform: unset; text-underline-offset: unset; text-underline-position: unset; text-wrap: unset; timeline-scope: unset; timeline-trigger: unset; touch-action: unset; transform: unset; transform-box: unset; transform-origin: unset; transform-style: unset; transition: unset; translate: unset; trigger-scope: unset; user-select: unset; vector-effect: unset; vertical-align: unset; view-timeline: unset; view-transition-class: unset; view-transition-group: unset; view-transition-name: unset; view-transition-scope: unset; visibility: unset; border-spacing: unset; -webkit-box-align: unset; -webkit-box-decoration-break: unset; -webkit-box-direction: unset; -webkit-box-flex: unset; -webkit-box-ordinal-group: unset; -webkit-box-orient: unset; -webkit-box-pack: unset; -webkit-box-reflect: unset; -webkit-line-break: unset; -webkit-line-clamp: unset; -webkit-mask-box-image: unset; -webkit-rtl-ordering: unset; -webkit-ruby-position: unset; -webkit-tap-highlight-color: unset; -webkit-text-combine: unset; -webkit-text-decorations-in-effect: unset; -webkit-text-fill-color: unset; -webkit-text-security: unset; -webkit-text-stroke: unset; -webkit-user-drag: unset; white-space-collapse: unset; widows: unset; will-change: unset; window-drag: unset; word-break: unset; word-spacing: unset; x: unset; y: unset; z-index: unset; display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; cursor: pointer; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
-                  <span><span class="sc-interp">Можно ли загрузить заявку через MAX?</span></span>
-                  <span style="flex: 0 0 auto; margin-top: 6px; display: inline-block; width: 0px; height: 0px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid var(--color-accent); transition: transform 0.18s; transform: rotate(0deg);"></span>
-                </button>
-                
-              </div>
+                <summary style="display: flex; width: 100%; gap: 12px; align-items: flex-start; justify-content: space-between; font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--color-text);">
+                  <span>Можно ли загрузить заявку через MAX?</span>
+                  <span class="ico ico-20 i-ui-faq-toggle seo-rot" style="margin-top: 1px; color: var(--color-accent-700);"></span>
+                </summary>
+                <p style="font-size: 14px; line-height: 1.6; color: var(--color-neutral-800); margin: 10px 0px 0px;">Да, бот принимает файл в&nbsp;переписке и&nbsp;возвращает сопоставленную спецификацию.</p>
+              </details>
             
           </div>
         
       </div>
     </div>
 
-    <div>
+    <div data-carousel="1">
       <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px;">
         <div>
           <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 6px;">База знаний</div>
-          <h2 style="font-size: 24px; margin: 0px;">Статьи по теме</h2>
+          <h2 style="font-size: 24px; margin: 0px;">Статьи по&nbsp;теме</h2>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
-          <button class="btn btn-secondary" style="min-width: 44px; min-height: 44px; padding: 0px;">←</button>
-          <button class="btn btn-secondary" style="min-width: 44px; min-height: 44px; padding: 0px;">→</button>
+          <button data-dir="-1" aria-label="Предыдущие статьи" class="btn btn-secondary" style="min-width: 44px; min-height: 44px; padding: 0px;" data-demo="1"><span class="ico ico-20 i-ui-arrow-left"></span></button>
+          <button data-dir="1" aria-label="Следующие статьи" class="btn btn-secondary" style="min-width: 44px; min-height: 44px; padding: 0px;" data-demo="1"><span class="ico ico-20 i-ui-arrow-right"></span></button>
         </div>
       </div>
-      <div style="overflow: hidden;">
-        <div style="display: flex; gap: 18px; transition: transform 0.32s; transform: translateX(0px);">
+      <div>
+        <div class="seo-track" data-track="1">
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/c-cavitation.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-cavitation.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Регламент · Насосы</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Кавитация: почему разрушается рабочее колесо</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Подпор на всасывании, NPSH и шум — как поймать проблему до замены колеса.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">13 сентября · 6 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Кавитация: почему разрушается рабочее колесо</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Подпор на&nbsp;всасывании, NPSH и&nbsp;шум&nbsp;— как поймать проблему до&nbsp;замены колеса.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">13 сентября · 6&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/c-seal.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-seal.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Регламент · Насосы</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Торцевое уплотнение: признаки износа</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Подтёки, шум и нагрев — когда менять, а когда уже поздно.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">12 сентября · 5 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Регламент · Насосы</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Торцевое уплотнение: признаки износа</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Подтёки, шум и&nbsp;нагрев&nbsp;— когда менять, а&nbsp;когда уже поздно.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">12 сентября · 5&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/c-gearmotor.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-gearmotor.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Сравнение · Приводы</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Мотор-редуктор или редуктор с двигателем</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Когда моноблок выгоднее сборки по частям.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">11 сентября · 7 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сравнение · Приводы</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Мотор-редуктор или редуктор с&nbsp;двигателем</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Когда моноблок выгоднее сборки по&nbsp;частям.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">11 сентября · 7&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/a-air.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-air.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Расчёт · Компрессоры</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Сколько воздуха нужно цеху</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Считаем расход по потребителям и коэффициенту загрузки.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">9 сентября · 8 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Расчёт · Компрессоры</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Сколько воздуха нужно цеху</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Считаем расход по&nbsp;потребителям и&nbsp;коэффициенту загрузки.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">9 сентября · 8&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/art-vfd.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/art-vfd.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Подбор · Частотники</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Частотник к насосу: когда окупается</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Экономия на переменном расходе и срок возврата вложений.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">6 сентября · 6 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Подбор · Частотники</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Частотник к&nbsp;насосу: когда окупается</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Экономия на&nbsp;переменном расходе и&nbsp;срок возврата вложений.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">6 сентября · 6&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/c-materials.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-materials.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Материалы · Арматура</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Чугун, нержавейка или пластик</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Выбор корпуса под среду, температуру и давление.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">4 сентября · 6 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Материалы · Арматура</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Чугун, нержавейка или пластик</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Выбор корпуса под среду, температуру и&nbsp;давление.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">4 сентября · 6&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/a-bearing.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-bearing.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Сервис · Подшипники</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Как продлить ресурс подшипника</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Смазка, посадка и центровка: три причины ранних отказов.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">2 сентября · 5 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Сервис · Подшипники</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Как продлить ресурс подшипника</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Смазка, посадка и&nbsp;центровка: три причины ранних отказов.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">2 сентября · 5&nbsp;мин</span>
               </div>
             </a>
           
-            <a href="#" class="blueprint" style="flex: 0 0 300px; padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;" data-demo="1">
+            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div class="duotone" style="height: 132px; background: url(&quot;img/a-containers.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
+              <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-containers.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
-                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);"><span class="sc-interp">Импорт · Поставки</span></span>
-                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;"><span class="sc-interp">Аналог из Китая: на что смотреть</span></span>
-                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);"><span class="sc-interp">Сертификация ЕАЭС, срок и доступность запчастей.</span></span>
-                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;"><span class="sc-interp">29 августа · 7 мин</span></span>
+                <span class="seo-mono" style="font-size: 10px; text-transform: uppercase; color: var(--color-accent-700);">Импорт · Поставки</span>
+                <span style="font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.25;">Аналог из&nbsp;Китая: на&nbsp;что смотреть</span>
+                <span style="font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);">Сертификация ЕАЭС, срок и&nbsp;доступность запчастей.</span>
+                <span class="seo-mono" style="font-size: 11px; color: var(--color-neutral-600); margin-top: auto; padding-top: 8px;">29 августа · 7&nbsp;мин</span>
               </div>
             </a>
           
         </div>
-      </div>
-      <div style="display: flex; gap: 6px; margin-top: 12px;">
-        
-          <span style="width: 22px; height: 3px; background: var(--color-accent); display: block;"></span>
-        
-          <span style="width: 22px; height: 3px; background: var(--color-neutral-300); display: block;"></span>
-        
       </div>
     </div>
   </div></section></div>
@@ -583,109 +668,109 @@
     <div style="max-width: 1360px; margin: 0px auto; padding: 36px 28px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px;">
       <div>
         <div style="display: flex; align-items: center; gap: 10px; color: rgb(255, 255, 255);">
-          <span style="width: 18px; height: 18px; background: var(--color-accent); display: block;"></span>
+          <span style="width: 18px; height: 18px; background: url(&quot;/b2b-marketplace/img/mark.svg&quot;) center center / contain no-repeat; display: block;"></span>
           <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">ПРОМКОНТУР</span>
         </div>
-        <p style="font-size: 14px; margin: 10px 0px 0px; max-width: 330px; line-height: 1.55;">Промышленное оборудование от поставщиков по всей России. 45 направлений снабжения, 300 000 моделей, прямые отгрузки со складов поставщиков.</p>
+        <p style="font-size: 14px; margin: 10px 0px 0px; max-width: 330px; line-height: 1.55;">Промышленное оборудование от&nbsp;поставщиков по&nbsp;всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
         <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 16px;">
-          <span class="mono" style="color: rgb(255, 255, 255); font-size: 19px; white-space: nowrap;">8 800 000-00-00</span>
-          <span style="font-size: 13px;">zakupki@promkontur.ru · пн–пт 08:00–19:00 МСК</span>
+          <a href="/b2b-marketplace/chat/" class="mono" style="color: rgb(255, 255, 255); font-size: 19px; white-space: nowrap;">Чат в&nbsp;MAX</a>
+          <span style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
         </div>
         <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap;">Чат в MAX</span>
-          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap;">Почта снабжения</span>
+          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="ico i-channel-max" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Чат в&nbsp;MAX</span>
+          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Почта снабжения</span>
         </div>
       </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;"><span class="sc-interp">Каталог</span></div>
+          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Каталог</div>
           
-            <a href="/b2b-marketplace/napravleniya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Все 45 направлений</span></a>
+            <a href="/b2b-marketplace/napravleniya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Все 45 направлений</a>
           
-            <a href="/b2b-marketplace/napravleniya/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Насосы</span></a>
+            <a href="/b2b-marketplace/napravleniya/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Насосы</a>
           
-            <a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Компрессоры</span></a>
+            <a href="/b2b-marketplace/katalog/kompressory/kaishan-lgcy-75/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Компрессоры</a>
           
-            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Подшипники</span></a>
+            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Подшипники</a>
           
-            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Частотники</span></a>
+            <a href="/b2b-marketplace/katalog/nasosy/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Частотники</a>
           
-            <a href="/b2b-marketplace/sravnenie/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Сравнение моделей</span></a>
-          
-        </div>
-      
-        <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;"><span class="sc-interp">Клиентам</span></div>
-          
-            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Как заказать</span></a>
-          
-            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Оплата и документы</span></a>
-          
-            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Доставка и сроки</span></a>
-          
-            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Отсрочка платежа</span></a>
-          
-            <a href="/b2b-marketplace/garantiya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Гарантия и возврат</span></a>
-          
-            <a href="/b2b-marketplace/proekty/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Проектные закупки</span></a>
-          
-            <a href="/b2b-marketplace/kabinet/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Личный кабинет</span></a>
-          
-            <a href="/b2b-marketplace/korzina/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Корзина</span></a>
+            <a href="/b2b-marketplace/sravnenie/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Сравнение моделей</a>
           
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;"><span class="sc-interp">Компания</span></div>
+          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Клиентам</div>
           
-            <a href="/b2b-marketplace/o-servise/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">О сервисе</span></a>
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Как заказать</a>
           
-            <a href="/b2b-marketplace/vhod/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Вход и регистрация</span></a>
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Оплата и&nbsp;документы</a>
           
-            <a href="/b2b-marketplace/proizvoditeli/grundfos/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Производители</span></a>
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Доставка и&nbsp;сроки</a>
           
-            <a href="/b2b-marketplace/o-servise/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Контакты</span></a>
+            <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Отсрочка платежа</a>
           
-        </div>
-      
-        <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;"><span class="sc-interp">Поставщикам</span></div>
+            <a href="/b2b-marketplace/garantiya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Гарантия и&nbsp;возврат</a>
           
-            <a href="/b2b-marketplace/postavshchikam/usloviya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Условия работы</span></a>
+            <a href="/b2b-marketplace/proekty/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Проектные закупки</a>
           
-            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Стать поставщиком</span></a>
+            <a href="/b2b-marketplace/kabinet/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Личный кабинет</a>
           
-            <a href="/b2b-marketplace/kabinet-postavshchika/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Кабинет поставщика</span></a>
-          
-            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Форматы выгрузки</span></a>
-          
-            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Условия расчётов</span></a>
+            <a href="/b2b-marketplace/korzina/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Корзина</a>
           
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;"><span class="sc-interp">База знаний</span></div>
+          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Компания</div>
           
-            <a href="/b2b-marketplace/blog/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Блог</span></a>
+            <a href="/b2b-marketplace/o-servise/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">О&nbsp;сервисе</a>
           
-            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Умный чат</span></a>
+            <a href="/b2b-marketplace/vhod/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Вход и&nbsp;регистрация</a>
           
-            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Бот в MAX</span></a>
+            <a href="/b2b-marketplace/proizvoditeli/grundfos/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Производители</a>
           
-            <a href="/b2b-marketplace/poisk-po-foto/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Поиск по фото шильдика</span></a>
+            <a href="/b2b-marketplace/kontakty/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Контакты</a>
           
-            <a href="/b2b-marketplace/zayavka-spiskom/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;"><span class="sc-interp">Разбор заявки XLSX</span></a>
+        </div>
+      
+        <div>
+          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Поставщикам</div>
+          
+            <a href="/b2b-marketplace/postavshchikam/usloviya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Условия работы</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Стать поставщиком</a>
+          
+            <a href="/b2b-marketplace/kabinet-postavshchika/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Кабинет поставщика</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Форматы выгрузки</a>
+          
+            <a href="/b2b-marketplace/postavshchikam/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Условия расчётов</a>
+          
+        </div>
+      
+        <div>
+          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">База знаний</div>
+          
+            <a href="/b2b-marketplace/blog/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Блог</a>
+          
+            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Умный чат</a>
+          
+            <a href="/b2b-marketplace/chat/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Бот в&nbsp;MAX</a>
+          
+            <a href="/b2b-marketplace/poisk-po-foto/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Поиск по&nbsp;фото шильдика</a>
+          
+            <a href="/b2b-marketplace/zayavka-spiskom/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Разбор заявки XLSX</a>
           
         </div>
       
     </div>
     <div style="border-top: 1px solid var(--color-neutral-800);">
       <div style="max-width: 1360px; margin: 0px auto; padding: 16px 28px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--color-neutral-500);">
-        <span>© 2026 ООО «Промконтур» · ИНН 7701234567 · ОГРН 1157746000000</span>
-        <span>Оплата: счёт для юрлиц, карта, отсрочка до 30 дней</span>
-        <a href="#" style="margin-left: auto; color: var(--color-neutral-500);" data-demo="1">Политика конфиденциальности</a>
-        <a href="#" style="color: var(--color-neutral-500);" data-demo="1">Условия использования</a>
-        <a href="#" style="color: var(--color-neutral-500);" data-demo="1">Карта сайта</a>
+        <span>© 2026 ООО «Промконтур» · ИНН 7701234567 · ОГРН&nbsp;— после регистрации</span>
+        <span>Оплата: счёт для&nbsp;юрлиц, карта, отсрочка до&nbsp;30&nbsp;дней</span>
+        <a href="/b2b-marketplace/politika-konfidencialnosti/" style="margin-left: auto; color: var(--color-neutral-500);">Политика конфиденциальности</a>
+        <a href="/b2b-marketplace/usloviya-ispolzovaniya/" style="color: var(--color-neutral-500);">Условия использования</a>
+        <a href="/b2b-marketplace/karta-sajta/" style="color: var(--color-neutral-500);">Карта сайта</a>
       </div>
     </div>
   </footer></div></div>

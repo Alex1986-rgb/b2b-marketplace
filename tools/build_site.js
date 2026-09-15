@@ -23,7 +23,7 @@ const ORIGIN = process.env.ORIGIN || 'https://alex1986-rgb.github.io';
 const PORT = 8150;
 const DOC = 'http://localhost:' + PORT + '/' + encodeURIComponent('Промышленный агрегатор.dc.html');
 const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const DATE = process.env.BUILD_DATE || new Date().toISOString().slice(0, 10);
+const DATE = process.env.BUILD_DATE || new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Moscow' });
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const url = p => ORIGIN + BASE + p;
@@ -78,6 +78,16 @@ function inPage(routes, base) {
       el.setAttribute('data-href', href);
     }
   }
+  // служебные обёртки движка
+  for (const x of [...c.querySelectorAll('span.sc-interp')]) x.replaceWith(...x.childNodes);
+  // ссылки, которым в макете не назначен экран
+  const byText = { 'Политика конфиденциальности': 'politika-konfidencialnosti/', 'Условия использования': 'usloviya-ispolzovaniya/', 'Карта сайта': 'karta-sajta/', 'Весь каталог': 'napravleniya/', 'Блог': 'blog/', 'Контакты': 'kontakty/' };
+  for (const a of c.querySelectorAll('a[href="#"]')) {
+    const t = a.textContent.trim();
+    if (byText[t]) a.setAttribute('href', base + byText[t]);
+    else if (a.closest('[data-track]')) a.setAttribute('href', base + (/рабочей точке/.test(t) ? routes.article.path : routes.blog.path));
+  }
+  for (const a of c.querySelectorAll('footer a')) if (a.textContent.trim() === 'Контакты') a.setAttribute('href', base + 'kontakty/');
   // «мёртвые» ссылки и кнопки без перехода — помечаем для site.js (демо-режим)
   for (const a of c.querySelectorAll('a[href="#"]')) { a.setAttribute('href', '#'); a.setAttribute('data-demo', '1'); }
   for (const b of c.querySelectorAll('button:not([data-local])')) b.setAttribute('data-demo', '1');
@@ -85,25 +95,42 @@ function inPage(routes, base) {
   // относительные картинки → от корня сайта
   for (const el of c.querySelectorAll('[style*="img/"]')) el.setAttribute('style', el.getAttribute('style').replace(/url\((["']?)img\//g, 'url($1' + base + 'img/'));
 
+  // типографика: неразрывные пробелы в разрядах, перед единицами и после коротких слов
+  const walker = document.createTreeWalker(c, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement && /^(SCRIPT|STYLE|TEXTAREA)$/.test(n.parentElement.tagName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+  const NB = ' ', THIN = ' ';
+  for (let n; (n = walker.nextNode());) {
+    let t = n.nodeValue; if (!/\S/.test(t)) continue;
+    for (let k = 0; k < 2; k++) t = t.replace(/(\d) (\d{3})(?!\d)/g, '$1' + THIN + '$2');
+    t = t.replace(/(\d) (₽|кВт|м³\/ч|м³|м(?![а-яё])|шт\.|%|мм|бар|дн(?:ей|я)|мес\.?|мин(?![а-яё])|ч(?![а-яё])|с(?![а-яё])|млн|тыс\.?|°C)/g, '$1' + NB + '$2');
+    t = t.replace(/(^|[\s(«])(в|и|с|к|о|у|а|на|по|от|до|за|из|не|без|для|при) /gi, '$1$2' + NB);
+    t = t.replace(/ (—|–) /g, NB + '$1 ');
+    if (t !== n.nodeValue) n.nodeValue = t;
+  }
+
   const styles = [...document.head.querySelectorAll('style')].map(s => s.textContent).join('\n');
   const h1 = (c.querySelector('h1') || {}).textContent || '';
   const faq = [...c.querySelectorAll('details.faq-item')].map(d => ({ q: d.querySelector('summary').textContent.trim(), a: (d.querySelector('p') || {}).textContent || '' }));
   const crumbs = (() => {
     const row = [...c.querySelectorAll('div')].find(d => d.children.length >= 3 && d.firstElementChild && d.firstElementChild.textContent.trim() === 'Главная' && /\//.test(d.textContent) && d.textContent.length < 160);
-    return row ? [...row.children].map(x => x.textContent.trim()).filter(t => t && t !== '/') : [];
+    return row ? [...row.children].filter(x => x.textContent.trim() && x.textContent.trim() !== '/').map(x => ({ name: x.textContent.trim(), href: x.getAttribute('href') || x.getAttribute('data-href') || '' })) : [];
   })();
   return { html: c.innerHTML, styles, h1: h1.trim(), faq, crumbs };
 }
 
 function jsonLd(id, r, snap) {
   const out = [];
-  const org = { '@type': 'Organization', name: 'ПРОМКОНТУР', url: url(''), logo: url('assets/logo.svg') };
+  const org = { '@type': 'Organization', '@id': url('#org'), name: 'ПРОМКОНТУР', url: url(''), logo: url('assets/logo.svg'), email: 'zakaz@promkontur.example' };
+  if (id !== 'homeB') out.push({ '@context': 'https://schema.org', ...org });
   if (id === 'homeB') out.push({ '@context': 'https://schema.org', '@graph': [org, { '@type': 'WebSite', name: 'ПРОМКОНТУР', url: url(''), inLanguage: 'ru' }] });
   if (snap.crumbs.length > 1) {
-    out.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: snap.crumbs.map((name, i) => ({ '@type': 'ListItem', position: i + 1, name, ...(i === 0 ? { item: url('') } : i === snap.crumbs.length - 1 ? { item: url(r.path) } : {}) })) });
+    const last = snap.crumbs.length - 1;
+    const items = snap.crumbs.map((cr, i) => ({ '@type': 'ListItem', position: i + 1, name: cr.name, item: i === 0 ? url('') : i === last ? url(r.path) : (cr.href && cr.href !== '#' ? ORIGIN + cr.href : null) }))
+      .filter((it, i) => it.item || i === last);
+    items.forEach((it, i) => { it.position = i + 1; if (!it.item) delete it.item; });
+    out.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items });
   }
-  if (id === 'product') out.push({ '@context': 'https://schema.org', '@type': 'Product', name: 'Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE', sku: '96122802', brand: { '@type': 'Brand', name: 'Grundfos' }, image: url('img/p-cr32.jpg'), aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.7', reviewCount: '34' }, offers: { '@type': 'Offer', price: '104900', priceCurrency: 'RUB', availability: 'https://schema.org/InStock', url: url(r.path) } });
-  if (id === 'article') out.push({ '@context': 'https://schema.org', '@type': 'Article', headline: snap.h1, datePublished: '2026-09-14', inLanguage: 'ru', image: url('img/art-hero.jpg'), author: { '@type': 'Organization', name: 'ПРОМКОНТУР' }, publisher: org });
+  if (id === 'product') out.push({ '@context': 'https://schema.org', '@type': 'Product', name: 'Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE', sku: '96122802', brand: { '@type': 'Brand', name: 'Grundfos' }, mpn: '96122802', description: r.desc, image: [url('img/p-cr32.jpg'), url('img/p-cr32-flange.jpg'), url('img/p-cr32-motor.jpg')], aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.7', bestRating: '5', reviewCount: '34' }, offers: { '@type': 'Offer', price: '104900', priceCurrency: 'RUB', availability: 'https://schema.org/InStock', itemCondition: 'https://schema.org/NewCondition', priceValidUntil: '2026-12-31', url: url(r.path), seller: { '@id': url('#org') } } });
+  if (id === 'article') out.push({ '@context': 'https://schema.org', '@type': 'Article', headline: snap.h1, description: r.desc, datePublished: '2026-09-14', dateModified: DATE, mainEntityOfPage: url(r.path), inLanguage: 'ru', image: url('img/art-hero.jpg'), author: { '@type': 'Organization', name: 'ПРОМКОНТУР' }, publisher: org });
   if (snap.faq.length) out.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: snap.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   return out.map(o => '<script type="application/ld+json">' + JSON.stringify(o).replace(/</g, '\\u003c') + '</script>').join('\n');
 }
@@ -118,7 +145,7 @@ function page({ id, r, body, extraHead = '' }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(r.title)}</title>
 <meta name="description" content="${esc(r.desc)}">
-${r.index ? '' : '<meta name="robots" content="noindex, follow">\n'}<link rel="canonical" href="${canonical}">
+${r.index ? '' : '<meta name="robots" content="noindex, follow">\n'}${r.path === '404.html' ? '' : `<link rel="canonical" href="${canonical}">`}
 <meta property="og:type" content="${r.type === 'article' ? 'article' : 'website'}">
 <meta property="og:site_name" content="ПРОМКОНТУР">
 <meta property="og:locale" content="ru_RU">
@@ -194,6 +221,12 @@ ${body}
         // head заканчивается внутри корневого контейнера экрана — закрывать ничего не нужно:
         // screen-блоки лежат внутри sc-if-обёрток, которые рендерятся без собственного тега.
         fs.writeFileSync(path.join(OUT, '404.html'), page({ id: '404', r: { path: '404.html', index: false, title: 'Страница не найдена — ПРОМКОНТУР', desc: 'Страница не найдена.' }, body: head + main + tail }));
+        const wrap = (h1, inner) => `<main style="max-width:920px;margin:0 auto;padding:40px 28px 72px"><div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-neutral-600)"><a href="${BASE}" style="color:inherit">Главная</a> / ${h1}</div><h1 style="font-size:40px;margin:8px 0 18px">${h1}</h1><div class="pk-prose">${inner}</div></main>`;
+        for (const extra of require('./extra_pages')(BASE, ROUTES)) {
+          const f = path.join(OUT, extra.path, 'index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
+          fs.writeFileSync(f, page({ id: extra.path, r: extra, body: head + wrap(extra.h1, extra.html) + tail }));
+          report.push(`       /${extra.path}  ${extra.h1}`);
+        }
       }
     }
   }
@@ -203,18 +236,16 @@ ${body}
   // ── ассеты ──
   const dsDir = fs.readdirSync(path.join(SRC, '_ds'))[0];
   fs.copyFileSync(path.join(SRC, '_ds', dsDir, 'styles.css'), path.join(OUT, 'assets', 'ds.css'));
-  fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8'));
+  fs.writeFileSync(path.join(OUT, 'assets', 'app.css'), styles + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'site.css'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'site', 'skin.css'), 'utf8') + '\n' + (fs.existsSync(path.join(SRC, 'icons.css')) ? fs.readFileSync(path.join(SRC, 'icons.css'), 'utf8') : ''));
   fs.copyFileSync(path.join(__dirname, 'site', 'site.js'), path.join(OUT, 'assets', 'site.js'));
   copyDir(path.join(SRC, 'img'), path.join(OUT, 'img'), s => s.includes(path.sep + 'src'));
   copyDir(path.join(__dirname, 'site', 'static'), OUT);
-  // макет — для владельца, вне индекса
-  copyDir(SRC, path.join(OUT, 'maket'), s => s.includes(path.sep + 'img' + path.sep + 'src') || s.endsWith('.thumbnail'));
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 
-  const idx = Object.values(ROUTES).filter(r => r.index);
+  const idx = Object.values(ROUTES).filter(r => r.index).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     idx.map(r => `  <url><loc>${url(r.path)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n') + '\n</urlset>\n');
-  fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nDisallow: ${BASE}panel/\nDisallow: ${BASE}kabinet/\nDisallow: ${BASE}kabinet-postavshchika/\nDisallow: ${BASE}korzina/\nDisallow: ${BASE}maket/\n\nSitemap: ${url('sitemap.xml')}\n`);
+  fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('sitemap.xml')}\n`);
 
   console.log(report.join('\n'));
   console.log(`\nстраниц: ${report.length}, в sitemap: ${idx.length}, ошибок в макете: ${errors.length}${errors.length ? '\n' + errors.slice(0, 5).join('\n') : ''}`);

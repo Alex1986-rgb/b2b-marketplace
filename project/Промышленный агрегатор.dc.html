@@ -9,6 +9,7 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="_ds/industry-2cf29483-63c2-42c2-a32d-4823edc25b26/styles.css">
+<link rel="stylesheet" href="icons.css">
 <script src="_ds/industry-2cf29483-63c2-42c2-a32d-4823edc25b26/_ds_bundle.js"></script>
 <style>
   body { margin:0; }
@@ -23,6 +24,13 @@
   .marquee-track { display:flex; gap:0; width:max-content; animation: marquee 42s linear infinite; }
   .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
   .split { display:grid; gap:36px; align-items:start; grid-template-columns:minmax(0,1fr) var(--aside,380px); }
+  /* пачка 5: иконки и фото. Иконка без i-* (пустое поле данных) не рисуется. */
+  .ico:not([class*=" i-"]) { display:none !important; }
+  .only-m { display:none !important; }
+  .thumb { display:block; flex:none; background-color:var(--color-neutral-200); }
+  .gal { display:flex; gap:10px; margin:0 0 28px; }
+  .gal > span { width:80px; height:80px; display:block; border:1px solid var(--color-divider); }
+  .gal > span.on { border:2px solid var(--color-accent); }
   .cartrow { display:grid; gap:16px; align-items:center; grid-template-columns:92px minmax(0,1fr) auto; padding:16px; border-bottom:1px solid var(--color-divider); }
   @media (max-width:1040px) {
     .split { grid-template-columns:minmax(0,1fr); }
@@ -60,6 +68,11 @@
     h1 { font-size:clamp(26px, 7.4vw, 34px) !important; line-height:1.15 !important; }
     h2 { font-size:clamp(22px, 6vw, 26px) !important; }
     .btn { white-space:normal; }
+    .hero-ph { display:none !important; }
+    .only-m { display:inline-block !important; }
+    .hide-m { display:none !important; }
+    .only-m-block { display:block !important; }
+    .ph-side { height:200px !important; }
   }
 </style>
 </helmet>
@@ -89,13 +102,13 @@
   <sc-if value="{{ isStorefront }}" hint-placeholder-val="{{ true }}">
   <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);font-size:13px">
     <div style="max-width:1360px;margin:0 auto;padding:0 28px;min-height:36px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-      <span style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;background:var(--color-accent);display:block"></span>Москва</span>
+      <span style="display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-delivery-region" style="color:var(--color-accent-300);width:14px;height:14px"></span>Москва</span>
       <span>Доставка по всей России</span>
-      <span>Оплата по счёту · отсрочка до 30 дней</span>
-      <a href="#" onClick="{{ goVendor }}" style="margin-left:auto;color:var(--color-neutral-300)">Кабинет поставщика</a>
+      <span style="display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-pay-deferral" style="color:var(--color-accent-300);width:14px;height:14px"></span>Оплата по счёту · отсрочка до 30 дней</span>
+      <a href="#" onClick="{{ goVendor }}" style="margin-left:auto;color:var(--color-neutral-300);display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-channel-vendor" style="color:var(--color-accent-300);width:14px;height:14px"></span>Кабинет поставщика</a>
       <a href="#" onClick="{{ goSupplier }}" style="color:var(--color-neutral-300)">Стать поставщиком</a>
       <a href="#" onClick="{{ goAbout }}" style="color:var(--color-neutral-300)">О сервисе</a>
-      <a href="#" onClick="{{ goAuthOrAccount }}" style="color:var(--color-neutral-300)">{{ loginLabel }}</a>
+      <a href="#" onClick="{{ goAuthOrAccount }}" style="color:var(--color-neutral-300);display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-ui-account" style="color:var(--color-accent-300);width:14px;height:14px"></span>{{ loginLabel }}</a>
       <a href="#" onClick="{{ goChat }}" class="mono" style="color:#fff;font-size:15px">Чат в MAX</a>
     </div>
   </div>
@@ -103,20 +116,20 @@
   <header style="background:var(--color-bg);border-bottom:1px solid var(--color-divider);position:relative;z-index:20">
     <div style="max-width:1360px;margin:0 auto;padding:16px 28px 0;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
       <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;margin-right:6px;text-decoration:none;color:inherit">
-        <span style="width:22px;height:22px;background:var(--color-accent);display:block"></span>
+        <span style="width:22px;height:22px;background:url(img/mark.svg) center/contain no-repeat;display:block"></span>
         <span style="font-family:var(--font-heading);font-weight:600;font-size:22px;letter-spacing:0.01em">ПРОМКОНТУР</span>
       </a>
-      <button onClick="{{ goDirections }}" class="btn btn-secondary" style="padding:10px 16px;font-size:15px">Каталог · 45 направлений</button>
+      <button onClick="{{ goDirections }}" class="btn btn-secondary" style="padding:10px 16px;font-size:15px;gap:8px"><span class="ico ico-16 i-entry-catalog" style="color:currentColor;width:18px;height:18px"></span>Каталог · 45 направлений</button>
       <div style="flex:1;min-width:280px;display:flex">
         <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:44px;border-right:0">
-        <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:44px;white-space:nowrap;border-right:0">По фото</button>
-        <button class="btn btn-primary" style="min-height:44px;padding-inline:24px;font-size:15px">Найти</button>
+        <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:44px;white-space:nowrap;border-right:0;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото</button>
+        <button class="btn btn-primary" style="min-height:44px;padding-inline:24px;font-size:15px;gap:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
       </div>
       <div style="display:flex;gap:16px;font-size:12px;color:var(--color-neutral-700);text-align:center">
-        <a href="#" onClick="{{ goChat }}" style="text-decoration:none;color:inherit"><div class="mono" style="font-size:17px;color:var(--color-accent-700)">MAX</div>Чат</a>
-        <a href="#" onClick="{{ goQuote }}" style="text-decoration:none;color:inherit"><div class="mono" style="font-size:17px;color:var(--color-text)">3</div>Запросы КП</a>
-        <a href="#" onClick="{{ goCompare }}" style="text-decoration:none;color:inherit"><div class="mono" style="font-size:17px;color:var(--color-text)">4</div>Сравнение</a>
-        <a href="#" onClick="{{ goCart }}" style="text-decoration:none;color:inherit"><div class="mono" style="font-size:17px;color:var(--color-text)">3</div>Корзина</a>
+        <a href="#" onClick="{{ goChat }}" style="text-decoration:none;color:inherit"><div style="position:relative;height:24px;display:flex;align-items:center;justify-content:center;color:var(--color-accent-700)"><span class="ico ico-20 i-entry-chat" style="color:currentColor"></span></div>Чат</a>
+        <a href="#" onClick="{{ goQuote }}" style="text-decoration:none;color:inherit"><div style="position:relative;height:24px;display:flex;align-items:center;justify-content:center;color:var(--color-text)"><span class="ico i-ui-quote" style="color:currentColor;width:22px;height:22px"></span><span class="mono" style="position:absolute;top:-5px;left:calc(50% + 5px);min-width:16px;height:16px;padding:0 4px;background:var(--color-accent);color:#fff;font-size:10px;line-height:16px;letter-spacing:0;text-align:center">3</span></div>Запросы КП</a>
+        <a href="#" onClick="{{ goCompare }}" style="text-decoration:none;color:inherit"><div style="position:relative;height:24px;display:flex;align-items:center;justify-content:center;color:var(--color-text)"><span class="ico i-ui-compare" style="color:currentColor;width:22px;height:22px"></span><span class="mono" style="position:absolute;top:-5px;left:calc(50% + 5px);min-width:16px;height:16px;padding:0 4px;background:var(--color-accent);color:#fff;font-size:10px;line-height:16px;letter-spacing:0;text-align:center">4</span></div>Сравнение</a>
+        <a href="#" onClick="{{ goCart }}" style="text-decoration:none;color:inherit"><div style="position:relative;height:24px;display:flex;align-items:center;justify-content:center;color:var(--color-text)"><span class="ico i-ui-cart" style="color:currentColor;width:22px;height:22px"></span><span class="mono" style="position:absolute;top:-5px;left:calc(50% + 5px);min-width:16px;height:16px;padding:0 4px;background:var(--color-accent);color:#fff;font-size:10px;line-height:16px;letter-spacing:0;text-align:center">3</span></div>Корзина</a>
       </div>
     </div>
     <nav style="max-width:1360px;margin:0 auto;padding:10px 28px 12px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
@@ -132,13 +145,13 @@
   <header style="background:var(--color-neutral-900);color:var(--color-neutral-300);border-bottom:1px solid #000">
     <div style="max-width:1360px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
       <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff">
-        <span style="width:18px;height:18px;background:var(--color-accent);display:block"></span>
+        <span style="width:18px;height:18px;background:url(img/mark.svg) center/contain no-repeat;display:block"></span>
         <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ПРОМКОНТУР</span>
       </a>
       <span class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300)">{{ staffTitle }}</span>
       <nav style="display:flex;gap:4px;flex-wrap:wrap;margin-left:12px">
         <sc-for list="{{ staffNav }}" as="n" hint-placeholder-count="6">
-          <a href="#" onClick="{{ n.go }}" style="{{ n.style }}">{{ n.t }}</a>
+          <a href="#" onClick="{{ n.go }}" style="{{ n.style }}"><span class="ico ico-16 {{ n.icon }}" style="color:var(--color-accent-300)"></span>{{ n.t }}</a>
         </sc-for>
       </nav>
       <span style="margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px">
@@ -150,14 +163,16 @@
 
   <sc-if value="{{ isHomeB }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Главная — вариант Б">
-    <section style="background:var(--color-accent-900);color:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)">
-      <div style="max-width:1360px;margin:0 auto;padding:44px 28px 40px">
+    <section style="background:var(--color-accent-900);color:var(--color-neutral-100);border-bottom:1px solid var(--color-divider);position:relative;overflow:hidden">
+      <div class="duotone hero-ph" style="position:absolute;top:0;right:0;bottom:0;width:40%;background:url(img/hero-pump-hall.jpg) center/cover no-repeat" data-photo="1"></div>
+      <div class="hero-ph" style="position:absolute;top:0;right:0;bottom:0;width:40%;background:linear-gradient(90deg, var(--color-accent-900) 0%, rgba(29,45,61,0.72) 38%, rgba(29,45,61,0.08) 100%)"></div>
+      <div style="max-width:1360px;margin:0 auto;padding:44px 28px 40px;position:relative">
         <h1 style="color:#fff;font-size:44px;max-width:900px;text-wrap:pretty">Промышленное оборудование от производителей и поставщиков в одном месте</h1>
         <p style="font-size:17px;color:var(--color-accent-200);max-width:720px">Более 115 000 моделей. Подбор по характеристикам, артикулу или фотографии. Доставка по России.</p>
         <div style="display:flex;margin-top:22px;max-width:900px">
           <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:54px;font-size:16px;background:#fff;border-right:0">
-          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:54px;background:#fff;border-right:0;white-space:nowrap">По фото шильдика</button>
-          <button class="btn btn-primary" style="min-height:54px;padding-inline:30px;font-size:16px;color:#fff">Найти</button>
+          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:54px;background:#fff;border-right:0;white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
+          <button class="btn btn-primary" style="min-height:54px;padding-inline:30px;font-size:16px;color:#fff;gap:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
         </div>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
           <sc-for list="{{ examples }}" as="e" hint-placeholder-count="4">
@@ -201,11 +216,11 @@
         </div>
         <sc-for list="{{ directionGroups }}" as="g" hint-placeholder-count="6">
           <div>
-            <div class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700);padding:10px 16px 4px;border-top:1px solid var(--color-divider)">{{ g.title }}</div>
+            <div class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700);padding:10px 16px 4px;border-top:1px solid var(--color-divider);display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ g.icon }}"></span>{{ g.title }}</div>
             <sc-for list="{{ g.items }}" as="c" hint-placeholder-count="8">
               <a href="#" onClick="{{ goDirection }}" class="row-hover" style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 16px;font-size:13px;color:inherit;text-decoration:none">
-                <span>{{ c.name }}</span>
-                <span class="mono" style="font-size:10px;color:var(--color-neutral-600)">{{ c.count }}</span>
+                <span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ c.icon }}" style="color:var(--color-accent-700)"></span>{{ c.name }}</span>
+                <span class="mono" style="font-size:10px;color:var(--color-neutral-600);white-space:nowrap">{{ c.count }}</span>
               </a>
             </sc-for>
           </div>
@@ -217,6 +232,7 @@
           <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
             <div class="card blueprint" style="padding:18px 20px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <span class="ico {{ s.icon }}" style="color:var(--color-accent-700)"></span>
               <span class="card-kicker">{{ s.n }}</span>
               <span class="card-title">{{ s.title }}</span>
               <p class="card-body">{{ s.text }}</p>
@@ -232,11 +248,12 @@
           <div class="blueprint" style="padding:6px 14px 10px;overflow-x:auto">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <table class="table" style="min-width:0;width:100%">
-              <thead><tr><th>Артикул</th><th>Наименование</th><th>Наличие</th><th style="text-align:right">Цена</th><th></th></tr></thead>
+              <thead><tr><th>Артикул</th><th style="width:48px"></th><th>Наименование</th><th>Наличие</th><th style="text-align:right">Цена</th><th></th></tr></thead>
               <tbody>
                 <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
                   <tr>
                     <td class="mono" style="font-size:12px;color:var(--color-neutral-700)">{{ p.sku }}</td>
+                    <td><span class="thumb" style="width:48px;height:48px;background: {{ p.bgc }}"></span></td>
                     <td style="font-weight:500">{{ p.name }}<div style="font-size:12px;color:var(--color-neutral-700);font-weight:400">{{ p.spec }}</div></td>
                     <td style="font-size:13px">{{ p.stock }}</td>
                     <td class="mono" style="text-align:right;font-size:16px">{{ p.price }}</td>
@@ -251,7 +268,7 @@
         <div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:18px">
           <div class="blueprint" style="padding:24px 26px;display:flex;flex-direction:column;gap:10px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <h3 style="margin:0">Одна цена вместо десятков продавцов</h3>
+            <h3 style="margin:0;display:flex;align-items:center;gap:10px"><span class="ico ico-28 i-step-one-price" style="color:var(--color-accent-700)"></span>Одна цена вместо десятков продавцов</h3>
             <p style="font-size:15px;color:var(--color-neutral-800);margin:0">Система сама сравнивает прайсы поставщиков по цене, остатку и сроку, добавляет наценку и показывает одну цену. Оборудование едет напрямую со склада поставщика.</p>
             <div style="border:1px solid var(--color-divider);padding:14px 16px;margin-top:4px">
               <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">Внутренний подбор · Grundfos CR 32-4</div>
@@ -352,7 +369,7 @@
             <div class="card blueprint" style="padding:0;gap:0">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="ph" style="background:{{ p.bgc }};height:164px;border-bottom:1px solid var(--color-divider);position:relative" data-photo="1">
-                <span class="mono" style="position:absolute;top:10px;left:10px;font-size:11px;background:var(--color-bg);padding:4px 8px">{{ p.stock }}</span>
+                <span class="mono" style="position:absolute;top:10px;left:10px;font-size:11px;background:var(--color-bg);padding:4px 8px;display:flex;align-items:center;gap:5px"><span class="ico i-order-shipped" style="color:var(--color-accent-700);width:12px;height:12px"></span>{{ p.stock }}</span>
               </div>
               <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1">
                 <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ p.sku }}</span>
@@ -363,7 +380,7 @@
                     <div class="mono" style="font-size:21px;line-height:1.1">{{ p.price }}</div>
                     <div style="font-size:12px;color:var(--color-neutral-600)">{{ p.lead }}</div>
                   </div>
-                  <button onClick="{{ p.open }}" class="btn btn-primary" style="white-space:nowrap;padding:10px 14px">{{ p.cta }}</button>
+                  <button onClick="{{ p.open }}" class="btn btn-primary" style="white-space:nowrap;padding:10px 14px;gap:6px"><span class="ico ico-16 i-ui-cart only-m"></span>{{ p.cta }}</button>
                 </div>
               </div>
             </div>
@@ -390,11 +407,16 @@
       <div>
         <h1 style="font-size:36px;margin-bottom:8px">Насос центробежный Grundfos CR 32-4 A-F-A-E-HQQE</h1>
         <div class="mono" style="display:flex;gap:16px;font-size:13px;color:var(--color-neutral-700);margin-bottom:22px;flex-wrap:wrap">
-          <span>Артикул 96122802</span><span>Grundfos · Дания</span><span>Гарантия 24 мес. (условия поставщика)</span>
+          <span>Артикул 96122802</span><span>Grundfos · Дания</span><span style="display:inline-flex;align-items:center;gap:6px"><span class="ico ico-16 i-warranty-maker" style="color:var(--color-accent-700);width:14px;height:14px"></span>Гарантия 24 мес. (условия поставщика)</span>
         </div>
-        <figure class="blueprint duotone ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:28px" data-photo="1">
+        <figure class="blueprint ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;height:380px;display:flex;align-items:flex-end;padding:16px;margin-bottom:12px" data-photo="1">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         </figure>
+        <div class="gal" role="list" aria-label="Фото товара">
+          <span class="on" role="listitem" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5"></span>
+          <span role="listitem" style="background:url(img/p-cr32-flange.jpg) center/contain no-repeat #c6c4c1"></span>
+          <span role="listitem" style="background:url(img/p-cr32-motor.jpg) center/contain no-repeat #bebebe"></span>
+        </div>
         <h3>Характеристики</h3>
         <table class="table">
           <tbody>
@@ -445,7 +467,7 @@
                 </div>
                 <div style="display:flex;gap:10px;align-items:baseline">
                   <span class="mono" style="font-size:16px">{{ r.score }}</span>
-                  <span class="tag tag-outline" style="font-size:11px">{{ r.verified }}</span>
+                  <span class="tag tag-outline" style="font-size:11px;gap:5px"><span class="ico i-doc-certificates" style="color:var(--color-accent-700);width:12px;height:12px"></span>{{ r.verified }}</span>
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ r.date }}</span>
                 </div>
               </div>
@@ -471,15 +493,15 @@
           <div class="hr" style="margin:12px 0"></div>
           <sc-if value="{{ true }}" hint-placeholder-val="{{ true }}">
             <div style="display:flex;flex-direction:column;gap:7px;font-size:14px">
-              <div style="display:flex;justify-content:space-between"><span class="text-muted">Наличие</span><span>8 шт. на складе</span></div>
-              <div style="display:flex;justify-content:space-between"><span class="text-muted">Отгрузка</span><span>2–4 рабочих дня</span></div>
-              <div style="display:flex;justify-content:space-between"><span class="text-muted">Оплата</span><span>Счёт, карта, отсрочка</span></div>
+              <div style="display:flex;justify-content:space-between"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-order-shipped" style="color:var(--color-accent-700)"></span>Наличие</span><span>8 шт. на складе</span></div>
+              <div style="display:flex;justify-content:space-between"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-step-direct-ship" style="color:var(--color-accent-700)"></span>Отгрузка</span><span>2–4 рабочих дня</span></div>
+              <div style="display:flex;justify-content:space-between"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-pay-card" style="color:var(--color-accent-700)"></span>Оплата</span><span>Счёт, карта, отсрочка</span></div>
             </div>
           </sc-if>
         </div>
         <div class="card blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span class="card-kicker">Нужен аналог дешевле?</span>
+          <span class="card-kicker" style="display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-engineer" style="color:var(--color-accent-700)"></span>Нужен аналог дешевле?</span>
           <p class="card-body" style="font-size:14px">Инженер подберёт замену по расходу, напору и присоединительным размерам и пришлёт сравнение за 2 часа.</p>
           <button onClick="{{ goQuote }}" class="btn btn-secondary" style="align-self:flex-start">Запросить подбор</button>
         </div>
@@ -508,7 +530,7 @@
           <sc-for list="{{ quoteIncludes }}" as="q" hint-placeholder-count="4">
             <div class="card blueprint" style="padding:16px 18px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <span class="card-title">{{ q.t }}</span>
+              <span class="card-title" style="display:flex;align-items:center;gap:10px"><span class="ico {{ q.icon }}" style="color:var(--color-accent-700)"></span>{{ q.t }}</span>
               <p class="card-body" style="font-size:13px">{{ q.d }}</p>
             </div>
           </sc-for>
@@ -550,12 +572,12 @@
       <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:26px;align-items:start">
         <div class="blueprint" style="padding:36px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;min-height:320px;justify-content:center">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span style="width:46px;height:46px;border:1.5px solid var(--color-accent);display:block"></span>
+          <span style="width:160px;height:110px;display:block;background:url(img/nameplate.jpg) center/cover no-repeat;border:1px solid var(--color-divider)" role="img" aria-label="Пример снимка шильдика" data-photo="1"></span>
           <span style="font-family:var(--font-heading);font-weight:600;font-size:21px">Перетащите фото шильдика</span>
           <span style="font-size:14px;color:var(--color-neutral-700);max-width:340px">JPG или PNG до 10 МБ. Снимайте так, чтобы модель и серийный номер читались.</span>
           <div style="display:flex;gap:10px;margin-top:4px">
             <button class="btn btn-primary" style="padding:11px 18px">Выбрать файл</button>
-            <button class="btn btn-secondary" style="padding:11px 18px">Снять камерой</button>
+            <button class="btn btn-secondary" style="padding:11px 18px;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>Снять камерой</button>
           </div>
         </div>
 
@@ -563,7 +585,7 @@
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Распознано · 0,8 с</div>
           <div class="blueprint" style="display:grid;grid-template-columns:120px minmax(0,1fr)">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="ph duotone" style="background:url(img/p-cr32.jpg) center/cover no-repeat;border-right:1px solid var(--color-divider)" data-photo="1"></div>
+            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;border-right:1px solid var(--color-divider)" data-photo="1"></div>
             <div style="padding:16px 18px;display:flex;flex-direction:column;gap:6px">
               <span class="mono" style="font-size:12px;color:var(--color-neutral-600)">GRUNDFOS · 96122802</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">CR 32-4 A-F-A-E-HQQE</span>
@@ -574,7 +596,7 @@
               </div>
             </div>
           </div>
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-top:4px">Аналоги</div>
+          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-top:4px;display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-analog" style="color:var(--color-accent-700)"></span>Аналоги</div>
           <sc-for list="{{ analogs }}" as="a" hint-placeholder-count="3">
             <div class="blueprint row-hover" style="display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 16px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -596,17 +618,19 @@
 
   <sc-if value="{{ isSupplier }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Стать поставщиком">
-    <section style="background:var(--color-accent-900);color:var(--color-neutral-100)">
-      <div class="hero2" style="max-width:1360px;margin:0 auto;padding:52px 28px 46px;display:grid;grid-template-columns:minmax(0,1.1fr) 380px;gap:44px;align-items:start">
+    <section style="background:var(--color-accent-900);color:var(--color-neutral-100);position:relative;overflow:hidden">
+      <div class="duotone hero-ph" style="position:absolute;inset:0;background:url(img/supplier-dock.jpg) center/cover no-repeat" data-photo="1"></div>
+      <div class="hero-ph" style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(29,45,61,0.9) 0%, rgba(29,45,61,0.8) 55%, rgba(29,45,61,0.7) 100%)"></div>
+      <div class="hero2" style="position:relative;max-width:1360px;margin:0 auto;padding:52px 28px 46px;display:grid;grid-template-columns:minmax(0,1.1fr) 380px;gap:44px;align-items:start">
         <div>
           <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:14px">Для поставщиков и дистрибьюторов</div>
           <h1 style="color:#fff;font-size:46px;max-width:640px">Загрузите прайс — заказы придут готовыми</h1>
           <p style="font-size:17px;color:var(--color-accent-200);max-width:600px">Мы приводим клиента, оформляем сделку и документы. Вы отгружаете напрямую с вашего склада. Никакой витрины, тендеров и переписки с розницей.</p>
           <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700)">XML / YML</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700)">REST API</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700)">Excel / CSV</span>
-            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700)">Обмен с 1С</span>
+            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-sync" style="color:var(--color-accent-300);width:14px;height:14px"></span>XML / YML</span>
+            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>REST API</span>
+            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-file" style="color:var(--color-accent-300);width:14px;height:14px"></span>Excel / CSV</span>
+            <span class="mono" style="font-size:13px;padding:7px 12px;border:1px solid var(--color-accent-700);display:inline-flex;align-items:center;gap:7px"><span class="ico i-tier-api" style="color:var(--color-accent-300);width:14px;height:14px"></span>Обмен с 1С</span>
           </div>
         </div>
         <div class="card" style="background:var(--color-bg);color:var(--color-text);border-color:transparent;padding:22px">
@@ -625,6 +649,7 @@
         </div>
       </div>
     </section>
+    <div class="duotone only-m-block" style="display:none;height:160px;background:url(img/warehouse.jpg) center/cover no-repeat" data-photo="1"></div>
 
     <section style="max-width:1360px;margin:0 auto;padding:44px 28px 56px">
       <h2 style="margin-bottom:18px">Как устроена работа</h2>
@@ -632,6 +657,7 @@
         <sc-for list="{{ supplierSteps }}" as="s" hint-placeholder-count="4">
           <div class="card blueprint" style="padding:20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <span class="ico {{ s.icon }}" style="color:var(--color-accent-700)"></span>
             <span class="card-kicker">{{ s.n }}</span>
             <span class="card-title">{{ s.t }}</span>
             <p class="card-body" style="font-size:13px">{{ s.d }}</p>
@@ -642,7 +668,7 @@
         <sc-for list="{{ supplierStats }}" as="s" hint-placeholder-count="3">
           <div class="blueprint" style="padding:22px 24px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="mono" style="font-size:32px;line-height:1.1">{{ s.v }}</div>
+            <div class="mono" style="font-size:32px;line-height:1.1;display:flex;align-items:center;gap:10px"><span class="ico ico-28 {{ s.icon }}" style="color:var(--color-accent-700)"></span>{{ s.v }}</div>
             <div style="font-size:14px;color:var(--color-neutral-700)">{{ s.k }}</div>
           </div>
         </sc-for>
@@ -657,12 +683,12 @@
       <nav class="blueprint" style="padding:8px 0">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="padding:10px 16px 12px;border-bottom:1px solid var(--color-divider)">
-          <div style="font-family:var(--font-heading);font-weight:600;font-size:17px">ООО «Метизный завод»</div>
+          <div style="font-family:var(--font-heading);font-weight:600;font-size:17px;display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-ui-account" style="color:var(--color-accent-700)"></span>ООО «Метизный завод»</div>
           <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">ИНН 7105012345</div>
         </div>
         <sc-for list="{{ accountNav }}" as="n" hint-placeholder-count="6">
           <a href="#" class="row-hover" style="display:flex;justify-content:space-between;padding:9px 16px;font-size:14px;color:inherit;text-decoration:none">
-            <span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
+            <span style="display:flex;align-items:center;gap:9px"><span class="ico ico-16 {{ n.icon }}" style="color:var(--color-accent-700)"></span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
           </a>
         </sc-for>
       </nav>
@@ -671,7 +697,7 @@
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap">
           <h1 style="font-size:32px;margin:0">Заказы и запросы</h1>
           <div style="display:flex;gap:10px">
-            <button class="btn btn-secondary">Выгрузить реестр</button>
+            <button class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-ui-download" style="color:currentColor;width:18px;height:18px"></span>Выгрузить реестр</button>
             <button class="btn btn-primary">Новый запрос КП</button>
           </div>
         </div>
@@ -708,7 +734,7 @@
               <tbody>
                 <sc-for list="{{ autoBuy }}" as="a" hint-placeholder-count="4">
                   <tr>
-                    <td style="font-size:14px;font-weight:500">{{ a.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ a.sku }} · {{ a.price }}</div></td>
+                    <td style="font-size:14px;font-weight:500"><div style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background: {{ a.bg }}"></span><div>{{ a.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ a.sku }} · {{ a.price }}</div></div></div></td>
                     <td style="font-size:13px">{{ a.period }}</td>
                     <td><input class="input mono" onChange="{{ noop }}" value="{{ a.qty }}" style="min-height:36px;max-width:80px"></td>
                     <td><span class="tag {{ a.tagClass }}" style="font-size:12px">{{ a.next }}</span></td>
@@ -726,7 +752,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px">
             <div>
-              <h3 style="margin:0">Согласование заявок</h3>
+              <h3 style="margin:0;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-ui-approval" style="color:var(--color-accent-700)"></span>Согласование заявок</h3>
               <p style="font-size:14px;color:var(--color-neutral-700);margin:2px 0 0">Заявка цеха проходит бюджет и закупку. Роли и лимиты настраиваются в разделе «Сотрудники».</p>
             </div>
             <button class="btn btn-secondary">Настроить маршрут</button>
@@ -774,12 +800,12 @@
               <tbody>
                 <sc-for list="{{ accountRepeat }}" as="r" hint-placeholder-count="5">
                   <tr>
-                    <td style="font-size:14px;font-weight:500">{{ r.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ r.sku }}</div></td>
+                    <td style="font-size:14px;font-weight:500"><div style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background: {{ r.bg }}"></span><div>{{ r.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ r.sku }}</div></div></div></td>
                     <td class="mono" style="font-size:13px">{{ r.times }}</td>
                     <td style="font-size:13px">{{ r.period }}</td>
                     <td style="font-size:13px;color:var(--color-neutral-700)">{{ r.last }}</td>
                     <td class="mono" style="font-size:14px">{{ r.price }}<div style="font-size:11px;color: {{ r.deltaColor }}">{{ r.delta }}</div></td>
-                    <td style="text-align:right"><button onClick="{{ goCart }}" class="btn btn-primary" style="font-size:13px">Повторить</button></td>
+                    <td style="text-align:right"><button onClick="{{ goCart }}" class="btn btn-primary" style="font-size:13px;gap:6px"><span class="ico ico-16 i-ui-repeat" style="color:currentColor"></span>Повторить</button></td>
                   </tr>
                 </sc-for>
               </tbody>
@@ -819,7 +845,7 @@
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <sc-for list="{{ cart }}" as="c" hint-placeholder-count="2">
               <div class="cartrow">
-                <div class="ph duotone" style="background:{{ c.bg }};height:76px" data-photo="1"></div>
+                <div class="ph" style="background:{{ c.bg }};height:76px" data-photo="1"></div>
                 <div style="display:flex;flex-direction:column;gap:3px">
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ c.sku }}</span>
                   <span style="font-family:var(--font-heading);font-weight:600;font-size:18px">{{ c.name }}</span>
@@ -844,9 +870,9 @@
             </div>
             <div class="field" style="margin-top:8px"><label>Способ оплаты</label>
               <div style="display:flex;gap:18px;flex-wrap:wrap">
-                <label class="radio"><input type="radio" name="pay" defaultChecked="{{ true }}"><span class="dot"></span>Счёт для юрлица</label>
-                <label class="radio"><input type="radio" name="pay"><span class="dot"></span>Карта</label>
-                <label class="radio"><input type="radio" name="pay"><span class="dot"></span>Отсрочка 30 дней</label>
+                <label class="radio"><input type="radio" name="pay" defaultChecked="{{ true }}"><span class="dot"></span><span style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-pay-invoice" style="color:var(--color-accent-700)"></span>Счёт для юрлица</span></label>
+                <label class="radio"><input type="radio" name="pay"><span class="dot"></span><span style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-pay-card" style="color:var(--color-accent-700)"></span>Карта</span></label>
+                <label class="radio"><input type="radio" name="pay"><span class="dot"></span><span style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-pay-deferral" style="color:var(--color-accent-700)"></span>Отсрочка 30 дней</span></label>
               </div>
             </div>
           </div>
@@ -894,19 +920,23 @@
     <div style="max-width:1360px;margin:0 auto;padding:28px 28px 48px;display:flex;flex-direction:column;gap:26px">
       <sc-for list="{{ directionGroups }}" as="g" hint-placeholder-count="6">
         <div>
-          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px">
-            <div style="display:flex;align-items:baseline;gap:12px">
-              <span class="mono" style="font-size:12px;color:var(--color-accent-700)">{{ g.n }}</span>
-              <h2 style="font-size:24px;margin:0">{{ g.title }}</h2>
+          <div style="display:grid;grid-template-columns:220px minmax(0,1fr);gap:0;margin-bottom:14px;border:1px solid var(--color-divider)">
+            <div class="duotone" style="background: {{ g.photo }};min-height:112px" data-photo="1"></div>
+            <div style="padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="ico ico-28 {{ g.icon }}" style="color:var(--color-accent-700)"></span>
+                <span class="mono" style="font-size:12px;color:var(--color-accent-700)">{{ g.n }}</span>
+                <h2 style="font-size:24px;margin:0">{{ g.title }}</h2>
+              </div>
+              <span style="font-size:13px;color:var(--color-neutral-700)">{{ g.audience }}</span>
             </div>
-            <span style="font-size:13px;color:var(--color-neutral-700)">{{ g.audience }}</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
             <sc-for list="{{ g.items }}" as="d" hint-placeholder-count="8">
               <a href="#" onClick="{{ goCatalog }}" class="blueprint" style="padding:14px 16px;display:flex;flex-direction:column;gap:4px;text-decoration:none;color:inherit">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-                <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline">
-                  <span style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.2">{{ d.name }}</span>
+                <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+                  <span style="display:flex;align-items:center;gap:10px"><span class="ico {{ d.icon }}" style="color:var(--color-accent-700)"></span><span style="font-family:var(--font-heading);font-weight:600;font-size:18px;line-height:1.2">{{ d.name }}</span></span>
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600);white-space:nowrap">{{ d.count }}</span>
                 </div>
                 <span style="font-size:13px;line-height:1.45;color:var(--color-neutral-700)">{{ d.sub }}</span>
@@ -929,9 +959,9 @@
           <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:700px">Опишите задачу словами, пришлите фото шильдика или список позиций из заявки. Чат уточнит параметры, соберёт спецификацию, проверит остатки у поставщиков и оформит заказ или запрос КП.</p>
         </div>
         <div style="display:flex;gap:10px">
-          <button class="btn btn-secondary">Загрузить заявку XLSX</button>
-          <button onClick="{{ goPhoto }}" class="btn btn-secondary">Фото шильдика</button>
-          <button class="btn btn-primary">Чат в MAX</button>
+          <button class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-entry-list" style="color:currentColor;width:18px;height:18px"></span>Загрузить заявку XLSX</button>
+          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>Фото шильдика</button>
+          <button class="btn btn-primary" style="gap:8px"><span class="ico ico-16 i-channel-max" style="color:currentColor;width:18px;height:18px"></span>Чат в MAX</button>
         </div>
       </div>
 
@@ -953,8 +983,8 @@
                   <sc-if value="{{ m.hasRows }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px">
                       <sc-for list="{{ m.rows }}" as="r" hint-placeholder-count="3">
-                        <div style="display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--color-divider);padding-top:6px;font-size:14px">
-                          <span>{{ r.name }}</span>
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--color-divider);padding-top:6px;font-size:14px">
+                          <span style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:44px;height:44px;background: {{ r.bg }}"></span>{{ r.name }}</span>
                           <span class="mono" style="white-space:nowrap">{{ r.price }}</span>
                         </div>
                       </sc-for>
@@ -1010,13 +1040,13 @@
             </div>
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
               <button onClick="{{ goCart }}" class="btn btn-primary">Оформить</button>
-              <button class="btn btn-secondary">Выгрузить в XLSX</button>
+              <button class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-ui-download" style="color:currentColor;width:18px;height:18px"></span>Выгрузить в XLSX</button>
             </div>
           </div>
 
           <div class="blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <h3 style="margin:0 0 4px">Продолжить в мессенджере MAX</h3>
+            <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-channel-max" style="color:var(--color-accent-700)"></span>Продолжить в мессенджере MAX</h3>
             <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Тот же подбор, история и спецификации — в MAX. Уведомления о счёте, отгрузке и ответе на запрос КП приходят туда же.</p>
             <div style="display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;align-items:center">
               <div style="height:104px;border:1px solid var(--color-divider);background:#fff url(img/qr-max.svg) center/92px no-repeat" role="img" aria-label="QR-код бота в MAX"></div>
@@ -1042,7 +1072,8 @@
             <div style="display:flex;flex-direction:column;gap:10px">
               <sc-for list="{{ chatSkills }}" as="s" hint-placeholder-count="6">
                 <div style="display:flex;gap:10px;align-items:flex-start">
-                  <span style="width:7px;height:7px;background:var(--color-accent);display:block;flex:none;margin-top:7px"></span>
+                  <span style="width:7px;height:7px;background:var(--color-accent);flex:none;margin-top:7px;display: {{ s.dot }}"></span>
+                  <span class="ico ico-20 {{ s.icon }}" style="color:var(--color-accent-700);margin-top:1px"></span>
                   <div>
                     <div style="font-family:var(--font-heading);font-weight:600;font-size:16px">{{ s.t }}</div>
                     <div style="font-size:13px;color:var(--color-neutral-700);line-height:1.5">{{ s.d }}</div>
@@ -1212,7 +1243,7 @@
             <tbody>
               <sc-for list="{{ logOptions }}" as="o" hint-placeholder-count="4">
                 <tr>
-                  <td style="font-size:14px;font-weight:500">{{ o.name }}</td>
+                  <td style="font-size:14px;font-weight:500"><span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ o.icon }}" style="color:var(--color-accent-700)"></span>{{ o.name }}</span></td>
                   <td style="font-size:13px;color:var(--color-neutral-700)">{{ o.scheme }}</td>
                   <td style="font-size:13px">{{ o.carrier }}</td>
                   <td class="mono" style="font-size:13px">{{ o.term }}</td>
@@ -1300,6 +1331,7 @@
         <sc-for list="{{ vendorTiers }}" as="t" hint-placeholder-count="3">
           <div class="blueprint" style="padding:22px 24px;display:flex;flex-direction:column;gap:10px;border-top:3px solid {{ t.bar }}">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <span class="ico ico-28 {{ t.icon }}" style="color:var(--color-accent-700)"></span>
             <span class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-accent-700)">{{ t.kicker }}</span>
             <span style="font-family:var(--font-heading);font-weight:600;font-size:25px;line-height:1.15">{{ t.name }}</span>
             <span style="font-size:14px;line-height:1.5;color:var(--color-neutral-700)">{{ t.who }}</span>
@@ -1321,7 +1353,7 @@
       <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start">
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 4px">Как система выбирает поставщика</h3>
+          <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-step-supplier-pick" style="color:var(--color-accent-700)"></span>Как система выбирает поставщика</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 12px">Вес каждого фактора в подборе. Купить место в выдаче нельзя — только улучшить показатели.</p>
           <div style="display:flex;flex-direction:column;gap:9px">
             <sc-for list="{{ vendorWeights }}" as="w" hint-placeholder-count="5">
@@ -1340,6 +1372,7 @@
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <h3 style="margin:0 0 10px">Что требуется от поставщика</h3>
+          <div class="duotone" style="height:160px;margin:0 0 14px;background:url(img/supplier-stock-count.jpg) center/cover no-repeat" data-photo="1"></div>
           <div style="display:flex;flex-direction:column;gap:9px">
             <sc-for list="{{ vendorReq }}" as="r" hint-placeholder-count="6">
               <div style="display:flex;gap:9px;align-items:flex-start">
@@ -1378,7 +1411,7 @@
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <div style="overflow-x:auto">
           <table class="table" style="width:100%;min-width:900px">
-            <thead><tr><th>Право</th><th style="text-align:center">Админ</th><th style="text-align:center">Оператор</th><th style="text-align:center">Инженер</th><th style="text-align:center">Контент</th><th style="text-align:center">Бухгалтер</th></tr></thead>
+            <thead><tr><th>Право</th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-users" style="color:var(--color-accent-700)"></span>Админ</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-users" style="color:var(--color-accent-700)"></span>Оператор</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-users" style="color:var(--color-accent-700)"></span>Инженер</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-users" style="color:var(--color-accent-700)"></span>Контент</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-users" style="color:var(--color-accent-700)"></span>Бухгалтер</span></th></tr></thead>
             <tbody>
               <sc-for list="{{ roleMatrix }}" as="r" hint-placeholder-count="10">
                 <tr>
@@ -1468,9 +1501,10 @@
         </div>
 
         <div>
-          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">03 · Первое сообщение в чате</div>
+          <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px;display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-entry-chat" style="color:var(--color-accent-700)"></span>03 · Первое сообщение в чате</div>
           <div class="blueprint" style="padding:16px 18px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <div class="duotone" style="height:100px;margin:-16px -18px 12px;background:url(img/nameplate-phone.jpg) center/cover no-repeat" data-photo="1"></div>
             <p style="font-size:14px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 10px">«Пришлите фото шильдика, артикул или опишите задачу словами — подберу оригинал и аналог с ценой и сроком. Если позиции нет в каталоге, найду у поставщиков и вернусь с ответом.»</p>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
               <span class="tag tag-outline" style="font-size:12px">Фото шильдика</span>
@@ -1545,7 +1579,7 @@
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <span class="tag tag-accent" style="font-size:12px;padding:8px 12px">1,4% сделок с ошибкой</span>
-          <button onClick="{{ goAutopilot }}" class="btn btn-secondary">Автопилот</button>
+          <button onClick="{{ goAutopilot }}" class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-op-autopilot" style="color:currentColor;width:18px;height:18px"></span>Автопилот</button>
         </div>
       </div>
 
@@ -1574,7 +1608,7 @@
             <tbody>
               <sc-for list="{{ incTypes }}" as="i" hint-placeholder-count="6">
                 <tr>
-                  <td style="font-size:14px;font-weight:500">{{ i.err }}</td>
+                  <td style="font-size:14px;font-weight:500"><span style="display:flex;align-items:flex-start;gap:8px"><span class="ico ico-16 i-state-warning" style="color:var(--color-accent-700)"></span><span>{{ i.err }}</span></span></td>
                   <td style="font-size:13px;color:var(--color-neutral-700)">{{ i.found }}</td>
                   <td style="font-size:13px;color:var(--color-neutral-700)">{{ i.act }}</td>
                   <td class="mono" style="font-size:13px">{{ i.comp }}</td>
@@ -1636,7 +1670,7 @@
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Телефония и MAX · голосовой канал</div>
-          <h1 style="font-size:34px;margin:2px 0 0">Голосовой робот</h1>
+          <h1 style="font-size:34px;margin:2px 0 0;display:flex;align-items:center;gap:12px"><span class="ico ico-32 i-channel-phone" style="color:var(--color-accent-700)"></span>Голосовой робот</h1>
           <p style="font-size:15px;color:var(--color-neutral-700);margin:4px 0 0;max-width:820px">Отвечает на звонки, звонит сам по задачам из CRM и голосовым сообщениям в MAX. Работает на тех же данных, что чат: каталог, остатки, история клиента.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
@@ -1662,7 +1696,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px">
             <div>
-              <h3 style="margin:0">Расшифровка входящего · 09:12, 1 мин 32 с</h3>
+              <h3 style="margin:0;display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-channel-phone" style="color:var(--color-accent-700)"></span>Расшифровка входящего · 09:12, 1 мин 32 с</h3>
               <p style="font-size:14px;color:var(--color-neutral-700);margin:2px 0 0">+7 910 ХХХ-ХХ-14 · ООО «Тепломаш» определён по номеру</p>
             </div>
             <span class="tag tag-accent" style="font-size:12px">Закрыт без человека</span>
@@ -1776,7 +1810,7 @@
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
           <select class="input" style="width:auto"><option>Все каналы</option><option>MAX</option><option>Почта</option><option>Сайт</option><option>Телефон</option></select>
-          <button onClick="{{ goAutopilot }}" class="btn btn-secondary">Автопилот</button>
+          <button onClick="{{ goAutopilot }}" class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-op-autopilot" style="color:currentColor;width:18px;height:18px"></span>Автопилот</button>
           <button class="btn btn-primary">Новая сделка</button>
         </div>
       </div>
@@ -1792,14 +1826,14 @@
               <div class="blueprint" style="padding:12px 14px;display:flex;flex-direction:column;gap:6px;border-left:3px solid {{ d.bar }}">
                 <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
                 <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
-                  <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700)">{{ d.channel }}</span>
+                  <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-700);display:flex;align-items:center;gap:5px"><span class="ico {{ d.chIcon }}" style="width:12px;height:12px"></span>{{ d.channel }}</span>
                   <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ d.age }}</span>
                 </div>
                 <span style="font-size:14px;font-weight:500;line-height:1.3">{{ d.title }}</span>
                 <span style="font-size:12px;color:var(--color-neutral-700);line-height:1.45">{{ d.last }}</span>
                 <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:2px">
                   <span class="mono" style="font-size:14px">{{ d.sum }}</span>
-                  <span class="tag {{ d.tagClass }}" style="font-size:11px">{{ d.owner }}</span>
+                  <span class="tag {{ d.tagClass }}" style="font-size:11px;gap:4px"><span class="ico {{ d.botIcon }}" style="width:12px;height:12px"></span>{{ d.owner }}</span>
                 </div>
               </div>
             </sc-for>
@@ -1942,7 +1976,7 @@
                 <span class="mono" style="font-size:11px;color: {{ q.waitColor }};min-width:52px">{{ q.wait }}</span>
                 <div>
                   <div style="font-size:14px;font-weight:500">{{ q.what }}</div>
-                  <div style="font-size:12px;color:var(--color-neutral-700)">{{ q.why }}</div>
+                  <div style="font-size:12px;color:var(--color-neutral-700);display:flex;align-items:center;gap:6px"><span class="ico i-state-warning" style="color:var(--color-accent-700);width:14px;height:14px"></span>{{ q.why }}</div>
                 </div>
                 <div style="display:flex;gap:8px;align-items:center">
                   <span class="mono" style="font-size:13px;white-space:nowrap">{{ q.sum }}</span>
@@ -2097,21 +2131,21 @@
         </div>
         <sc-for list="{{ accountNav }}" as="n" hint-placeholder-count="7">
           <a href="#" onClick="{{ goAccount }}" class="row-hover" style="display:flex;justify-content:space-between;padding:9px 16px;font-size:14px;color:inherit;text-decoration:none">
-            <span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
+            <span style="display:flex;align-items:center;gap:9px"><span class="ico ico-16 {{ n.icon }}" style="color:var(--color-accent-700)"></span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
           </a>
         </sc-for>
       </nav>
 
       <div style="display:flex;flex-direction:column;gap:22px">
         <div>
-          <h1 style="font-size:30px;margin:0 0 4px">Уведомления</h1>
+          <h1 style="font-size:30px;margin:0 0 4px;display:flex;align-items:center;gap:12px"><span class="ico ico-28 i-ui-notify" style="color:var(--color-accent-700)"></span>Уведомления</h1>
           <p style="font-size:15px;color:var(--color-neutral-700);margin:0;max-width:720px">Выберите, о чём и куда сообщать. По умолчанию всё важное приходит в MAX, документы — на рабочую почту.</p>
         </div>
 
         <div class="blueprint" style="padding:6px 14px 12px;overflow-x:auto">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <table class="table" style="width:100%;min-width:720px">
-            <thead><tr><th>Событие</th><th style="text-align:center">MAX</th><th style="text-align:center">Почта</th><th style="text-align:center">SMS</th><th>Когда</th></tr></thead>
+            <thead><tr><th>Событие</th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-channel-max" style="color:var(--color-accent-700)"></span>MAX</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-channel-mail" style="color:var(--color-accent-700)"></span>Почта</span></th><th style="text-align:center"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-channel-sms" style="color:var(--color-accent-700)"></span>SMS</span></th><th>Когда</th></tr></thead>
             <tbody>
               <sc-for list="{{ notifyRows }}" as="n" hint-placeholder-count="8">
                 <tr>
@@ -2168,7 +2202,7 @@
             <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">{{ s.label }}</div>
             <div class="blueprint" style="padding:26px 22px;min-height:230px;display:flex;flex-direction:column;gap:10px;justify-content:center;text-align: {{ s.align }}">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <span style="width:40px;height:40px;display:block;align-self: {{ s.iconAlign }};background: {{ s.iconColor }};-webkit-mask: {{ s.icon }};mask: {{ s.icon }}"></span>
+              <span class="ico ico-40 {{ s.icon }}" style="align-self: {{ s.iconAlign }};color: {{ s.iconColor }}"></span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:21px;line-height:1.2">{{ s.title }}</span>
               <span style="font-size:14px;line-height:1.55;color:var(--color-neutral-700)">{{ s.text }}</span>
               <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;justify-content: {{ s.justify }}">
@@ -2186,13 +2220,21 @@
   <sc-if value="{{ isWarranty }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Гарантия и возврат">
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 48px">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:32px;align-items:start;margin-bottom:24px">
+      <div>
       <h1 style="font-size:36px;margin:0 0 8px">Гарантия, возврат и рекламации</h1>
-      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 24px;max-width:760px">Гарантию даёт производитель, обращение ведём мы: вы фиксируете дефект, дальше переписку с заводом и подрядчиком берёт на себя сервис. Срок гарантии указан в каждой карточке, документы приходят вместе с грузом и дублируются в кабинете.</p>
+      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0;max-width:760px">Гарантию даёт производитель, обращение ведём мы: вы фиксируете дефект, дальше переписку с заводом и подрядчиком берёт на себя сервис. Срок гарантии указан в каждой карточке, документы приходят вместе с грузом и дублируются в кабинете.</p>
+      </div>
+      <figure class="blueprint duotone ph ph-side" style="background:url(img/warranty-inspection.jpg) center/cover no-repeat;height:260px;margin:0" data-photo="1">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </figure>
+      </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;margin-bottom:26px">
         <sc-for list="{{ warrantyCases }}" as="w" hint-placeholder-count="4">
           <div class="card blueprint" style="padding:20px 22px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <span class="ico ico-28 {{ w.icon }}" style="color:var(--color-accent-700)"></span>
             <span class="card-kicker">{{ w.kicker }}</span>
             <span class="card-title">{{ w.title }}</span>
             <p class="card-body" style="font-size:14px">{{ w.text }}</p>
@@ -2229,9 +2271,9 @@
           </div>
           <div class="field"><label>Тип обращения</label>
             <div class="seg" style="width:100%">
-              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty" defaultChecked="{{ true }}">Гарантия</label>
-              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty">Возврат</label>
-              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty">Недостача</label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty" defaultChecked="{{ true }}"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-warranty-maker" style="color:var(--color-accent-700)"></span>Гарантия</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-warranty-return" style="color:var(--color-accent-700)"></span>Возврат</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="wty"><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-warranty-damage" style="color:var(--color-accent-700)"></span>Недостача</span></label>
             </div>
           </div>
           <div class="field"><label>Что произошло</label><textarea class="input" placeholder="Опишите дефект, режим работы и наработку"></textarea></div>
@@ -2240,7 +2282,7 @@
         </div>
         <div class="blueprint" style="padding:20px 22px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">Что не покрывает гарантия</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-warranty-excluded" style="color:var(--color-accent-700)"></span>Что не покрывает гарантия</h3>
           <div style="display:flex;flex-direction:column;gap:9px">
             <sc-for list="{{ warrantyExcl }}" as="e" hint-placeholder-count="5">
               <div style="display:flex;gap:9px;align-items:flex-start">
@@ -2259,8 +2301,10 @@
 
   <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Проектные закупки">
-    <section style="background:var(--color-accent-900);color:var(--color-neutral-100)">
-      <div style="max-width:1360px;margin:0 auto;padding:46px 28px 40px;display:grid;grid-template-columns:minmax(0,1.1fr) 360px;gap:40px;align-items:start">
+    <section style="background:var(--color-accent-900);color:var(--color-neutral-100);position:relative;overflow:hidden">
+      <div class="duotone" style="position:absolute;inset:0;background:url(img/project-commissioning.jpg) center/cover no-repeat" data-photo="1"></div>
+      <div style="position:absolute;inset:0;background:rgba(29,45,61,0.82)"></div>
+      <div style="position:relative;max-width:1360px;margin:0 auto;padding:46px 28px 40px;display:grid;grid-template-columns:minmax(0,1.1fr) 360px;gap:40px;align-items:start">
         <div>
           <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:12px">Проекты, тендеры и комплектация объектов</div>
           <h1 style="color:#fff;font-size:42px;max-width:660px;margin:0 0 12px">Комплектация объекта одной спецификацией</h1>
@@ -2268,7 +2312,7 @@
           <div style="display:flex;gap:36px;margin-top:26px;padding-top:20px;border-top:1px solid var(--color-accent-700);flex-wrap:wrap">
             <sc-for list="{{ projectStats }}" as="s" hint-placeholder-count="4">
               <div>
-                <div class="mono" style="font-size:26px;line-height:1.1;color:#fff">{{ s.v }}</div>
+                <div class="mono" style="font-size:26px;line-height:1.1;color:#fff;display:flex;align-items:center;gap:8px"><span class="ico ico-20 {{ s.icon }}" style="color:var(--color-accent-300)"></span>{{ s.v }}</div>
                 <div style="font-size:13px;color:var(--color-accent-200)">{{ s.k }}</div>
               </div>
             </sc-for>
@@ -2298,6 +2342,7 @@
           <sc-for list="{{ projectKits }}" as="k" hint-placeholder-count="4">
             <div class="card blueprint" style="padding:20px 22px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <div class="duotone" style="aspect-ratio:16/9;margin:-20px -22px 6px;border-bottom:1px solid var(--color-divider);background: {{ k.photo }}" data-photo="1"></div>
               <span class="card-kicker">{{ k.kicker }}</span>
               <span class="card-title">{{ k.title }}</span>
               <p class="card-body" style="font-size:14px">{{ k.text }}</p>
@@ -2316,7 +2361,7 @@
             <tbody>
               <sc-for list="{{ projectSteps }}" as="p" hint-placeholder-count="5">
                 <tr>
-                  <td style="font-size:14px;font-weight:500">{{ p.a }}</td>
+                  <td style="font-size:14px;font-weight:500"><span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ p.icon }}" style="color:var(--color-accent-700)"></span>{{ p.a }}</span></td>
                   <td style="font-size:13px;color:var(--color-neutral-700)">{{ p.b }}</td>
                   <td class="mono" style="font-size:13px">{{ p.c }}</td>
                   <td class="mono" style="font-size:13px">{{ p.d }}</td>
@@ -2329,7 +2374,7 @@
 
       <div class="blueprint" style="padding:20px 22px">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-        <h3 style="margin:0 0 10px">Документы для тендера</h3>
+        <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-doc-generic" style="color:var(--color-accent-700)"></span>Документы для тендера</h3>
         <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px;max-width:820px">Предоставляем коммерческое предложение на бланке, спецификацию с техническими характеристиками, сертификаты и декларации ЕАЭС, паспорта, гарантийные условия, справки о материально-технических ресурсах и опыте поставок.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button onClick="{{ goQuote }}" class="btn btn-primary">Запросить пакет документов</button>
@@ -2352,13 +2397,13 @@
           <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 18px;max-width:680px">Дания, производство с 1945 года. В каталоге 1 440 моделей: многоступенчатые CR, консольные NB и NK, циркуляционные MAGNA3, дренажные и канализационные. Поставки через проверенных поставщиков в РФ; срок и условия гарантии — в карточке товара.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button onClick="{{ goCatalog }}" class="btn btn-primary" style="padding:12px 20px">Все модели Grundfos</button>
-            <button onClick="{{ goCompare }}" class="btn btn-secondary" style="padding:12px 20px">Сравнить серии</button>
+            <button onClick="{{ goCompare }}" class="btn btn-secondary" style="padding:12px 20px;gap:8px"><span class="ico ico-16 i-ui-compare" style="color:currentColor;width:18px;height:18px"></span>Сравнить серии</button>
             <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="padding:12px 20px">Найти по шильдику</button>
           </div>
           <div style="display:flex;gap:36px;margin-top:24px;padding-top:18px;border-top:1px solid var(--color-divider);flex-wrap:wrap">
             <sc-for list="{{ brandStats }}" as="s" hint-placeholder-count="4">
               <div>
-                <div class="mono" style="font-size:24px;line-height:1.1">{{ s.v }}</div>
+                <div class="mono" style="font-size:24px;line-height:1.1;display:flex;align-items:center;gap:8px"><span class="ico ico-20 {{ s.icon }}" style="color:var(--color-accent-700)"></span>{{ s.v }}</div>
                 <div style="font-size:13px;color:var(--color-neutral-700)">{{ s.k }}</div>
               </div>
             </sc-for>
@@ -2395,13 +2440,13 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">Запчасти и сервис</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-quote-install" style="color:var(--color-accent-700)"></span>Запчасти и сервис</h3>
           <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">Торцевые уплотнения, рабочие колёса, комплекты прокладок и клеммные коробки по артикулам производителя. Отгрузка со склада в России 1–3 дня.</p>
           <button onClick="{{ goChat }}" class="btn btn-secondary">Подобрать ЗИП по модели</button>
         </div>
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">Аналоги дешевле</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-analog" style="color:var(--color-accent-700)"></span>Аналоги дешевле</h3>
           <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">По каждой модели подбираем замену CNP, Wilo, Ebara или отечественную по расходу, напору и присоединительным размерам — с разницей в цене и сроке.</p>
           <button onClick="{{ goCompare }}" class="btn btn-secondary">Посмотреть сравнение</button>
         </div>
@@ -2412,8 +2457,10 @@
 
   <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="О сервисе">
-    <section style="background:var(--color-accent-900);color:var(--color-neutral-100)">
-      <div style="max-width:1360px;margin:0 auto;padding:48px 28px 42px">
+    <section style="background:var(--color-accent-900);color:var(--color-neutral-100);position:relative;overflow:hidden">
+      <div class="duotone hero-ph" style="position:absolute;top:0;right:0;bottom:0;width:40%;background:url(img/about-engineer.jpg) center/cover no-repeat" data-photo="1"></div>
+      <div class="hero-ph" style="position:absolute;top:0;right:0;bottom:0;width:40%;background:linear-gradient(90deg, var(--color-accent-900) 0%, rgba(29,45,61,0.72) 38%, rgba(29,45,61,0.08) 100%)"></div>
+      <div style="max-width:1360px;margin:0 auto;padding:48px 28px 42px;position:relative">
         <div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-accent-300);margin-bottom:12px">О сервисе · как это работает</div>
         <h1 style="color:#fff;font-size:42px;max-width:820px;margin:0 0 12px">Мы не склад и не магазин. Мы — контур закупки</h1>
         <p style="font-size:17px;color:var(--color-accent-200);max-width:760px;margin:0">Снабженец не сравнивает условия 18 поставщиков и не ведёт переписку с каждым. Система собирает прайсы, выбирает предложение по цене, наличию и сроку, показывает одну цену и оформляет сделку. Оборудование едет напрямую со склада поставщика.</p>
@@ -2437,9 +2484,15 @@
           <sc-for list="{{ aboutSteps }}" as="s" hint-placeholder-count="5">
             <div class="card blueprint" style="padding:20px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+              <span class="ico {{ s.icon }}" style="color:var(--color-accent-700)"></span>
               <span class="card-kicker">{{ s.n }}</span>
               <span class="card-title">{{ s.t }}</span>
               <p class="card-body" style="font-size:14px">{{ s.d }}</p>
+              <div style="display:flex;gap:12px;color:var(--color-accent-700)">
+                <sc-for list="{{ s.entries }}" as="e" hint-placeholder-count="5">
+                  <span class="ico ico-20 {{ e.icon }}" title="{{ e.t }}"></span>
+                </sc-for>
+              </div>
             </div>
           </sc-for>
         </div>
@@ -2448,7 +2501,7 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start">
         <div class="blueprint" style="padding:20px 22px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">На чём мы зарабатываем</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-about-earn" style="color:var(--color-accent-700)"></span>На чём мы зарабатываем</h3>
           <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0">На наценке к цене поставщика — она заложена в ту цену, которую вы видите. Никаких платных размещений, приоритетов в выдаче за деньги и абонентской платы ни для закупщика, ни для поставщика. Поставщик выигрывает подбор ценой, наличием и сроком, а не бюджетом на продвижение.</p>
         </div>
         <div class="blueprint" style="padding:20px 22px">
@@ -2456,8 +2509,8 @@
           <h3 style="margin:0 0 10px">Контакты</h3>
           <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Мессенджер</span><a href="#" onClick="{{ goChat }}" class="mono">Чат в MAX</a></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Снабжение</span><span class="mono">zakaz@promkontur.example</span></div>
-            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Поставщикам</span><span class="mono">partner@promkontur.example</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-channel-mail" style="color:var(--color-accent-700)"></span>Снабжение</span><span class="mono">zakaz@promkontur.example</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted" style="display:inline-flex;align-items:center;gap:8px"><span class="ico ico-16 i-channel-mail" style="color:var(--color-accent-700)"></span>Поставщикам</span><span class="mono">partner@promkontur.example</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Часы работы</span><span>пн–пт 08:00–19:00 МСК</span></div>
             <div style="display:flex;justify-content:space-between;gap:12px"><span class="text-muted">Юрлицо</span><span>ООО «Промконтур», ИНН 7701234567</span></div>
           </div>
@@ -2480,23 +2533,23 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;align-items:start">
         <div class="blueprint" style="padding:22px 24px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 4px">Вход</h3>
+          <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-ui-login" style="color:var(--color-accent-700)"></span>Вход</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 14px">По номеру телефона — код придёт в MAX или SMS.</p>
           <div class="field"><label>Телефон</label><input class="input mono" placeholder="+7"></div>
           <div class="field"><label>Код из сообщения</label><input class="input mono" placeholder="4 цифры"></div>
-          <button class="btn btn-primary btn-block" style="min-height:46px">Войти</button>
+          <button class="btn btn-primary btn-block" style="min-height:46px;gap:8px"><span class="ico ico-16 i-ui-login" style="color:currentColor;width:18px;height:18px"></span>Войти</button>
           <div class="hr" style="margin:14px 0"></div>
-          <button class="btn btn-secondary btn-block" style="min-height:44px">Войти через MAX</button>
+          <button class="btn btn-secondary btn-block" style="min-height:44px;gap:8px"><span class="ico ico-16 i-channel-max" style="color:currentColor;width:18px;height:18px"></span>Войти через MAX</button>
           <button class="btn btn-secondary btn-block" style="min-height:44px">Вход по почте и паролю</button>
         </div>
 
         <div class="blueprint" style="padding:22px 24px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 4px">Регистрация компании</h3>
+          <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-ui-register" style="color:var(--color-accent-700)"></span>Регистрация компании</h3>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 14px">Достаточно ИНН — реквизиты подтянутся автоматически.</p>
-          <div class="field"><label>ИНН компании или ИП</label><input class="input mono" onChange="{{ noop }}" value="5003123456" placeholder="10 или 12 цифр"></div>
+          <div class="field"><label style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico ico-16 i-ui-register" style="color:var(--color-accent-700)"></span>ИНН компании или ИП</label><input class="input mono" onChange="{{ noop }}" value="5003123456" placeholder="10 или 12 цифр"></div>
           <div style="border:1px solid var(--color-divider);padding:12px 14px;margin-bottom:12px">
-            <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px">Найдено по ИНН · проверено за 4 секунды</div>
+            <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:6px;display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-ui-kyc" style="color:var(--color-accent-700)"></span>Найдено по ИНН · проверено за 4 секунды</div>
             <div style="font-size:15px;font-weight:500">ООО «Энергомаш-Сервис»</div>
             <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:10px">Московская обл., г. Видное · действующая, с 2011 года</div>
             <div style="display:flex;flex-direction:column;gap:5px">
@@ -2529,9 +2582,9 @@
           <h3 style="margin:0 0 10px">Что даёт аккаунт</h3>
           <div style="display:flex;flex-direction:column;gap:9px">
             <sc-for list="{{ authPerks }}" as="p" hint-placeholder-count="5">
-              <div style="display:flex;gap:9px;align-items:flex-start">
-                <span style="width:6px;height:6px;background:var(--color-accent);display:block;flex:none;margin-top:7px"></span>
-                <span style="font-size:14px;line-height:1.5;color:var(--color-neutral-800)">{{ p }}</span>
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span class="ico ico-20 {{ p.icon }}" style="color:var(--color-accent-700);margin-top:1px"></span>
+                <span style="font-size:14px;line-height:1.5;color:var(--color-neutral-800)">{{ p.t }}</span>
               </div>
             </sc-for>
           </div>
@@ -2559,20 +2612,19 @@
               <span class="mono">09:41</span><span class="mono">Москва · 5G</span>
             </div>
             <div style="padding:14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--color-divider)">
-              <span style="width:20px;height:20px;background:var(--color-accent);display:block"></span>
+              <span style="width:20px;height:20px;background:url(img/mark.svg) center/contain no-repeat;display:block"></span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ПРОМКОНТУР</span>
-              <span style="margin-left:auto;display:grid;gap:4px">
-                <span style="width:20px;height:2px;background:var(--color-text);display:block"></span>
-                <span style="width:20px;height:2px;background:var(--color-text);display:block"></span>
-                <span style="width:20px;height:2px;background:var(--color-text);display:block"></span>
-              </span>
+              <span style="margin-left:auto;display:grid;place-items:center;width:44px;height:44px;margin-block:-10px;margin-right:-10px" aria-label="Меню"><span class="ico i-ui-menu" style="color:var(--color-text)"></span></span>
             </div>
             <div style="padding:14px;display:flex;flex-direction:column;gap:12px">
-              <input class="input" placeholder="Модель или артикул" style="min-height:48px">
+              <div style="position:relative;display:flex"><span class="ico ico-20 i-ui-search" style="color:var(--color-neutral-600);position:absolute;left:14px;top:14px;pointer-events:none"></span><input class="input" placeholder="Модель или артикул" style="min-height:48px;padding-left:44px"></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <button onClick="{{ goPhoto }}" class="btn btn-primary" style="min-height:48px;font-size:15px">По фото</button>
                 <button onClick="{{ goChat }}" class="btn btn-secondary" style="min-height:48px;font-size:15px">Чат в MAX</button>
               </div>
+              <a href="#" onClick="{{ goPhoto }}" class="duotone" style="display:block;height:120px;background:url(img/nameplate-phone.jpg) center/cover no-repeat;border:1px solid var(--color-divider)" aria-label="Найти по фото шильдика" data-photo="1">
+                <span class="mono" style="position:absolute;left:10px;bottom:10px;z-index:1;font-size:11px;background:var(--color-bg);color:var(--color-text);padding:4px 8px">Найти по фото шильдика</span>
+              </a>
               <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600);margin-top:4px">Ваши регулярные закупки</div>
               <sc-for list="{{ mobileRepeat }}" as="r" hint-placeholder-count="3">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--color-divider);padding-top:10px">
@@ -2580,14 +2632,14 @@
                     <div style="font-size:15px;font-weight:500">{{ r.name }}</div>
                     <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ r.meta }}</div>
                   </div>
-                  <button onClick="{{ goCart }}" class="btn btn-secondary" style="min-height:44px;font-size:14px;white-space:nowrap">Повторить</button>
+                  <button onClick="{{ goCart }}" class="btn btn-secondary" style="min-height:44px;font-size:14px;white-space:nowrap;gap:6px"><span class="ico ico-16 i-ui-repeat" style="color:currentColor"></span>Повторить</button>
                 </div>
               </sc-for>
             </div>
             <div style="border-top:1px solid var(--color-divider);display:grid;grid-template-columns:repeat(4,1fr)">
               <sc-for list="{{ mobileTabbar }}" as="t" hint-placeholder-count="4">
                 <div style="padding:12px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;border-left:1px solid var(--color-divider)">
-                  <span style="width:9px;height:9px;background: {{ t.fill }};border:1.5px solid var(--color-accent);display:block"></span>
+                  <span class="ico ico-20 {{ t.icon }}" style="color: {{ t.iconColor }}"></span>
                   <span style="font-size:11px;color: {{ t.color }}">{{ t.t }}</span>
                 </div>
               </sc-for>
@@ -2659,7 +2711,7 @@
           <div class="blueprint" style="width:100%;max-width:390px;padding:0">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div style="background:var(--color-accent-900);color:#fff;padding:16px 14px;display:flex;flex-direction:column;gap:4px">
-              <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-300)">Робот говорит · 01:19</span>
+              <span class="mono" style="font-size:10px;text-transform:uppercase;color:var(--color-accent-300);display:flex;align-items:center;gap:6px"><span class="ico i-op-voice" style="color:var(--color-accent-300);width:14px;height:14px"></span>Робот говорит · 01:19</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ООО «Тепломаш»</span>
               <span class="mono" style="font-size:12px;color:var(--color-accent-200)">+7 910 ХХХ-ХХ-14 · 12 заказов</span>
             </div>
@@ -2698,7 +2750,7 @@
             <div style="padding:12px 14px;display:flex;flex-direction:column;gap:12px">
               <sc-for list="{{ mobileCatalog }}" as="p" hint-placeholder-count="3">
                 <div style="display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;border-bottom:1px solid var(--color-divider);padding-bottom:12px">
-                  <div class="ph duotone" style="background:{{ p.bg }};height:84px" data-photo="1"></div>
+                  <div class="ph" style="background:{{ p.bg }};height:84px" data-photo="1"></div>
                   <div style="display:flex;flex-direction:column;gap:4px">
                     <span class="mono" style="font-size:10px;color:var(--color-neutral-600)">{{ p.sku }}</span>
                     <span style="font-size:15px;font-weight:500;line-height:1.25">{{ p.name }}</span>
@@ -2724,7 +2776,7 @@
             <div style="background:var(--color-neutral-900);color:var(--color-neutral-300);padding:8px 14px;display:flex;justify-content:space-between;font-size:11px">
               <span class="mono">09:48</span><span class="mono">CR 32-4</span>
             </div>
-            <div class="ph duotone" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4;height:180px" data-photo="1"></div>
+            <div class="ph" style="background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5;height:180px" data-photo="1"></div>
             <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
               <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">Артикул 96122802 · Grundfos</span>
               <span style="font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.2">Насос Grundfos CR 32-4</span>
@@ -2794,7 +2846,7 @@
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px">
         <div>
           <div class="mono" style="font-size:11px;text-transform:uppercase;color:var(--color-neutral-600)">Клиент · оператор сервиса</div>
-          <h1 style="font-size:32px;margin:2px 0 0">ООО «Метизный завод»</h1>
+          <h1 style="font-size:32px;margin:2px 0 0;display:flex;align-items:center;gap:12px"><span class="ico i-op-client" style="color:var(--color-accent-700)"></span>ООО «Метизный завод»</h1>
           <div class="mono" style="font-size:13px;color:var(--color-neutral-700);margin-top:4px">ИНН 7105012345 · Тула · снабжение, 4 сотрудника · с марта 2024</div>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -2932,7 +2984,7 @@
           <sc-for list="{{ orderSteps }}" as="s" hint-placeholder-count="5">
             <div style="background:var(--color-bg);padding:14px 16px;display:flex;flex-direction:column;gap:6px;border-top:3px solid {{ s.bar }}">
               <span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ s.date }}</span>
-              <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color: {{ s.color }}">{{ s.t }}</span>
+              <span style="font-family:var(--font-heading);font-weight:600;font-size:17px;color: {{ s.color }};display:flex;align-items:center;gap:8px"><span class="ico ico-20 {{ s.icon }}"></span>{{ s.t }}</span>
               <span style="font-size:13px;color:var(--color-neutral-700)">{{ s.d }}</span>
             </div>
           </sc-for>
@@ -2947,7 +2999,7 @@
             <tbody>
               <sc-for list="{{ orderItems }}" as="i" hint-placeholder-count="3">
                 <tr>
-                  <td style="font-size:14px;font-weight:500">{{ i.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ i.sku }}</div></td>
+                  <td style="font-size:14px;font-weight:500"><div style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background: {{ i.bg }}"></span><div>{{ i.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ i.sku }}</div></div></div></td>
                   <td class="mono" style="font-size:13px">{{ i.qty }}</td>
                   <td style="font-size:13px;color:var(--color-neutral-700)">{{ i.vendor }}</td>
                   <td class="mono" style="font-size:14px;text-align:right;white-space:nowrap">{{ i.sum }}</td>
@@ -2958,11 +3010,11 @@
         </div>
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">Документы по заказу</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-doc-generic" style="color:var(--color-accent-700)"></span>Документы по заказу</h3>
           <div style="display:flex;flex-direction:column;gap:0">
             <sc-for list="{{ orderDocs }}" as="d" hint-placeholder-count="4">
               <div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-top:1px solid var(--color-divider);padding:8px 0">
-                <span style="font-size:14px">{{ d.t }}</span>
+                <span style="font-size:14px;display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ d.icon }}" style="color:var(--color-accent-700)"></span>{{ d.t }}</span>
                 <span class="mono" style="font-size:12px;color:var(--color-neutral-600);white-space:nowrap">{{ d.when }}</span>
               </div>
             </sc-for>
@@ -2989,7 +3041,7 @@
           <p style="font-size:15px;color:var(--color-neutral-700);margin:6px 0 0;max-width:720px">Строки сопоставлены с артикулами в базе. Позиции с точным совпадением уходят в корзину, спорные — на подтверждение, строки без аналога уходят закупщику как пробел ассортимента.</p>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-secondary">Загрузить другой файл</button>
+          <button class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-entry-list" style="color:currentColor"></span>Загрузить другой файл</button>
           <button onClick="{{ goCart }}" class="btn btn-primary">Перенести в корзину</button>
         </div>
       </div>
@@ -3032,7 +3084,7 @@
           <div style="display:flex;flex-direction:column;gap:12px">
             <sc-for list="{{ uploadIssues }}" as="i" hint-placeholder-count="3">
               <div style="border-top:1px solid var(--color-divider);padding-top:10px">
-                <div style="font-size:14px;font-weight:500">{{ i.row }}</div>
+                <div style="font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px"><span class="ico ico-16 i-state-warning" style="color:var(--color-accent-700)"></span>{{ i.row }}</div>
                 <div style="font-size:13px;color:var(--color-neutral-700);margin:2px 0 8px">{{ i.problem }}</div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
                   <button class="btn btn-secondary" style="font-size:13px">{{ i.a1 }}</button>
@@ -3070,13 +3122,21 @@
   <sc-if value="{{ isPayment }}" hint-placeholder-val="{{ false }}">
   <div data-screen-label="Оплата и документы">
     <div style="max-width:1360px;margin:0 auto;padding:24px 28px 48px">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:32px;align-items:start;margin-bottom:24px">
+      <div>
       <h1 style="font-size:36px;margin:0 0 8px">Оплата, доставка и документы</h1>
-      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 24px;max-width:760px">Работаем с юридическими лицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой (кроме габаритных грузов и удалённых регионов — там расчёт в КП), счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО.</p>
+      <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0;max-width:760px">Работаем с юридическими лицами и ИП по всей России. Цены в каталоге указаны с НДС и доставкой (кроме габаритных грузов и удалённых регионов — там расчёт в КП), счёт выставляется в течение 15 минут после оформления, закрывающие документы приходят в личный кабинет и по ЭДО.</p>
+      </div>
+      <figure class="blueprint duotone ph ph-side" style="background:url(img/payment-dispatch.jpg) center/cover no-repeat;height:260px;margin:0" data-photo="1">
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </figure>
+      </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
         <sc-for list="{{ paymentWays }}" as="p" hint-placeholder-count="4">
           <div class="card blueprint" style="padding:20px 22px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <span class="ico ico-28 {{ p.icon }}" style="color:var(--color-accent-700)"></span>
             <span class="card-kicker">{{ p.kicker }}</span>
             <span class="card-title">{{ p.title }}</span>
             <p class="card-body" style="font-size:14px">{{ p.text }}</p>
@@ -3084,11 +3144,11 @@
         </sc-for>
       </div>
 
-      <h2 style="font-size:26px;margin:28px 0 12px">Доставка и сроки</h2>
+      <h2 style="font-size:26px;margin:28px 0 12px;display:flex;align-items:center;gap:10px"><span class="ico ico-28 i-step-direct-ship" style="color:var(--color-accent-700)"></span>Доставка и сроки</h2>
       <div class="blueprint" style="padding:6px 14px 10px;overflow-x:auto">
         <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
         <table class="table" style="width:100%">
-          <thead><tr><th>Направление доставки</th><th>Срок от склада поставщика</th><th>Стоимость</th><th>Разгрузка</th></tr></thead>
+          <thead><tr><th><span style="display:inline-flex;align-items:center;gap:8px;gap:6px"><span class="ico i-delivery-region" style="color:var(--color-accent-700);width:14px;height:14px"></span>Направление доставки</span></th><th>Срок от склада поставщика</th><th>Стоимость</th><th>Разгрузка</th></tr></thead>
           <tbody>
             <sc-for list="{{ deliveryRows }}" as="d" hint-placeholder-count="5">
               <tr>
@@ -3109,7 +3169,7 @@
           <div style="display:flex;flex-direction:column;gap:8px">
             <sc-for list="{{ docsList }}" as="d" hint-placeholder-count="5">
               <div style="display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--color-divider);padding-top:8px;font-size:14px">
-                <span>{{ d.t }}</span>
+                <span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ d.icon }}" style="color:var(--color-accent-700)"></span>{{ d.t }}</span>
                 <span class="mono" style="font-size:12px;color:var(--color-neutral-600);white-space:nowrap">{{ d.when }}</span>
               </div>
             </sc-for>
@@ -3117,7 +3177,7 @@
         </div>
         <div class="blueprint" style="padding:18px 20px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h3 style="margin:0 0 10px">Отсрочка платежа</h3>
+          <h3 style="margin:0 0 10px;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-pay-deferral" style="color:var(--color-accent-700)"></span>Отсрочка платежа</h3>
           <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-800);margin:0 0 12px">До 30 дней после проверки контрагента. Лимит зависит от оборота и истории закупок, виден в личном кабинете. Первая сделка — по предоплате или с частичным авансом.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button onClick="{{ goAccount }}" class="btn btn-secondary">Проверить лимит</button>
@@ -3149,6 +3209,10 @@
         <sc-for list="{{ emptyActions }}" as="a" hint-placeholder-count="4">
           <div class="card blueprint" style="padding:18px 20px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+            <sc-if value="{{ a.hasPh }}" hint-placeholder-val="{{ false }}">
+              <div class="duotone" style="height:90px;margin:-18px -20px 4px;background:url(img/nameplate.jpg) center/cover no-repeat" data-photo="1"></div>
+            </sc-if>
+            <span class="ico ico-28 {{ a.icon }}" style="color:var(--color-accent-700)"></span>
             <span class="card-title">{{ a.t }}</span>
             <p class="card-body" style="font-size:14px">{{ a.d }}</p>
             <button onClick="{{ a.go }}" class="btn btn-secondary" style="align-self:flex-start">{{ a.cta }}</button>
@@ -3164,7 +3228,7 @@
           <tbody>
             <sc-for list="{{ emptySuggest }}" as="p" hint-placeholder-count="4">
               <tr>
-                <td style="font-weight:500;font-size:14px">{{ p.name }}</td>
+                <td style="font-weight:500;font-size:14px"><span style="display:flex;align-items:center;gap:10px"><span class="thumb" style="width:40px;height:40px;background:url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5"></span>{{ p.name }}</span></td>
                 <td style="font-size:13px;color:var(--color-neutral-700)">{{ p.spec }}</td>
                 <td style="font-size:13px">{{ p.stock }}</td>
                 <td class="mono" style="text-align:right;font-size:15px;white-space:nowrap">{{ p.price }}</td>
@@ -3186,7 +3250,7 @@
     <div style="max-width:1360px;margin:0 auto;padding:14px 28px 48px;display:flex;flex-direction:column;gap:26px">
       <div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,0.8fr);gap:32px;align-items:start">
         <div>
-          <h1 style="font-size:40px;margin:0 0 10px">Насосы для промышленности и ЖКХ</h1>
+          <h1 style="font-size:40px;margin:0 0 10px;display:flex;align-items:center;gap:14px"><span class="ico ico-32 i-dir-pumps" style="color:var(--color-accent-700)"></span>Насосы для промышленности и ЖКХ</h1>
           <p style="font-size:17px;line-height:1.55;color:var(--color-neutral-800);margin:0 0 18px;max-width:640px">4 218 моделей от 37 производителей: центробежные, консольные, скважинные, дозировочные, химические и пищевые. Подбор по расходу, напору и среде, цены с доставкой, отгрузка со склада поставщика за 2–5 дней.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button onClick="{{ goCatalog }}" class="btn btn-primary" style="padding:12px 20px">Открыть каталог</button>
@@ -3280,7 +3344,7 @@
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <label class="radio"><input type="checkbox" defaultChecked="{{ true }}"><span class="dot"></span>Только различия</label>
-          <button class="btn btn-secondary">Выгрузить в XLSX</button>
+          <button class="btn btn-secondary" style="gap:8px"><span class="ico ico-16 i-ui-download" style="color:currentColor;width:18px;height:18px"></span>Выгрузить в XLSX</button>
           <button onClick="{{ goQuote }}" class="btn btn-secondary">Запросить КП на все</button>
         </div>
       </div>
@@ -3292,7 +3356,7 @@
             <tr>
               <th style="width:210px">Параметр</th>
               <sc-for list="{{ compareModels }}" as="m" hint-placeholder-count="4">
-                <th style="text-align:left">{{ m.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ m.sku }}</div></th>
+                <th style="text-align:left;vertical-align:bottom"><span class="thumb" style="width:96px;height:96px;margin-bottom:8px;background: {{ m.bg }}"></span>{{ m.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ m.sku }}</div></th>
               </sc-for>
             </tr>
           </thead>
@@ -3344,7 +3408,7 @@
         </div>
         <sc-for list="{{ vendorNav }}" as="n" hint-placeholder-count="6">
           <a href="#" class="row-hover" style="display:flex;justify-content:space-between;padding:9px 16px;font-size:14px;color:inherit;text-decoration:none">
-            <span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
+            <span style="display:flex;align-items:center;gap:9px"><span class="ico ico-16 {{ n.icon }}" style="color:var(--color-accent-700)"></span>{{ n.t }}</span><span class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ n.c }}</span>
           </a>
         </sc-for>
       </nav>
@@ -3354,7 +3418,7 @@
           <h1 style="font-size:30px;margin:0">Заявки и выгрузка прайса</h1>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button class="btn btn-secondary">Настроить выгрузку</button>
-            <button class="btn btn-primary">Загрузить прайс</button>
+            <button class="btn btn-primary" style="gap:8px"><span class="ico ico-16 i-price-upload" style="color:currentColor;width:18px;height:18px"></span>Загрузить прайс</button>
           </div>
         </div>
 
@@ -3372,7 +3436,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:10px">
             <h3 style="margin:0">Состояние выгрузки</h3>
-            <span class="mono" style="font-size:12px;color:var(--color-neutral-600)">последний обмен: 14 сентября, 06:00</span>
+            <span class="mono" style="font-size:12px;color:var(--color-neutral-600);display:flex;align-items:center;gap:6px"><span class="ico ico-16 i-tier-sync" style="color:var(--color-accent-700)"></span>последний обмен: 14 сентября, 06:00</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
             <div class="field"><label>Формат</label><select class="input"><option>XML фид</option><option>REST API</option><option>Excel по FTP</option><option>Обмен с 1С</option></select></div>
@@ -3391,7 +3455,7 @@
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px">
             <div>
-              <h3 style="margin:0">Прайс и остатки</h3>
+              <h3 style="margin:0;display:flex;align-items:center;gap:10px"><span class="ico ico-24 i-vendor-price" style="color:var(--color-accent-700)"></span>Прайс и остатки</h3>
               <p style="font-size:14px;color:var(--color-neutral-700);margin:2px 0 0">Правка вручную переопределяет фид до следующей выгрузки. Отмеченные позиции обновляются пакетно.</p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -3561,9 +3625,12 @@
           <div style="display:flex;flex-direction:column;gap:10px">
             <sc-for list="{{ articleProducts }}" as="p" hint-placeholder-count="3">
               <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;border-top:1px solid var(--color-divider);padding-top:8px">
-                <div>
-                  <div style="font-size:14px;font-weight:500">{{ p.name }}</div>
-                  <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ p.spec }}</div>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <span class="thumb" style="width:48px;height:48px;background: {{ p.bg }}"></span>
+                  <div>
+                    <div style="font-size:14px;font-weight:500">{{ p.name }}</div>
+                    <div class="mono" style="font-size:11px;color:var(--color-neutral-600)">{{ p.spec }}</div>
+                  </div>
                 </div>
                 <span class="mono" style="font-size:15px;white-space:nowrap">{{ p.price }}</span>
               </div>
@@ -3573,7 +3640,7 @@
         </div>
         <div class="blueprint" style="padding:16px 18px">
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <h4 style="margin:0 0 6px">Спросить у чата</h4>
+          <h4 style="margin:0 0 6px;display:flex;align-items:center;gap:8px"><span class="ico ico-20 i-entry-chat" style="color:var(--color-accent-700)"></span>Спросить у чата</h4>
           <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 10px">Чат знает содержание статьи и подберёт модель под ваши расход и напор.</p>
           <button onClick="{{ goChat }}" class="btn btn-secondary btn-block">Открыть умный чат</button>
         </div>
@@ -3599,7 +3666,7 @@
 
       <div data-admin-tabs="1" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--color-divider);padding-bottom:12px">
         <sc-for list="{{ adminSections }}" as="s" hint-placeholder-count="7">
-          <button onClick="{{ s.go }}" style="{{ s.style }}">{{ s.t }}</button>
+          <button onClick="{{ s.go }}" style="{{ s.style }}"><span class="ico ico-16 i-op-admin"></span>{{ s.t }}</button>
         </sc-for>
       </div>
 
@@ -3927,7 +3994,7 @@
             <tbody>
               <sc-for list="{{ channels }}" as="c" hint-placeholder-count="5">
                 <tr>
-                  <td style="font-weight:500;font-size:14px">{{ c.name }}</td>
+                  <td style="font-weight:500;font-size:14px"><span style="display:flex;align-items:center;gap:8px"><span class="ico ico-16 {{ c.icon }}" style="color:var(--color-accent-700)"></span>{{ c.name }}</span></td>
                   <td class="mono" style="font-size:12px;color:var(--color-neutral-700)">{{ c.id }}</td>
                   <td class="mono" style="font-size:14px">{{ c.dialogs }}</td>
                   <td class="mono" style="font-size:14px">{{ c.auto }}</td>
@@ -4425,17 +4492,17 @@
     <div style="max-width:1360px;margin:0 auto;padding:36px 28px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px">
       <div>
         <div style="display:flex;align-items:center;gap:10px;color:#fff">
-          <span style="width:18px;height:18px;background:var(--color-accent);display:block"></span>
+          <span style="width:18px;height:18px;background:url(img/mark.svg) center/contain no-repeat;display:block"></span>
           <span style="font-family:var(--font-heading);font-weight:600;font-size:19px">ПРОМКОНТУР</span>
         </div>
         <p style="font-size:14px;margin:10px 0 0;max-width:330px;line-height:1.55">Промышленное оборудование от поставщиков по всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
         <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px">
           <a href="#" onClick="{{ goChat }}" class="mono" style="color:#fff;font-size:19px;white-space:nowrap">Чат в MAX</a>
-          <span style="font-size:13px">zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
+          <span style="font-size:13px;display:flex;align-items:center;gap:6px"><span class="ico i-channel-mail" style="color:var(--color-accent-300);width:14px;height:14px"></span>zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
         </div>
         <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap">Чат в MAX</span>
-          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap">Почта снабжения</span>
+          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><span class="ico i-channel-max" style="color:var(--color-accent-300);width:14px;height:14px"></span>Чат в MAX</span>
+          <span class="mono" style="font-size:12px;border:1px solid var(--color-neutral-700);padding:6px 10px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px"><span class="ico i-channel-mail" style="color:var(--color-accent-300);width:14px;height:14px"></span>Почта снабжения</span>
         </div>
       </div>
       <sc-for list="{{ footerCols }}" as="f" hint-placeholder-count="5">
@@ -4543,15 +4610,16 @@ class Component extends DCLogic {
     }));
 
     const catalogProducts = [
-      { bg: "url(img/p-cr32.jpg) center/cover no-repeat", bgc: "url(img/p-cr32.jpg) center/contain no-repeat #c2c2c4", sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #c2c2c4", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #c2c2c4", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #c2c2c4", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
-      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #c2c2c4", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
-      { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c2c2c4", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
+      { bg: "url(img/p-cr32.jpg) center/cover no-repeat", bgc: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nb40.jpg) center/cover no-repeat", bgc: "url(img/p-nb40.jpg) center/contain no-repeat #b3b3b4", sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-nis80.jpg) center/cover no-repeat", bgc: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "Подача 50 м³/ч · напор 32 м · 7,5 кВт", price: "96 200 ₽", lead: "Отгрузка 2 дня", stock: "12 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", bgc: "url(img/p-lgcy75.jpg) center/contain no-repeat #6a6663", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "Винтовой компрессор · 75 кВт · 10 бар", price: "по запросу", lead: "Срок от 21 дня", stock: "Под заказ", cta: "Запросить КП" },
+      { bg: "url(img/p-vr15.jpg) center/cover no-repeat", bgc: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", spec: "Частотный преобразователь · 380 В · IP20", price: "62 300 ₽", lead: "Отгрузка 1–2 дня", stock: "26 шт. в наличии", cta: "В корзину" },
+      { bg: "url(img/p-6205.jpg) center/cover no-repeat", bgc: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", spec: "25×52×15 мм · закрытый · сталь", price: "540 ₽", lead: "Отгрузка в день заказа", stock: "1 400 шт.", cta: "В корзину" }
     ].map(p => ({ ...p, open: this.go(p.cta === "Запросить КП" ? "quote" : "product") }));
 
-    const pb = n => ({ bg: "url(img/" + n + ".jpg) center/cover no-repeat", bgc: "url(img/" + n + ".jpg) center/contain no-repeat #bfbfc1" });
+    const pbg = {"p-cr32": "#c7c5c5", "p-cr32-flange": "#c6c4c1", "p-cr32-motor": "#bebebe", "p-nb40": "#b3b3b4", "p-nis80": "#bdb8b3", "p-lgcy75": "#6a6663", "p-vr15": "#d9d9d9", "p-6205": "#c3c1c2"};
+    const pb = n => ({ bg: "url(img/" + n + ".jpg) center/cover no-repeat", bgc: "url(img/" + n + ".jpg) center/contain no-repeat " + (pbg[n] || "#bfbfc1") });
     const pumpProducts = [
       { ...pb("p-cr32"), sku: "96122802", name: "Grundfos CR 32-4", spec: "Подача 32 м³/ч · напор 46 м · 5,5 кВт", price: "104 900 ₽", lead: "Отгрузка 2–4 дня", stock: "8 шт. в наличии", cta: "В корзину" },
       { ...pb("p-nb40"), sku: "98160680", name: "Grundfos NB 40-200/219", spec: "Подача 45 м³/ч · напор 50 м · 7,5 кВт", price: "187 400 ₽", lead: "Отгрузка 3–5 дней", stock: "4 шт. в наличии", cta: "В корзину" },
@@ -5180,6 +5248,7 @@ class Component extends DCLogic {
         ]
       },
       photo: {
+        image: "url(img/nameplate-phone.jpg) center/cover no-repeat",
         heading: "Поиск оборудования по фото шильдика",
         intro: "Шильдик — металлическая табличка на корпусе оборудования с моделью, артикулом, серийным номером и основными параметрами. Сфотографируйте её, и система распознает данные, найдёт позицию в базе и предложит точное совпадение либо аналоги с близкими характеристиками.",
         paras: [
@@ -5262,7 +5331,8 @@ class Component extends DCLogic {
           staffUser: isVend ? "ООО «Гидромаш»" : "Петров А. · админ",
           staffInitials: isVend ? "ГМ" : "ПА",
           staffNav: (isVend ? navVend : navOps).map(([t, id]) => ({ t, go: this.go(id),
-            style: "font-size:13px;padding:6px 10px;text-decoration:none;" + (id === cur ? "background:var(--color-accent-700);color:#fff" : "color:var(--color-neutral-300)") })),
+            icon: ({ crm: "i-op-crm", client: "i-op-client", autopilot: "i-op-autopilot", voice: "i-op-voice", logistics: "i-op-logistics", incident: "i-op-errors", unit: "i-op-economy", roles: "i-op-roles", admin: "i-op-admin" })[id] || "",
+            style: "display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:6px 10px;text-decoration:none;" + (id === cur ? "background:var(--color-accent-700);color:#fff" : "color:var(--color-neutral-300)") })),
           loginLabel: buyer ? "ООО «Метизный завод»" : "Войти",
           goAuthOrAccount: this.go(buyer ? "account" : "auth")
         };
@@ -5330,10 +5400,10 @@ class Component extends DCLogic {
         { v: "11", k: "срывов предупреждено заранее", color: "var(--color-text)" }
       ],
       logOptions: [
-        { name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Перевозчик 1", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
-        { name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "Перевозчики 3 и 2", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
-        { name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Перевозчик 1", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
-        { name: "Самовывоз с терминала", scheme: "клиент забирает в Туле", carrier: "—", term: "3 дня", cost: "0 ₽", pick: "Предложено клиенту", tagClass: "tag-neutral" }
+        { icon: "i-log-consolidated", name: "Сборный груз", scheme: "Гидромаш и ПромАрматура → терминал Москва → Тула", carrier: "Перевозчик 1", term: "3 дня", cost: "4 200 ₽", pick: "Выбрано", tagClass: "tag-accent" },
+        { icon: "i-log-direct", name: "Прямые отгрузки", scheme: "каждый поставщик своим рейсом", carrier: "Перевозчики 3 и 2", term: "2 и 4 дня", cost: "2 300 ₽", pick: "Дешевле, но 2 приёмки", tagClass: "tag-outline" },
+        { icon: "i-log-urgent", name: "Срочная доставка", scheme: "сборный груз, ускоренный рейс", carrier: "Перевозчик 1", term: "1 день", cost: "9 800 ₽", pick: "Не требовалось", tagClass: "tag-neutral" },
+        { icon: "i-log-pickup", name: "Самовывоз с терминала", scheme: "клиент забирает в Туле", carrier: "—", term: "3 дня", cost: "0 ₽", pick: "Предложено клиенту", tagClass: "tag-neutral" }
       ],
       logCarriers: [
         { name: "Перевозчик 1", zone: "вся РФ, габарит", term: "2–5 дней", otd: "95,2%", color: "var(--color-neutral-700)", share: "42%" },
@@ -5350,17 +5420,17 @@ class Component extends DCLogic {
         { n: "05", t: "Понижает рейтинг перевозчика", d: "при срыве не по вине поставщика; ниже 90% — исключение из срочных" }
       ],
       vendorTiers: [
-        { kicker: "Прайс файлом", name: "Базовое", who: "Небольшой поставщик или перекупщик: прайс в Excel, остатки обновляются вручную.", bar: "var(--color-neutral-400)", btnClass: "btn-secondary", cta: "Подключить", rows: [
+        { icon: "i-tier-file", kicker: "Прайс файлом", name: "Базовое", who: "Небольшой поставщик или перекупщик: прайс в Excel, остатки обновляются вручную.", bar: "var(--color-neutral-400)", btnClass: "btn-secondary", cta: "Подключить", rows: [
           { k: "Стоимость размещения", v: "0 ₽" }, { k: "Обновление прайса", v: "Excel, раз в сутки" },
           { k: "Остатки", v: "по факту заявки" }, { k: "Расчёт после отгрузки", v: "до 7 дней" },
           { k: "Приоритет в подборе", v: "ниже при равной цене" }, { k: "Заявки", v: "письмом и в кабинет" }
         ] },
-        { kicker: "Автоматический обмен", name: "Стандарт", who: "Дистрибьютор со складом: XML или YML, остатки и цены обновляются без участия людей.", bar: "var(--color-accent)", btnClass: "btn-primary", cta: "Подключить прайс", rows: [
+        { icon: "i-tier-sync", kicker: "Автоматический обмен", name: "Стандарт", who: "Дистрибьютор со складом: XML или YML, остатки и цены обновляются без участия людей.", bar: "var(--color-accent)", btnClass: "btn-primary", cta: "Подключить прайс", rows: [
           { k: "Стоимость размещения", v: "0 ₽" }, { k: "Обновление прайса", v: "XML/YML, каждые 4 часа" },
           { k: "Остатки", v: "из фида, с историей точности" }, { k: "Расчёт после отгрузки", v: "до 5 дней" },
           { k: "Приоритет в подборе", v: "по цене, остатку и рейтингу" }, { k: "Заявки", v: "API + MAX, готовыми" }
         ] },
-        { kicker: "Глубокая интеграция", name: "Партнёр", who: "Производитель или крупный дистрибьютор: API и обмен с 1С, резерв в реальном времени.", bar: "var(--color-accent-900)", btnClass: "btn-secondary", cta: "Обсудить условия", rows: [
+        { icon: "i-tier-api", kicker: "Глубокая интеграция", name: "Партнёр", who: "Производитель или крупный дистрибьютор: API и обмен с 1С, резерв в реальном времени.", bar: "var(--color-accent-900)", btnClass: "btn-secondary", cta: "Обсудить условия", rows: [
           { k: "Стоимость размещения", v: "0 ₽" }, { k: "Обновление прайса", v: "REST API, реальное время" },
           { k: "Остатки", v: "резерв напрямую в вашей системе" }, { k: "Расчёт после отгрузки", v: "до 3 дней" },
           { k: "Приоритет в подборе", v: "плюс к рейтингу за точность" }, { k: "Заявки", v: "прямо в 1С и WMS" }
@@ -5503,7 +5573,9 @@ class Component extends DCLogic {
           { channel: "Почта", age: "2 дня", title: "INNOVERT VR 15 × 4", last: "Робот: передано поставщику, трек ожидается", sum: "249 200 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" },
           { channel: "MAX", age: "3 дня", title: "Манжеты и прокладки, ЗИП", last: "Робот: отгружено, УПД отправлено по ЭДО", sum: "27 000 ₽", owner: "робот", tagClass: "tag-accent", bar: "var(--color-accent)" }
         ] }
-      ],
+      ].map(col => ({ ...col, deals: col.deals.map(d => ({ ...d,
+        chIcon: ({ "MAX": "i-channel-max", "Почта": "i-channel-mail", "Сайт": "i-channel-web", "Телефон": "i-channel-phone" })[d.channel] || "",
+        botIcon: d.owner === "робот" ? "i-op-autopilot" : "" })) })),
       crmTimeline: [
         { time: "10:02", dot: "var(--color-neutral-400)", who: "Клиент · почта", action: "входящее", text: "«Добрый день, нужен такой же насос или аналог, фото таблички во вложении. Срочно, линия стоит.»" },
         { time: "10:02", dot: "var(--color-accent)", who: "Робот", action: "распознал шильдик", text: "Grundfos CR 32-4 A-F-A-E-HQQE, артикул 96122802, уверенность 94%. Найдено в каталоге, 8 шт. в наличии. Слова «срочно» и «линия стоит» — приоритет поднят." },
@@ -5621,18 +5693,18 @@ class Component extends DCLogic {
         { event: "Срок оплаты по отсрочке", note: "напоминание о платеже", max: true, mail: true, sms: true, when: "за 3 дня" }
       ],
       states: [
-        { label: "Корзина", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M3 4h2l2.4 11h10.2L20 7H6.2'/%3E%3Ccircle cx='9' cy='19' r='1.5'/%3E%3Ccircle cx='17' cy='19' r='1.5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "В корзине пока ничего нет", text: "Найдите позицию по артикулу, сфотографируйте шильдик или загрузите заявку списком — соберём спецификацию за вас.", cta: "Загрузить заявку", alt: "Открыть каталог", go: this.go("upload"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
-        { label: "Новый кабинет", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Здесь появится история закупок", text: "После первого заказа мы посчитаем периодичность по каждой позиции и будем напоминать о повторной закупке.", cta: "Найти оборудование", alt: "Подобрать в чате", go: this.go("catalog"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
-        { label: "Ошибка синхронизации", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M4.5 12a7.5 7.5 0 0 1 13-5.1L20 9M20 4v5h-5M19.5 12a7.5 7.5 0 0 1-13 5.1L4 15m0 5v-5h5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Фид поставщика недоступен", text: "«Подшипник-Трейд»: 12 строк с ошибкой формата, последняя удачная выгрузка 4 часа назад. Позиции показываются по прошлым данным и помечены как требующие проверки.", cta: "Повторить выгрузку", alt: "Открыть журнал", go: this.go("admin"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
-        { label: "Отсрочка отклонена", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='5' y='10.5' width='14' height='10'/%3E%3Cpath d='M8 10.5V7.5a4 4 0 0 1 8 0v3M12 14.5v2.5'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Лимит пока не открыт", text: "Компания зарегистрирована меньше года, истории закупок недостаточно. Работаем по счёту или с частичным авансом; повторная проверка — после трёх закрытых сделок.", cta: "Оформить по счёту", alt: "Спросить в чате", go: this.go("cart"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
-        { label: "Нет связи", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Cpath d='M2.5 8.5a14 14 0 0 1 19 0M5.5 12a9.5 9.5 0 0 1 13 0M8.8 15.4a5 5 0 0 1 6.4 0'/%3E%3Ccircle cx='12' cy='19' r='1'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Соединение потеряно", text: "Черновик заявки сохранён локально. Как только связь появится, спецификация отправится сама — повторять ввод не нужно.", cta: "Повторить", alt: "Сохранить в файл", go: this.go("upload"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-neutral-600)" },
-        { label: "Позиция снята", icon: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6'%3E%3Crect x='3.5' y='4' width='17' height='5'/%3E%3Cpath d='M5 9v11h14V9M10 15l4-4m0 4-4-4'/%3E%3C/svg%3E\") center/contain no-repeat", title: "Модель снята с производства", text: "Grundfos CR 32-4-2 (выпуск до 2019) больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
+        { label: "Корзина", icon: "i-ui-cart", title: "В корзине пока ничего нет", text: "Найдите позицию по артикулу, сфотографируйте шильдик или загрузите заявку списком — соберём спецификацию за вас.", cta: "Загрузить заявку", alt: "Открыть каталог", go: this.go("upload"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
+        { label: "Новый кабинет", icon: "i-ui-history", title: "Здесь появится история закупок", text: "После первого заказа мы посчитаем периодичность по каждой позиции и будем напоминать о повторной закупке.", cta: "Найти оборудование", alt: "Подобрать в чате", go: this.go("catalog"), align: "center", iconAlign: "center", justify: "center", iconColor: "var(--color-accent)" },
+        { label: "Ошибка синхронизации", icon: "i-state-sync-error", title: "Фид поставщика недоступен", text: "«Подшипник-Трейд»: 12 строк с ошибкой формата, последняя удачная выгрузка 4 часа назад. Позиции показываются по прошлым данным и помечены как требующие проверки.", cta: "Повторить выгрузку", alt: "Открыть журнал", go: this.go("admin"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
+        { label: "Отсрочка отклонена", icon: "i-state-deferral-denied", title: "Лимит пока не открыт", text: "Компания зарегистрирована меньше года, истории закупок недостаточно. Работаем по счёту или с частичным авансом; повторная проверка — после трёх закрытых сделок.", cta: "Оформить по счёту", alt: "Спросить в чате", go: this.go("cart"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent-700)" },
+        { label: "Нет связи", icon: "i-state-offline", title: "Соединение потеряно", text: "Черновик заявки сохранён локально. Как только связь появится, спецификация отправится сама — повторять ввод не нужно.", cta: "Повторить", alt: "Сохранить в файл", go: this.go("upload"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-neutral-600)" },
+        { label: "Позиция снята", icon: "i-state-discontinued", title: "Модель снята с производства", text: "Grundfos CR 32-4-2 (выпуск до 2019) больше не поставляется. Подобрали две замены по рабочей точке и присоединительным размерам.", cta: "Показать замены", alt: "Спросить инженера", go: this.go("compare"), align: "left", iconAlign: "flex-start", justify: "flex-start", iconColor: "var(--color-accent)" }
       ],
       warrantyCases: [
-        { kicker: "12–36 мес. — по карточке", title: "Гарантия", text: "Срок указан в карточке. Обращение оформляется в кабинете, переписку с заводом ведёт сервис." },
-        { kicker: "14 дней", title: "Возврат без причины", text: "Для неустановленного оборудования в заводской упаковке с полным комплектом документов." },
-        { kicker: "при приёмке", title: "Недостача и бой", text: "Фиксируется в транспортной накладной. Замена или возврат денег в течение трёх дней." },
-        { kicker: "под заказ", title: "Что не возвращается", text: "Позиции, изготовленные или собранные под ваш проект, и оборудование с монтажом." }
+        { kicker: "12–36 мес. — по карточке", icon: "i-warranty-maker", title: "Гарантия", text: "Срок указан в карточке. Обращение оформляется в кабинете, переписку с заводом ведёт сервис." },
+        { kicker: "14 дней", icon: "i-warranty-return", title: "Возврат без причины", text: "Для неустановленного оборудования в заводской упаковке с полным комплектом документов." },
+        { kicker: "при приёмке", icon: "i-warranty-damage", title: "Недостача и бой", text: "Фиксируется в транспортной накладной. Замена или возврат денег в течение трёх дней." },
+        { kicker: "под заказ", icon: "i-warranty-excluded", title: "Что не возвращается", text: "Позиции, изготовленные или собранные под ваш проект, и оборудование с монтажом." }
       ],
       warrantyRows: [
         { a: "Недостача или бой при приёмке", b: "отметка в накладной, фото", c: "15 минут", d: "3 дня" },
@@ -5652,24 +5724,24 @@ class Component extends DCLogic {
         { v: "2 часа", k: "предварительный расчёт" },
         { v: "до 6 дней", k: "полное КП с монтажом" },
         { v: "14 дней", k: "срок действия цены" },
-        { v: "до 45%", k: "аванс по графику проекта" }
+        { icon: "i-pay-stages", v: "до 45%", k: "аванс по графику проекта" }
       ],
       projectKits: [
-        { kicker: "Водоснабжение", title: "Насосная станция повышения давления", text: "Насосы, шкаф управления с частотниками, мембранные баки, арматура, датчики, монтажная рама.", from: "от 640 000 ₽" },
-        { kicker: "Пневмосеть", title: "Компрессорная станция", text: "Винтовой компрессор, ресивер, осушитель, фильтры, магистраль, автоматика и ПНР.", from: "от 1 280 000 ₽" },
-        { kicker: "Теплоснабжение", title: "ИТП с автоматикой", text: "Теплообменники, циркуляционные насосы, регуляторы, КИПиА, щит управления.", from: "от 890 000 ₽" },
-        { kicker: "Водоподготовка", title: "Комплекс водоподготовки", text: "Фильтрация, умягчение, обратный осмос, дозирование реагентов, накопительные ёмкости.", from: "от 684 000 ₽" }
+        { photo: "url(img/dir-pumps.jpg) center/cover no-repeat", kicker: "Водоснабжение", title: "Насосная станция повышения давления", text: "Насосы, шкаф управления с частотниками, мембранные баки, арматура, датчики, монтажная рама.", from: "от 640 000 ₽" },
+        { photo: "url(img/a-compressor.jpg) center/cover no-repeat", kicker: "Пневмосеть", title: "Компрессорная станция", text: "Винтовой компрессор, ресивер, осушитель, фильтры, магистраль, автоматика и ПНР.", from: "от 1 280 000 ₽" },
+        { photo: "url(img/a-hex.jpg) center/cover no-repeat", kicker: "Теплоснабжение", title: "ИТП с автоматикой", text: "Теплообменники, циркуляционные насосы, регуляторы, КИПиА, щит управления.", from: "от 890 000 ₽" },
+        { photo: "url(img/a-water.jpg) center/cover no-repeat", kicker: "Водоподготовка", title: "Комплекс водоподготовки", text: "Фильтрация, умягчение, обратный осмос, дозирование реагентов, накопительные ёмкости.", from: "от 684 000 ₽" }
       ],
       projectSteps: [
-        { a: "01 · Запрос", b: "принимает спецификацию или опросный лист", c: "2 часа", d: "—" },
-        { a: "02 · Инженерный подбор", b: "проверяет рабочие точки, подбирает комплект", c: "1–3 дня", d: "—" },
+        { icon: "i-step-request", a: "01 · Запрос", b: "принимает спецификацию или опросный лист", c: "2 часа", d: "—" },
+        { icon: "i-quote-engineering", a: "02 · Инженерный подбор", b: "проверяет рабочие точки, подбирает комплект", c: "1–3 дня", d: "—" },
         { a: "03 · КП и согласование", b: "расчёт с доставкой, монтажом и ПНР", c: "3 дня", d: "—" },
         { a: "04 · Поставка", b: "контроль сроков по каждому поставщику", c: "по графику", d: "аванс 30–45%" },
-        { a: "05 · Монтаж и ПНР", b: "подрядчик в регионе, акты и документы", c: "по объекту", d: "остаток после ПНР" }
+        { icon: "i-quote-install", a: "05 · Монтаж и ПНР", b: "подрядчик в регионе, акты и документы", c: "по объекту", d: "остаток после ПНР" }
       ],
       brandStats: [
         { v: "1 440", k: "моделей в каталоге" },
-        { v: "24 мес.", k: "гарантия (условия поставщика)" },
+        { icon: "i-warranty-maker", v: "24 мес.", k: "гарантия (условия поставщика)" },
         { v: "1–3 дня", k: "отгрузка запчастей" },
         { v: "214", k: "позиций в наличии сегодня" }
       ],
@@ -5688,18 +5760,18 @@ class Component extends DCLogic {
         { v: "74%", k: "заявок без оператора" }
       ],
       aboutSteps: [
-        { n: "01", t: "Заявка", d: "Каталог, чат, фото шильдика, заявка списком или письмо — любой удобный вход." },
-        { n: "02", t: "Подбор поставщика", d: "Система сравнивает прайсы по цене, остатку и сроку: цена 45%, наличие 25%, срок 20%, рейтинг 10%." },
-        { n: "03", t: "Одна цена", d: "Вы видите итоговую стоимость с НДС и доставкой. До 500 000 ₽ — сразу корзина, выше — КП за два часа." },
-        { n: "04", t: "Сделка", d: "Счёт за 15 минут, оплата по счёту, картой или в отсрочку до 30 дней, документы в кабинете и по ЭДО." },
-        { n: "05", t: "Прямая отгрузка", d: "Поставщик отгружает со своего склада на ваш адрес. Статус и трек — в заказе и в MAX." }
+        { icon: "i-step-request", entries: [{ icon: "i-entry-catalog", t: "Каталог" }, { icon: "i-entry-chat", t: "Чат" }, { icon: "i-entry-photo", t: "Фото шильдика" }, { icon: "i-entry-list", t: "Заявка списком" }, { icon: "i-channel-mail", t: "Письмо" }], n: "01", t: "Заявка", d: "Каталог, чат, фото шильдика, заявка списком или письмо — любой удобный вход." },
+        { icon: "i-step-supplier-pick", entries: [], n: "02", t: "Подбор поставщика", d: "Система сравнивает прайсы по цене, остатку и сроку: цена 45%, наличие 25%, срок 20%, рейтинг 10%." },
+        { icon: "i-step-one-price", entries: [], n: "03", t: "Одна цена", d: "Вы видите итоговую стоимость с НДС и доставкой. До 500 000 ₽ — сразу корзина, выше — КП за два часа." },
+        { icon: "i-step-deal", entries: [], n: "04", t: "Сделка", d: "Счёт за 15 минут, оплата по счёту, картой или в отсрочку до 30 дней, документы в кабинете и по ЭДО." },
+        { icon: "i-step-direct-ship", entries: [], n: "05", t: "Прямая отгрузка", d: "Поставщик отгружает со своего склада на ваш адрес. Статус и трек — в заказе и в MAX." }
       ],
       authPerks: [
-        "Счёт на юрлицо за 15 минут и закрывающие документы в кабинете и по ЭДО.",
-        "Отсрочка платежа до 30 дней после проверки контрагента.",
-        "История закупок с периодичностью и повтором заказа одной кнопкой.",
-        "Сохранённые спецификации и шаблоны заявок для регулярной номенклатуры.",
-        "Согласование заявок внутри компании: цех, бюджет, закупка с ролями и лимитами."
+        { icon: "i-pay-invoice", t: "Счёт на юрлицо за 15 минут и закрывающие документы в кабинете и по ЭДО." },
+        { icon: "i-pay-deferral", t: "Отсрочка платежа до 30 дней после проверки контрагента." },
+        { icon: "i-ui-history", t: "История закупок с периодичностью и повтором заказа одной кнопкой." },
+        { icon: "i-ui-specs", t: "Сохранённые спецификации и шаблоны заявок для регулярной номенклатуры." },
+        { icon: "i-ui-approval", t: "Согласование заявок внутри компании: цех, бюджет, закупка с ролями и лимитами." }
       ],
       mobileRepeat: [
         { name: "Подшипник SKF 6205-2RS", meta: "200 шт. · 9 сентября · 540 ₽/шт." },
@@ -5719,9 +5791,9 @@ class Component extends DCLogic {
         { who: "Робот", text: "«Оформляю. Счёт придёт в MAX за 15 минут, резерв поставил. Добавить ответные фланцы?»", bar: "var(--color-accent)" }
       ],
       mobileCatalog: [
-        { bg: "url(img/p-cr32.jpg) center/cover no-repeat", sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
-        { bg: "url(img/p-nis80.jpg) center/cover no-repeat", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
-        { bg: "url(img/p-lgcy75.jpg) center/cover no-repeat", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 8 шт.", price: "104 900 ₽", cta: "В корзину" },
+        { bg: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", sku: "WL-CNP-2-80", name: "CNP NIS 80-65-160", spec: "50 м³/ч · 32 м · 12 шт.", price: "96 200 ₽", cta: "В корзину" },
+        { bg: "url(img/p-lgcy75.jpg) center/contain no-repeat #6a6663", sku: "KSN-LGCY-75", name: "Kaishan LGCY-75", spec: "75 кВт · 10 бар · под заказ", price: "по запросу", cta: "Запрос КП" }
       ],
       mobileCart: [
         { name: "Grundfos CR 32-4", qty: "2 шт. × 104 900 ₽", sum: "209 800 ₽" },
@@ -5729,10 +5801,10 @@ class Component extends DCLogic {
         { name: "INNOVERT VR 15 кВт", qty: "1 шт. × 62 300 ₽", sum: "62 300 ₽" }
       ],
       mobileTabbar: [
-        { t: "Главная", fill: "var(--color-accent)", color: "var(--color-text)" },
-        { t: "Каталог", fill: "transparent", color: "var(--color-neutral-700)" },
-        { t: "Чат", fill: "transparent", color: "var(--color-neutral-700)" },
-        { t: "Заказы", fill: "transparent", color: "var(--color-neutral-700)" }
+        { icon: "i-ui-home", iconColor: "var(--color-accent-700)", t: "Главная", fill: "var(--color-accent)", color: "var(--color-text)" },
+        { icon: "i-entry-catalog", iconColor: "var(--color-neutral-600)", t: "Каталог", fill: "transparent", color: "var(--color-neutral-700)" },
+        { icon: "i-entry-chat", iconColor: "var(--color-neutral-600)", t: "Чат", fill: "transparent", color: "var(--color-neutral-700)" },
+        { icon: "i-ui-orders", iconColor: "var(--color-neutral-600)", t: "Заказы", fill: "transparent", color: "var(--color-neutral-700)" }
       ],
       mobileChat: [
         { text: "Нужен насос 40 м³/ч, напор 35 м, вода до +60 °C", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff" },
@@ -5809,23 +5881,23 @@ class Component extends DCLogic {
         "Мотор-редукторы берут по ремонту: предложить ЗИП-комплект на складе под их типоразмер."
       ],
       orderSteps: [
-        { date: "12 сент", t: "Оформлен", d: "счёт выставлен, 15 минут", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "12 сент", t: "Счёт принят · отсрочка", d: "оплата до 15 октября", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "13 сент", t: "Передан поставщикам", d: "Гидромаш и ПромАрматура, подтверждено", color: "var(--color-text)", bar: "var(--color-accent)" },
-        { date: "15 сент", t: "Отгружен", d: "сборный груз, 2 отгрузки · трек 4512 8890 3341", color: "var(--color-accent-700)", bar: "var(--color-accent)" },
-        { date: "18 сент", t: "Доставка", d: "терминал Тула, ожидается", color: "var(--color-neutral-700)", bar: "var(--color-neutral-300)" }
+        { icon: "i-order-created", date: "12 сент", t: "Оформлен", d: "счёт выставлен, 15 минут", color: "var(--color-text)", bar: "var(--color-accent)" },
+        { icon: "i-order-paid", date: "12 сент", t: "Счёт принят · отсрочка", d: "оплата до 15 октября", color: "var(--color-text)", bar: "var(--color-accent)" },
+        { icon: "i-order-handed", date: "13 сент", t: "Передан поставщикам", d: "Гидромаш и ПромАрматура, подтверждено", color: "var(--color-text)", bar: "var(--color-accent)" },
+        { icon: "i-order-shipped", date: "15 сент", t: "Отгружен", d: "сборный груз, 2 отгрузки · трек 4512 8890 3341", color: "var(--color-accent-700)", bar: "var(--color-accent)" },
+        { icon: "i-order-delivery", date: "18 сент", t: "Доставка", d: "терминал Тула, ожидается", color: "var(--color-neutral-700)", bar: "var(--color-neutral-300)" }
       ],
       orderItems: [
-        { name: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", vendor: "Гидромаш", sum: "209 800 ₽" },
-        { name: "Обратный клапан DN65 PN16", sku: "ARM-OK-65", qty: "2", vendor: "ПромАрматура", sum: "8 400 ₽" },
-        { name: "Комплект прокладок DN65", sku: "PRK-65-SET", qty: "1", vendor: "Гидромаш", sum: "4 400 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4 A-F-A-E-HQQE", sku: "96122802", qty: "2", vendor: "Гидромаш", sum: "209 800 ₽" },
+        { bg: "url(img/p-check-valve.jpg) center/cover no-repeat", name: "Обратный клапан DN65 PN16", sku: "ARM-OK-65", qty: "2", vendor: "ПромАрматура", sum: "8 400 ₽" },
+        { bg: "url(img/p-gasket-kit.jpg) center/cover no-repeat", name: "Комплект прокладок DN65", sku: "PRK-65-SET", qty: "1", vendor: "Гидромаш", sum: "4 400 ₽" }
       ],
       orderDocs: [
-        { t: "Счёт на оплату", when: "12 сентября" },
-        { t: "Счёт-договор", when: "12 сентября" },
-        { t: "УПД и счёт-фактура", when: "15 сентября" },
-        { t: "Транспортная накладная", when: "15 сентября" },
-        { t: "Паспорта и сертификаты", when: "с грузом" }
+        { icon: "i-doc-generic", t: "Счёт на оплату", when: "12 сентября" },
+        { icon: "i-doc-generic", t: "Счёт-договор", when: "12 сентября" },
+        { icon: "i-doc-generic", t: "УПД и счёт-фактура", when: "15 сентября" },
+        { icon: "i-doc-generic", t: "Транспортная накладная", when: "15 сентября" },
+        { icon: "i-doc-certificates", t: "Паспорта и сертификаты", when: "с грузом" }
       ],
       goHome: this.go("homeB"), goAccount: this.go("account"), goVendor: this.go("vendor"),
       headerNav: [
@@ -5860,10 +5932,10 @@ class Component extends DCLogic {
         { row: "Шланг 3/4 20 м", problem: "Найдено 46 позиций. Уточните давление и материал армирования.", a1: "Показать варианты", a2: "Удалить строку" }
       ],
       paymentWays: [
-        { kicker: "Основной способ", title: "Счёт для юрлиц и ИП", text: "Счёт приходит на почту в течение 15 минут после оформления. Отгрузка — после поступления оплаты или по факту, если есть отсрочка." },
-        { kicker: "Быстрая покупка", title: "Оплата картой", text: "Для позиций до 500 000 ₽. Чек и УПД формируются автоматически и появляются в кабинете." },
-        { kicker: "Для постоянных клиентов", title: "Отсрочка до 30 дней", text: "Лимит открывается после проверки контрагента и виден в кабинете. Первая сделка — по предоплате." },
-        { kicker: "Проектные поставки", title: "Поэтапная оплата", text: "Аванс, оплата по готовности и остаток после пусконаладки — график согласуется в КП." }
+        { icon: "i-pay-invoice", kicker: "Основной способ", title: "Счёт для юрлиц и ИП", text: "Счёт приходит на почту в течение 15 минут после оформления. Отгрузка — после поступления оплаты или по факту, если есть отсрочка." },
+        { icon: "i-pay-card", kicker: "Быстрая покупка", title: "Оплата картой", text: "Для позиций до 500 000 ₽. Чек и УПД формируются автоматически и появляются в кабинете." },
+        { icon: "i-pay-deferral", kicker: "Для постоянных клиентов", title: "Отсрочка до 30 дней", text: "Лимит открывается после проверки контрагента и виден в кабинете. Первая сделка — по предоплате." },
+        { icon: "i-pay-stages", kicker: "Проектные поставки", title: "Поэтапная оплата", text: "Аванс, оплата по готовности и остаток после пусконаладки — график согласуется в КП." }
       ],
       deliveryRows: [
         { a: "Москва и МО", b: "1–2 дня", c: "включена", d: "до подъезда или ворот" },
@@ -5873,17 +5945,17 @@ class Component extends DCLogic {
         { a: "Дальний Восток и Крайний Север", b: "9–21 день", c: "по расчёту", d: "терминал" }
       ],
       docsList: [
-        { t: "Счёт на оплату", when: "15 минут" },
-        { t: "Договор поставки или счёт-договор", when: "1 день" },
-        { t: "УПД или ТОРГ-12 и счёт-фактура", when: "при отгрузке" },
-        { t: "Транспортная накладная", when: "при отгрузке" },
-        { t: "Паспорта, сертификаты, гарантийные талоны", when: "с грузом и в кабинете" }
+        { icon: "i-doc-generic", t: "Счёт на оплату", when: "15 минут" },
+        { icon: "i-doc-generic", t: "Договор поставки или счёт-договор", when: "1 день" },
+        { icon: "i-doc-generic", t: "УПД или ТОРГ-12 и счёт-фактура", when: "при отгрузке" },
+        { icon: "i-doc-generic", t: "Транспортная накладная", when: "при отгрузке" },
+        { icon: "i-doc-certificates", t: "Паспорта, сертификаты, гарантийные талоны", when: "с грузом и в кабинете" }
       ],
       emptyActions: [
-        { t: "Поиск по фото шильдика", d: "Снимите табличку на оборудовании — система найдёт модель по артикулу.", cta: "Загрузить фото", go: this.go("photo") },
-        { t: "Подбор в умном чате", d: "Опишите задачу параметрами: расход, напор, среда — чат подберёт три варианта.", cta: "Открыть чат", go: this.go("chat") },
-        { t: "Заявка списком", d: "Загрузите XLSX из заявки цеха — мы сопоставим строки с артикулами.", cta: "Загрузить файл", go: this.go("upload") },
-        { t: "Запрос инженеру", d: "Нестандартная позиция или изделие по чертежу — ответ в течение двух часов.", cta: "Отправить запрос", go: this.go("quote") }
+        { icon: "i-entry-photo", hasPh: true, t: "Поиск по фото шильдика", d: "Снимите табличку на оборудовании — система найдёт модель по артикулу.", cta: "Загрузить фото", go: this.go("photo") },
+        { icon: "i-entry-chat", hasPh: false, t: "Подбор в умном чате", d: "Опишите задачу параметрами: расход, напор, среда — чат подберёт три варианта.", cta: "Открыть чат", go: this.go("chat") },
+        { icon: "i-entry-list", hasPh: false, t: "Заявка списком", d: "Загрузите XLSX из заявки цеха — мы сопоставим строки с артикулами.", cta: "Загрузить файл", go: this.go("upload") },
+        { icon: "i-engineer", hasPh: false, t: "Запрос инженеру", d: "Нестандартная позиция или изделие по чертежу — ответ в течение двух часов.", cta: "Отправить запрос", go: this.go("quote") }
       ],
       emptySuggest: [
         { name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", stock: "8 шт. в наличии", price: "104 900 ₽" },
@@ -5920,10 +5992,10 @@ class Component extends DCLogic {
         { section: "Сравнение · Насосы", title: "Нержавейка или чугун: где экономия мнимая", meta: "1 сентября · 6 мин" }
       ],
       compareModels: [
-        { name: "CNP CDLF 42-30", sku: "CNP-CDLF-42-30", price: "74 800 ₽", cta: "В корзину", open: this.go("product") },
-        { name: "Wilo Helix V 4204", sku: "4198470", price: "96 300 ₽", cta: "В корзину", open: this.go("product") },
-        { name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
-        { name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30", sku: "CNP-CDLF-42-30", price: "74 800 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Wilo Helix V 4204", sku: "4198470", price: "96 300 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 45-3", sku: "96122804", price: "156 700 ₽", cta: "В корзину", open: this.go("product") },
+        { bg: "url(img/p-nis80.jpg) center/contain no-repeat #bdb8b3", name: "Ebara 3M 65-160", sku: "3M65-160", price: "84 100 ₽", cta: "Запросить КП", open: this.go("quote") }
       ],
       compareRows: [
         { k: "Подача в точке, м³/ч", cells: [{ v: "40", weight: "600", color: "var(--color-text)" }, { v: "42", weight: "400", color: "var(--color-text)" }, { v: "45", weight: "400", color: "var(--color-text)" }, { v: "33 · не проходит по точке", weight: "400", color: "#b3261e" }] },
@@ -5945,8 +6017,8 @@ class Component extends DCLogic {
         { sku: "VBR-M12", name: "Виброопора М12", price: "650", stock: "—", lead: "—", source: "XML фид", status: "Ошибка формата", tagClass: "tag-outline", check: "transparent" }
       ],
       vendorNav: [
-        { t: "Заявки", c: "1" }, { t: "Прайс и остатки", c: "12 480" }, { t: "Отгрузки", c: "4" },
-        { t: "Расчёты", c: "2" }, { t: "Направления", c: "4" }, { t: "Договор и реквизиты", c: "" }
+        { icon: "i-orders-inbox", t: "Заявки", c: "1" }, { icon: "i-vendor-price", t: "Прайс и остатки", c: "12 480" }, { icon: "i-vendor-shipments", t: "Отгрузки", c: "4" },
+        { icon: "i-payout", t: "Расчёты", c: "2" }, { icon: "i-vendor-directions", t: "Направления", c: "4" }, { icon: "i-ui-requisites", t: "Договор и реквизиты", c: "" }
       ],
       vendorStats: [
         { v: "1", k: "новая заявка" },
@@ -5999,9 +6071,9 @@ class Component extends DCLogic {
         { a: "более 35%", b: "Вне рабочей зоны", c: "более 20%", d: "Снижение вдвое и более" }
       ],
       articleProducts: [
-        { name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", price: "104 900 ₽" },
-        { name: "CNP CDLF 42-30", spec: "40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
-        { name: "INNOVERT VR 15 кВт", spec: "частотник · 380 В", price: "62 300 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", spec: "32 м³/ч · 46 м · 5,5 кВт", price: "104 900 ₽" },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30", spec: "40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", name: "INNOVERT VR 15 кВт", spec: "частотник · 380 В", price: "62 300 ₽" }
       ],
       contentQueue: [
         { topic: "Подбор насоса по рабочей точке", dir: "Насосы", key: "как подобрать насос · 4 800/мес", photos: "3", size: "8 400", status: "Опубликовано", tagClass: "tag-accent", action: "Открыть" },
@@ -6026,78 +6098,78 @@ class Component extends DCLogic {
       ],
       directionGroups: [
         {
-          n: "01", title: "Привод, электрика и КИПиА", audience: "заводы, сервисные компании, энергетики",
+          icon: "i-cluster-electric", photo: "url(img/a-vfd.jpg) center/cover no-repeat", n: "01", title: "Привод, электрика и КИПиА", audience: "заводы, сервисные компании, энергетики",
           items: [
-            { name: "Электродвигатели", sub: "асинхронные, взрывозащищённые, тормозные, специальные", count: "6 900" },
-            { name: "Частотники и автоматика", sub: "ПЛК, HMI, датчики, энкодеры, сервоприводы, шкафы управления", count: "2 310" },
-            { name: "КИПиА", sub: "датчики давления и температуры, расходомеры, уровнемеры", count: "4 180" },
-            { name: "Электротехника", sub: "автоматы, контакторы, реле, клеммы, шкафы", count: "9 640" },
-            { name: "Кабель и кабеленесущие системы", sub: "промышленный кабель, лотки, вводы", count: "3 520" },
-            { name: "ИБП и электропитание", sub: "промышленные UPS, стабилизаторы, аккумуляторные шкафы", count: "1 240" },
-            { name: "Дизель-генераторы", sub: "ДГУ, АВР, контейнерные станции", count: "610" },
-            { name: "Промышленное освещение", sub: "LED для цехов и складов, взрывозащищённые светильники", count: "2 070" },
-            { name: "Энергосбережение", sub: "компенсация реактивной мощности, мониторинг энергопотребления", count: "480" }
+            { icon: "i-dir-motors", name: "Электродвигатели", sub: "асинхронные, взрывозащищённые, тормозные, специальные", count: "6 900" },
+            { icon: "i-dir-vfd", name: "Частотники и автоматика", sub: "ПЛК, HMI, датчики, энкодеры, сервоприводы, шкафы управления", count: "2 310" },
+            { icon: "i-dir-kipia", name: "КИПиА", sub: "датчики давления и температуры, расходомеры, уровнемеры", count: "4 180" },
+            { icon: "i-dir-electrical", name: "Электротехника", sub: "автоматы, контакторы, реле, клеммы, шкафы", count: "9 640" },
+            { icon: "i-dir-cable", name: "Кабель и кабеленесущие системы", sub: "промышленный кабель, лотки, вводы", count: "3 520" },
+            { icon: "i-dir-ups", name: "ИБП и электропитание", sub: "промышленные UPS, стабилизаторы, аккумуляторные шкафы", count: "1 240" },
+            { icon: "i-dir-generators", name: "Дизель-генераторы", sub: "ДГУ, АВР, контейнерные станции", count: "610" },
+            { icon: "i-dir-lighting", name: "Промышленное освещение", sub: "LED для цехов и складов, взрывозащищённые светильники", count: "2 070" },
+            { icon: "i-dir-energy", name: "Энергосбережение", sub: "компенсация реактивной мощности, мониторинг энергопотребления", count: "480" }
           ]
         },
         {
-          n: "02", title: "Перекачка, трубопровод, вода", audience: "ЖКХ, водоканалы, производства, строительство",
+          icon: "i-cluster-pumping", photo: "url(img/dir-pumps.jpg) center/cover no-repeat", n: "02", title: "Перекачка, трубопровод, вода", audience: "ЖКХ, водоканалы, производства, строительство",
           items: [
-            { name: "Насосы", sub: "химические, пищевые, дренажные, дозировочные, циркуляционные", count: "4 218" },
-            { name: "Промышленная арматура", sub: "задвижки, клапаны, краны, затворы, электроприводы", count: "8 470" },
-            { name: "Гидравлика", sub: "насосы, распределители, РВД, гидроцилиндры", count: "5 130" },
-            { name: "Пневматика", sub: "цилиндры, клапаны, фитинги, подготовка воздуха", count: "3 120" },
-            { name: "Теплообменное оборудование", sub: "пластинчатые и кожухотрубные теплообменники", count: "1 060" },
-            { name: "Котельное оборудование", sub: "горелки, теплообменники, насосные группы, автоматика", count: "1 480" },
-            { name: "Водоподготовка", sub: "обратный осмос, фильтрация, умягчение, дозирование реагентов", count: "990" },
-            { name: "Очистные сооружения", sub: "локальные очистные, станции для предприятий", count: "320" },
-            { name: "Пожарное оборудование", sub: "насосные станции, автоматика, клапаны", count: "870" }
+            { icon: "i-dir-pumps", name: "Насосы", sub: "химические, пищевые, дренажные, дозировочные, циркуляционные", count: "4 218" },
+            { icon: "i-dir-valves", name: "Промышленная арматура", sub: "задвижки, клапаны, краны, затворы, электроприводы", count: "8 470" },
+            { icon: "i-dir-hydraulics", name: "Гидравлика", sub: "насосы, распределители, РВД, гидроцилиндры", count: "5 130" },
+            { icon: "i-dir-pneumatics", name: "Пневматика", sub: "цилиндры, клапаны, фитинги, подготовка воздуха", count: "3 120" },
+            { icon: "i-dir-heat-exchangers", name: "Теплообменное оборудование", sub: "пластинчатые и кожухотрубные теплообменники", count: "1 060" },
+            { icon: "i-dir-boilers", name: "Котельное оборудование", sub: "горелки, теплообменники, насосные группы, автоматика", count: "1 480" },
+            { icon: "i-dir-water", name: "Водоподготовка", sub: "обратный осмос, фильтрация, умягчение, дозирование реагентов", count: "990" },
+            { icon: "i-dir-sewage", name: "Очистные сооружения", sub: "локальные очистные, станции для предприятий", count: "320" },
+            { icon: "i-dir-fire", name: "Пожарное оборудование", sub: "насосные станции, автоматика, клапаны", count: "870" }
           ]
         },
         {
-          n: "03", title: "Воздух, климат и очистка", audience: "производства, пищевые производства, металлообработка",
+          icon: "i-cluster-air", photo: "url(img/a-compressor.jpg) center/cover no-repeat", n: "03", title: "Воздух, климат и очистка", audience: "производства, пищевые производства, металлообработка",
           items: [
-            { name: "Компрессоры", sub: "винтовые, поршневые, безмасляные, осушители, ресиверы", count: "1 940" },
-            { name: "Вентиляция и климат", sub: "вентиляторы, приточные установки, чиллеры, теплообменники", count: "2 040" },
-            { name: "Промышленный холод", sub: "рефрижераторы, холодильные установки, ККБ", count: "760" },
-            { name: "Промышленные фильтры", sub: "воздушные, масляные, гидравлические, аспирационные", count: "1 580" },
-            { name: "Пылеулавливание и аспирация", sub: "циклоны, фильтры, вытяжные установки", count: "640" },
-            { name: "Очистка воздуха и газов", sub: "скрубберы, фильтры, газоочистка", count: "280" },
-            { name: "Промышленные печи и сушильные камеры", sub: "термообработка, сушка, камеры полимеризации", count: "340" }
+            { icon: "i-dir-compressors", name: "Компрессоры", sub: "винтовые, поршневые, безмасляные, осушители, ресиверы", count: "1 940" },
+            { icon: "i-dir-ventilation", name: "Вентиляция и климат", sub: "вентиляторы, приточные установки, чиллеры, теплообменники", count: "2 040" },
+            { icon: "i-dir-cooling", name: "Промышленный холод", sub: "рефрижераторы, холодильные установки, ККБ", count: "760" },
+            { icon: "i-dir-filters", name: "Промышленные фильтры", sub: "воздушные, масляные, гидравлические, аспирационные", count: "1 580" },
+            { icon: "i-dir-dust", name: "Пылеулавливание и аспирация", sub: "циклоны, фильтры, вытяжные установки", count: "640" },
+            { icon: "i-dir-gas-cleaning", name: "Очистка воздуха и газов", sub: "скрубберы, фильтры, газоочистка", count: "280" },
+            { icon: "i-dir-furnaces", name: "Промышленные печи и сушильные камеры", sub: "термообработка, сушка, камеры полимеризации", count: "340" }
           ]
         },
         {
-          n: "04", title: "Механика, привод, запчасти", audience: "ремонтные службы, сервисные компании",
+          icon: "i-cluster-mechanics", photo: "url(img/cl-mechanics.jpg) center/cover no-repeat", n: "04", title: "Механика, привод, запчасти", audience: "ремонтные службы, сервисные компании",
           items: [
-            { name: "Редукторы и мотор-редукторы", sub: "цилиндрические, червячные, планетарные, мотор-редукторы, вариаторы", count: "3 480" },
-            { name: "Подшипники и комплектующие", sub: "подшипники, манжеты, сальники, ремни, цепи, муфты", count: "12 600" },
-            { name: "Запчасти для производства", sub: "ремкомплекты, уплотнения, расходники", count: "7 420" },
-            { name: "Конвейерное оборудование", sub: "ролики, ленты, мотор-барабаны, барабаны, цепи", count: "2 860" },
-            { name: "Подъёмное оборудование", sub: "тали, лебёдки, краны, электротельферы", count: "1 380" },
-            { name: "Промышленная химия", sub: "масла, смазки, очистители, СОЖ", count: "2 240" },
-            { name: "Оборудование для металлообработки", sub: "инструмент, оснастка, патроны", count: "6 310" },
-            { name: "Промышленный инструмент", sub: "пневмо-, электро-, гидроинструмент", count: "4 070" }
+            { icon: "i-dir-gearboxes", name: "Редукторы и мотор-редукторы", sub: "цилиндрические, червячные, планетарные, мотор-редукторы, вариаторы", count: "3 480" },
+            { icon: "i-dir-bearings", name: "Подшипники и комплектующие", sub: "подшипники, манжеты, сальники, ремни, цепи, муфты", count: "12 600" },
+            { icon: "i-dir-spares", name: "Запчасти для производства", sub: "ремкомплекты, уплотнения, расходники", count: "7 420" },
+            { icon: "i-dir-conveyors", name: "Конвейерное оборудование", sub: "ролики, ленты, мотор-барабаны, барабаны, цепи", count: "2 860" },
+            { icon: "i-dir-lifting", name: "Подъёмное оборудование", sub: "тали, лебёдки, краны, электротельферы", count: "1 380" },
+            { icon: "i-dir-chemistry", name: "Промышленная химия", sub: "масла, смазки, очистители, СОЖ", count: "2 240" },
+            { icon: "i-dir-metalworking", name: "Оборудование для металлообработки", sub: "инструмент, оснастка, патроны", count: "6 310" },
+            { icon: "i-dir-tools", name: "Промышленный инструмент", sub: "пневмо-, электро-, гидроинструмент", count: "4 070" }
           ]
         },
         {
-          n: "05", title: "Производство и обработка", audience: "машиностроение, металлообработка, лаборатории",
+          icon: "i-cluster-production", photo: "url(img/cl-production.jpg) center/cover no-repeat", n: "05", title: "Производство и обработка", audience: "машиностроение, металлообработка, лаборатории",
           items: [
-            { name: "Станки и ЧПУ", sub: "лазеры, токарные, фрезерные, листогибы", count: "890" },
-            { name: "Сварочное оборудование", sub: "полуавтоматы, плазма, TIG/MIG/MAG, расходники", count: "2 430" },
-            { name: "Промышленные роботы", sub: "манипуляторы, коботы, сварочные роботы", count: "210" },
-            { name: "Системы машинного зрения", sub: "камеры, датчики, контроль качества", count: "340" },
-            { name: "3D-печать для производства", sub: "промышленные принтеры, материалы", count: "180" },
-            { name: "Лабораторное оборудование", sub: "анализаторы, измерители, лабораторные насосы", count: "1 120" },
-            { name: "Сепараторы и центрифуги", sub: "пищевые производства, химия, нефтепродукты", count: "260" }
+            { icon: "i-dir-cnc", name: "Станки и ЧПУ", sub: "лазеры, токарные, фрезерные, листогибы", count: "890" },
+            { icon: "i-dir-welding", name: "Сварочное оборудование", sub: "полуавтоматы, плазма, TIG/MIG/MAG, расходники", count: "2 430" },
+            { icon: "i-dir-robots", name: "Промышленные роботы", sub: "манипуляторы, коботы, сварочные роботы", count: "210" },
+            { icon: "i-dir-vision", name: "Системы машинного зрения", sub: "камеры, датчики, контроль качества", count: "340" },
+            { icon: "i-dir-3d-print", name: "3D-печать для производства", sub: "промышленные принтеры, материалы", count: "180" },
+            { icon: "i-dir-lab", name: "Лабораторное оборудование", sub: "анализаторы, измерители, лабораторные насосы", count: "1 120" },
+            { icon: "i-dir-separators", name: "Сепараторы и центрифуги", sub: "пищевые производства, химия, нефтепродукты", count: "260" }
           ]
         },
         {
-          n: "06", title: "Логистика, упаковка, пищевые линии", audience: "склады, логистика, пищевые производства",
+          icon: "i-cluster-logistics", photo: "url(img/cl-logistics.jpg) center/cover no-repeat", n: "06", title: "Логистика, упаковка, пищевые линии", audience: "склады, логистика, пищевые производства",
           items: [
-            { name: "Складская техника", sub: "штабелёры, гидравлические тележки, погрузчики, комплектующие", count: "1 640" },
-            { name: "Упаковочное оборудование", sub: "стреппинг, термоусадка, этикетировщики", count: "980" },
-            { name: "Весовое оборудование", sub: "платформенные весы, дозаторы, чеквейеры", count: "720" },
-            { name: "Пищевое оборудование", sub: "насосы, мешалки, дозаторы, упаковочные линии", count: "1 310" },
-            { name: "Средства безопасности", sub: "газоанализаторы, СИЗ, промышленная сигнализация", count: "2 480" }
+            { icon: "i-dir-warehouse", name: "Складская техника", sub: "штабелёры, гидравлические тележки, погрузчики, комплектующие", count: "1 640" },
+            { icon: "i-dir-packaging", name: "Упаковочное оборудование", sub: "стреппинг, термоусадка, этикетировщики", count: "980" },
+            { icon: "i-dir-weighing", name: "Весовое оборудование", sub: "платформенные весы, дозаторы, чеквейеры", count: "720" },
+            { icon: "i-dir-food", name: "Пищевое оборудование", sub: "насосы, мешалки, дозаторы, упаковочные линии", count: "1 310" },
+            { icon: "i-dir-safety", name: "Средства безопасности", sub: "газоанализаторы, СИЗ, промышленная сигнализация", count: "2 480" }
           ]
         }
       ],
@@ -6107,9 +6179,9 @@ class Component extends DCLogic {
         { who: "Закупщик", text: "Вода техническая, фланец DN65 PN16.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Подобрал три варианта по рабочей точке 40 м³/ч / 35 м. Все в наличии, цены с доставкой:", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: true, hasActions: true,
           rows: [
-            { name: "CNP CDLF 42-30 · 40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
-            { name: "Wilo Helix V 4204 · 42 м³/ч · 38 м · 7,5 кВт", price: "96 300 ₽" },
-            { name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
+            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "CNP CDLF 42-30 · 40 м³/ч · 36 м · 7,5 кВт", price: "74 800 ₽" },
+            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Wilo Helix V 4204 · 42 м³/ч · 38 м · 7,5 кВт", price: "96 300 ₽" },
+            { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 45-3 · 45 м³/ч · 40 м · 7,5 кВт", price: "156 700 ₽" }
           ] },
         { who: "Закупщик", text: "Берём CNP, две штуки. И добавь обратные клапаны DN65 и виброопоры.", align: "flex-end", bg: "var(--color-accent-900)", border: "var(--color-accent-900)", color: "#fff", hasRows: false, hasActions: false },
         { who: "Чат", text: "Собрал спецификацию справа: 2 насоса, 2 клапана, 8 виброопор и комплект прокладок. Проверил остатки у трёх поставщиков, всё отгружается в один день. Счёт выставлю сразу после подтверждения.", align: "flex-start", bg: "transparent", border: "var(--color-divider)", color: "var(--color-text)", hasRows: false, hasActions: false }
@@ -6190,11 +6262,11 @@ class Component extends DCLogic {
         { dir: "Промышленная арматура", pages: "16", articles: "12", clusters: "36", pct: "38%", overlap: "0", overlapColor: "var(--color-neutral-700)", priority: "Высокий", tagClass: "tag-accent" }
       ],
       channels: [
-        { name: "Мессенджер MAX", id: "@promkontur_bot", dialogs: "1 860", auto: "74%", orders: "157", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Чат на сайте", id: "web-widget", dialogs: "4 240", auto: "72%", orders: "461", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Почта снабжения", id: "zakupki@promkontur.ru", dialogs: "980", auto: "48%", orders: "102", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
-        { name: "Телефония", id: "номер не подключён", dialogs: "1 120", auto: "12%", orders: "94", status: "Частично", tagClass: "tag-outline", action: "Настроить" },
-        { name: "Кабинет поставщика", id: "vendor-inbox", dialogs: "460", auto: "66%", orders: "—", status: "Подключено", tagClass: "tag-accent", action: "Настроить" }
+        { icon: "i-channel-max", name: "Мессенджер MAX", id: "@promkontur_bot", dialogs: "1 860", auto: "74%", orders: "157", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { icon: "i-channel-web", name: "Чат на сайте", id: "web-widget", dialogs: "4 240", auto: "72%", orders: "461", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { icon: "i-channel-mail", name: "Почта снабжения", id: "zakupki@promkontur.ru", dialogs: "980", auto: "48%", orders: "102", status: "Подключено", tagClass: "tag-accent", action: "Настроить" },
+        { icon: "i-channel-phone", name: "Телефония", id: "номер не подключён", dialogs: "1 120", auto: "12%", orders: "94", status: "Частично", tagClass: "tag-outline", action: "Настроить" },
+        { icon: "i-channel-vendor", name: "Кабинет поставщика", id: "vendor-inbox", dialogs: "460", auto: "66%", orders: "—", status: "Подключено", tagClass: "tag-accent", action: "Настроить" }
       ],
       chatChips: ["Подобрать по параметрам", "Найти аналог", "Проверить наличие", "Загрузить заявку списком", "Собрать спецификацию"],
       chatSpec: [
@@ -6204,12 +6276,12 @@ class Component extends DCLogic {
         { name: "Комплект прокладок DN65", sku: "PRK-65-SET", qty: "1", sum: "4 400 ₽" }
       ],
       chatSkills: [
-        { t: "Уточняет параметры", d: "Задаёт только те вопросы, без которых подбор неоднозначен: среда, присоединение, режим работы." },
-        { t: "Читает заявку списком", d: "Принимает XLSX, письмо или фото шильдиков и сопоставляет строки с артикулами в базе." },
-        { t: "Проверяет остатки в реальном времени", d: "Опрашивает прайсы и API поставщиков, отбрасывает позиции с нулевым остатком." },
-        { t: "Предлагает аналоги", d: "Подбирает замену по рабочей точке и присоединительным размерам с разницей в цене." },
-        { t: "Собирает спецификацию и счёт", d: "Формирует документ, выставляет счёт и отправляет заказ поставщику по API." },
-        { t: "Передаёт инженеру", d: "Проектные комплекты, позиции дороже порога и нестандартные среды уходят человеку с историей диалога." }
+        { dot: "block", t: "Уточняет параметры", d: "Задаёт только те вопросы, без которых подбор неоднозначен: среда, присоединение, режим работы." },
+        { icon: "i-entry-list", dot: "none", t: "Читает заявку списком", d: "Принимает XLSX, письмо или фото шильдиков и сопоставляет строки с артикулами в базе." },
+        { dot: "block", t: "Проверяет остатки в реальном времени", d: "Опрашивает прайсы и API поставщиков, отбрасывает позиции с нулевым остатком." },
+        { icon: "i-analog", dot: "none", t: "Предлагает аналоги", d: "Подбирает замену по рабочей точке и присоединительным размерам с разницей в цене." },
+        { dot: "block", t: "Собирает спецификацию и счёт", d: "Формирует документ, выставляет счёт и отправляет заказ поставщику по API." },
+        { icon: "i-engineer", dot: "none", t: "Передаёт инженеру", d: "Проектные комплекты, позиции дороже порога и нестандартные среды уходят человеку с историей диалога." }
       ],
       directionFeeds: (() => {
         const ruF = ["XML", "REST API", "Excel / FTP", "1С:Обмен", "YML", "парсер сайта"];
@@ -6271,7 +6343,7 @@ class Component extends DCLogic {
       ].map(s => ({
         t: s.t,
         go: () => this.setState({ adminTab: s.id }),
-        style: "font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;padding:7px 14px;border:1px solid " +
+        style: "display:inline-flex;align-items:center;gap:8px;font-family:var(--font-heading);font-weight:600;font-size:14px;cursor:pointer;padding:7px 14px;border:1px solid " +
           ((this.state.adminTab || "all") === s.id ? "var(--color-accent)" : "var(--color-divider)") +
           ";background:" + ((this.state.adminTab || "all") === s.id ? "var(--color-accent)" : "transparent") +
           ";color:" + ((this.state.adminTab || "all") === s.id ? "#fff" : "var(--color-text)")
@@ -6345,10 +6417,10 @@ class Component extends DCLogic {
         { name: "Водоподготовка", count: "990" }, { name: "ДГУ", count: "610" }
       ],
       steps: [
-        { n: "01", title: "Заявка", text: "Клиент выбирает позицию или отправляет запрос КП." },
-        { n: "02", title: "Подбор поставщика", text: "Система сравнивает цены, остатки и сроки по всем прайсам." },
-        { n: "03", title: "Одна цена", text: "Клиент видит итоговую стоимость с наценкой и доставкой." },
-        { n: "04", title: "Прямая отгрузка", text: "Поставщик отгружает товар напрямую клиенту, документы — у нас." }
+        { icon: "i-step-request", n: "01", title: "Заявка", text: "Клиент выбирает позицию или отправляет запрос КП." },
+        { icon: "i-step-supplier-pick", n: "02", title: "Подбор поставщика", text: "Система сравнивает цены, остатки и сроки по всем прайсам." },
+        { icon: "i-step-one-price", n: "03", title: "Одна цена", text: "Клиент видит итоговую стоимость с наценкой и доставкой." },
+        { icon: "i-step-direct-ship", n: "04", title: "Прямая отгрузка", text: "Поставщик отгружает товар напрямую клиенту, документы — у нас." }
       ],
       suppliers: [
         { name: "Поставщик А", price: "91 000 ₽", color: "var(--color-accent-300)" },
@@ -6391,10 +6463,10 @@ class Component extends DCLogic {
         { k: "Температура среды", v: "−20…+120 °C" }
       ],
       quoteIncludes: [
-        { t: "Инженерный подбор", d: "Проверка по расходу, давлению и режиму работы, подбор ресивера и осушителя." },
-        { t: "Расчёт доставки", d: "Габаритный груз до объекта, разгрузка и такелаж." },
-        { t: "Монтаж и ПНР", d: "Работы подрядчика в регионе поставки, срок и стоимость в КП." },
-        { t: "Условия оплаты", d: "Аванс, отсрочка или поэтапная оплата под график проекта." }
+        { icon: "i-quote-engineering", t: "Инженерный подбор", d: "Проверка по расходу, давлению и режиму работы, подбор ресивера и осушителя." },
+        { icon: "i-step-direct-ship", t: "Расчёт доставки", d: "Габаритный груз до объекта, разгрузка и такелаж." },
+        { icon: "i-quote-install", t: "Монтаж и ПНР", d: "Работы подрядчика в регионе поставки, срок и стоимость в КП." },
+        { icon: "i-order-paid", t: "Условия оплаты", d: "Аванс, отсрочка или поэтапная оплата под график проекта." }
       ],
       analogs: [
         { name: "Wilo Helix V 3604", spec: "Подача 36 м³/ч · напор 48 м", price: "98 700 ₽", lead: "Отгрузка 3 дня" },
@@ -6402,22 +6474,22 @@ class Component extends DCLogic {
         { name: "Ebara 3M 65-160", spec: "Подача 33 м³/ч · напор 42 м", price: "84 100 ₽", lead: "Под заказ 9 дней" }
       ],
       supplierSteps: [
-        { n: "01", t: "Договор и доступ", d: "Подписываем агентский договор, открываем кабинет поставщика." },
-        { n: "02", t: "Выгрузка прайса", d: "XML, API, Excel или обмен с 1С. Обновление раз в сутки или чаще." },
-        { n: "03", t: "Заказы", d: "Заявка приходит уже с оплатой и адресом доставки клиента." },
-        { n: "04", t: "Отгрузка и расчёты", d: "Вы отгружаете напрямую, мы закрываем документы и переводим оплату." }
+        { icon: "i-step-deal", n: "01", t: "Договор и доступ", d: "Подписываем агентский договор, открываем кабинет поставщика." },
+        { icon: "i-price-upload", n: "02", t: "Выгрузка прайса", d: "XML, API, Excel или обмен с 1С. Обновление раз в сутки или чаще." },
+        { icon: "i-orders-inbox", n: "03", t: "Заказы", d: "Заявка приходит уже с оплатой и адресом доставки клиента." },
+        { icon: "i-payout", n: "04", t: "Отгрузка и расчёты", d: "Вы отгружаете напрямую, мы закрываем документы и переводим оплату." }
       ],
       supplierStats: [
         { v: "0 ₽", k: "стоимость размещения прайса" },
         { v: "1–5 дней", k: "срок подключения выгрузки" },
-        { v: "3–7 дней", k: "расчёт после отгрузки" }
+        { icon: "i-payout", v: "3–7 дней", k: "расчёт после отгрузки" }
       ],
       autoBuy: [
-        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "7 октября", tagClass: "tag-accent", mode: "выше лимита — подтверждение в MAX", on: true },
-        { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", price: "140 ₽", period: "ежемесячно", qty: "100", next: "1 октября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
-        { name: "Grundfos CR 32-4", sku: "96122802", price: "104 900 ₽", period: "раз в квартал", qty: "1", next: "декабрь", tagClass: "tag-neutral", mode: "подтверждение в MAX", on: true },
-        { name: "Фильтр-элемент воздушный 2 мкм", sku: "FLT-AIR-2", price: "3 200 ₽", period: "каждые 6 недель", qty: "6", next: "26 сентября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
-        { name: "Комплект прокладок DN65", sku: "PRK-65-SET", price: "4 400 ₽", period: "по наработке", qty: "2", next: "пауза", tagClass: "tag-outline", mode: "выключена", on: false }
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", price: "540 ₽", period: "каждые 4 недели", qty: "200", next: "7 октября", tagClass: "tag-accent", mode: "выше лимита — подтверждение в MAX", on: true },
+        { bg: "url(img/p-lip-seal.jpg) center/cover no-repeat", name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", price: "140 ₽", period: "ежемесячно", qty: "100", next: "1 октября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", sku: "96122802", price: "104 900 ₽", period: "раз в квартал", qty: "1", next: "декабрь", tagClass: "tag-neutral", mode: "подтверждение в MAX", on: true },
+        { bg: "url(img/p-air-filter.jpg) center/cover no-repeat", name: "Фильтр-элемент воздушный 2 мкм", sku: "FLT-AIR-2", price: "3 200 ₽", period: "каждые 6 недель", qty: "6", next: "26 сентября", tagClass: "tag-neutral", mode: "без подтверждения", on: true },
+        { bg: "url(img/p-gasket-kit.jpg) center/cover no-repeat", name: "Комплект прокладок DN65", sku: "PRK-65-SET", price: "4 400 ₽", period: "по наработке", qty: "2", next: "пауза", tagClass: "tag-outline", mode: "выключена", on: false }
       ],
       kycChecks: [
         { t: "ЕГРЮЛ, статус и руководитель", v: "действующая", color: "var(--color-neutral-700)" },
@@ -6448,16 +6520,16 @@ class Component extends DCLogic {
         ];
       })(),
       accountRepeat: [
-        { name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", price: "540 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
-        { name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", times: "7", period: "раз в месяц", last: "13 сентября", price: "140 ₽", delta: "−4% к прошлой закупке", deltaColor: "var(--color-accent-700)" },
-        { name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", price: "104 900 ₽", delta: "+2% к прошлой закупке", deltaColor: "var(--color-neutral-700)" },
-        { name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
-        { name: "Мотор-редуктор NORD SK 02", sku: "NRD-SK02", times: "2", period: "по ремонту", last: "28 августа", price: "48 200 ₽", delta: "−7% к прошлой закупке", deltaColor: "var(--color-accent-700)" }
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", name: "Подшипник SKF 6205-2RS", sku: "SKF-6205", times: "9", period: "раз в 3–4 недели", last: "9 сентября", price: "540 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
+        { bg: "url(img/p-lip-seal.jpg) center/cover no-repeat", name: "Манжета 45×65×10 NBR", sku: "MNZ-456510", times: "7", period: "раз в месяц", last: "13 сентября", price: "140 ₽", delta: "−4% к прошлой закупке", deltaColor: "var(--color-accent-700)" },
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", name: "Grundfos CR 32-4", sku: "96122802", times: "4", period: "раз в квартал", last: "12 сентября", price: "104 900 ₽", delta: "+2% к прошлой закупке", deltaColor: "var(--color-neutral-700)" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", name: "INNOVERT VR 15 кВт", sku: "INV-VR-15", times: "3", period: "раз в 2 месяца", last: "2 сентября", price: "62 300 ₽", delta: "без изменений", deltaColor: "var(--color-neutral-600)" },
+        { bg: "url(img/p-gearmotor.jpg) center/cover no-repeat", name: "Мотор-редуктор NORD SK 02", sku: "NRD-SK02", times: "2", period: "по ремонту", last: "28 августа", price: "48 200 ₽", delta: "−7% к прошлой закупке", deltaColor: "var(--color-accent-700)" }
       ],
       accountNav: [
-        { t: "Заказы", c: "12" }, { t: "Согласование", c: "4" }, { t: "Регулярные закупки", c: "5" },
-        { t: "Запросы КП", c: "3" }, { t: "Счета и УПД", c: "24" },
-        { t: "Спецификации", c: "6" }, { t: "Сотрудники", c: "4" }, { t: "Реквизиты", c: "" }
+        { icon: "i-ui-orders", t: "Заказы", c: "12" }, { icon: "i-ui-approval", t: "Согласование", c: "4" }, { icon: "i-ui-repeat", t: "Регулярные закупки", c: "5" },
+        { icon: "i-ui-quote", t: "Запросы КП", c: "3" }, { icon: "i-pay-invoice", t: "Счета и УПД", c: "24" },
+        { icon: "i-ui-specs", t: "Спецификации", c: "6" }, { icon: "i-ui-users", t: "Сотрудники", c: "4" }, { icon: "i-ui-requisites", t: "Реквизиты", c: "" }
       ],
       accountStats: [
         { v: "3", k: "запроса КП в работе" }, { v: "1", k: "заказ в пути" },
@@ -6471,9 +6543,9 @@ class Component extends DCLogic {
         { id: "КП-2198", items: "Комплекс водоподготовки", status: "КП получено", tagClass: "tag-accent", date: "—", sum: "684 000 ₽" }
       ],
       cart: [
-        { bg: "url(img/p-cr32.jpg) center/cover no-repeat", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
-        { bg: "url(img/p-6205.jpg) center/cover no-repeat", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
-        { bg: "url(img/p-vr15.jpg) center/cover no-repeat", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
+        { bg: "url(img/p-cr32.jpg) center/contain no-repeat #c7c5c5", sku: "96122802", name: "Grundfos CR 32-4", lead: "8 шт. в наличии · отгрузка 2–4 дня", qty: "2", sum: "209 800 ₽" },
+        { bg: "url(img/p-6205.jpg) center/contain no-repeat #c3c1c2", sku: "SKF-6205", name: "Подшипник SKF 6205-2RS", lead: "1 400 шт. · отгрузка в день заказа", qty: "50", sum: "27 000 ₽" },
+        { bg: "url(img/p-vr15.jpg) center/contain no-repeat #d9d9d9", sku: "INV-VR-15", name: "INNOVERT VR 15 кВт", lead: "26 шт. в наличии · отгрузка 1–2 дня", qty: "1", sum: "62 300 ₽" }
       ],
       footerCols: [
         { title: "Каталог", links: [

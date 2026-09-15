@@ -1,0 +1,73 @@
+/* ══ Слой «настоящего сайта» поверх дизайн-системы макета ══════════════════
+   Убирает чертёжную «макетность»: крестики на углах, плоские серые коробки,
+   квадратные маркеры. Работает поверх inline-стилей (движок пишет style
+   с пробелами после двоеточия — селекторы в том же виде). */
+:root {
+  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 14px;
+  --color-bg: #f4f5f7; --color-surface: #ffffff;
+  --line: rgba(22, 38, 58, .10);
+  --shadow-card: 0 1px 2px rgba(22, 38, 58, .05), 0 3px 12px rgba(22, 38, 58, .05);
+  --shadow-hover: 0 12px 32px rgba(22, 38, 58, .13);
+}
+body { background: var(--color-bg); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* карточки и рамки */
+.blueprint > .corner { display: none !important; }
+.blueprint { border: 1px solid var(--line); border-radius: var(--radius-lg); background-color: var(--color-surface); box-shadow: var(--shadow-card); overflow: hidden; }
+.blueprint .blueprint { box-shadow: none; }
+.blueprint.halftone, .blueprint.plate, .blueprint.duotone { overflow: hidden; }
+.card { background: var(--color-surface); border-radius: var(--radius-lg); }
+a.blueprint, a.card, [data-href].blueprint { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+a.blueprint:hover, a.card:hover, [data-href].blueprint:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: color-mix(in srgb, var(--color-accent) 35%, transparent); }
+.row-hover { border-radius: 8px; transition: background .15s; }
+
+/* фото: мягче тонировка, скругления, лёгкий зум у ссылок */
+.duotone::after { opacity: .5; }
+.ph { background-color: #dfe2e6; }
+figure.ph, figure.blueprint { border-radius: var(--radius-lg); }
+a.blueprint .ph, a.card .ph { transition: transform .4s ease; }
+
+/* кнопки, поля, плашки */
+.btn { border-radius: var(--radius-md); transition: background .15s, border-color .15s, box-shadow .15s, color .15s; }
+.btn-primary { box-shadow: 0 1px 2px rgba(22, 38, 58, .18), inset 0 -1px 0 rgba(0, 0, 0, .08); }
+.btn-primary:hover { box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent) 40%, transparent); }
+.btn-secondary { background: var(--color-surface); border-color: var(--line); }
+.btn-secondary:hover { border-color: color-mix(in srgb, var(--color-accent) 45%, transparent); color: var(--color-accent-700); background: var(--color-surface); }
+.input { background: var(--color-surface); border-color: var(--line); border-radius: var(--radius-md); transition: border-color .15s, box-shadow .15s; }
+.input:focus, .input:focus-visible { border-color: var(--color-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent); }
+.tag { border-radius: 999px; padding: 3px 10px; font-weight: 500; }
+.seg { border-radius: var(--radius-md); background: var(--color-surface); }
+.table th { font-weight: 500; }
+.table tbody tr:last-child td { border-bottom: 0; }
+
+/* поисковая строка: поле и кнопки как одно целое */
+[style*="min-width: 280px; display: flex"] > .input { border-radius: 10px 0 0 10px; }
+[style*="min-width: 280px; display: flex"] > .btn { border-radius: 0; }
+[style*="min-width: 280px; display: flex"] > .btn:last-child { border-radius: 0 10px 10px 0; }
+
+/* шапка витрины: белая, прилипает */
+header[style*="z-index: 20"] { position: sticky !important; top: 0; z-index: 50 !important; background: rgba(255, 255, 255, .92) !important; backdrop-filter: saturate(1.4) blur(10px); box-shadow: 0 1px 0 var(--line); border-bottom: 0 !important; }
+header nav a { transition: color .15s; }
+header nav a:hover { color: var(--color-accent-700) !important; }
+
+/* маркеры, точки, полосы, аватары — без «квадратиков» */
+span[style*="width: 7px; height: 7px"], span[style*="width: 8px; height: 8px"], span[style*="width: 9px; height: 9px"], span[style*="width: 10px; height: 10px"] { border-radius: 50%; }
+[style*="height: 3px"], [style*="height: 4px"], [style*="height: 5px"], [style*="height: 6px"], [style*="height: 8px;"] { border-radius: 999px; }
+span[style*="width: 28px; height: 28px"][style*="place-items: center"] { border-radius: 50%; }
+span[style*="img/mark.svg"] { border-radius: 6px; }
+
+/* чекбоксы-«квадратики» в фильтрах и таблицах: скругление и галочка у отмеченных */
+span[style*="width: 14px; height: 14px"] { border-radius: 4px; position: relative; }
+span[style*="width: 14px; height: 14px"][style*="background: var(--color-accent)"]::after {
+  content: ""; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.radio .dot { transition: border-color .15s, background .15s; }
+.radio input[type="checkbox"] + .dot { border-radius: 4px; }
+
+/* подвал */
+footer a { transition: color .15s; }
+footer a:hover { color: #fff !important; }
+
+@media (max-width: 760px) {
+  .blueprint { border-radius: 12px; }
+  header[style*="z-index: 20"] { position: relative !important; }
+}

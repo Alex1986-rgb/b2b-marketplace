@@ -6,7 +6,7 @@
     "build": "node tools/build_site.js"
   },
   "devDependencies": {
-    "lucide-static": "^0.460.0",
+    "lucide-static": "^1.46.0",
     "puppeteer-core": "^23.11.1",
     "qrcode": "^1.5.4"
   }
