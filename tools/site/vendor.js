@@ -16,6 +16,8 @@
   var fmtDT = R.fmtDT = function (iso) { var m = String(iso || '').match(/T(\d{2}:\d{2})/); return fmtD(iso) + (m ? ', ' + m[1] : ''); };
   var orderSum = R.orderSum = function (o) { return o.items.reduce(function (s, i) { return s + i.qty * i.price; }, 0); };
   var slug = R.slug = function (id) { return String(id).toLowerCase().replace('зв-', 'zv-'); };
+  // bus: у заявок из шины нет статической страницы — ссылка на список с поиском по номеру
+  var oHref = R.oHref = function (o, BASE) { return o.bus ? BASE + 'kabinet-postavshchika/zayavki/?q=' + encodeURIComponent(o.id) : BASE + 'kabinet-postavshchika/zayavka/' + slug(o.id) + '/'; };
   var TAG = { 'Новая': 'tag-accent', 'Подтверждена': 'tag-outline', 'Собрана': 'tag-outline', 'Отгружена': 'tag-neutral', 'Доставлена': 'tag-neutral', 'К расчёту': 'tag-outline', 'Оплачена': 'pv-tag-ok', 'Отклонена': 'pv-tag-bad', 'ОК': 'pv-tag-ok', 'Нет остатка': 'tag-neutral', 'Ошибка формата': 'pv-tag-bad', 'Успешно': 'pv-tag-ok', 'С ошибками': 'tag-outline', 'Сбой': 'pv-tag-bad' };
   var tag = R.tag = function (s) { return '<span class="tag ' + (TAG[s] || 'tag-neutral') + ' pv-tag">' + esc(s) + '</span>'; };
   var ico = R.ico = function (id, extra) { return '<span class="ico ico-16 i-' + id + '" aria-hidden="true"' + (extra ? ' style="' + extra + '"' : '') + '></span>'; };
@@ -51,13 +53,13 @@
       : /Отгружена|Доставлена|К расчёту|Оплачена/.test(o.status) ? (o.carrier ? esc(o.carrier) : 'отгружено') + (o.track ? '<div class="pv-sub mono">' + esc(o.track) + '</div>' : '')
       : 'отгрузка до ' + fmtD(o.confirmedShip || o.shipBy);
     return '<tr data-id="' + esc(o.id) + '">' +
-      '<td data-label="Заявка"><a class="pv-link mono" href="' + BASE + 'kabinet-postavshchika/zayavka/' + slug(o.id) + '/">' + esc(o.id) + '</a><div class="pv-sub">' + fmtDT(o.created) + '</div></td>' +
+      '<td data-label="Заявка"><a class="pv-link mono" href="' + oHref(o, BASE) + '">' + esc(o.id) + '</a><div class="pv-sub">' + fmtDT(o.created) + (o.pkOrder ? ' · заказ ' + esc(o.pkOrder) : '') + '</div></td>' + // bus: oHref, pkOrder
       '<td data-label="Покупатель">' + esc(D.buyer) + ' · ' + esc(o.city) + '<div class="pv-sub">' + esc(String(o.warehouse).split(' · ')[1] ? o.warehouse.split(' · ')[1].split(',')[0] : '') + ' → ' + esc(o.city) + '</div></td>' +
       '<td data-label="Позиции">' + esc(first.name) + ' × ' + num(first.qty) + (more > 0 ? '<div class="pv-sub">и ещё ' + more + ' поз.</div>' : '') + '</td>' +
       '<td data-label="Сумма" class="mono pv-num">' + rub(orderSum(o)) + '</td>' +
       '<td data-label="Срок">' + term + '</td>' +
       '<td data-label="Статус">' + tag(o.status) + '</td>' +
-      '<td class="pv-acts">' + (acts || '<a class="btn btn-secondary pv-btn-sm" href="' + BASE + 'kabinet-postavshchika/zayavka/' + slug(o.id) + '/">Открыть</a>') + '</td></tr>';
+      '<td class="pv-acts">' + (acts || '<a class="btn btn-secondary pv-btn-sm" href="' + oHref(o, BASE) + '">Открыть</a>') + '</td></tr>'; // bus: oHref
   };
   R.orderRows = function (orders, D, BASE) { return orders.map(function (o) { return R.orderRow(o, D, BASE); }).join(''); };
 
@@ -214,8 +216,64 @@
     else if (kind === 'settings') pageSettings(pg);
     else if ($('[data-screen-label="Кабинет поставщика"]')) pageMockup($('[data-screen-label="Кабинет поставщика"]'));
     tick(); setInterval(tick, 1000);
+    if (window.PK_BUS_READY) PK_BUS_READY(busConnect); // bus
   }
   function save(k) { store.set(k, S[k]); }
+
+  // ═════════ bus: события витрины и оператора ═════════
+  function busApply(ev) {
+    var p = ev.payload || {};
+    if (ev.type === 'order.created') {
+      if (S.orders.some(function (o) { return o.pkOrder === p.order; })) return { dup: true };
+      var lines = (p.items || []).map(function (i) {
+        var row = S.price.filter(function (r) { return (i.sku && r.sku === i.sku) || (i.slug && r.slug === i.slug); })[0];
+        return row && row.price != null ? { sku: row.sku, name: row.name, slug: row.slug || null, href: row.href || (row.slug && row.category ? 'katalog/' + row.category + '/' + row.slug + '/' : undefined), qty: +i.qty || 1, price: row.price } : null;
+      }).filter(Boolean);
+      if (!lines.length) return { skipped: true };
+      var n = S.orders.reduce(function (m, o) { var r = /^ЗВ-(\d+)/.exec(o.id); return r ? Math.max(m, +r[1]) : m; }, 0) + 1;
+      var shipBy = R.addWorkDays(todayIso(), 3);
+      var o = { id: 'ЗВ-' + n, created: nowIso(), city: p.city || '—', status: 'Новая', slaMin: Math.round((Date.now() - S.meta.slaBase) / 60000) + 120, shipBy: shipBy,
+        warehouse: (D.orders[0] && D.orders[0].warehouse) || 'Склад поставщика', delivery: 'доставка до адреса покупателя' + (p.address ? ': ' + p.address : ''), items: lines,
+        history: [{ ts: nowIso(), who: 'ПРОМКОНТУР', text: 'Заявка создана по заказу ' + p.order + ' с витрины (' + (p.payment || 'счёт') + ')' }], pkOrder: p.order, bus: true };
+      S.orders.unshift(o); save('orders');
+      return { request: o.id, lines: lines.length };
+    }
+    if (ev.type === 'vendor.suspended' || ev.type === 'vendor.resumed' || ev.type === 'price.rule.changed') {
+      var N = store.get('notices', {});
+      if (ev.type === 'vendor.suspended') N.suspended = { why: p.why || '', at: ev.ts };
+      else if (ev.type === 'vendor.resumed') { N.suspended = null; N.resumed = { at: ev.ts }; }
+      else N.terms = { what: p.what || 'правила наценки', at: ev.ts, closed: false };
+      store.set('notices', N);
+      return { notice: ev.type };
+    }
+    return { ignored: true };
+  }
+  function busBanner() {
+    var N = store.get('notices', {}), host = $('[data-ven-page]') || $('[data-screen-label="Кабинет поставщика"]') || $('main');
+    $$('.pk-bus-banner').forEach(function (b) { b.remove(); });
+    if (!host) return;
+    function banner(title, text, closable) {
+      var b = document.createElement('div'); b.className = 'pk-bus-banner'; b.setAttribute('role', 'status');
+      b.innerHTML = '<div><b>' + esc(title) + '</b><span>' + esc(text) + '</span></div>';
+      if (closable) { var x = document.createElement('button'); x.type = 'button'; x.className = 'btn btn-secondary pv-btn-sm'; x.textContent = 'Понятно'; x.addEventListener('click', function () { var M = store.get('notices', {}); if (M.terms) M.terms.closed = true; store.set('notices', M); busBanner(); }); b.appendChild(x); }
+      host.insertBefore(b, host.firstChild);
+    }
+    if (N.terms && !N.terms.closed) banner('Сервис изменил условия', 'Обновлены правила наценки площадки: ' + N.terms.what + '. Ваши закупочные цены не меняются.', true);
+    if (N.suspended) banner('Сервис приостановил приём заявок', 'Причина: ' + (N.suspended.why || 'не указана') + '. Новые заявки не поступают, открытые заявки выполняйте как обычно. Вопросы — менеджеру ПРОМКОНТУР в MAX.', false);
+  }
+  function busConnect(B) {
+    if (window.PK_BUS && PK_BUS.css) PK_BUS.css();
+    function run(list) {
+      var n = 0;
+      list.forEach(function (ev) { var r = busApply(ev); B.ack(ev.id, 'vendor', r); if (!r.ignored && !r.skipped && !r.dup) n++; });
+      if (n) { refresh(); busBanner(); }
+      return n;
+    }
+    var n = run(B.pending('vendor'));
+    busBanner();
+    if (n) toast('Новых событий от сервиса: ' + n);
+    B.on('*', function (ev) { if (ev.to.indexOf('vendor') < 0) return; if (run([ev])) toast(B.describe(ev, 'vendor').t); });
+  }
 
   // ── общие: тост, диалог, счётчики, SLA ──
   var toastEl, toastT;
@@ -278,6 +336,10 @@
 
   // ── действия с заявками (общие для всех страниц) ──
   function hist(o, text) { o.history.push({ ts: nowIso(), who: 'Гидромаш · кабинет', text: text }); }
+  // bus: смена статуса заявки → vendor.order.status (закупщику и оператору)
+  function busStatus(o) {
+    try { if (window.PK_BUS) PK_BUS.emit('vendor.order.status', { request: o.id, order: o.pkOrder || null, status: o.status, vendor: 'Гидромаш', track: o.track || '', carrier: o.carrier || '', confirmedShip: o.confirmedShip || '', reject: o.reject || '', sum: orderSum(o), skus: o.items.map(function (i) { return i.sku; }) }); } catch (e) {}
+  }
   function doAct(act, id) {
     var o = byId(id); if (!o) return;
     if (act === 'confirm') {
@@ -291,7 +353,7 @@
           if (v < todayIso()) return { error: 'Дата отгрузки не может быть в прошлом', field: f.date };
           o.status = 'Подтверждена'; o.confirmedShip = v;
           hist(o, 'Подтверждена, отгрузка ' + fmtD(v) + (v > o.shipBy ? ' (позже срока в заявке — покупатель уведомлён)' : '') + (f.reserve.checked ? ', резерв поставлен' : ''));
-          save('orders'); refresh(); toast('Заявка ' + o.id + ' подтверждена · отгрузка ' + fmtD(v));
+          save('orders'); busStatus(o); /* bus */ refresh(); toast('Заявка ' + o.id + ' подтверждена · отгрузка ' + fmtD(v));
         } });
     } else if (act === 'reject') {
       modal({ title: 'Отклонить заявку ' + o.id, lead: 'Позиции уйдут второму поставщику. Частые отказы снижают рейтинг в подборе.', ok: 'Отклонить', danger: true,
@@ -303,10 +365,10 @@
           if (f.reason.value === 'Другое' && note.length < 5) return { error: 'Опишите причину в комментарии', field: f.note };
           o.status = 'Отклонена'; o.reject = f.reason.value; o.rejectNote = note;
           hist(o, 'Отклонена: ' + f.reason.value.toLowerCase() + (note ? ' — ' + note : ''));
-          save('orders'); refresh(); toast('Заявка ' + o.id + ' отклонена');
+          save('orders'); busStatus(o); /* bus */ refresh(); toast('Заявка ' + o.id + ' отклонена');
         } });
     } else if (act === 'pack') {
-      o.status = 'Собрана'; hist(o, 'Отмечена собранной'); save('orders'); refresh(); toast('Заявка ' + o.id + ' собрана — можно отгружать');
+      o.status = 'Собрана'; hist(o, 'Отмечена собранной'); save('orders'); busStatus(o); /* bus */ refresh(); toast('Заявка ' + o.id + ' собрана — можно отгружать');
     } else if (act === 'ship') {
       modal({ title: 'Отгрузить заявку ' + o.id, lead: 'Трек-номер уйдёт покупателю, статус будет обновляться из системы перевозчика.', ok: 'Отгрузить',
         body: '<div class="field"><label for="pv-car">Перевозчик</label><select class="input" id="pv-car" name="carrier" required><option value="">Выберите перевозчика</option>' + D.carriers.map(function (c) { return '<option>' + esc(c) + '</option>'; }).join('') + '</select></div>' +
@@ -319,10 +381,10 @@
           if (!/^\d{1,3}$/.test(f.places.value.trim()) || +f.places.value < 1) return { error: 'Количество мест — целое число от 1', field: f.places };
           o.status = 'Отгружена'; o.carrier = f.carrier.value; o.track = pickup ? '' : tr;
           hist(o, 'Отгружена: ' + o.carrier + (o.track ? ', трек ' + o.track : '') + ', мест ' + (+f.places.value));
-          save('orders'); refresh(); toast('Заявка ' + o.id + ' отгружена · ' + o.carrier);
+          save('orders'); busStatus(o); /* bus */ refresh(); toast('Заявка ' + o.id + ' отгружена · ' + o.carrier);
         } });
     } else if (act === 'deliver') {
-      o.status = 'Доставлена'; hist(o, 'Доставлена (отметка поставщика, в работе приходит от перевозчика)'); save('orders'); refresh(); toast('Заявка ' + o.id + ' доставлена — загрузите УПД для расчёта');
+      o.status = 'Доставлена'; hist(o, 'Доставлена (отметка поставщика, в работе приходит от перевозчика)'); save('orders'); busStatus(o); /* bus */ refresh(); toast('Заявка ' + o.id + ' доставлена — загрузите УПД для расчёта');
     } else if (act === 'settle') {
       modal({ title: 'Передать к расчёту ' + o.id, lead: 'Нужен подписанный УПД. Выплата — до ' + D.company.settleDays + ' раб. дней по уровню «' + D.company.tier + '».', ok: 'Передать',
         body: '<div class="field"><label for="pv-upd">Номер УПД</label><input class="input mono" id="pv-upd" name="upd" autocomplete="off" maxlength="20" placeholder="например, 1482"></div>',
@@ -331,7 +393,7 @@
           if (!/^[\wА-Яа-я\-\/]{1,20}$/.test(v)) return { error: 'Укажите номер УПД', field: f.upd };
           o.status = 'К расчёту'; o.upd = v; o.payPlan = R.addWorkDays(todayIso(), D.company.settleDays);
           hist(o, 'УПД № ' + v + ' загружен, передана к расчёту · плановая выплата ' + fmtD(o.payPlan));
-          save('orders'); refresh(); toast('Передана к расчёту · выплата ' + fmtD(o.payPlan));
+          save('orders'); busStatus(o); /* bus */ refresh(); toast('Передана к расчёту · выплата ' + fmtD(o.payPlan));
         } });
     }
   }
@@ -356,6 +418,7 @@
   function pageOrders(pg) {
     var tbody = $('[data-ven-orders]', pg), chips = $('[data-ven-chips]', pg), q = $('[data-ven-q]', pg), empty = $('[data-ven-empty]', pg), stats = $('[data-ven-stats]', pg);
     var qs = new URLSearchParams(location.search), filter = qs.get('st') || 'Все';
+    if (qs.get('q')) q.value = qs.get('q'); // bus: ссылка на заявку из шины
     function list() {
       var s = q.value.trim().toLowerCase();
       return S.orders.filter(function (o) {

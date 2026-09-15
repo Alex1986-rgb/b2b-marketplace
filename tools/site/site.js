@@ -3,6 +3,19 @@
 (function () {
   'use strict';
   var BASE = (document.querySelector('link[rel="manifest"]') || { getAttribute: function () { return '/site.webmanifest'; } }).getAttribute('href').replace('site.webmanifest', '');
+  // bus: шина событий между кабинетами (assets/bus.js). Сборщик подключает на страницах только site.js/search.js/auth.js
+  // и скрипт раздела, поэтому bus.js догружаем отсюда — только на корзине и в кабинетах. Скрипты разделов
+  // подписываются через PK_BUS_READY(fn): fn вызовется сразу, если шина уже есть, или по событию pk:bus:ready.
+  window.PK_BUS_READY = window.PK_BUS_READY || function (fn) {
+    if (window.PK_BUS) { fn(window.PK_BUS); return; }
+    document.addEventListener('pk:bus:ready', function h() { document.removeEventListener('pk:bus:ready', h); if (window.PK_BUS) fn(window.PK_BUS); });
+  };
+  (function () { // bus
+    var rel = location.pathname.indexOf(BASE) === 0 ? location.pathname.slice(BASE.length) : location.pathname.replace(/^\//, '');
+    if (window.PK_BUS || !/^(korzina|kabinet|kabinet-postavshchika|panel)\//.test(rel)) return;
+    var s = document.createElement('script'); s.src = BASE + 'assets/bus.js'; s.async = true;
+    (document.head || document.documentElement).appendChild(s);
+  })();
   var LS = { get: function (k, d) { try { var v = localStorage.getItem('pk:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
              set: function (k, v) { try { localStorage.setItem('pk:' + k, JSON.stringify(v)); } catch (e) {} } };
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -122,6 +135,12 @@
     });
     cartPage = { wrap: wrap, demo: demo };
     renderCart();
+    window.PK_BUS_READY(function (B) { // bus: строка честности под кнопкой оформления
+      var go = $$('button').filter(function (b) { return /^оформить и выставить счёт/i.test(txt(b)); })[0];
+      if (!go || $('.pk-bus-note')) return;
+      B.css(); var n = document.createElement('p'); n.className = 'pk-bus-note'; n.textContent = B.NOTE;
+      go.insertAdjacentElement('afterend', n);
+    });
 
     wrap.addEventListener('click', function (e) {
       var step = e.target.closest('[data-step]'), del = e.target.closest('[data-del]');
@@ -240,11 +259,32 @@
     }
     if (!validate(scope)) { toast('Заполните обязательные поля'); return; }
     var target = box || scope; // в корзине поля в соседнем блоке — заменяем карточку «Итого»
-    if (cartPage && document.body.contains(cartPage.wrap)) { setCart([]); renderCart(); }
+    var busTitle = null; // bus
+    if (cartPage && document.body.contains(cartPage.wrap)) { busTitle = emitOrder(scope); setCart([]); renderCart(); }
     var keep = $$('.corner', target);
-    target.innerHTML = successHTML();
+    target.innerHTML = successHTML(busTitle);
     keep.forEach(function (c) { target.insertBefore(c, target.firstChild); });
     var s = $('.pk-success', target); if (s) s.focus();
+  }
+
+  // bus: оформление в корзине → событие order.created для кабинетов закупщика, поставщика и оператора
+  function emitOrder(scope) {
+    var B = window.PK_BUS; if (!B) return null;
+    var items = currentItems().filter(function (x) { return x.qty > 0; });
+    if (!items.length) return null;
+    var f = {};
+    $$('.field', scope.closest('main, #main, [role="main"]') || document).forEach(function (fl) {
+      var l = txt($('label', fl)), c = $('input.input, textarea.input', fl); if (l && c) f[l] = c.value.trim();
+    });
+    var pay = $$('input[type="radio"][name="pay"]').filter(function (r) { return r.checked; })[0];
+    var payLabel = pay ? txt(pay.closest('label')) : 'Счёт для юрлица';
+    var addr = f['Адрес доставки'] || '', city = (addr.match(/(?:г\.\s*)?([А-ЯЁ][а-яё-]+)/) || [])[1] || '';
+    var order = B.nextOrderId(), total = items.reduce(function (a, x) { return a + x.price * x.qty; }, 0);
+    var ev = B.emit('order.created', {
+      order: order, total: total, payment: payLabel, company: f['Плательщик'] || '', inn: f['ИНН'] || '', address: addr, city: city, contact: f['Контакт на объекте'] || '',
+      items: items.map(function (x) { return { sku: x.sku, name: x.name, qty: x.qty, price: x.price }; })
+    });
+    return ev ? 'Заказ ' + order + ' оформлен (демо): счёт и статус — в кабинете закупщика' : null;
   }
 
   // ═════════ Делегированные клики ═════════

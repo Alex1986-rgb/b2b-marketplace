@@ -216,7 +216,7 @@
               fdate(o.date),
               h('div', { class: 'pk-cab-item' }, [thumb(first.img), h('div', null, [h('span', { class: 'pk-cab-item-name', text: first.name + ' · ' + o.items[0].qty + ' шт.' }), o.items.length > 1 ? h('span', { class: 'pk-cab-muted', text: '+ ещё ' + (o.items.length - 1) + ' ' + plural(o.items.length - 1, 'позиция', 'позиции', 'позиций') }) : null])]),
               h('span', { class: 'pk-cab-muted', text: vendors }),
-              tag(o.status, STATUS_TAG[o.status]),
+              h('div', { class: 'pk-cab-stcell' }, [tag(o.status, STATUS_TAG[o.status]), o.busNote ? h('span', { class: 'pk-cab-muted', text: o.busNote }) : null]), // bus
               h('span', { class: 'mono', text: money(o.total) })
             ] };
           }), 'pk-cab-orders'), 'pk-cab-tablecard') : empty('По этим условиям заказов нет.', btn('Сбросить фильтры', 'btn-secondary', function () { F.q = ''; F.status = 'all'; rerender(); }))
@@ -272,7 +272,7 @@
       return [
         h('div', { class: 'pk-cab-actions pk-cab-actions-row' }, actions),
         card([
-          h('div', { class: 'pk-cab-orderhead' }, [tag(o.status, STATUS_TAG[o.status]), o.track && o.track !== '—' ? h('span', { class: 'mono pk-cab-muted' }, 'Трек ' + o.track + ' · ' + o.carrier + (o.terminal ? ' · ' + o.terminal : '')) : o.carrier ? h('span', { class: 'pk-cab-muted', text: o.carrier }) : h('span', { class: 'pk-cab-muted', text: 'Трек-номер появится после отгрузки' })]),
+          h('div', { class: 'pk-cab-orderhead' }, [tag(o.status, STATUS_TAG[o.status]), o.busNote ? tag(o.busNote, 'tag-outline') : null /* bus */, o.track && o.track !== '—' ? h('span', { class: 'mono pk-cab-muted' }, 'Трек ' + o.track + ' · ' + o.carrier + (o.terminal ? ' · ' + o.terminal : '')) : o.carrier ? h('span', { class: 'pk-cab-muted', text: o.carrier }) : h('span', { class: 'pk-cab-muted', text: 'Трек-номер появится после отгрузки' })]),
           stepper
         ]),
         h('div', { class: 'pk-cab-split' }, [
@@ -328,6 +328,7 @@
     if (!ok) {
       a.status = 'rejected';
       a.history.push({ step: role, who: who, decision: 'Отклонено', date: stamp, comment: comment });
+      busEmit('approval.rejected', { id: a.id, name: a.name, total: a.total, stage: role, comment: comment, company: ST.company.name }); // bus
       save('approvals'); toast('Заявка ' + a.id + ' отклонена.'); return;
     }
     if (a.stage < 2) {
@@ -337,6 +338,7 @@
     var items = approvalItems(a);
     var o = items.length ? createOrder(items.map(function (i) { return { slug: i.slug, qty: i.qty, vendor: i.vendor }; }), { approval: a.id, author: userName() }) : null;
     a.status = 'done'; a.stage = 3; if (o) a.order = o.id;
+    busEmit('approval.done', { id: a.id, name: a.name, total: o ? o.total : a.total, order: o ? o.id : null, company: ST.company.name, author: userName(), items: o ? o.items.map(function (i) { return { slug: i.slug, name: prod(i.slug).name, qty: i.qty, price: i.price }; }) : [] }); // bus
     a.history.push({ step: role, who: who, decision: o ? 'Оформлен заказ ' + o.id : 'Согласовано', date: stamp, comment: comment || '' });
     save('approvals'); toast(o ? 'Заявка ' + a.id + ' согласована, оформлен заказ ' + o.id + ' со счётом.' : 'Заявка ' + a.id + ' согласована.');
   }
@@ -485,6 +487,7 @@
           if (!setErr(name, name.value.trim().length >= 3 ? '' : 'Опишите, что нужно рассчитать')) { name.focus(); return; }
           var id = 'КП-' + nextNum(ST.quotes, /^КП-(\d+)/);
           ST.quotes.unshift({ id: id, name: name.value.trim(), created: today(), due: addDays(today(), 1), status: 'В работе', engineer: 'Назначается инженер', spec: spec.value || null, note: desc.value.trim() || 'Желаемый срок поставки — ' + fdate(due.value), wanted: due.value });
+          busEmit('quote.requested', { id: id, name: ST.quotes[0].name, note: ST.quotes[0].note, spec: ST.quotes[0].spec, specTotal: (ST.specs.filter(function (x) { return x.id === ST.quotes[0].spec; })[0] || { items: [] }).items.reduce(function (a2, i) { return a2 + (i.price || prod(i.slug).price) * i.qty; }, 0), wanted: due.value, company: ST.company.name, author: userName() }); // bus
           save('quotes'); S.form = false; toast('Запрос ' + id + ' создан. Инженер ответит в течение 2 рабочих часов.'); rerender();
         } }, [
           h('h2', { class: 'pk-cab-h2', text: 'Новый запрос КП' }),
@@ -877,6 +880,63 @@
     });
   }
 
+  // ═════════ bus: события других кабинетов ═════════
+  var RERENDER = null, BUS = null;
+  function busEmit(type, payload) { try { if (window.PK_BUS) PK_BUS.emit(type, payload); } catch (e) {} }
+  var VSTATE = { 'Подтверждена': 'Передан поставщику', 'Собрана': 'Собран у поставщика', 'Отгружена': 'Отгружен поставщиком', 'Доставлена': 'Доставлен', 'К расчёту': 'Доставлен', 'Оплачена': 'Доставлен', 'Отклонена': 'Поставщик отказал — подбираем замену' };
+  function busApply(ev) {
+    var p = ev.payload || {};
+    if (ev.type === 'order.created') {
+      if (findOrder(p.order)) return { dup: true };
+      var bySku = {}; Object.keys(SEED.products).forEach(function (k) { bySku[SEED.products[k].sku] = k; });
+      var extra = lsGet('busprod') || {};
+      var lines = (p.items || []).map(function (i) {
+        var slug = bySku[i.sku];
+        if (!slug) { slug = 'bus-' + (i.sku || i.name); extra[slug] = { name: i.name, sku: i.sku || '', price: i.price, img: '', href: '' }; SEED.products[slug] = extra[slug]; }
+        return { slug: slug, qty: +i.qty || 1, price: +i.price || 0, vendor: 'назначается' };
+      });
+      lsSet('busprod', extra);
+      var deferral = /отсроч/i.test(p.payment || '');
+      var o = { id: p.order, date: today(), status: 'Счёт', busNote: 'Счёт выставлен', items: lines, total: lineSum(lines), payment: deferral ? 'Отсрочка 30 дней' : (p.payment || 'Счёт для юрлица'), payDue: deferral ? addDays(today(), 30) : null, author: ev.author && ev.author.name || userName(), address: p.address || '', fromBus: ev.id };
+      ST.orders.unshift(o);
+      ST.documents.unshift({ id: 'СЧ-' + nextNum(ST.documents, /^СЧ-(\d+)/), type: 'Счёт', title: 'Счёт на оплату', order: o.id, date: today(), total: o.total, edo: deferral ? 'Отсрочка' : 'Ожидает оплаты' });
+      save('orders', 'documents');
+      return { order: o.id };
+    }
+    if (ev.type === 'vendor.order.status') {
+      var ord = p.order && findOrder(p.order); if (!ord) return { skipped: true };
+      var map = { 'Отгружена': 'Отгружен', 'Доставлена': 'Доставлен' }, idx = STEPS.indexOf(ord.status);
+      if (map[p.status] && STEPS.indexOf(map[p.status]) > idx) ord.status = map[p.status];
+      if (p.status === 'Отгружена') { ord.shipped = today(); ord.eta = p.eta || addDays(today(), 3); ord.carrier = p.carrier || ''; ord.track = p.track || '—'; ord.busNote = 'В пути' + (p.track ? ' · трек ' + p.track : ''); }
+      else if (p.status === 'Доставлена') { ord.delivered = today(); ord.eta = null; ord.busNote = 'Доставлен'; }
+      else if (VSTATE[p.status]) ord.busNote = VSTATE[p.status] + (p.confirmedShip ? ' · отгрузка ' + fdate(p.confirmedShip) : '');
+      if (p.skus && p.vendor) ord.items.forEach(function (i) { if (p.skus.indexOf(prod(i.slug).sku) >= 0) i.vendor = p.vendor; });
+      save('orders');
+      return { order: ord.id, status: ord.status };
+    }
+    if (ev.type === 'quote.answered') {
+      var q = ST.quotes.filter(function (x) { return x.id === p.id; })[0]; if (!q) return { skipped: true };
+      if (/Принято|Отозван/.test(q.status)) return { skipped: true };
+      q.status = 'КП получено'; q.total = +p.total || q.total || null; q.due = today(); q.validUntil = p.validUntil || addDays(today(), 14); q.engineer = p.by ? 'Ответил ' + p.by : q.engineer;
+      save('quotes');
+      return { quote: q.id };
+    }
+    return { ignored: true };
+  }
+  function busConnect(B) {
+    BUS = B;
+    function run(list) {
+      var n = 0;
+      list.forEach(function (ev) { var r = busApply(ev); B.ack(ev.id, 'buyer', r); if (!r.ignored && !r.skipped && !r.dup) n++; });
+      if (n) { if (RERENDER) RERENDER(); paintCounts(); }
+      return n;
+    }
+    var extra = lsGet('busprod'); if (extra) Object.keys(extra).forEach(function (k) { if (!SEED.products[k]) SEED.products[k] = extra[k]; });
+    var n = run(B.pending('buyer'));
+    if (n) toast('Новых событий из других кабинетов: ' + n);
+    B.on('*', function (ev) { if (ev.to.indexOf('buyer') < 0) return; var k = run([ev]); if (k) toast(B.describe(ev, 'buyer').t); });
+  }
+
   // ═════════ старт ═════════
   var VIEWS = { orders: viewOrders, order: viewOrder, approvals: viewApprovals, regular: viewRegular, quotes: viewQuotes, documents: viewDocuments, specs: viewSpecs, employees: viewEmployees, requisites: viewRequisites };
   function start() {
@@ -884,7 +944,7 @@
     if (AUTH) { var e1 = ST.employees.filter(function (e) { return e.you; })[0]; if (e1 && AUTH.name && e1.name.indexOf(AUTH.name) !== 0) { e1.name = AUTH.name; } if (AUTH.company && AUTH.company !== ST.company.name && lsGet('company') === undefined) ST.company.name = AUTH.company; }
     var view = $('[data-cab-view]');
     if (view && VIEWS[view.getAttribute('data-cab-view')]) {
-      try { VIEWS[view.getAttribute('data-cab-view')](view); }
+      try { RERENDER = VIEWS[view.getAttribute('data-cab-view')](view); } // bus: RERENDER
       catch (err) { view.textContent = ''; add(view, empty('Не удалось показать раздел: ' + err.message)); if (window.console) console.warn(err); }
     } else {
       legacyNav();
@@ -894,6 +954,7 @@
     }
     paintCounts();
     window.addEventListener('storage', function (e) { if (e.key && e.key.indexOf(PREFIX) === 0) { KEYS.forEach(function (k) { var v = lsGet(k); if (v !== undefined) ST[k] = v; }); paintCounts(); } });
+    if (window.PK_BUS_READY) PK_BUS_READY(busConnect); // bus
   }
   function boot() {
     if (window.PK_AUTH && typeof PK_AUTH.require === 'function') { AUTH = PK_AUTH.require('buyer'); if (!AUTH) return; }

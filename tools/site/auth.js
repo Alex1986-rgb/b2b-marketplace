@@ -301,6 +301,29 @@
     anchor.insertAdjacentElement('beforebegin', pills);
     (h1 && h1.nextElementSibling ? h1.nextElementSibling : anchor).insertAdjacentElement('afterend', note);
 
+    // «Демо-доступ»: вход в любую роль одним нажатием + подсказка про код
+    var DEMO_CARDS = [
+      ['buyer', 'i-ui-account', 'Кабинет закупщика', 'ООО «Метизный завод»', 'Заказы, согласование заявок цеха, регулярные закупки, запросы КП, счета и УПД, сотрудники.'],
+      ['vendor', 'i-channel-vendor', 'Кабинет поставщика', 'ООО «Гидромаш»', 'Новые заявки и отгрузка, редактор прайса, выгрузка фида, расчёты и настройки.'],
+      ['operator', 'i-op-admin', 'Панель оператора', 'Петров А., админ', 'CRM-сделки, автопилот, правила наценки, поставщики, права и журнал изменений.']
+    ];
+    var demo = el('section', 'pk-demo-access'); demo.setAttribute('aria-labelledby', 'pk-demo-h');
+    var dh = el('h2', null, 'Демо-доступ: войти одним нажатием'); dh.id = 'pk-demo-h'; demo.appendChild(dh);
+    demo.appendChild(el('p', 'pk-demo-sub', 'Выберите роль — откроется её кабинет. Или войдите по телефону ниже: любой номер, код из «сообщения» — 4815.'));
+    var grid = el('div', 'pk-demo-grid');
+    DEMO_CARDS.forEach(function (c) {
+      var box = el('div', 'pk-demo-card');
+      var top = el('div', 'pk-demo-top'); var ic = el('span', 'ico ico-28 ' + c[1]); ic.setAttribute('aria-hidden', 'true'); top.appendChild(ic);
+      var tt = el('div'); tt.appendChild(el('strong', null, c[2])); tt.appendChild(el('span', null, c[3])); top.appendChild(tt); box.appendChild(top);
+      box.appendChild(el('p', null, c[4]));
+      var go = el('button', 'btn btn-primary', 'Войти как ' + ROLE_LABEL[c[0]].toLowerCase()); go.type = 'button';
+      go.addEventListener('click', function (e) { e.stopPropagation(); login(c[0], ''); location.href = target(c[0]); });
+      box.appendChild(go); grid.appendChild(box);
+    });
+    demo.appendChild(grid);
+    demo.appendChild(el('p', 'pk-demo-foot', DEMO_NOTE + '. «Сбросить демо-данные» — в меню пользователя.'));
+    (card.closest('[style*="grid"]') || card).insertAdjacentElement('beforebegin', demo);
+
     var already = el('div', 'pk-already'); already.hidden = true;
     note.insertAdjacentElement('afterend', already);
 

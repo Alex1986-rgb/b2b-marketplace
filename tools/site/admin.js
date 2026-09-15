@@ -536,6 +536,7 @@
   function initAutopilot() {
     var qb = blockByTitle(/^Ждёт человека/); if (!qb) return;
     var h = $('h3', qb), list = h.parentElement.nextElementSibling;
+    busQueueRows(list); // bus
     var rows = Array.prototype.slice.call(list.children);
     var Q = LS.get('apq', {});
     var kpi = $$(M + ' .blueprint').filter(function (b) { return /ждут человека/.test(txt(b)) && !$('h3', b); })[0];
@@ -562,6 +563,7 @@
         Q[key] = cur; LS.set('apq', Q);
       });
       done.addEventListener('click', function () {
+        if (r.hasAttribute('data-bus-quote') && !r._busAnswered) { busAnswerQuote(r, function () { r._busAnswered = true; done.click(); }); return; } // bus
         var prev = JSON.parse(JSON.stringify(Q));
         Q[key] = Object.assign({}, Q[key], { done: true, by: whoShort(), at: nowStr() }); LS.set('apq', Q);
         log('Автоматизация', 'Задача «' + title + '»', (prev[key] && prev[key].taken) ? 'в работе' : 'в очереди', 'решено', { k: 'ls', key: 'apq', prev: prev });
@@ -833,7 +835,7 @@
       if (focusSel) { var f = $('[data-f="' + focusSel + '"]', tbody); if (f && !f.disabled) f.focus(); else { var ff = $('button:not([disabled])', tbody); if (ff) ff.focus(); } }
     }
     window._pkRulesRender = function () { render(); };
-    function commit(list, what, from, to) { var prev = rules(); LS.set('rules', list); log('Цены', what, from, to, { k: 'ls', key: 'rules', prev: prev }); }
+    function commit(list, what, from, to) { var prev = rules(); LS.set('rules', list); log('Цены', what, from, to, { k: 'ls', key: 'rules', prev: prev }); busEmit('price.rule.changed', { what: what + ': ' + from + ' → ' + to }); } // bus
     function reorder(i, d) {
       var list = rules(), j = i + d; if (j < 0 || j >= list.length || /базовое/.test(list[j].cat)) return;
       var r = list.splice(i, 1)[0]; list.splice(j, 0, r);
@@ -1371,8 +1373,8 @@
       pause.addEventListener('click', function () {
         if (!P[slug]) {
           modal({ title: 'Приостановить «' + name + '»?', html: '<p>Позиции поставщика перестанут участвовать в выборе предложения, открытые резервы сохранятся.</p>' + field('Причина', select('why', ['срыв сроков', 'точность остатков ниже порога', 'ошибки фида', 'по просьбе поставщика'], '')),
-            buttons: [{ label: 'Отмена' }, { label: 'Приостановить', primary: true, onClick: function (box) { P[slug] = { why: val(box, 'why'), at: nowStr() }; LS.set('sup', P); paint(); log('Источники', 'Поставщик «' + name + '»', 'активен', 'приостановлен: ' + P[slug].why, null); toast('«' + name + '» приостановлен.'); } }] });
-        } else { var why = P[slug].why; delete P[slug]; LS.set('sup', P); tag.className = 'tag tag-accent'; tag.textContent = 'Успешно'; paint(); log('Источники', 'Поставщик «' + name + '»', 'приостановлен: ' + why, 'активен', null); toast('«' + name + '» снова в работе.'); }
+            buttons: [{ label: 'Отмена' }, { label: 'Приостановить', primary: true, onClick: function (box) { P[slug] = { why: val(box, 'why'), at: nowStr() }; LS.set('sup', P); paint(); log('Источники', 'Поставщик «' + name + '»', 'активен', 'приостановлен: ' + P[slug].why, null); if (slug === 'gidromash') busEmit('vendor.suspended', { slug: slug, name: name, why: P[slug].why }); /* bus */ toast('«' + name + '» приостановлен.'); } }] });
+        } else { var why = P[slug].why; delete P[slug]; LS.set('sup', P); tag.className = 'tag tag-accent'; tag.textContent = 'Успешно'; paint(); log('Источники', 'Поставщик «' + name + '»', 'приостановлен: ' + why, 'активен', null); if (slug === 'gidromash') busEmit('vendor.resumed', { slug: slug, name: name }); /* bus */ toast('«' + name + '» снова в работе.'); }
       });
       paint();
     });
@@ -1416,6 +1418,91 @@
     });
   }
 
+  // ═════════ bus: события витрины, закупщика и поставщика ═════════
+  function busEmit(type, payload) { try { if (window.PK_BUS) PK_BUS.emit(type, payload); } catch (e) {} }
+  function clientSlugByName(name) { var c = (DATA.clients || []).filter(function (x) { return name && x.name === name; })[0]; return c ? c.slug : ''; }
+  function busDeal(d) { // новая сделка в колонке «Счёт выставлен» (индекс 3)
+    var list = LS.get('newDeals', []);
+    if (list.some(function (x) { return x.id === d.id; })) return false;
+    d.code = 'СД-' + (2232 + list.length);
+    list.push(d); LS.set('newDeals', list); if (DATA.deals) DATA.deals.push(d);
+    saveDeal(d.id, { col: 3 });
+    return true;
+  }
+  function busApply(ev) {
+    var p = ev.payload || {}, t = hm(new Date(ev.ts)), author = ev.author && ev.author.name || 'закупщик';
+    if (ev.type === 'order.created') {
+      var ok = busDeal({ id: 'bus-' + String(p.order).replace(/\D/g, ''), col: 3, channel: 'Сайт', age: 'сейчас', title: 'Заказ ' + p.order + (p.company ? ' · ' + p.company : ''), last: 'Оформлен в корзине, счёт выставлен · ' + (p.payment || ''), sum: p.total || 0, owner: 'робот', client: clientSlugByName(p.company), company: p.company || '', pkOrder: p.order,
+        items: (p.items || []).map(function (i) { return { name: i.name + (i.sku ? ' (' + i.sku + ')' : ''), qty: i.qty }; }),
+        timeline: [{ time: t, who: 'Сайт · корзина', action: 'заказ оформлен', text: (p.items || []).length + ' поз. на ' + money(p.total) + (p.address ? ' · ' + p.address : '') }, { time: t, who: 'Робот', action: 'выставил счёт', text: 'Счёт по заказу ' + p.order + ' отправлен в кабинет закупщика (демо).' }] });
+      if (ok) log('CRM', 'Заказ с витрины ' + p.order + (p.company ? ' · ' + p.company : ''), '—', 'Счёт выставлен · ' + money(p.total), null);
+      return { deal: ok };
+    }
+    if (ev.type === 'vendor.order.status') {
+      var deal = LS.get('newDeals', []).filter(function (x) { return p.order && x.pkOrder === p.order; })[0];
+      var moved = deal && /Подтверждена|Собрана|Отгружена|Доставлена|К расчёту|Оплачена/.test(p.status);
+      if (deal) {
+        var st = dealState(deal.id), patch = { notes: (st.notes || []).concat([{ time: t, who: (p.vendor || 'Поставщик') + ' · кабинет', action: 'заявка ' + p.request, text: p.status + (p.track ? ', трек ' + p.track : '') + (p.carrier ? ' · ' + p.carrier : '') + (p.reject ? ' · причина: ' + p.reject : '') }]) };
+        if (moved && st.col !== 4) patch.col = 4;
+        saveDeal(deal.id, patch);
+      }
+      log('CRM', 'Заявка поставщика ' + p.request + (p.order ? ' · заказ ' + p.order : ''), '—', p.status + (moved ? ' → сделка в «' + ((DATA.columns || [])[4] || 'Оплачено') + '»' : '') + (p.track ? ' · трек ' + p.track : ''), null);
+      return { deal: deal ? deal.id : null };
+    }
+    if (ev.type === 'approval.done') {
+      var ok2 = busDeal({ id: 'bus-' + String(p.id).replace(/[^\dA-Za-z]/g, '') + '-' + ev.ts.toString(36), col: 3, channel: 'Сайт', age: 'сейчас', title: 'Заявка цеха ' + p.id + ' согласована' + (p.order ? ' → ' + p.order : ''), last: (p.name || '') + ' · ' + (p.company || ''), sum: p.total || 0, owner: whoShort(), client: clientSlugByName(p.company), pkOrder: p.order || null,
+        items: (p.items || []).map(function (i) { return { name: i.name, qty: i.qty }; }), timeline: [{ time: t, who: author + ' · кабинет', action: 'согласовал заявку', text: 'Маршрут Цех → Бюджет → Закупка пройден' + (p.order ? ', оформлен заказ ' + p.order : '') }] });
+      if (ok2) log('CRM', 'Заявка цеха ' + p.id + ' · ' + (p.company || ''), 'на согласовании', 'согласована' + (p.order ? ' · заказ ' + p.order : ''), null);
+      return { deal: ok2 };
+    }
+    if (ev.type === 'approval.rejected') { log('CRM', 'Заявка цеха ' + p.id + ' · ' + (p.company || ''), 'на согласовании', 'отклонена на этапе «' + (p.stage || '') + '»' + (p.comment ? ': ' + p.comment : ''), null); return { logged: true }; }
+    if (ev.type === 'quote.requested') {
+      var qs = LS.get('busQuotes', []);
+      if (qs.some(function (x) { return x.id === p.id && x.ev === ev.id; })) return { dup: true };
+      qs.unshift({ ev: ev.id, id: p.id, name: p.name, note: p.note, company: p.company, author: author, specTotal: p.specTotal || 0, ts: ev.ts });
+      LS.set('busQuotes', qs);
+      log('Автоматизация', 'Запрос КП ' + p.id + ' от ' + (p.company || author), '—', 'в очереди «Ждёт человека»', null);
+      return { queued: true };
+    }
+    return { ignored: true };
+  }
+  function busQueueRows(list) {
+    LS.get('busQuotes', []).slice().reverse().forEach(function (q) {
+      var mins = Math.max(0, Math.round((Date.now() - q.ts) / 60000));
+      var r = el('div', { style: 'display: grid; grid-template-columns: auto minmax(0px, 1fr) auto; gap: 14px; align-items: center; border-top: 1px solid var(--color-divider); padding: 10px 0px;', 'data-bus-quote': q.id, 'data-bus-ev': q.ev },
+        '<span class="mono" style="font-size: 11px; color: var(--color-accent-700); min-width: 52px;">' + (mins < 60 ? mins + '\u00a0м' : Math.floor(mins / 60) + '\u00a0ч ' + (mins % 60) + '\u00a0м') + '</span>' +
+        '<div><div style="font-size: 14px; font-weight: 500;">' + esc('Запрос КП от ' + (q.company || q.author) + ': ' + q.id) + '</div>' +
+        '<div style="font-size: 12px; color: var(--color-neutral-700);">' + esc((q.name || '') + (q.note ? ' · ' + q.note : '') + ' · из кабинета закупщика') + '</div></div>' +
+        '<div style="display: flex; gap: 8px; align-items: center;"><span class="mono" style="font-size: 13px; white-space: nowrap;">' + (q.specTotal ? '≈ ' + money(q.specTotal) : 'расчёт') + '</span></div>');
+      list.insertBefore(r, list.firstChild);
+    });
+  }
+  function busAnswerQuote(r, done) {
+    var q = LS.get('busQuotes', []).filter(function (x) { return x.ev === r.getAttribute('data-bus-ev'); })[0];
+    if (!q) { done(); return; }
+    modal({ title: 'Ответ на запрос ' + q.id, html: '<p class="pk-adm-muted">' + esc((q.company || q.author) + ' · ' + (q.name || '')) + '</p>' + field('Сумма КП, ₽', input('total', q.specTotal ? String(q.specTotal) : '', 'inputmode="numeric" maxlength="10"'), 'Уйдёт закупщику: запрос сменит статус на «КП получено»') + field('КП действует, дней', input('days', '14', 'inputmode="numeric" maxlength="3"')),
+      buttons: [{ label: 'Отмена' }, { label: 'Отправить КП', primary: true, onClick: function (box) {
+        var total = +val(box, 'total').replace(/\s/g, ''), days = +val(box, 'days');
+        if (!(total > 0)) return 'Укажите сумму КП — целое число рублей.';
+        if (!(days >= 1 && days <= 90)) return 'Срок действия — от 1 до 90 дней.';
+        var d = new Date(); d.setDate(d.getDate() + days);
+        busEmit('quote.answered', { id: q.id, name: q.name, total: total, validUntil: d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()), by: whoShort() });
+        LS.set('busQuotes', LS.get('busQuotes', []).map(function (x) { return x.ev === q.ev ? Object.assign({}, x, { answered: total }) : x; }));
+        log('Автоматизация', 'КП ' + q.id + ' для ' + (q.company || q.author), 'запрос', 'КП на ' + money(total), null);
+        setTimeout(done, 0);
+      } }] });
+  }
+  function busConnect(B) {
+    var n = 0;
+    B.pending('operator').forEach(function (ev) { var r = busApply(ev); B.ack(ev.id, 'operator', r); if (!r.ignored && !r.dup) n++; });
+    B.on('*', function (ev) {
+      if (ev.to.indexOf('operator') < 0) return;
+      var r = busApply(ev); B.ack(ev.id, 'operator', r);
+      if (!r.ignored && !r.dup) toast(B.describe(ev, 'operator').t + (/^panel\/(crm|avtopilot)\/$/.test(PATH) ? ' — обновите страницу, чтобы увидеть' : ''));
+    });
+    return n;
+  }
+
   // ═════════ запуск ═════════
   function start() {
     chrome();
@@ -1435,5 +1522,13 @@
     persistControls();
     leftovers();
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  // bus: сначала забрать непрочитанные события (новые сделки, очередь КП), потом рисовать; без шины — через 1,5 с как раньше
+  var started = false;
+  function go() { if (started) return; started = true; start(); }
+  function boot() {
+    if (!window.PK_BUS_READY) { go(); return; }
+    PK_BUS_READY(function (B) { try { var n = busConnect(B); if (n && started) toast('Новых событий: ' + n + ' — обновите страницу, чтобы увидеть'); } catch (e) { if (window.console) console.warn('pk-bus', e); } go(); });
+    setTimeout(go, 1500);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

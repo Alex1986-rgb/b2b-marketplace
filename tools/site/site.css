@@ -826,3 +826,17 @@ tr.is-chosen td { background: color-mix(in srgb, var(--color-accent) 6%, transpa
   .pk-cat-list { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
   .pk-cat-need-h { font-size: 22px; }
 }
+
+/* auth: демо-доступ на странице входа */
+.pk-demo-access { margin: 0 0 28px; padding: 22px 24px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 12%, #fff), #fff); border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent); }
+.pk-demo-access h2 { font-size: 24px; margin: 0 0 6px; }
+.pk-demo-sub { margin: 0 0 16px; color: var(--color-neutral-800); font-size: 15px; }
+.pk-demo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pk-demo-card { background: #fff; border: 1px solid var(--line, rgba(22,38,58,.1)); border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 1px 2px rgba(22,38,58,.05); }
+.pk-demo-top { display: flex; gap: 12px; align-items: center; color: var(--color-accent-700); }
+.pk-demo-top strong { display: block; color: var(--color-text); font-family: var(--font-heading); font-size: 18px; }
+.pk-demo-top span:not(.ico) { display: block; font-size: 13px; color: var(--color-neutral-700); }
+.pk-demo-card p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--color-neutral-800); flex: 1; }
+.pk-demo-card .btn { align-self: flex-start; }
+.pk-demo-foot { margin: 14px 0 0; font-size: 12px; color: var(--color-neutral-600); }
+@media (max-width: 760px) { .pk-demo-grid { grid-template-columns: minmax(0, 1fr); } .pk-demo-access { padding: 18px 16px; } }
