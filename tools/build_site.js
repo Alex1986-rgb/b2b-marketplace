@@ -44,7 +44,7 @@ function copyDir(a, b, skip = () => false) {
 }
 
 // ── то, что выполняется внутри страницы макета ────────────────────────────────
-function inPage(routes, base) {
+function inPage(routes, base, L) {
   const P = DCLogic.prototype, orig = P.setState; let cap;
   P.setState = function (a) { cap = a; };
   const os = window.scrollTo; window.scrollTo = () => {};
@@ -89,6 +89,47 @@ function inPage(routes, base) {
     else if (a.closest('[data-track]')) a.setAttribute('href', base + (/рабочей точке/.test(t) ? routes.article.path : routes.blog.path));
   }
   for (const a of c.querySelectorAll('footer a')) if (a.textContent.trim() === 'Контакты') a.setAttribute('href', base + 'kontakty/');
+  // карточки → их собственные страницы (товары, статьи, направления, производители)
+  const norm = t => (t || '').replace(/[\s\u00A0\u202F]+/g, ' ').trim().toLowerCase();
+  const matches = (list, text) => list.filter(it => it.names.some(n => text.includes(norm(n))));
+  const nearest = (el, list, stop) => {
+    const td = el.closest('td, th');
+    if (td && td.parentElement && td.closest('table')) { // кнопка в таблице сравнения — модель в заголовке той же колонки
+      const idx = [...td.parentElement.children].indexOf(td), th = td.closest('table').querySelector('thead tr');
+      if (th && th.children[idx]) { const m = matches(list, norm(th.children[idx].textContent)); if (m.length === 1) return m[0]; }
+    }
+    for (let x = el; x && x !== c; x = x.parentElement) {
+      const m = matches(list, norm(x.textContent));
+      if (m.length === 1) return m[0];
+      if (m.length > 1) { // несколько имён — берём самое длинное, если одно вложено в другое (CR 32-4 ⊂ CR 32-4 A-F-A…)
+        const byLen = m.map(it => ({ it, n: Math.max(...it.names.filter(n => norm(x.textContent).includes(norm(n))).map(n => n.length)) })).sort((a, b) => b.n - a.n);
+        const top = byLen[0]; if (byLen.every(o => o === top || top.it.names.some(tn => o.it.names.some(on => norm(tn).includes(norm(on)))))) return top.it;
+        return null;
+      }
+      if (stop && x.matches(stop)) return null;
+    }
+    return null;
+  };
+  if (L) for (const el of c.querySelectorAll('a[href], [data-href]')) {
+    const href = el.getAttribute('href') || el.getAttribute('data-href');
+    const set = h => el.hasAttribute('href') ? el.setAttribute('href', h) : el.setAttribute('data-href', h);
+    const own = norm(el.textContent);
+    if (href === base + routes.product.path || href === base + routes.catalog.path && /в корзину|открыть|купить/.test(own)) {
+      const m = nearest(el, L.products, 'section, main'); if (m) set(m.href);
+    } else if (href === base + routes.direction.path) {
+      const m = L.directions.find(d => own === norm(d.names[0]) || own.startsWith(norm(d.names[0]) + ' ')); if (m) set(m.href);
+    } else if (href === base + routes.brand.path) {
+      const m = L.brands.find(b => b.names.some(n => own === norm(n))); if (m) set(m.href);
+    } else if (href === base + routes.article.path || href === base + routes.blog.path) {
+      const m = nearest(el, L.articles, 'section, main'); if (m) set(m.href);
+    }
+  }
+  // плашки брендов без своей страницы — не ссылка (иначе вели бы на чужой бренд)
+  for (const a of [...c.querySelectorAll('a.brand-logo')]) {
+    if (a.getAttribute('href') === base + routes.brand.path && norm(a.textContent) !== 'grundfos') {
+      const sp = document.createElement('span'); sp.className = a.className; sp.innerHTML = a.innerHTML; a.replaceWith(sp);
+    }
+  }
   // «мёртвые» ссылки и кнопки без перехода — помечаем для site.js (демо-режим)
   for (const a of c.querySelectorAll('a[href="#"]')) { a.setAttribute('href', '#'); a.setAttribute('data-demo', '1'); }
   for (const b of c.querySelectorAll('button:not([data-local])')) b.setAttribute('data-demo', '1');
@@ -138,7 +179,7 @@ function jsonLd(id, r, snap) {
 
 function page({ id, r, body, extraHead = '' }) {
   const canonical = url(r.path);
-  const ogImg = url('img/' + ({ product: 'p-cr32', quote: 'p-lgcy75', article: 'art-hero', blog: 'blog-boiler', supplier: 'warehouse', direction: 'dir-pumps', brand: 'brand' }[id] || 'og-cover') + '.jpg');
+  const ogImg = url('img/' + (String(id).startsWith('gen:') ? String(id).slice(4) : ({ product: 'p-cr32', quote: 'p-lgcy75', article: 'art-hero', blog: 'blog-boiler', supplier: 'warehouse', direction: 'dir-pumps', brand: 'brand' }[id] || 'og-cover')) + '.jpg');
   return `<!doctype html>
 <html lang="ru">
 <head>
@@ -185,6 +226,9 @@ ${body}
   const p = await b.newPage();
   await p.setViewport({ width: 1440, height: 900 });
   const errors = [];
+  const genPages = require('./gen_pages');
+  const LINKS = genPages.linkIndex(BASE);
+  const GENERATED = genPages(BASE);
   p.on('pageerror', e => errors.push(e.message));
   await p.goto(DOC, { waitUntil: 'networkidle0' });
 
@@ -194,7 +238,7 @@ ${body}
     if (r.skip) continue;
     await p.evaluate(id => { for (const s of document.querySelectorAll('select')) for (const o of s.options) if (o.value === id) { s.value = id; s.dispatchEvent(new Event('change', { bubbles: true })); return; } }, id);
     await new Promise(res => setTimeout(res, 450));
-    const snap = await p.evaluate(inPage, ROUTES, BASE);
+    const snap = await p.evaluate(inPage, ROUTES, BASE, LINKS);
     styles = snap.styles;
     const html = page({ id, r, body: snap.html, extraHead: jsonLd(id, r, snap) + '\n' });
     const file = path.join(OUT, r.path, 'index.html');
@@ -224,6 +268,16 @@ ${body}
         // screen-блоки лежат внутри sc-if-обёрток, которые рендерятся без собственного тега.
         fs.writeFileSync(path.join(OUT, '404.html'), page({ id: '404', r: { path: '404.html', index: false, title: 'Страница не найдена — ПРОМКОНТУР', desc: 'Страница не найдена.' }, body: head + main + tail }));
         const wrap = (h1, inner) => `<main style="max-width:920px;margin:0 auto;padding:40px 28px 72px"><div class="mono" style="font-size:12px;text-transform:uppercase;color:var(--color-neutral-600)"><a href="${BASE}" style="color:inherit">Главная</a> / ${h1}</div><h1 style="font-size:40px;margin:8px 0 18px">${h1}</h1><div class="pk-prose">${inner}</div></main>`;
+        for (const g of GENERATED) {
+          const f = path.join(OUT, g.path, 'index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
+          const body = g.html.replace(/IMGBASE/g, BASE + 'img/');
+          const ld = [];
+          if (g.ld) ld.push({ '@context': 'https://schema.org', ...JSON.parse(JSON.stringify(g.ld).replace(/IMGABS/g, url('img/'))) });
+          if (g.faq && g.faq.length) ld.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: g.faq.map(q => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) });
+          const head2 = ld.map(o => '<script type="application/ld+json">' + JSON.stringify(o).replace(/</g, '\\u003c') + '</script>').join('\n');
+          fs.writeFileSync(f, page({ id: g.og ? 'gen:' + g.og : g.path, r: g, body: head + body + tail, extraHead: head2 + '\n' }));
+          report.push(`       /${g.path}  ${g.h1}`);
+        }
         for (const extra of require('./extra_pages')(BASE, ROUTES)) {
           const f = path.join(OUT, extra.path, 'index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
           fs.writeFileSync(f, page({ id: extra.path, r: extra, body: head + wrap(extra.h1, extra.html) + tail }));
@@ -244,7 +298,7 @@ ${body}
   copyDir(path.join(__dirname, 'site', 'static'), OUT);
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 
-  const idx = Object.values(ROUTES).filter(r => r.index && !r.skip).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
+  const idx = Object.values(ROUTES).filter(r => r.index && !r.skip).concat(GENERATED).concat(require('./extra_pages')(BASE, ROUTES).filter(r => r.index));
   fs.writeFileSync(path.join(OUT, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     idx.map(r => `  <url><loc>${url(r.path)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n') + '\n</urlset>\n');
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${url('sitemap.xml')}\n`);

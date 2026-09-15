@@ -23,6 +23,11 @@
   @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
   .marquee-track { display:flex; gap:0; width:max-content; animation: marquee 42s linear infinite; }
   .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track:hover { animation-play-state: paused; }
+  .brand-logo { display:inline-flex; align-items:center; gap:10px; margin:0 10px; padding:8px 16px 8px 8px; border-radius:12px; background:var(--color-surface, #fff); border:1px solid color-mix(in srgb, var(--color-text) 8%, transparent); text-decoration:none; color:var(--color-neutral-700); white-space:nowrap; filter:grayscale(1); opacity:.85; transition:filter .2s, opacity .2s, box-shadow .2s, color .2s; }
+  .brand-logo:hover { filter:none; opacity:1; color:var(--color-text); box-shadow:0 6px 18px rgba(22,38,58,.10); }
+  .brand-logo-mark { width:32px; height:32px; border-radius:9px; display:grid; place-items:center; background:var(--color-accent); color:#fff; flex:none; }
+  .brand-logo-name { font-family:var(--font-heading); font-weight:600; font-size:17px; letter-spacing:.01em; }
   .split { display:grid; gap:36px; align-items:start; grid-template-columns:minmax(0,1fr) var(--aside,380px); }
   /* пачка 5: иконки и фото. Иконка без i-* (пустое поле данных) не рисуется. */
   .ico:not([class*=" i-"]) { display:none !important; }
@@ -84,6 +89,7 @@
     .hide-m { display:none !important; }
     .only-m-block { display:block !important; }
     .ph-side { height:200px !important; }
+    nav.blueprint[style*="top: 124px"] { position:relative !important; top:auto !important; }
     .pk-stepper { grid-auto-flow:row !important; }
     .pk-step { flex-direction:row !important; align-items:flex-start !important; text-align:left !important; gap:12px !important; padding:0 0 18px !important; }
     .pk-step:last-child { padding-bottom:0 !important; }
@@ -189,8 +195,8 @@
         <h1 style="color:#fff;font-size:44px;max-width:900px;text-wrap:pretty">Промышленное оборудование от производителей и поставщиков в одном месте</h1>
         <p style="font-size:17px;color:var(--color-accent-200);max-width:720px">Более 115 000 моделей. Подбор по характеристикам, артикулу или фотографии. Доставка по России.</p>
         <div style="display:flex;margin-top:22px;max-width:900px;align-items:center;gap:4px;padding:5px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(8,16,26,.28)">
-          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:48px;font-size:16px;background:transparent;border:0;box-shadow:none;flex:1;min-width:0;padding-left:12px">
-          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:48px;background:transparent;border:0;border-radius:8px;color:var(--color-accent-700);white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
+          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:48px;font-size:16px;background:transparent;border:0;box-shadow:none;padding-left:12px">
+          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:48px;background:transparent;border:0;border-radius:8px;color:var(--color-text);white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:var(--color-accent-700);width:18px;height:18px"></span>По фото шильдика</button>
           <button class="btn btn-primary" style="min-height:48px;padding-inline:28px;font-size:16px;color:#fff;gap:8px;border-radius:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
         </div>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
@@ -219,7 +225,7 @@
         <sc-for list="{{ brandTicker }}" as="b" hint-placeholder-count="2">
           <div style="display:flex;gap:0">
             <sc-for list="{{ b.items }}" as="n" hint-placeholder-count="20">
-              <span class="mono" style="font-size:14px;color:var(--color-neutral-800);padding:0 22px;border-right:1px solid var(--color-divider);white-space:nowrap">{{ n }}</span>
+              <a href="#" onClick="{{ goBrand }}" class="brand-logo" title="{{ n.t }}"><span class="brand-logo-mark"><span class="ico ico-20 {{ n.icon }}"></span></span><span class="brand-logo-name">{{ n.t }}</span></a>
             </sc-for>
           </div>
         </sc-for>
@@ -295,19 +301,13 @@
           <div class="blueprint" style="padding:24px 26px;display:flex;flex-direction:column;gap:10px">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <h3 style="margin:0;display:flex;align-items:center;gap:10px"><span class="ico ico-28 i-step-one-price" style="color:var(--color-accent-700)"></span>Одна цена вместо десятков продавцов</h3>
-            <p style="font-size:15px;color:var(--color-neutral-800);margin:0">Система сама сравнивает прайсы поставщиков по цене, остатку и сроку, добавляет наценку и показывает одну цену. Оборудование едет напрямую со склада поставщика.</p>
-            <div style="background:var(--color-bg);border-radius:10px;padding:14px 16px;margin-top:4px">
-              <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:8px">Внутренний подбор · Grundfos CR 32-4</div>
-              <sc-for list="{{ suppliersLight }}" as="s" hint-placeholder-count="3">
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;padding:7px 10px;border-radius:8px;background: {{ s.bg }};color: {{ s.color }};font-weight: {{ s.weight }}">
-                  <span style="display:flex;align-items:center;gap:8px"><span style="width:18px;height:18px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:11px;line-height:1;background: {{ s.dotBg }};color:#fff;box-shadow: {{ s.dotRing }}">{{ s.mark }}</span>{{ s.name }}</span><span class="mono" style="font-size:15px">{{ s.price }}</span>
-                </div>
-              </sc-for>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--color-divider);margin-top:8px;padding-top:10px">
-                <span style="font-size:14px">Цена на сайте</span>
-                <span class="mono" style="font-size:24px">104 900 ₽</span>
-              </div>
-            </div>
+            <p style="font-size:15px;color:var(--color-neutral-800);margin:0">Сравниваем предложения по цене, наличию и сроку отгрузки и показываем одну итоговую цену. Никаких запросов «уточните стоимость» и доплат при оформлении.</p>
+            <ul style="list-style:none;margin:6px 0 0;padding:0">
+              <li style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--color-divider)"><span class="ico ico-24 i-pay-invoice" style="color:var(--color-accent-700);margin-top:2px"></span><span><span style="display:block;font-weight:600;font-size:15px">Цена с НДС и доставкой по России</span><span style="display:block;font-size:13px;color:var(--color-neutral-700)">в карточке — сразу итоговая сумма</span></span></li>
+              <li style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--color-divider)"><span class="ico ico-24 i-log-direct" style="color:var(--color-accent-700);margin-top:2px"></span><span><span style="display:block;font-weight:600;font-size:15px">Остаток и срок отгрузки проверены</span><span style="display:block;font-size:13px;color:var(--color-neutral-700)">данные обновляются из складов поставщиков</span></span></li>
+              <li style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--color-divider)"><span class="ico ico-24 i-doc-generic" style="color:var(--color-accent-700);margin-top:2px"></span><span><span style="display:block;font-weight:600;font-size:15px">Счёт за 15 минут, документы по ЭДО</span><span style="display:block;font-size:13px;color:var(--color-neutral-700)">оплата по счёту, картой или с отсрочкой</span></span></li>
+              <li style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--color-divider)"><span class="ico ico-24 i-step-direct-ship" style="color:var(--color-accent-700);margin-top:2px"></span><span><span style="display:block;font-weight:600;font-size:15px">Отгрузка напрямую со склада</span><span style="display:block;font-size:13px;color:var(--color-neutral-700)">трек и статус — в заказе и в MAX</span></span></li>
+            </ul>
           </div>
           <div style="display:flex;flex-direction:column;gap:18px">
             <div class="card blueprint" style="padding:20px 22px">
@@ -315,7 +315,7 @@
               <span class="card-kicker">до 500 000 ₽</span>
               <span class="card-title">Покупка прямо из корзины</span>
               <p class="card-body" style="font-size:14px">Цена, наличие и срок доставки видны сразу. Оплата по счёту или картой, закрывающие документы в личном кабинете.</p>
-              <button onClick="{{ goProduct }}" class="btn btn-secondary" style="align-self:flex-start">Открыть каталог</button>
+              <button onClick="{{ goDirections }}" class="btn btn-secondary" style="align-self:flex-start">Открыть каталог</button>
             </div>
             <div class="card blueprint" style="padding:20px 22px">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -3410,7 +3410,7 @@
             <tr>
               <th style="width:210px">Параметр</th>
               <sc-for list="{{ compareModels }}" as="m" hint-placeholder-count="4">
-                <th style="text-align:left;vertical-align:bottom"><span class="thumb" style="width:96px;height:96px;margin-bottom:8px;background: {{ m.bg }}"></span>{{ m.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ m.sku }}</div></th>
+                <th style="text-align:left;vertical-align:bottom"><span class="thumb" style="width:96px;height:96px;margin-bottom:8px;border-radius:10px;background: {{ m.bg }}"></span><div style="font-family:var(--font-heading);font-weight:600;font-size:15px;text-transform:none;letter-spacing:0;color:var(--color-text)">{{ m.name }}</div><div style="font-size:12px;color:var(--color-neutral-600);font-weight:400;text-transform:none;letter-spacing:0">{{ m.sku }}</div></th>
               </sc-for>
             </tr>
           </thead>
@@ -5143,7 +5143,7 @@ class Component extends DCLogic {
           { q: "Есть ли взрывозащищённое исполнение?", a: "Да, по электродвигателям, освещению, КИПиА и вентиляции доступны Ex-исполнения — указывайте маркировку в запросе." },
           { q: "Работаете ли с импортом и параллельным ввозом?", a: "Да, по части брендов через партнёров. Срок и курс фиксируются в КП на момент подтверждения." },
           { q: "Есть ли шеф-монтаж по проектным направлениям?", a: "По компрессорам, котельному, холодильному и очистному оборудованию — да, работы считаются отдельной строкой в КП." },
-          { q: "Можно ли закрепить цены на год?", a: "Для регулярной номенклатуры заключаем рамочный договор с прайс-листом и фиксацией наценки." }
+          { q: "Можно ли закрепить цены на год?", a: "Для регулярной номенклатуры заключаем рамочный договор с прайс-листом и фиксацией цен." }
         ]
       },
       chat: {
@@ -5199,7 +5199,7 @@ class Component extends DCLogic {
         faqHeading: "О заказе и доставке",
         faq: [
           { q: "Нужно ли регистрироваться, чтобы увидеть цену?", a: "Нет. Цены открытые: стоимость, остаток и срок отгрузки видны сразу. Регистрация нужна только для выставления счёта, отсрочки и доступа к документам." },
-          { q: "Как формируется цена на сайте?", a: "Система сравнивает предложения поставщиков по цене, остатку и сроку, выбирает лучшее и добавляет наценку сервиса. Вы видите одну итоговую цену с НДС и доставкой по РФ." },
+          { q: "Как формируется цена на сайте?", a: "Система сравнивает предложения поставщиков по цене, остатку и сроку, выбирает лучшее. Вы видите одну итоговую цену с НДС и доставкой по РФ — без доплат при оформлении." },
           { q: "Можно ли купить оборудование дороже 500 000 ₽ из корзины?", a: "Такие позиции оформляются через запрос КП: нужен инженерный подбор, расчёт доставки габаритного груза и согласование условий оплаты. Ответ приходит в течение двух рабочих часов." },
           { q: "Кто отгружает товар и кто отвечает по гарантии?", a: "Отгружает поставщик напрямую на ваш адрес. Гарантию даёт производитель, гарантийные обращения мы ведём за вас через кабинет." },
           { q: "Работаете ли вы с регионами?", a: "Да, доставка по всей России. Для крупногабаритного оборудования расчёт делается индивидуально и входит в КП." },
@@ -6465,7 +6465,8 @@ class Component extends DCLogic {
 
       examples: ["Grundfos CR 32-4", "SKF 6205", "INNOVERT 15 кВт", "Kaishan 10 бар"],
       brandTicker: (() => {
-        const brands = ["GRUNDFOS", "WILO", "CNP", "SKF", "NSK", "SEW-EURODRIVE", "NORD", "INNOVERT", "SCHNEIDER", "ABB", "SIEMENS", "DANFOSS", "KAISHAN", "ATLAS COPCO", "FESTO", "CAMOZZI", "PARKER", "EBARA", "ЛИВГИДРОМАШ", "КАЛУЖСКИЙ НЗ", "ЧЕБОКСАРСКИЙ ЭА", "ВЗЛЁТ", "ЭЛЕКТРОПРИВОД", "РЕДУКТОР-ПТО"];
+        const prof = { pump: "i-dir-pumps", bearing: "i-dir-bearings", gear: "i-dir-gearboxes", vfd: "i-dir-vfd", el: "i-dir-electrical", air: "i-dir-compressors", pn: "i-dir-pneumatics", kip: "i-dir-kipia" };
+        const brands = [["Grundfos", "pump"], ["Wilo", "pump"], ["CNP", "pump"], ["SKF", "bearing"], ["NSK", "bearing"], ["SEW-Eurodrive", "gear"], ["NORD", "gear"], ["INNOVERT", "vfd"], ["Schneider", "el"], ["ABB", "el"], ["Siemens", "el"], ["Danfoss", "vfd"], ["Kaishan", "air"], ["Atlas Copco", "air"], ["Festo", "pn"], ["Camozzi", "pn"], ["Parker", "pn"], ["Ebara", "pump"], ["Ливгидромаш", "pump"], ["Калужский НЗ", "pump"], ["Чебоксарский ЭА", "el"], ["Взлёт", "kip"], ["Электропривод", "vfd"], ["Редуктор-ПТО", "gear"]].map(([t, k]) => ({ t, icon: prof[k] }));
         return [{ items: brands }, { items: brands }];
       })(),
       heroStats: [
@@ -6483,7 +6484,7 @@ class Component extends DCLogic {
       steps: [
         { icon: "i-step-request", n: "01", title: "Заявка", text: "Клиент выбирает позицию или отправляет запрос КП." },
         { icon: "i-step-supplier-pick", n: "02", title: "Подбор поставщика", text: "Система сравнивает цены, остатки и сроки по всем прайсам." },
-        { icon: "i-step-one-price", n: "03", title: "Одна цена", text: "Клиент видит итоговую стоимость с наценкой и доставкой." },
+        { icon: "i-step-one-price", n: "03", title: "Одна цена", text: "Цена в карточке уже с НДС и доставкой — без доплат при оформлении." },
         { icon: "i-step-direct-ship", n: "04", title: "Прямая отгрузка", text: "Поставщик отгружает товар напрямую клиенту, документы — у нас." }
       ],
       suppliers: [

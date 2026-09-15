@@ -1,0 +1,1680 @@
+{
+  "generatedAt": "2026-09-15T01:46:11.318Z",
+  "site": "/Users/alexandr/projects/b2b-marketplace/site",
+  "origin": "http://127.0.0.1:63705/b2b-marketplace/",
+  "durationSec": 44,
+  "dataFiles": {
+    "products": 24,
+    "articles": 15,
+    "directions": 45,
+    "brands": 16
+  },
+  "entities": {
+    "products": 24,
+    "articles": 16,
+    "directions": 45,
+    "brands": 16
+  },
+  "stats": {
+    "pages": 135,
+    "publicPages": 122,
+    "privatePages": 13,
+    "links": 10374,
+    "cardLinks": 894,
+    "demoElements": 356,
+    "uniqueTargets": 133
+  },
+  "summary": {
+    "errors": 61,
+    "warnings": 48,
+    "byType": {
+      "wrong_target": {
+        "severity": "error",
+        "count": 2
+      },
+      "card_not_clickable": {
+        "severity": "error",
+        "count": 6
+      },
+      "many_cards_same_target": {
+        "severity": "warning",
+        "count": 46
+      },
+      "card_wrong_target": {
+        "severity": "error",
+        "count": 45
+      },
+      "target_h1_mismatch": {
+        "severity": "error",
+        "count": 1
+      },
+      "card_to_hub": {
+        "severity": "error",
+        "count": 1
+      },
+      "page_not_in_data": {
+        "severity": "warning",
+        "count": 1
+      },
+      "orphan": {
+        "severity": "warning",
+        "count": 1
+      },
+      "click_test": {
+        "severity": "error",
+        "count": 4
+      },
+      "click_test_partial": {
+        "severity": "warning",
+        "count": 2
+      }
+    }
+  },
+  "clickTests": [
+    {
+      "test": "первая карточка каталога",
+      "width": 390,
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 32-4",
+      "cardIsLink": false,
+      "point": [
+        251,
+        485
+      ],
+      "landed": "katalog/nasosy/",
+      "ok": false,
+      "detail": "клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+    },
+    {
+      "test": "первая статья блога",
+      "width": 390,
+      "page": "blog/",
+      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "cardIsLink": false,
+      "point": [
+        195,
+        427
+      ],
+      "landed": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
+      "ok": true,
+      "partial": true,
+      "detail": "название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+    },
+    {
+      "test": "первый раздел направлений",
+      "width": 390,
+      "page": "napravleniya/",
+      "text": "Электродвигатели",
+      "cardIsLink": true,
+      "target": "katalog/nasosy/",
+      "point": [
+        195,
+        451
+      ],
+      "landed": "katalog/nasosy/",
+      "h1": "Насосы",
+      "ok": false,
+      "detail": "не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+    },
+    {
+      "test": "первая карточка каталога",
+      "width": 1440,
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 32-4",
+      "cardIsLink": false,
+      "point": [
+        520,
+        450
+      ],
+      "landed": "katalog/nasosy/",
+      "ok": false,
+      "detail": "клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+    },
+    {
+      "test": "первая статья блога",
+      "width": 1440,
+      "page": "blog/",
+      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "cardIsLink": false,
+      "point": [
+        1046,
+        410
+      ],
+      "landed": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
+      "ok": true,
+      "partial": true,
+      "detail": "название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+    },
+    {
+      "test": "первый раздел направлений",
+      "width": 1440,
+      "page": "napravleniya/",
+      "text": "Электродвигатели",
+      "cardIsLink": true,
+      "target": "katalog/nasosy/",
+      "point": [
+        226,
+        450
+      ],
+      "landed": "katalog/nasosy/",
+      "h1": "Насосы",
+      "ok": false,
+      "detail": "не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+    }
+  ],
+  "issues": [
+    {
+      "type": "wrong_target",
+      "severity": "error",
+      "page": "chat/",
+      "text": "Запросить КП",
+      "card": "Подбор · насос для оборотной воды ответ 4 сек Нужен насос на оборотную воду: 40 м³/ч, напор 35 м, температура до +60 °C. Grundfos дорого, н…",
+      "cardSel": "div.blueprint",
+      "target": "katalog/kompressory/kaishan-lgcy-75/",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-45-3/",
+        "katalog/nasosy/cnp-cdlf-42-30/",
+        "katalog/nasosy/wilo-helix-v-4204/"
+      ],
+      "detail": "товар: в карточке «Grundfos CR 45-3», «CNP CDLF 42-30», «Wilo Helix V 4204», ссылка на «Kaishan LGCY-75»"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 32-4",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-32-4/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos NB 40-200/219",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-nb-40-200-219/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 45-3",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-45-3/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 20-5",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-20-5/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos NBG 65-50-160",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-nbg-65-50-160/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "card_not_clickable",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos TP 65-230/2",
+      "cardSel": "div.card.blueprint",
+      "expected": [
+        "katalog/nasosy/grundfos-tp-65-230-2/"
+      ],
+      "detail": "название/фото карточки не ссылка; href на свою страницу есть только у кнопки «В корзину», а её перехватывает site.js (добавляет в корзину) — карточка не открывается"
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/3d-pechat-dlya-proizvodstva/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «FDM-принтеры промышленного класса 40», «SLA и DLP фотополимерные принтеры 30», «SLS принтеры для полимерных порошков 10», «3D-сканеры 30»…",
+      "examples": [
+        "FDM-принтеры промышленного класса 40",
+        "SLA и DLP фотополимерные принтеры 30",
+        "SLS принтеры для полимерных порошков 10",
+        "3D-сканеры 30",
+        "Инженерные пластики и композитные нити 40",
+        "Фотополимеры и порошки 20",
+        "Постобработка и сушка материалов 10"
+      ]
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Электродвигатели",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/elektrodvigateli/"
+      ],
+      "detail": "карточка направлениеа «Электродвигатели» ведёт на katalog/nasosy/, а её страница — napravleniya/elektrodvigateli/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Частотники и автоматика",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/chastotniki-i-avtomatika/"
+      ],
+      "detail": "карточка направлениеа «Частотники и автоматика» ведёт на katalog/nasosy/, а её страница — napravleniya/chastotniki-i-avtomatika/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "КИПиА",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/kipia/"
+      ],
+      "detail": "карточка направлениеа «КИПиА» ведёт на katalog/nasosy/, а её страница — napravleniya/kipia/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Электротехника",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/elektrotekhnika/"
+      ],
+      "detail": "карточка направлениеа «Электротехника» ведёт на katalog/nasosy/, а её страница — napravleniya/elektrotekhnika/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Кабель и кабеленесущие системы",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/kabel-i-kabelenesushchie-sistemy/"
+      ],
+      "detail": "карточка направлениеа «Кабель и кабеленесущие системы» ведёт на katalog/nasosy/, а её страница — napravleniya/kabel-i-kabelenesushchie-sistemy/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "ИБП и электропитание",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/ibp-i-elektropitanie/"
+      ],
+      "detail": "карточка направлениеа «ИБП и электропитание» ведёт на katalog/nasosy/, а её страница — napravleniya/ibp-i-elektropitanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Дизель-генераторы",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/dizel-generatory/"
+      ],
+      "detail": "карточка направлениеа «Дизель-генераторы» ведёт на katalog/nasosy/, а её страница — napravleniya/dizel-generatory/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленное освещение",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennoe-osveshchenie/"
+      ],
+      "detail": "карточка направлениеа «Промышленное освещение» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennoe-osveshchenie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Энергосбережение",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/energosberezhenie/"
+      ],
+      "detail": "карточка направлениеа «Энергосбережение» ведёт на katalog/nasosy/, а её страница — napravleniya/energosberezhenie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Насосы",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/nasosy/"
+      ],
+      "detail": "карточка направлениеа «Насосы» ведёт на katalog/nasosy/, а её страница — napravleniya/nasosy/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленная арматура",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennaya-armatura/"
+      ],
+      "detail": "карточка направлениеа «Промышленная арматура» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennaya-armatura/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Гидравлика",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/gidravlika/"
+      ],
+      "detail": "карточка направлениеа «Гидравлика» ведёт на katalog/nasosy/, а её страница — napravleniya/gidravlika/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Пневматика",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/pnevmatika/"
+      ],
+      "detail": "карточка направлениеа «Пневматика» ведёт на katalog/nasosy/, а её страница — napravleniya/pnevmatika/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Теплообменное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/teploobmennoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Теплообменное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/teploobmennoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Котельное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/kotelnoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Котельное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/kotelnoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Водоподготовка",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/vodopodgotovka/"
+      ],
+      "detail": "карточка направлениеа «Водоподготовка» ведёт на katalog/nasosy/, а её страница — napravleniya/vodopodgotovka/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Очистные сооружения",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/ochistnye-sooruzheniya/"
+      ],
+      "detail": "карточка направлениеа «Очистные сооружения» ведёт на katalog/nasosy/, а её страница — napravleniya/ochistnye-sooruzheniya/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Пожарное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/pozharnoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Пожарное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/pozharnoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Компрессоры",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/kompressory/"
+      ],
+      "detail": "карточка направлениеа «Компрессоры» ведёт на katalog/nasosy/, а её страница — napravleniya/kompressory/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Вентиляция и климат",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/ventilyaciya-i-klimat/"
+      ],
+      "detail": "карточка направлениеа «Вентиляция и климат» ведёт на katalog/nasosy/, а её страница — napravleniya/ventilyaciya-i-klimat/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленный холод",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennyj-holod/"
+      ],
+      "detail": "карточка направлениеа «Промышленный холод» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennyj-holod/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленные фильтры",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennye-filtry/"
+      ],
+      "detail": "карточка направлениеа «Промышленные фильтры» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-filtry/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Пылеулавливание и аспирация",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/pyleulavlivanie-i-aspiraciya/"
+      ],
+      "detail": "карточка направлениеа «Пылеулавливание и аспирация» ведёт на katalog/nasosy/, а её страница — napravleniya/pyleulavlivanie-i-aspiraciya/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Очистка воздуха и газов",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/ochistka-vozduha-i-gazov/"
+      ],
+      "detail": "карточка направлениеа «Очистка воздуха и газов» ведёт на katalog/nasosy/, а её страница — napravleniya/ochistka-vozduha-i-gazov/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленные печи и сушильные камеры",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennye-pechi-i-sushilnye-kamery/"
+      ],
+      "detail": "карточка направлениеа «Промышленные печи и сушильные камеры» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-pechi-i-sushilnye-kamery/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Редукторы и мотор-редукторы",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/reduktory-i-motor-reduktory/"
+      ],
+      "detail": "карточка направлениеа «Редукторы и мотор-редукторы» ведёт на katalog/nasosy/, а её страница — napravleniya/reduktory-i-motor-reduktory/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Подшипники и комплектующие",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/podshipniki-i-komplektuyushchie/"
+      ],
+      "detail": "карточка направлениеа «Подшипники и комплектующие» ведёт на katalog/nasosy/, а её страница — napravleniya/podshipniki-i-komplektuyushchie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Запчасти для производства",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/zapchasti-dlya-proizvodstva/"
+      ],
+      "detail": "карточка направлениеа «Запчасти для производства» ведёт на katalog/nasosy/, а её страница — napravleniya/zapchasti-dlya-proizvodstva/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Конвейерное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/konvejernoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Конвейерное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/konvejernoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Подъёмное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/podemnoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Подъёмное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/podemnoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленная химия",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennaya-himiya/"
+      ],
+      "detail": "карточка направлениеа «Промышленная химия» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennaya-himiya/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Оборудование для металлообработки",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/oborudovanie-dlya-metalloobrabotki/"
+      ],
+      "detail": "карточка направлениеа «Оборудование для металлообработки» ведёт на katalog/nasosy/, а её страница — napravleniya/oborudovanie-dlya-metalloobrabotki/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленный инструмент",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennyj-instrument/"
+      ],
+      "detail": "карточка направлениеа «Промышленный инструмент» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennyj-instrument/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Станки и ЧПУ",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/stanki-i-chpu/"
+      ],
+      "detail": "карточка направлениеа «Станки и ЧПУ» ведёт на katalog/nasosy/, а её страница — napravleniya/stanki-i-chpu/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Сварочное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/svarochnoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Сварочное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/svarochnoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Промышленные роботы",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/promyshlennye-roboty/"
+      ],
+      "detail": "карточка направлениеа «Промышленные роботы» ведёт на katalog/nasosy/, а её страница — napravleniya/promyshlennye-roboty/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Системы машинного зрения",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/sistemy-mashinnogo-zreniya/"
+      ],
+      "detail": "карточка направлениеа «Системы машинного зрения» ведёт на katalog/nasosy/, а её страница — napravleniya/sistemy-mashinnogo-zreniya/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "3D-печать для производства",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/3d-pechat-dlya-proizvodstva/"
+      ],
+      "detail": "карточка направлениеа «3D-печать для производства» ведёт на katalog/nasosy/, а её страница — napravleniya/3d-pechat-dlya-proizvodstva/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Лабораторное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/laboratornoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Лабораторное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/laboratornoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Сепараторы и центрифуги",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/separatory-i-centrifugi/"
+      ],
+      "detail": "карточка направлениеа «Сепараторы и центрифуги» ведёт на katalog/nasosy/, а её страница — napravleniya/separatory-i-centrifugi/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Складская техника",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/skladskaya-tehnika/"
+      ],
+      "detail": "карточка направлениеа «Складская техника» ведёт на katalog/nasosy/, а её страница — napravleniya/skladskaya-tehnika/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Упаковочное оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/upakovochnoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Упаковочное оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/upakovochnoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Весовое оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/vesovoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Весовое оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/vesovoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Пищевое оборудование",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/pishchevoe-oborudovanie/"
+      ],
+      "detail": "карточка направлениеа «Пищевое оборудование» ведёт на katalog/nasosy/, а её страница — napravleniya/pishchevoe-oborudovanie/"
+    },
+    {
+      "type": "card_wrong_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Средства безопасности",
+      "cardSel": "a.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "napravleniya/sredstva-bezopasnosti/"
+      ],
+      "detail": "карточка направлениеа «Средства безопасности» ведёт на katalog/nasosy/, а её страница — napravleniya/sredstva-bezopasnosti/"
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "error",
+      "page": "napravleniya/",
+      "target": "katalog/nasosy/",
+      "text": "45 разных карточек",
+      "detail": "45 разных карточек ведут на один адрес katalog/nasosy/: «Электродвигатели 6 900 асинхронные, взр…», «Частотники и автоматика 2 310 ПЛК, HMI,…», «КИПиА 4 180 датчики давления и температ…», «Электротехника 9 640 автоматы, контакто…»…",
+      "examples": [
+        "Электродвигатели 6 900 асинхронные, взрывозащищённые, тормоз",
+        "Частотники и автоматика 2 310 ПЛК, HMI, датчики, энкодеры, с",
+        "КИПиА 4 180 датчики давления и температуры, расходомеры, уро",
+        "Электротехника 9 640 автоматы, контакторы, реле, клеммы, шка",
+        "Кабель и кабеленесущие системы 3 520 промышленный кабель, ло",
+        "ИБП и электропитание 1 240 промышленные UPS, стабилизаторы, ",
+        "Дизель-генераторы 610 ДГУ, АВР, контейнерные станции",
+        "Промышленное освещение 2 070 LED для цехов и складов, взрыво",
+        "Энергосбережение 480 компенсация реактивной мощности, монито",
+        "Насосы 4 218 химические, пищевые, дренажные, дозировочные, ц",
+        "Промышленная арматура 8 470 задвижки, клапаны, краны, затвор",
+        "Гидравлика 5 130 насосы, распределители, РВД, гидроцилиндры"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/chastotniki-i-avtomatika/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Преобразователи частоты до 7,5 кВт 560», «Преобразователи частоты 11–250 кВт 370», «Устройства плавного пуска 210», «Программируемые логические контроллеры …»…",
+      "examples": [
+        "Преобразователи частоты до 7,5 кВт 560",
+        "Преобразователи частоты 11–250 кВт 370",
+        "Устройства плавного пуска 210",
+        "Программируемые логические контроллеры 320",
+        "Панели оператора HMI 230",
+        "Сервоприводы и серводвигатели 210",
+        "Энкодеры и датчики положения 250",
+        "Шкафы управления под заказ 160"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/dizel-generatory/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «ДГУ открытого исполнения 140», «ДГУ в шумозащитном кожухе 160», «Контейнерные электростанции 90», «Шкафы АВР 100»…",
+      "examples": [
+        "ДГУ открытого исполнения 140",
+        "ДГУ в шумозащитном кожухе 160",
+        "Контейнерные электростанции 90",
+        "Шкафы АВР 100",
+        "Газопоршневые установки 30",
+        "Запчасти, фильтры и контроллеры ДГУ 90"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/elektrodvigateli/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Асинхронные общепромышленные АИР 3 100», «Взрывозащищённые АИМЛ, ВА, ВРП 830», «Двигатели с тормозом 550», «Крановые и металлургические 350»…",
+      "examples": [
+        "Асинхронные общепромышленные АИР 3 100",
+        "Взрывозащищённые АИМЛ, ВА, ВРП 830",
+        "Двигатели с тормозом 550",
+        "Крановые и металлургические 350",
+        "Однофазные и малой мощности 620",
+        "Двигатели под частотное регулирование 480",
+        "Высоковольтные 6–10 кВ 210",
+        "Щётки, крыльчатки, кожухи, клеммные коробки 760"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/elektrotekhnika/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Модульные автоматические выключатели и …», «Силовые автоматы в литом корпусе 1 060», «Контакторы и тепловые реле 1 450», «Промежуточные реле и таймеры 1 160»…",
+      "examples": [
+        "Модульные автоматические выключатели и УЗО 2 310",
+        "Силовые автоматы в литом корпусе 1 060",
+        "Контакторы и тепловые реле 1 450",
+        "Промежуточные реле и таймеры 1 160",
+        "Клеммы, маркировка, DIN-рейки 1 350",
+        "Корпуса и электротехнические шкафы 960",
+        "Кнопки, лампы, переключатели 870",
+        "Щиты распределения под заказ 480"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/energosberezhenie/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Установки компенсации реактивной мощнос…», «Конденсаторы и контакторы для УКРМ 100», «Фильтры гармоник 50», «Счётчики и анализаторы качества сети 110»…",
+      "examples": [
+        "Установки компенсации реактивной мощности 120",
+        "Конденсаторы и контакторы для УКРМ 100",
+        "Фильтры гармоник 50",
+        "Счётчики и анализаторы качества сети 110",
+        "Системы мониторинга энергопотребления 60",
+        "Регуляторы реактивной мощности 40"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/gidravlika/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Шестерённые, аксиально-поршневые и плас…», «Гидромоторы 410», «Распределители и клапаны 820», «Гидроцилиндры 720»…",
+      "examples": [
+        "Шестерённые, аксиально-поршневые и пластинчатые насосы 770",
+        "Гидромоторы 410",
+        "Распределители и клапаны 820",
+        "Гидроцилиндры 720",
+        "Рукава высокого давления и фитинги 1 230",
+        "Гидростанции и маслостанции 310",
+        "Фильтры, баки, теплообменники 460",
+        "Уплотнения и ремкомплекты 410"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/ibp-i-elektropitanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Онлайн-ИБП 1–20 кВА 270», «Трёхфазные ИБП 20–400 кВА 120», «Стабилизаторы напряжения 240», «Аккумуляторные батареи AGM и GEL 220»…",
+      "examples": [
+        "Онлайн-ИБП 1–20 кВА 270",
+        "Трёхфазные ИБП 20–400 кВА 120",
+        "Стабилизаторы напряжения 240",
+        "Аккумуляторные батареи AGM и GEL 220",
+        "Аккумуляторные шкафы и стеллажи 90",
+        "Блоки питания на DIN-рейку 200",
+        "Инверторы и зарядные устройства 100"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/kabel-i-kabelenesushchie-sistemy/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Силовой кабель ВВГ, АВВГ, ВБШв 770», «Контрольный кабель и кабель управления …», «Гибкий кабель КГ и для подвижных механи…», «Огнестойкий кабель нг(А)-FRLS 350»…",
+      "examples": [
+        "Силовой кабель ВВГ, АВВГ, ВБШв 770",
+        "Контрольный кабель и кабель управления 490",
+        "Гибкий кабель КГ и для подвижных механизмов 390",
+        "Огнестойкий кабель нг(А)-FRLS 350",
+        "Кабельные лотки и короба 600",
+        "Кабельные вводы и сальники 320",
+        "Кабельные муфты и наконечники 320",
+        "Кабель для взрывоопасных зон 280"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/kipia/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Датчики и преобразователи давления 920», «Манометры и мановакуумметры 670», «Термосопротивления и термопары 630», «Расходомеры и счётчики 500»…",
+      "examples": [
+        "Датчики и преобразователи давления 920",
+        "Манометры и мановакуумметры 670",
+        "Термосопротивления и термопары 630",
+        "Расходомеры и счётчики 500",
+        "Уровнемеры и сигнализаторы уровня 420",
+        "Регуляторы и вторичные приборы 460",
+        "Реле давления и температуры 330",
+        "Отборные устройства и клапанные блоки 250"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/kompressory/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Винтовые компрессоры 590», «Поршневые компрессоры 350», «Безмасляные компрессоры 160», «Осушители рефрижераторные и адсорбционн…»…",
+      "examples": [
+        "Винтовые компрессоры 590",
+        "Поршневые компрессоры 350",
+        "Безмасляные компрессоры 160",
+        "Осушители рефрижераторные и адсорбционные 250",
+        "Ресиверы 190",
+        "Магистральные фильтры и сепараторы 190",
+        "Запчасти и сервисные комплекты 210"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/konvejernoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Конвейерные ролики и роликоопоры 740», «Конвейерные ленты резинотканевые и ПВХ …», «Мотор-барабаны 290», «Приводные и натяжные барабаны 340»…",
+      "examples": [
+        "Конвейерные ролики и роликоопоры 740",
+        "Конвейерные ленты резинотканевые и ПВХ 570",
+        "Мотор-барабаны 290",
+        "Приводные и натяжные барабаны 340",
+        "Тяговые и пластинчатые цепи 340",
+        "Очистители лент и футеровка 290",
+        "Конвейеры под заказ 290"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/kotelnoe-oborudovanie/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Водогрейные котлы 230», «Паровые котлы и парогенераторы 130», «Газовые и комбинированные горелки 270», «Автоматика котельных и безопасности 220»…",
+      "examples": [
+        "Водогрейные котлы 230",
+        "Паровые котлы и парогенераторы 130",
+        "Газовые и комбинированные горелки 270",
+        "Автоматика котельных и безопасности 220",
+        "Насосные группы и гидрострелки 180",
+        "Дымоходы и газоходы 150",
+        "Расширительные баки и предохранительная арматура 180",
+        "Блочно-модульные котельные 120"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/laboratornoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Анализаторы состава и спектрометры 200», «Лабораторные весы 160», «pH-метры, кондуктометры, титраторы 160», «Твердомеры и испытательные машины 130»…",
+      "examples": [
+        "Анализаторы состава и спектрометры 200",
+        "Лабораторные весы 160",
+        "pH-метры, кондуктометры, титраторы 160",
+        "Твердомеры и испытательные машины 130",
+        "Сушильные шкафы и термостаты 160",
+        "Лабораторные и перистальтические насосы 110",
+        "Лабораторная мебель и посуда 200"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Твердосплавные пластины и державки 1 380», «Свёрла, развёртки и метчики 1 140», «Фрезы концевые и торцевые 1 010», «Токарные патроны и кулачки 630»…",
+      "examples": [
+        "Твердосплавные пластины и державки 1 380",
+        "Свёрла, развёртки и метчики 1 140",
+        "Фрезы концевые и торцевые 1 010",
+        "Токарные патроны и кулачки 630",
+        "Оправки, цанги и инструментальные системы 760",
+        "Тиски и станочная оснастка 630",
+        "Измерительный инструмент 760"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "error",
+      "page": "napravleniya/nasosy/",
+      "target": "katalog/nasosy/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес katalog/nasosy/: «Центробежные 1 240», «Консольно-моноблочные 860», «Скважинные 520», «Дозировочные 410»…",
+      "examples": [
+        "Центробежные 1 240",
+        "Консольно-моноблочные 860",
+        "Скважинные 520",
+        "Дозировочные 410",
+        "Химические 380",
+        "Пищевые 260",
+        "Дренажные и фекальные 330",
+        "Циркуляционные 218"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/ochistka-vozduha-i-gazov/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Скрубберы и абсорберы 70», «Адсорберы с активированным углём 50», «Установки термического и каталитическог…», «Фильтры туманоуловители 40»…",
+      "examples": [
+        "Скрубберы и абсорберы 70",
+        "Адсорберы с активированным углём 50",
+        "Установки термического и каталитического окисления 30",
+        "Фильтры туманоуловители 40",
+        "Электрофильтры 30",
+        "Сорбенты и катализаторы 40",
+        "Системы мониторинга выбросов 20"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/ochistnye-sooruzheniya/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Станции биологической очистки 80», «Ливневые очистные сооружения 60», «Жироуловители 40», «Нефтеуловители и пескоуловители 40»…",
+      "examples": [
+        "Станции биологической очистки 80",
+        "Ливневые очистные сооружения 60",
+        "Жироуловители 40",
+        "Нефтеуловители и пескоуловители 40",
+        "Канализационные насосные станции 50",
+        "Флотаторы и оборудование физико-химической очистки 30",
+        "Обезвоживание осадка 20"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/pishchevoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Санитарные насосы 200», «Ёмкости и реакторы с мешалками 210», «Дозаторы и фасовочные автоматы 240», «Пастеризаторы и теплообменники 160»…",
+      "examples": [
+        "Санитарные насосы 200",
+        "Ёмкости и реакторы с мешалками 210",
+        "Дозаторы и фасовочные автоматы 240",
+        "Пастеризаторы и теплообменники 160",
+        "Системы безразборной мойки CIP 130",
+        "Санитарная арматура и фитинги 240",
+        "Упаковочные линии 130"
+      ]
+    },
+    {
+      "type": "target_h1_mismatch",
+      "severity": "error",
+      "page": "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
+      "target": "katalog/pnevmatika/filtr-element-vozdushnyj-2-mkm/",
+      "detail": "h1 «Фильтрующий элемент магистрального фильтра сжатого воздуха, 2 мкм» не содержит названия «Фильтр-элемент воздушный 2 мкм»",
+      "expected": [
+        "Фильтр-элемент воздушный 2 мкм",
+        "Фильтр-элемент воздушный"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/pnevmatika/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Пневмоцилиндры ISO 15552 и компактные 6…», «Пневмораспределители и островы 530», «Блоки подготовки воздуха 340», «Фитинги и быстроразъёмные соединения 620»…",
+      "examples": [
+        "Пневмоцилиндры ISO 15552 и компактные 630",
+        "Пневмораспределители и островы 530",
+        "Блоки подготовки воздуха 340",
+        "Фитинги и быстроразъёмные соединения 620",
+        "Пневмотрубки и шланги 370",
+        "Вакуумные присоски и эжекторы 250",
+        "Пневмоприводы арматуры 190",
+        "Датчики положения и ремкомплекты 190"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/podemnoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Электрические тали и тельферы 300», «Ручные тали и рычажные лебёдки 250», «Электрические лебёдки 150», «Кран-балки подвесные и опорные 170»…",
+      "examples": [
+        "Электрические тали и тельферы 300",
+        "Ручные тали и рычажные лебёдки 250",
+        "Электрические лебёдки 150",
+        "Кран-балки подвесные и опорные 170",
+        "Козловые и консольные краны 80",
+        "Стропы и грузозахватные приспособления 280",
+        "Запчасти для кранов и талей 150"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/podshipniki-i-komplektuyushchie/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Шариковые подшипники 3 020», «Роликовые подшипники 2 020», «Корпусные подшипниковые узлы 1 260», «Манжеты и сальники 1 760»…",
+      "examples": [
+        "Шариковые подшипники 3 020",
+        "Роликовые подшипники 2 020",
+        "Корпусные подшипниковые узлы 1 260",
+        "Манжеты и сальники 1 760",
+        "Приводные ремни 1 510",
+        "Приводные цепи и звёздочки 1 260",
+        "Муфты 1 010",
+        "Линейные направляющие и втулки 760"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/pozharnoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Насосные станции пожаротушения 150», «Шкафы управления пожарными насосами 110», «Узлы управления спринклерные и дренчерн…», «Пожарные клапаны и затворы 140»…",
+      "examples": [
+        "Насосные станции пожаротушения 150",
+        "Шкафы управления пожарными насосами 110",
+        "Узлы управления спринклерные и дренчерные 100",
+        "Пожарные клапаны и затворы 140",
+        "Оросители 120",
+        "Пожарные шкафы и рукава 150",
+        "Приборы и извещатели 100"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennaya-armatura/",
+      "target": "chat/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес chat/: «Задвижки клиновые и шиберные 1 350», «Дисковые поворотные затворы 1 270», «Шаровые краны 1 690», «Обратные клапаны 1 020»…",
+      "examples": [
+        "Задвижки клиновые и шиберные 1 350",
+        "Дисковые поворотные затворы 1 270",
+        "Шаровые краны 1 690",
+        "Обратные клапаны 1 020",
+        "Регулирующие и предохранительные клапаны 930",
+        "Электроприводы и пневмоприводы 850",
+        "Фильтры сетчатые и грязевики 680",
+        "Фланцы, прокладки, крепёж 680"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennaya-himiya/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Гидравлические масла 410», «Редукторные и индустриальные масла 360», «Компрессорные и турбинные масла 220», «Пластичные смазки 360»…",
+      "examples": [
+        "Гидравлические масла 410",
+        "Редукторные и индустриальные масла 360",
+        "Компрессорные и турбинные масла 220",
+        "Пластичные смазки 360",
+        "СОЖ и масла для металлообработки 310",
+        "Промышленные очистители и обезжириватели 310",
+        "Антикоррозионные и специальные составы 270"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennoe-osveshchenie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Светильники для высоких пролётов 420», «Линейные светильники для складов 370», «Пылевлагозащищённые IP65–IP69 350», «Взрывозащищённые светильники 230»…",
+      "examples": [
+        "Светильники для высоких пролётов 420",
+        "Линейные светильники для складов 370",
+        "Пылевлагозащищённые IP65–IP69 350",
+        "Взрывозащищённые светильники 230",
+        "Прожекторы и уличное освещение 330",
+        "Аварийное освещение и указатели 250",
+        "Системы управления освещением 120"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennye-filtry/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Воздушные фильтры для компрессоров и дв…», «Масляные и топливные фильтры 250», «Гидравлические фильтры и элементы 270», «Фильтры вентиляции карманные и панельны…»…",
+      "examples": [
+        "Воздушные фильтры для компрессоров и двигателей 320",
+        "Масляные и топливные фильтры 250",
+        "Гидравлические фильтры и элементы 270",
+        "Фильтры вентиляции карманные и панельные 250",
+        "Картриджи для аспирации 190",
+        "Фильтры для жидкостей и мешочные 170",
+        "Корпуса фильтров 130"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennye-pechi-i-sushilnye-kamery/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Печи для термообработки металлов 70», «Камеры полимеризации порошковой краски …», «Сушильные шкафы 60», «Сушильные камеры для древесины 40»…",
+      "examples": [
+        "Печи для термообработки металлов 70",
+        "Камеры полимеризации порошковой краски 60",
+        "Сушильные шкафы 60",
+        "Сушильные камеры для древесины 40",
+        "Муфельные и лабораторные печи 50",
+        "Нагреватели, горелки и автоматика печей 40",
+        "Футеровочные материалы 20"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennye-roboty/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Промышленные манипуляторы 50», «Коллаборативные роботы 40», «Сварочные роботизированные комплексы 30», «Паллетайзеры и робототехнические ячейки…»…",
+      "examples": [
+        "Промышленные манипуляторы 50",
+        "Коллаборативные роботы 40",
+        "Сварочные роботизированные комплексы 30",
+        "Паллетайзеры и робототехнические ячейки 30",
+        "Захваты и схваты 30",
+        "Позиционеры, линейные оси и ограждения 30"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennyj-holod/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Компрессорно-конденсаторные блоки 160», «Холодильные агрегаты и централи 120», «Воздухоохладители 110», «Холодильные и морозильные камеры 110»…",
+      "examples": [
+        "Компрессорно-конденсаторные блоки 160",
+        "Холодильные агрегаты и централи 120",
+        "Воздухоохладители 110",
+        "Холодильные и морозильные камеры 110",
+        "Рефрижераторные контейнеры 60",
+        "Чиллеры для технологического охлаждения 90",
+        "Автоматика, компрессоры и хладагенты 110"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennyj-instrument/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Пневмоинструмент 810», «Аккумуляторный и сетевой электроинструм…», «Гидравлические домкраты, съёмники и пре…», «Динамометрический инструмент 410»…",
+      "examples": [
+        "Пневмоинструмент 810",
+        "Аккумуляторный и сетевой электроинструмент 980",
+        "Гидравлические домкраты, съёмники и прессы 570",
+        "Динамометрический инструмент 410",
+        "Наборы ручного инструмента 650",
+        "Абразивы и расходные материалы 650"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/pyleulavlivanie-i-aspiraciya/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Циклоны и батарейные циклоны 100», «Рукавные фильтры 120», «Картриджные фильтры 100», «Пылеулавливающие агрегаты для деревообр…»…",
+      "examples": [
+        "Циклоны и батарейные циклоны 100",
+        "Рукавные фильтры 120",
+        "Картриджные фильтры 100",
+        "Пылеулавливающие агрегаты для деревообработки 90",
+        "Фильтровентиляционные агрегаты для сварки 90",
+        "Местные отсосы и вытяжные устройства 80",
+        "Шлюзовые затворы и рукава 60"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/reduktory-i-motor-reduktory/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Червячные редукторы и мотор-редукторы 8…», «Цилиндрические соосные мотор-редукторы …», «Коническо-цилиндрические мотор-редуктор…», «Планетарные редукторы 350»…",
+      "examples": [
+        "Червячные редукторы и мотор-редукторы 830",
+        "Цилиндрические соосные мотор-редукторы 700",
+        "Коническо-цилиндрические мотор-редукторы 490",
+        "Планетарные редукторы 350",
+        "Плоские насадные мотор-редукторы 310",
+        "Общепромышленные редукторы Ц2У, 1Ц2У, РМ 420",
+        "Вариаторы и запчасти 380"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/separatory-i-centrifugi/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Тарельчатые сепараторы 60», «Декантерные центрифуги 50», «Фильтрующие и осадительные центрифуги 40», «Сепараторы масел и топлива 40»…",
+      "examples": [
+        "Тарельчатые сепараторы 60",
+        "Декантерные центрифуги 50",
+        "Фильтрующие и осадительные центрифуги 40",
+        "Сепараторы масел и топлива 40",
+        "Гидроциклоны и вибросита 40",
+        "Запчасти и сервисные комплекты 30"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/sistemy-mashinnogo-zreniya/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Промышленные камеры 80», «Смарт-камеры и визуальные датчики 60», «Считыватели штрихкодов и DataMatrix 70», «Объективы 40»…",
+      "examples": [
+        "Промышленные камеры 80",
+        "Смарт-камеры и визуальные датчики 60",
+        "Считыватели штрихкодов и DataMatrix 70",
+        "Объективы 40",
+        "Подсветка для машинного зрения 40",
+        "3D-сканеры и профилометры 30",
+        "ПО и контроллеры обработки изображений 20"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/skladskaya-tehnika/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Гидравлические тележки 350», «Электротележки 200», «Ручные и самоходные штабелёры 300», «Вилочные погрузчики и ричтраки 200»…",
+      "examples": [
+        "Гидравлические тележки 350",
+        "Электротележки 200",
+        "Ручные и самоходные штабелёры 300",
+        "Вилочные погрузчики и ричтраки 200",
+        "Колёса и ролики для складской техники 260",
+        "Тяговые аккумуляторы и зарядные устройства 200",
+        "Запчасти и навесное оборудование 130"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/sredstva-bezopasnosti/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Стационарные газоанализаторы и системы …», «Переносные газоанализаторы и газосигнал…», «Средства защиты органов дыхания 400», «Спецодежда и спецобувь 550»…",
+      "examples": [
+        "Стационарные газоанализаторы и системы контроля загазованнос",
+        "Переносные газоанализаторы и газосигнализаторы 250",
+        "Средства защиты органов дыхания 400",
+        "Спецодежда и спецобувь 550",
+        "Средства защиты рук, головы, глаз и слуха 450",
+        "Промышленная световая и звуковая сигнализация 250",
+        "Знаки, ограждения и блокировки LOTO 300"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/stanki-i-chpu/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Токарные станки с ЧПУ и универсальные 2…», «Фрезерные станки и обрабатывающие центр…», «Оптоволоконные лазеры для резки металла…», «Листогибочные прессы 120»…",
+      "examples": [
+        "Токарные станки с ЧПУ и универсальные 200",
+        "Фрезерные станки и обрабатывающие центры 180",
+        "Оптоволоконные лазеры для резки металла 140",
+        "Листогибочные прессы 120",
+        "Гильотинные ножницы и вальцы 90",
+        "Сверлильные и ленточнопильные станки 110",
+        "Системы ЧПУ и модернизация 50"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/svarochnoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Полуавтоматы MIG/MAG 540», «Аппараты аргонодуговой сварки TIG 340», «Инверторы MMA 290», «Аппараты плазменной резки 290»…",
+      "examples": [
+        "Полуавтоматы MIG/MAG 540",
+        "Аппараты аргонодуговой сварки TIG 340",
+        "Инверторы MMA 290",
+        "Аппараты плазменной резки 290",
+        "Сварочные горелки и комплектующие 340",
+        "Сварочная проволока и электроды 440",
+        "Средства защиты сварщика 190"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/teploobmennoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Разборные пластинчатые теплообменники 2…», «Паяные пластинчатые теплообменники 230», «Кожухотрубные теплообменники 150», «Пластины и уплотнения 190»…",
+      "examples": [
+        "Разборные пластинчатые теплообменники 290",
+        "Паяные пластинчатые теплообменники 230",
+        "Кожухотрубные теплообменники 150",
+        "Пластины и уплотнения 190",
+        "Блочные тепловые пункты 80",
+        "Кожухотрубные охладители масла 70",
+        "Химическая промывка и сервисные комплекты 50"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/upakovochnoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Паллетоупаковщики стретч-плёнкой 160», «Стреппинг-машины и инструмент 160», «Термоусадочное оборудование 140», «Этикетировщики и принтеры маркировки 180»…",
+      "examples": [
+        "Паллетоупаковщики стретч-плёнкой 160",
+        "Стреппинг-машины и инструмент 160",
+        "Термоусадочное оборудование 140",
+        "Этикетировщики и принтеры маркировки 180",
+        "Запайщики и вакуумные упаковщики 120",
+        "Скотчеватели и формирователи коробов 100",
+        "Плёнка, лента и расходные материалы 120"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/ventilyaciya-i-klimat/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Радиальные и осевые вентиляторы 440», «Приточно-вытяжные установки 310», «Чиллеры и фанкойлы 220», «Воздушно-отопительные агрегаты и теплов…»…",
+      "examples": [
+        "Радиальные и осевые вентиляторы 440",
+        "Приточно-вытяжные установки 310",
+        "Чиллеры и фанкойлы 220",
+        "Воздушно-отопительные агрегаты и тепловентиляторы 270",
+        "Крышные и канальные вентиляторы 290",
+        "Воздуховоды и фасонные изделия 310",
+        "Воздушные клапаны и решётки 200"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/vesovoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Платформенные весы 170», «Паллетные весы и весы-рохли 90», «Крановые весы 70», «Автомобильные и вагонные весы 60»…",
+      "examples": [
+        "Платформенные весы 170",
+        "Паллетные весы и весы-рохли 90",
+        "Крановые весы 70",
+        "Автомобильные и вагонные весы 60",
+        "Весовые дозаторы 100",
+        "Чеквейеры 70",
+        "Тензодатчики и весовые терминалы 160"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/vodopodgotovka/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Установки обратного осмоса 170», «Фильтры умягчения 170», «Обезжелезивание и деманганация 150», «Механическая фильтрация 140»…",
+      "examples": [
+        "Установки обратного осмоса 170",
+        "Фильтры умягчения 170",
+        "Обезжелезивание и деманганация 150",
+        "Механическая фильтрация 140",
+        "УФ-стерилизаторы 100",
+        "Станции дозирования реагентов 130",
+        "Мембраны, смолы, загрузки и реагенты 130"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/zapchasti-dlya-proizvodstva/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Торцевые уплотнения 1 330», «Ремкомплекты насосов и компрессоров 1 1…», «Резинотехнические изделия и кольца 1 340», «Прокладки и паронит 890»…",
+      "examples": [
+        "Торцевые уплотнения 1 330",
+        "Ремкомплекты насосов и компрессоров 1 190",
+        "Резинотехнические изделия и кольца 1 340",
+        "Прокладки и паронит 890",
+        "Промышленный крепёж 1 190",
+        "Запчасти для станков и линий 890",
+        "Изготовление деталей по чертежу 590"
+      ]
+    },
+    {
+      "type": "card_to_hub",
+      "severity": "error",
+      "page": "poisk/",
+      "text": "Grundfos CR 32-4",
+      "card": "Искать вместо этого: Grundfos CR 32-4 8 шт. в наличии · 104 900 ₽",
+      "cardSel": "div.blueprint",
+      "target": "katalog/nasosy/",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-32-4/"
+      ],
+      "detail": "товар «Grundfos CR 32-4» ведёт на хаб вместо своей страницы"
+    },
+    {
+      "type": "wrong_target",
+      "severity": "error",
+      "page": "sravnenie/",
+      "text": "Открыть рекомендованную",
+      "card": "Вывод по подбору Под заданную рабочую точку ближе всего CNP CDLF 42-30: КПД в точке 74%, запас по напору 3%, цена на 22% ниже Wilo Helix V …",
+      "cardSel": "div.blueprint",
+      "target": "katalog/nasosy/grundfos-cr-32-4/",
+      "expected": [
+        "katalog/nasosy/grundfos-cr-45-3/",
+        "katalog/nasosy/cnp-cdlf-42-30/",
+        "katalog/nasosy/wilo-helix-v-4204/"
+      ],
+      "detail": "товар: в карточке «Grundfos CR 45-3», «CNP CDLF 42-30», «Wilo Helix V 4204», ссылка на «Grundfos CR 32-4»"
+    },
+    {
+      "type": "page_not_in_data",
+      "severity": "warning",
+      "page": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
+      "detail": "страница есть, в tools/data/articles.json записи нет"
+    },
+    {
+      "type": "orphan",
+      "severity": "warning",
+      "page": "poisk/",
+      "detail": "служебная/хаб-страница без входящих ссылок с публичных страниц"
+    },
+    {
+      "type": "click_test",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 32-4",
+      "target": "katalog/nasosy/",
+      "detail": "первая карточка каталога @390px: клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+    },
+    {
+      "type": "click_test_partial",
+      "severity": "warning",
+      "page": "blog/",
+      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
+      "detail": "первая статья блога @390px: название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+    },
+    {
+      "type": "click_test",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Электродвигатели",
+      "target": "katalog/nasosy/",
+      "detail": "первый раздел направлений @390px: не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+    },
+    {
+      "type": "click_test",
+      "severity": "error",
+      "page": "katalog/nasosy/",
+      "text": "Grundfos CR 32-4",
+      "target": "katalog/nasosy/",
+      "detail": "первая карточка каталога @1440px: клик по названию «Grundfos CR 32-4» не открывает товар: переход есть только у кнопки «В корзину», которую site.js превращает в «добавить в корзину»"
+    },
+    {
+      "type": "click_test_partial",
+      "severity": "warning",
+      "page": "blog/",
+      "text": "Как подобрать насос по рабочей точке и не переплатить за напор",
+      "target": "blog/kak-podobrat-nasos-po-rabochej-tochke/",
+      "detail": "первая статья блога @1440px: название/карточка не кликается, открывается только ссылкой «Читать статью» → blog/kak-podobrat-nasos-po-rabochej-tochke/"
+    },
+    {
+      "type": "click_test",
+      "severity": "error",
+      "page": "napravleniya/",
+      "text": "Электродвигатели",
+      "target": "katalog/nasosy/",
+      "detail": "первый раздел направлений @1440px: не та страница: карточка «Электродвигатели» → katalog/nasosy/ с h1 «Насосы»"
+    }
+  ]
+}

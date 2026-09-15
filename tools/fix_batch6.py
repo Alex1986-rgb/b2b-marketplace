@@ -56,6 +56,10 @@ R('{ name: "Wilo Helix V 3604", spec: "36 м³/ч', '{ bg: "url(img/p-wilo-helix
 R('<span class="thumb" style="width:40px;height:40px;background:url(img/p-cr32.jpg)' + W + '"></span>{{ p.name }}',
   '<span class="thumb" style="width:40px;height:40px;background: {{ p.bg }}"></span>{{ p.name }}')
 
+# Сравнение: название модели обычным заголовком, не моно-капсом
+R('''<span class="thumb" style="width:96px;height:96px;margin-bottom:8px;background: {{ m.bg }}"></span>{{ m.name }}<div class="mono" style="font-size:11px;color:var(--color-neutral-600);font-weight:400">{{ m.sku }}</div></th>''',
+  '''<span class="thumb" style="width:96px;height:96px;margin-bottom:8px;border-radius:10px;background: {{ m.bg }}"></span><div style="font-family:var(--font-heading);font-weight:600;font-size:15px;text-transform:none;letter-spacing:0;color:var(--color-text)">{{ m.name }}</div><div style="font-size:12px;color:var(--color-neutral-600);font-weight:400;text-transform:none;letter-spacing:0">{{ m.sku }}</div></th>''')
+
 # ── 2. Чат: пузыри, аватар, время, единая строка ввода, иконки навыков ─────────────────────
 BOT = '{ bot: true, bg: "#fff", color: "var(--color-text)", radius: "16px 16px 16px 4px", shadow: "0 1px 3px rgba(22,38,58,.08)", avatar: "block" }'
 USR = '{ bot: false, bg: "var(--color-accent)", color: "#fff", radius: "16px 16px 4px 16px", shadow: "none", avatar: "none" }'
@@ -239,8 +243,8 @@ R('''        <div style="display:flex;margin-top:22px;max-width:900px">
           <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:54px;background:#fff;border-right:0;white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
           <button class="btn btn-primary" style="min-height:54px;padding-inline:30px;font-size:16px;color:#fff;gap:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
         </div>''', '''        <div style="display:flex;margin-top:22px;max-width:900px;align-items:center;gap:4px;padding:5px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(8,16,26,.28)">
-          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:48px;font-size:16px;background:transparent;border:0;box-shadow:none;flex:1;min-width:0;padding-left:12px">
-          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:48px;background:transparent;border:0;border-radius:8px;color:var(--color-accent-700);white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:currentColor;width:18px;height:18px"></span>По фото шильдика</button>
+          <input class="input" placeholder="Введите модель, артикул или название оборудования" style="min-height:48px;font-size:16px;background:transparent;border:0;box-shadow:none;padding-left:12px">
+          <button onClick="{{ goPhoto }}" class="btn btn-secondary" style="min-height:48px;background:transparent;border:0;border-radius:8px;color:var(--color-text);white-space:nowrap;gap:8px"><span class="ico ico-16 i-entry-photo" style="color:var(--color-accent-700);width:18px;height:18px"></span>По фото шильдика</button>
           <button class="btn btn-primary" style="min-height:48px;padding-inline:28px;font-size:16px;color:#fff;gap:8px;border-radius:8px"><span class="ico ico-16 i-ui-search" style="color:currentColor;width:18px;height:18px"></span><span class="hide-m">Найти</span></button>
         </div>''')
 PILL = 'border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)'
@@ -380,6 +384,7 @@ R('''  .gal > span { width:80px; height:80px; display:block; border:1px solid va
   }''')
 R('''    .ph-side { height:200px !important; }
   }''', '''    .ph-side { height:200px !important; }
+    nav.blueprint[style*="top: 124px"] { position:relative !important; top:auto !important; }
     .pk-stepper { grid-auto-flow:row !important; }
     .pk-step { flex-direction:row !important; align-items:flex-start !important; text-align:left !important; gap:12px !important; padding:0 0 18px !important; }
     .pk-step:last-child { padding-bottom:0 !important; }

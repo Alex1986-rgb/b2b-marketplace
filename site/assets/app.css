@@ -58,13 +58,29 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
   .marquee-track { display:flex; gap:0; width:max-content; animation: marquee 42s linear infinite; }
   .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track:hover { animation-play-state: paused; }
+  .brand-logo { display:inline-flex; align-items:center; gap:10px; margin:0 10px; padding:8px 16px 8px 8px; border-radius:12px; background:var(--color-surface, #fff); border:1px solid color-mix(in srgb, var(--color-text) 8%, transparent); text-decoration:none; color:var(--color-neutral-700); white-space:nowrap; filter:grayscale(1); opacity:.85; transition:filter .2s, opacity .2s, box-shadow .2s, color .2s; }
+  .brand-logo:hover { filter:none; opacity:1; color:var(--color-text); box-shadow:0 6px 18px rgba(22,38,58,.10); }
+  .brand-logo-mark { width:32px; height:32px; border-radius:9px; display:grid; place-items:center; background:var(--color-accent); color:#fff; flex:none; }
+  .brand-logo-name { font-family:var(--font-heading); font-weight:600; font-size:17px; letter-spacing:.01em; }
   .split { display:grid; gap:36px; align-items:start; grid-template-columns:minmax(0,1fr) var(--aside,380px); }
   /* пачка 5: иконки и фото. Иконка без i-* (пустое поле данных) не рисуется. */
   .ico:not([class*=" i-"]) { display:none !important; }
   .only-m { display:none !important; }
   .thumb { display:block; flex:none; background-color:var(--color-neutral-200); }
   .gal { display:flex; gap:10px; margin:0 0 28px; }
-  .gal > span { width:80px; height:80px; display:block; border:1px solid var(--color-divider); }
+  .gal > span { width:80px; height:80px; display:block; border:1px solid var(--color-divider); border-radius:8px; background-color:#fff; }
+  /* пачка 6 */
+  .spec-zebra tbody tr:nth-child(odd) td { background:var(--color-bg); }
+  .spec-zebra td { border-top:0 !important; }
+  details.rubric > summary::-webkit-details-marker { display:none; }
+  details.rubric[open] > summary .rubric-rot { transform:rotate(180deg); }
+  .rubric-rot { transition:transform .15s ease; }
+  .pill-dark { transition:background .15s ease; }
+  .pill-dark:hover { background:rgba(255,255,255,.16) !important; }
+  @media (min-width:761px) and (max-width:1180px) {
+    .footer-grid { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+  }
   .gal > span.on { border:2px solid var(--color-accent); }
   .cartrow { display:grid; gap:16px; align-items:center; grid-template-columns:92px minmax(0,1fr) auto; padding:16px; border-bottom:1px solid var(--color-divider); }
   @media (max-width:1040px) {
@@ -108,6 +124,15 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     .hide-m { display:none !important; }
     .only-m-block { display:block !important; }
     .ph-side { height:200px !important; }
+    nav.blueprint[style*="top: 124px"] { position:relative !important; top:auto !important; }
+    .pk-stepper { grid-auto-flow:row !important; }
+    .pk-step { flex-direction:row !important; align-items:flex-start !important; text-align:left !important; gap:12px !important; padding:0 0 18px !important; }
+    .pk-step:last-child { padding-bottom:0 !important; }
+    .pk-step-l { top:0 !important; left:15px !important; right:auto !important; width:2px !important; height:16px !important; }
+    .pk-step-r { top:16px !important; bottom:0; left:15px !important; right:auto !important; width:2px !important; height:auto !important; }
+    .dir-banner-ph { min-height:160px !important; border-radius:14px 14px 0 0 !important; }
+    .footer-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    .footer-grid > :first-child { grid-column:1 / -1; }
   }
 
 
@@ -376,6 +401,7 @@ details.faq-item > summary { display: grid !important; grid-template-columns: 1f
   header [style*="min-width: 280px; display: flex"] { order: 10; flex: 1 1 100% !important; }
   header [style*="min-width: 280px; display: flex"] > .input { flex: 1 1 auto; min-width: 0; }
 }
+@media (max-width: 900px) { .pk-article { grid-template-columns: minmax(0, 1fr) !important; } .pk-article > aside { position: static !important; } }
 
 /* иконки ПРОМКОНТУР: Lucide (ISC) + собственные рисунки. Сгенерировано tools/make_icons.js */
 .ico{display:inline-block;flex:none;width:24px;height:24px;vertical-align:middle;background-color:currentColor;-webkit-mask:var(--i) center/contain no-repeat;mask:var(--i) center/contain no-repeat}

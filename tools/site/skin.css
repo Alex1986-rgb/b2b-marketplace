@@ -186,3 +186,4 @@ details.faq-item > summary { display: grid !important; grid-template-columns: 1f
   header [style*="min-width: 280px; display: flex"] { order: 10; flex: 1 1 100% !important; }
   header [style*="min-width: 280px; display: flex"] > .input { flex: 1 1 auto; min-width: 0; }
 }
+@media (max-width: 900px) { .pk-article { grid-template-columns: minmax(0, 1fr) !important; } .pk-article > aside { position: static !important; } }

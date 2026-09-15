@@ -105,9 +105,8 @@
       <h1 style="font-size: 38px;">Поиск по&nbsp;фото шильдика</h1>
       <p style="font-size: 17px; color: var(--color-neutral-800); max-width: 640px;">Сфотографируйте табличку на&nbsp;оборудовании. Система распознаёт модель и&nbsp;артикул и&nbsp;подбирает точное совпадение или аналог.</p>
       <div style="display: grid; grid-template-columns: minmax(0px, 1fr) minmax(0px, 1fr); gap: 28px; margin-top: 26px; align-items: start;">
-        <div class="blueprint" style="padding: 36px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; min-height: 320px; justify-content: center;">
-          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-          <span role="img" aria-label="Пример снимка шильдика" data-photo="1" style="width: 160px; height: 110px; display: block; background: url(&quot;/b2b-marketplace/img/nameplate.jpg&quot;) center center / cover no-repeat; border: 1px solid var(--color-divider);"></span>
+        <div class="dropzone" style="padding: 36px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; min-height: 320px; justify-content: center; border: 2px dashed color-mix(in srgb, var(--color-accent) 35%, transparent); background: color-mix(in srgb, var(--color-accent) 4%, #fff); border-radius: 14px;">
+          <span class="ico ico-40 i-entry-upload" style="color: var(--color-accent-700);"></span>
           <span style="font-family: var(--font-heading); font-weight: 600; font-size: 21px;">Перетащите фото шильдика</span>
           <span style="font-size: 14px; color: var(--color-neutral-700); max-width: 340px;">JPG или PNG до&nbsp;10 МБ. Снимайте так, чтобы модель и&nbsp;серийный номер читались.</span>
           <div style="display: flex; gap: 10px; margin-top: 4px;">
@@ -117,10 +116,16 @@
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 16px;">
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600);">Распознано · 0,8&nbsp;с</div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span role="img" aria-label="Загруженное фото шильдика" data-photo="1" style="width: 64px; height: 64px; flex: 0 0 auto; border-radius: 8px; background: url(&quot;/b2b-marketplace/img/nameplate.jpg&quot;) center center / cover no-repeat;"></span>
+            <div>
+              <div style="font-family: var(--font-heading); font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 8px;"><span class="ico ico-16 i-ui-approval" style="color: var(--color-accent-700);"></span>Распознано за&nbsp;0,8&nbsp;с</div>
+              <div style="font-size: 13px; color: var(--color-neutral-700);">shildik-nasos.jpg · 2,4 МБ</div>
+            </div>
+          </div>
           <div class="blueprint" style="display: grid; grid-template-columns: 120px minmax(0px, 1fr);">
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <div class="ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(199, 197, 197); border-right: 1px solid var(--color-divider);"></div>
+            <div class="ph" data-photo="1" style="background: url(&quot;/b2b-marketplace/img/p-cr32.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255); border-right: 1px solid var(--color-divider);"></div>
             <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 6px;">
               <span class="mono" style="font-size: 12px; color: var(--color-neutral-600);">GRUNDFOS · 96122802</span>
               <span style="font-family: var(--font-heading); font-weight: 600; font-size: 19px;">CR 32-4 A-F-A-E-HQQE</span>
@@ -135,9 +140,12 @@
           
             <div class="blueprint row-hover" style="display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 16px;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div>
+              <div style="display: flex; align-items: center; gap: 12px; min-width: 0px;">
+                <span class="thumb" style="width: 48px; height: 48px; border-radius: 8px; background: url(&quot;/b2b-marketplace/img/p-wilo-helix.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>
+                <div>
                 <div style="font-weight: 500;">Wilo Helix V 3604</div>
                 <div style="font-size: 13px; color: var(--color-neutral-700);">Подача 36&nbsp;м³/ч · напор 48&nbsp;м</div>
+                </div>
               </div>
               <div style="text-align: right; white-space: nowrap;">
                 <div class="mono" style="font-size: 17px;">98 700&nbsp;₽</div>
@@ -147,9 +155,12 @@
           
             <div class="blueprint row-hover" style="display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 16px;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div>
+              <div style="display: flex; align-items: center; gap: 12px; min-width: 0px;">
+                <span class="thumb" style="width: 48px; height: 48px; border-radius: 8px; background: url(&quot;/b2b-marketplace/img/p-cnp-cdlf.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>
+                <div>
                 <div style="font-weight: 500;">CNP CDLF 32-40</div>
                 <div style="font-size: 13px; color: var(--color-neutral-700);">Подача 32&nbsp;м³/ч · напор 44&nbsp;м</div>
+                </div>
               </div>
               <div style="text-align: right; white-space: nowrap;">
                 <div class="mono" style="font-size: 17px;">71 300&nbsp;₽</div>
@@ -159,9 +170,12 @@
           
             <div class="blueprint row-hover" style="display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 16px;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-              <div>
+              <div style="display: flex; align-items: center; gap: 12px; min-width: 0px;">
+                <span class="thumb" style="width: 48px; height: 48px; border-radius: 8px; background: url(&quot;/b2b-marketplace/img/p-ebara-3m.jpg&quot;) center center / contain no-repeat rgb(255, 255, 255);"></span>
+                <div>
                 <div style="font-weight: 500;">Ebara 3M 65-160</div>
                 <div style="font-size: 13px; color: var(--color-neutral-700);">Подача 33&nbsp;м³/ч · напор 42&nbsp;м</div>
+                </div>
               </div>
               <div style="text-align: right; white-space: nowrap;">
                 <div class="mono" style="font-size: 17px;">84 100&nbsp;₽</div>
@@ -247,7 +261,6 @@
 
     <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
     <div style="flex: 1 1 520px; min-width: 0px;">
-      <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 8px;">Информация о&nbsp;разделе</div>
       <h2 style="font-size: 28px; margin: 0px 0px 12px;">Поиск оборудования по&nbsp;фото шильдика</h2>
       <p class="seo-p">Шильдик&nbsp;— металлическая табличка на&nbsp;корпусе оборудования с&nbsp;моделью, артикулом, серийным номером и&nbsp;основными параметрами. Сфотографируйте её, и&nbsp;система распознает данные, найдёт позицию в&nbsp;базе и&nbsp;предложит точное совпадение либо аналоги с&nbsp;близкими характеристиками.</p>
 
@@ -345,7 +358,6 @@
     </div>
 
     <div>
-      <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 8px;">Частые вопросы</div>
       <h2 style="font-size: 24px; margin: 0px 0px 16px;">Поиск по&nbsp;фото</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start;">
         
@@ -435,7 +447,6 @@
     <div data-carousel="1">
       <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px;">
         <div>
-          <div class="seo-mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-600); margin-bottom: 6px;">База знаний</div>
           <h2 style="font-size: 24px; margin: 0px;">Статьи по&nbsp;теме</h2>
         </div>
         <div style="display: flex; gap: 8px; align-items: center;">
@@ -446,7 +457,7 @@
       <div>
         <div class="seo-track" data-track="1">
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/kavitaciya-pochemu-razrushaetsya-rabochee-koleso/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-cavitation.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -457,7 +468,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/torcevoe-uplotnenie-priznaki-iznosa/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-seal.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -468,7 +479,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/motor-reduktor-ili-reduktor-s-dvigatelem/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-gearmotor.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -479,7 +490,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/skolko-vozduha-nuzhno-cehu/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-air.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -490,7 +501,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/chastotnyj-preobrazovatel-kogda-okupaetsya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/art-vfd.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -501,7 +512,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/chugun-nerzhavejka-ili-plastik/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/c-materials.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -512,7 +523,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/kak-prodlit-resurs-podshipnika/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-bearing.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -523,7 +534,7 @@
               </div>
             </a>
           
-            <a href="/b2b-marketplace/blog/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+            <a href="/b2b-marketplace/blog/postavka-oborudovaniya-iz-kitaya/" class="blueprint" style="flex: 0 0 min(300px, 82vw); padding: 0px; display: flex; flex-direction: column; text-decoration: none; color: inherit;">
               <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
               <div class="duotone" style="height: 132px; background: url(&quot;/b2b-marketplace/img/a-containers.jpg&quot;) center center / cover no-repeat; border-bottom: 1px solid var(--color-divider);"></div>
               <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1 1 0%;">
@@ -541,7 +552,7 @@
   
 
   <footer style="background: var(--color-neutral-900); color: var(--color-neutral-300);">
-    <div style="max-width: 1360px; margin: 0px auto; padding: 36px 28px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 28px;">
+    <div class="footer-grid" style="max-width: 1360px; margin: 0px auto; padding: 36px 28px 28px; display: grid; grid-template-columns: minmax(0px, 1.6fr) repeat(5, minmax(0px, 1fr)); gap: 28px;">
       <div>
         <div style="display: flex; align-items: center; gap: 10px; color: rgb(255, 255, 255);">
           <span style="width: 18px; height: 18px; background: url(&quot;/b2b-marketplace/img/mark.svg&quot;) center center / contain no-repeat; display: block;"></span>
@@ -549,17 +560,16 @@
         </div>
         <p style="font-size: 14px; margin: 10px 0px 0px; max-width: 330px; line-height: 1.55;">Промышленное оборудование от&nbsp;поставщиков по&nbsp;всей России. 45 направлений снабжения, более 115 000 моделей, прямые отгрузки со складов поставщиков.</p>
         <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 16px;">
-          <a href="/b2b-marketplace/chat/" class="mono" style="color: rgb(255, 255, 255); font-size: 19px; white-space: nowrap;">Чат в&nbsp;MAX</a>
           <span style="font-size: 13px; display: flex; align-items: center; gap: 6px;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>zakaz@promkontur.example · пн–пт 08:00–19:00 МСК</span>
         </div>
         <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="ico i-channel-max" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Чат в&nbsp;MAX</span>
-          <span class="mono" style="font-size: 12px; border: 1px solid var(--color-neutral-700); padding: 6px 10px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Почта снабжения</span>
+          <a href="/b2b-marketplace/chat/" style="font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 7px 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; color: rgb(255, 255, 255); text-decoration: none;"><span class="ico i-channel-max" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Чат в&nbsp;MAX</a>
+          <a href="mailto:zakaz@promkontur.example" style="font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 7px 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; color: rgb(255, 255, 255); text-decoration: none;"><span class="ico i-channel-mail" style="color: var(--color-accent-300); width: 14px; height: 14px;"></span>Почта снабжения</a>
         </div>
       </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Каталог</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Каталог</div>
           
             <a href="/b2b-marketplace/napravleniya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Все 45 направлений</a>
           
@@ -576,7 +586,7 @@
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Клиентам</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Клиентам</div>
           
             <a href="/b2b-marketplace/oplata-i-dostavka/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Как заказать</a>
           
@@ -597,7 +607,7 @@
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Компания</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Компания</div>
           
             <a href="/b2b-marketplace/o-servise/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">О&nbsp;сервисе</a>
           
@@ -610,7 +620,7 @@
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">Поставщикам</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">Поставщикам</div>
           
             <a href="/b2b-marketplace/postavshchikam/usloviya/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Условия работы</a>
           
@@ -625,7 +635,7 @@
         </div>
       
         <div>
-          <div class="mono" style="font-size: 11px; text-transform: uppercase; color: var(--color-neutral-500); margin-bottom: 10px;">База знаний</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">База знаний</div>
           
             <a href="/b2b-marketplace/blog/" style="display: block; font-size: 14px; padding: 3px 0px; color: var(--color-neutral-300); text-decoration: none;">Блог</a>
           
