@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-15T11:07:57.520Z",
+  "generatedAt": "2026-09-15T11:30:11.117Z",
   "site": "/Users/alexandr/projects/b2b-marketplace/site",
-  "origin": "http://127.0.0.1:51130/b2b-marketplace/",
+  "origin": "http://127.0.0.1:60947/b2b-marketplace/",
   "durationSec": 27,
   "dataFiles": {
     "products": 24,
@@ -19,18 +19,22 @@
     "pages": 194,
     "publicPages": 123,
     "privatePages": 71,
-    "links": 14907,
-    "cardLinks": 1003,
+    "links": 16216,
+    "cardLinks": 1966,
     "demoElements": 456,
     "uniqueTargets": 125
   },
   "summary": {
-    "errors": 1,
-    "warnings": 53,
+    "errors": 2,
+    "warnings": 55,
     "byType": {
+      "wrong_target": {
+        "severity": "error",
+        "count": 1
+      },
       "resource_404": {
         "severity": "warning",
-        "count": 7
+        "count": 9
       },
       "many_cards_same_target": {
         "severity": "warning",
@@ -140,9 +144,29 @@
   ],
   "issues": [
     {
+      "type": "wrong_target",
+      "severity": "error",
+      "page": "blog/kak-vybrat-elektrodvigatel/",
+      "text": "насосов",
+      "card": "Подбор · Электродвигатели Как выбрать электродвигатель по мощности и исполнению 10 сентября 2026 г. 8 мин чтения Проверено инженером сервис…",
+      "cardSel": "article.pk-prose-col",
+      "target": "napravleniya/nasosy/",
+      "expected": [
+        "napravleniya/elektrodvigateli/"
+      ],
+      "detail": "направление: в карточке «Электродвигатели», ссылка на «Насосы»"
+    },
+    {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet-postavshchika/zayavka/zv-4771/",
+      "page": "kabinet-postavshchika/zayavka/zv-4797/",
+      "target": "/b2b-marketplace/assets/vendor.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet-postavshchika/zayavka/zv-4818/",
       "target": "/b2b-marketplace/assets/vendor.js",
       "detail": "net::ERR_ABORTED"
     },
@@ -156,14 +180,21 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/dokumenty/",
+      "page": "kabinet/soglasovanie/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "kabinet/zakaz/pk-10331/",
+      "page": "kabinet/zakaz/pk-10377/",
+      "target": "/b2b-marketplace/assets/cabinet.js",
+      "detail": "net::ERR_ABORTED"
+    },
+    {
+      "type": "resource_404",
+      "severity": "warning",
+      "page": "kabinet/zakaz/pk-10425/",
       "target": "/b2b-marketplace/assets/cabinet.js",
       "detail": "net::ERR_ABORTED"
     },
@@ -412,6 +443,24 @@
     },
     {
       "type": "many_cards_same_target",
+      "severity": "error",
+      "page": "napravleniya/nasosy/",
+      "target": "katalog/nasosy/",
+      "text": "8 разных карточек",
+      "detail": "8 разных карточек ведут на один адрес katalog/nasosy/: «Центробежные», «Консольно-моноблочные», «Скважинные», «Дозировочные»…",
+      "examples": [
+        "Центробежные",
+        "Консольно-моноблочные",
+        "Скважинные",
+        "Дозировочные",
+        "Химические",
+        "Пищевые",
+        "Дренажные и фекальные",
+        "Циркуляционные"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
       "severity": "warning",
       "page": "napravleniya/oborudovanie-dlya-metalloobrabotki/",
       "target": "chat/",
@@ -425,24 +474,6 @@
         "Оправки, цанги и инструментальные системы 760",
         "Тиски и станочная оснастка 630",
         "Измерительный инструмент 760"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "error",
-      "page": "napravleniya/nasosy/",
-      "target": "katalog/nasosy/",
-      "text": "8 разных карточек",
-      "detail": "8 разных карточек ведут на один адрес katalog/nasosy/: «Центробежные 1 240», «Консольно-моноблочные 860», «Скважинные 520», «Дозировочные 410»…",
-      "examples": [
-        "Центробежные 1 240",
-        "Консольно-моноблочные 860",
-        "Скважинные 520",
-        "Дозировочные 410",
-        "Химические 380",
-        "Пищевые 260",
-        "Дренажные и фекальные 330",
-        "Циркуляционные 218"
       ]
     },
     {
@@ -465,23 +496,6 @@
     {
       "type": "many_cards_same_target",
       "severity": "warning",
-      "page": "napravleniya/pishchevoe-oborudovanie/",
-      "target": "chat/",
-      "text": "7 разных карточек",
-      "detail": "7 разных карточек ведут на один адрес chat/: «Санитарные насосы 200», «Ёмкости и реакторы с мешалками 210», «Дозаторы и фасовочные автоматы 240», «Пастеризаторы и теплообменники 160»…",
-      "examples": [
-        "Санитарные насосы 200",
-        "Ёмкости и реакторы с мешалками 210",
-        "Дозаторы и фасовочные автоматы 240",
-        "Пастеризаторы и теплообменники 160",
-        "Системы безразборной мойки CIP 130",
-        "Санитарная арматура и фитинги 240",
-        "Упаковочные линии 130"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "warning",
       "page": "napravleniya/ochistnye-sooruzheniya/",
       "target": "chat/",
       "text": "7 разных карточек",
@@ -494,6 +508,23 @@
         "Канализационные насосные станции 50",
         "Флотаторы и оборудование физико-химической очистки 30",
         "Обезвоживание осадка 20"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/pishchevoe-oborudovanie/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Санитарные насосы 200», «Ёмкости и реакторы с мешалками 210», «Дозаторы и фасовочные автоматы 240», «Пастеризаторы и теплообменники 160»…",
+      "examples": [
+        "Санитарные насосы 200",
+        "Ёмкости и реакторы с мешалками 210",
+        "Дозаторы и фасовочные автоматы 240",
+        "Пастеризаторы и теплообменники 160",
+        "Системы безразборной мойки CIP 130",
+        "Санитарная арматура и фитинги 240",
+        "Упаковочные линии 130"
       ]
     },
     {
@@ -569,23 +600,6 @@
     {
       "type": "many_cards_same_target",
       "severity": "warning",
-      "page": "napravleniya/promyshlennaya-himiya/",
-      "target": "chat/",
-      "text": "7 разных карточек",
-      "detail": "7 разных карточек ведут на один адрес chat/: «Гидравлические масла 410», «Редукторные и индустриальные масла 360», «Компрессорные и турбинные масла 220», «Пластичные смазки 360»…",
-      "examples": [
-        "Гидравлические масла 410",
-        "Редукторные и индустриальные масла 360",
-        "Компрессорные и турбинные масла 220",
-        "Пластичные смазки 360",
-        "СОЖ и масла для металлообработки 310",
-        "Промышленные очистители и обезжириватели 310",
-        "Антикоррозионные и специальные составы 270"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "warning",
       "page": "napravleniya/promyshlennaya-armatura/",
       "target": "chat/",
       "text": "8 разных карточек",
@@ -599,6 +613,23 @@
         "Электроприводы и пневмоприводы 850",
         "Фильтры сетчатые и грязевики 680",
         "Фланцы, прокладки, крепёж 680"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennaya-himiya/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Гидравлические масла 410», «Редукторные и индустриальные масла 360», «Компрессорные и турбинные масла 220», «Пластичные смазки 360»…",
+      "examples": [
+        "Гидравлические масла 410",
+        "Редукторные и индустриальные масла 360",
+        "Компрессорные и турбинные масла 220",
+        "Пластичные смазки 360",
+        "СОЖ и масла для металлообработки 310",
+        "Промышленные очистители и обезжириватели 310",
+        "Антикоррозионные и специальные составы 270"
       ]
     },
     {
@@ -621,23 +652,6 @@
     {
       "type": "many_cards_same_target",
       "severity": "warning",
-      "page": "napravleniya/promyshlennye-pechi-i-sushilnye-kamery/",
-      "target": "chat/",
-      "text": "7 разных карточек",
-      "detail": "7 разных карточек ведут на один адрес chat/: «Печи для термообработки металлов 70», «Камеры полимеризации порошковой краски …», «Сушильные шкафы 60», «Сушильные камеры для древесины 40»…",
-      "examples": [
-        "Печи для термообработки металлов 70",
-        "Камеры полимеризации порошковой краски 60",
-        "Сушильные шкафы 60",
-        "Сушильные камеры для древесины 40",
-        "Муфельные и лабораторные печи 50",
-        "Нагреватели, горелки и автоматика печей 40",
-        "Футеровочные материалы 20"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "warning",
       "page": "napravleniya/promyshlennye-filtry/",
       "target": "chat/",
       "text": "7 разных карточек",
@@ -650,6 +664,23 @@
         "Картриджи для аспирации 190",
         "Фильтры для жидкостей и мешочные 170",
         "Корпуса фильтров 130"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/promyshlennye-pechi-i-sushilnye-kamery/",
+      "target": "chat/",
+      "text": "7 разных карточек",
+      "detail": "7 разных карточек ведут на один адрес chat/: «Печи для термообработки металлов 70», «Камеры полимеризации порошковой краски …», «Сушильные шкафы 60», «Сушильные камеры для древесины 40»…",
+      "examples": [
+        "Печи для термообработки металлов 70",
+        "Камеры полимеризации порошковой краски 60",
+        "Сушильные шкафы 60",
+        "Сушильные камеры для древесины 40",
+        "Муфельные и лабораторные печи 50",
+        "Нагреватели, горелки и автоматика печей 40",
+        "Футеровочные материалы 20"
       ]
     },
     {
@@ -721,22 +752,6 @@
     {
       "type": "many_cards_same_target",
       "severity": "warning",
-      "page": "napravleniya/separatory-i-centrifugi/",
-      "target": "chat/",
-      "text": "6 разных карточек",
-      "detail": "6 разных карточек ведут на один адрес chat/: «Тарельчатые сепараторы 60», «Декантерные центрифуги 50», «Фильтрующие и осадительные центрифуги 40», «Сепараторы масел и топлива 40»…",
-      "examples": [
-        "Тарельчатые сепараторы 60",
-        "Декантерные центрифуги 50",
-        "Фильтрующие и осадительные центрифуги 40",
-        "Сепараторы масел и топлива 40",
-        "Гидроциклоны и вибросита 40",
-        "Запчасти и сервисные комплекты 30"
-      ]
-    },
-    {
-      "type": "many_cards_same_target",
-      "severity": "warning",
       "page": "napravleniya/reduktory-i-motor-reduktory/",
       "target": "chat/",
       "text": "7 разных карточек",
@@ -749,6 +764,22 @@
         "Плоские насадные мотор-редукторы 310",
         "Общепромышленные редукторы Ц2У, 1Ц2У, РМ 420",
         "Вариаторы и запчасти 380"
+      ]
+    },
+    {
+      "type": "many_cards_same_target",
+      "severity": "warning",
+      "page": "napravleniya/separatory-i-centrifugi/",
+      "target": "chat/",
+      "text": "6 разных карточек",
+      "detail": "6 разных карточек ведут на один адрес chat/: «Тарельчатые сепараторы 60», «Декантерные центрифуги 50», «Фильтрующие и осадительные центрифуги 40», «Сепараторы масел и топлива 40»…",
+      "examples": [
+        "Тарельчатые сепараторы 60",
+        "Декантерные центрифуги 50",
+        "Фильтрующие и осадительные центрифуги 40",
+        "Сепараторы масел и топлива 40",
+        "Гидроциклоны и вибросита 40",
+        "Запчасти и сервисные комплекты 30"
       ]
     },
     {
@@ -941,21 +972,21 @@
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/admin/",
+      "page": "panel/ekonomika/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/postavshchiki/",
+      "page": "panel/klienty/agroprom-t/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },
     {
       "type": "resource_404",
       "severity": "warning",
-      "page": "panel/sdelki/sd-2214/",
+      "page": "panel/sdelki/sd-2206/",
       "target": "/b2b-marketplace/assets/admin.js",
       "detail": "net::ERR_ABORTED"
     },

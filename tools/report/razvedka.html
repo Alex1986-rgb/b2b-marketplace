@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ПРОМКОНТУР — разведка поставщиков, 15.09.2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Fira+Sans+Condensed:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f2f3; --surface:#e9e9ea; --paper:#fbfbfc; --text:#1d1f20; --muted:#5d5d60; --soft:#7a7a7d;
+  --line:rgba(29,31,32,.16); --line2:rgba(29,31,32,.08);
+  --a:#5980a6; --a100:#eef6ff; --a200:#d6ebff; --a300:#b5d9fd; --a600:#597ea3; --a700:#416180; --a800:#2c455d; --a900:#1d2d3d;
+  --ok:#3f7d5a; --ok-bg:#e5f1ea; --bad:#a24b3f; --bad-bg:#f6e6e3; --warn:#9a7020; --warn-bg:#f6eedb;
+  --h:"Fira Sans Condensed","Arial Narrow",system-ui,sans-serif; --b:"Fira Sans",system-ui,sans-serif; --m:"Fira Code",ui-monospace,monospace;
+}
+@page{size:1600px 900px;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:#cfd2d6}
+body{font-family:var(--b);color:var(--text);font-size:17px;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:1600px;height:900px;position:relative;overflow:hidden;background:var(--bg);page-break-after:always;padding:64px 80px 70px}
+@media screen{.page{margin:0 auto 24px}}
+h1,h2,h3{font-family:var(--h);font-weight:600;margin:0;letter-spacing:-.01em}
+h2{font-size:46px;line-height:1.05}
+h3{font-size:24px;line-height:1.15}
+p{margin:0}
+.mono{font-family:var(--m);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft)}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow .num{font-family:var(--m);font-size:13px;color:#fff;background:var(--a);padding:3px 8px}
+.lead{font-size:20px;color:var(--muted);max-width:1000px;margin-top:12px}
+.acc{color:var(--a700)}
+/* каркас страницы */
+.frame{position:absolute;inset:26px;border:1px solid var(--line2);pointer-events:none}
+.foot{position:absolute;left:80px;right:80px;bottom:30px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--h);font-weight:700;font-size:17px;letter-spacing:.06em}
+.brand svg{width:22px;height:22px}
+/* чертёжные уголки как на сайте */
+.bp{position:relative;border:1px solid var(--line)}
+.bp>i{position:absolute;width:11px;height:11px;color:rgba(29,31,32,.55)}
+.bp>i::before,.bp>i::after{content:"";position:absolute;background:currentColor}
+.bp>i::before{left:5px;top:0;width:1px;height:100%}.bp>i::after{top:5px;left:0;height:1px;width:100%}
+.bp>.tl{top:-6px;left:-6px}.bp>.tr{top:-6px;right:-6px}.bp>.bl{bottom:-6px;left:-6px}.bp>.br{bottom:-6px;right:-6px}
+.card{background:var(--paper);border:1px solid var(--line2);border-radius:8px;box-shadow:0 1px 2px rgba(29,31,32,.05),0 6px 18px rgba(29,31,32,.05)}
+.pill{display:inline-block;font-family:var(--m);font-size:12px;padding:3px 9px;border-radius:99px;background:var(--a100);color:var(--a700);white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.grid{display:grid;gap:18px}
+table{border-collapse:collapse;width:100%}
+th{font-family:var(--m);font-weight:400;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);text-align:left;padding:0 12px 10px;border-bottom:1px solid var(--line)}
+td{padding:11px 12px;border-bottom:1px solid var(--line2);vertical-align:top;font-size:16px}
+td b{font-weight:600}
+.duo{position:absolute;background-size:cover;background-position:center;background-color:#5980a6;background-blend-mode:luminosity}
+.duo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,45,61,.35),rgba(29,45,61,.05))}
+/* обложка */
+.cover{padding:0;background:var(--a900);color:#fff}
+.cover .duo{inset:0;opacity:.55}
+.cover .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(29,45,61,.97) 0%,rgba(29,45,61,.9) 45%,rgba(29,45,61,.35) 100%)}
+.cover .in{position:absolute;left:96px;top:86px;right:96px;bottom:80px;display:flex;flex-direction:column}
+.cover h1{font-size:88px;line-height:.98;max-width:980px;margin-top:auto}
+.cover .sub{font-size:24px;color:var(--a200);max-width:860px;margin-top:22px}
+.cover .kpis{display:flex;gap:0;margin-top:56px;border-top:1px solid rgba(214,235,255,.25)}
+.cover .kpi{padding:22px 44px 0 0;margin-right:44px;border-right:1px solid rgba(214,235,255,.18)}
+.cover .kpi:last-child{border:0}
+.cover .kpi b{display:block;font-family:var(--h);font-size:52px;font-weight:600;line-height:1}
+.cover .kpi span{font-family:var(--m);font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--a300)}
+.cover .brand{color:#fff;font-size:22px}
+.cover .frame{border-color:rgba(214,235,255,.14)}
+/* числа-выводы */
+.find{padding:24px 26px;display:flex;gap:18px}
+.find .n{font-family:var(--h);font-size:40px;font-weight:600;color:var(--a);line-height:.9;min-width:34px}
+.find h3{font-size:22px;margin-bottom:6px}
+.find p{font-size:16px;color:var(--muted)}
+/* партнёры */
+.pcard{padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px;min-height:176px}
+.pcard .dir{font-family:var(--m);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--soft)}
+.pcard h3{font-size:23px}
+.pcard .big{font-family:var(--h);font-size:34px;font-weight:600;color:var(--a700);line-height:1;margin-top:auto}
+.pcard .note{font-size:14px;color:var(--muted)}
+/* бары */
+.bar{display:flex;height:46px;border-radius:6px;overflow:hidden;font-family:var(--m);font-size:12px}
+.bar>div{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* схема */
+.node{padding:20px 22px;text-align:left}
+.node .mono{margin-bottom:6px}
+.arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--a);font-family:var(--m);font-size:12px;text-align:center;gap:6px}
+.arrow svg{width:100%;height:18px}
+.steps{display:flex;gap:6px;margin-top:10px}
+.steps div{flex:1;background:var(--paper);border:1px solid var(--line2);border-top:3px solid var(--a);padding:10px 10px 9px;font-size:13.5px;line-height:1.25;border-radius:0 0 6px 6px}
+.steps div .mono{display:block;font-size:11px;margin-bottom:4px}
+/* мокап карточки */
+.mock{padding:26px 28px}
+.offer{display:grid;grid-template-columns:22px 1fr auto;gap:14px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:8px;margin-top:10px;background:#fff}
+.offer.on{border:2px solid var(--a);background:var(--a100);padding:13px 15px}
+.radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--soft)}
+.offer.on .radio{border-color:var(--a);box-shadow:inset 0 0 0 4px #fff;background:var(--a)}
+.offer .t{font-weight:600;font-size:16px}.offer .s{font-size:13.5px;color:var(--muted)}
+.offer .p{font-family:var(--h);font-size:26px;font-weight:600;text-align:right;line-height:1}
+.offer .p small{display:block;font-family:var(--m);font-size:11.5px;color:var(--ok);font-weight:400;margin-top:4px}
+.btn{display:inline-block;background:var(--a);color:#fff;font-weight:500;padding:13px 22px;border-radius:6px;font-size:16px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+ul.clean{list-style:none;margin:0;padding:0}
+ul.clean li{padding:9px 0 9px 26px;position:relative;border-bottom:1px solid var(--line2);font-size:16px}
+ul.clean li::before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;background:var(--a);transform:rotate(45deg)}
+ul.clean.bad li::before{background:var(--bad)}
+.q{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line2)}
+.q .n{font-family:var(--m);color:#fff;background:var(--a);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex:none;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- ═══ 1. Обложка ═══ -->
+<section class="page cover">
+  <div class="duo" style="background-image:url(../../project/img/hero-pump-hall.jpg)"></div>
+  <div class="shade"></div>
+  <div class="frame"></div>
+  <div class="in">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="brand"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#5980a6"/><path d="M4 9V4h5M23 4h5v5M28 23v5h-5M9 28H4v-5" fill="none" stroke="#d6ebff" stroke-width="1.5"/><path d="M10.5 23.5V9.5h11v14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="square"/></svg>ПРОМКОНТУР</div>
+      <span class="mono" style="color:var(--a300)">Разведка · 15.09.2026</span>
+    </div>
+    <h1>Где закупать дешевле: партнёры в России, заводы Китая и рынок</h1>
+    <p class="sub">Сводка трёх волн агентной разведки по 44 направлениям промышленного оборудования — кому стать дилером, что везти из Китая и как показать выбор «под заказ / со склада» на сайте.</p>
+    <div class="kpis">
+      <div class="kpi"><b>44</b><span>направления</span></div>
+      <div class="kpi"><b>22</b><span>агента-разведчика</span></div>
+      <div class="kpi"><b>12</b><span>партнёров для старта</span></div>
+      <div class="kpi"><b>35–70</b><span>дней — срок из Китая</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 2. Главное ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">01</span><span class="mono">Главное за минуту</span></div>
+  <h2>Шесть выводов, которые меняют план</h2>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:36px;gap:22px">
+    <div class="card find"><div class="n">1</div><div><h3>Grundfos и Ebara ушли из РФ</h3><p>Главные бренды витрины — только серый импорт, дилерства нет. Основа насосов — CNP/Aikon и Wilo (завод в Ногинске).</p></div></div>
+    <div class="card find"><div class="n">2</div><div><h3>Цены сайта не сверены с рынком</h3><p>Насосы в 2–6 раз дешевле рынка, задвижка DN100 и манжета — в 2–7 раз дороже. Перед продажами — пересчёт.</p></div></div>
+    <div class="card find"><div class="n">3</div><div><h3>Лучшие входы — с открытыми условиями</h3><p>EKF 36–57 %, ТД ТОР до 40 % от 50 тыс. ₽, Бежецкий АСО наценка до 40 %, Ридан до 50 %.</p></div></div>
+    <div class="card find"><div class="n">4</div><div><h3>Китай выгоден не везде</h3><p>Да: частотники, компрессоры, мотор-редукторы, токарные ЧПУ. Нет: подшипники (антидемпинг до 41,5 %), ДГУ, лазеры, сварка.</p></div></div>
+    <div class="card find"><div class="n">5</div><div><h3>Только белая схема и сборные партии</h3><p>Карго бьёт штрафом по покупателю. Штучный ввоз съедают брокер и логистика — отправки по расписанию раз в 2–4 недели.</p></div></div>
+    <div class="card find"><div class="n">6</div><div><h3>Выбор поставки — через офферы</h3><p>На карточке «Склад РФ / В пути / Под заказ из Китая»: цена, срок диапазоном, предоплата 30/70, гарантия.</p></div></div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">02</span></div>
+</section>
+
+<!-- ═══ 3. Механика сайта ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="duo" style="right:0;top:0;bottom:0;width:470px;background-image:url(../../project/img/supplier-dock.jpg)"></div>
+  <div style="max-width:960px">
+    <div class="eyebrow"><span class="num">02</span><span class="mono">Сайт сегодня</span></div>
+    <h2>Контур закупки: одна цена, одно предложение</h2>
+    <p class="lead">Статический сайт без бэкенда: 135 страниц из макета, корзина и вход в localStorage. Поставщики РФ подключают прайс, заказ уходит им, отгрузка напрямую клиенту, наценка ~22 %.</p>
+    <div class="steps" style="margin-top:30px">
+      <div><span class="mono">вход</span>Направление, поиск, фото шильдика, чат, Excel</div>
+      <div><span class="mono">каталог</span>Фильтры по типу, подаче, напору</div>
+      <div><span class="mono">карточка</span>Цена с НДС, остаток, срок</div>
+      <div><span class="mono">корзина</span>Счёт, отсрочка до 30 дней</div>
+      <div><span class="mono">кабинет</span>Статусы, КП, автозакупка</div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:34px;gap:20px">
+      <div class="card" style="padding:22px 24px"><span class="pill">уже есть</span><h3 style="margin:12px 0 8px">Китай — только в админке</h3><p style="color:var(--muted);font-size:16px">Источники Alibaba / 1688 / Made-in-China и калькулятор импорта с плоской формулой: логистика 12 % от FOB, пошлина+НДС 25 %.</p></div>
+      <div class="card" style="padding:22px 24px"><span class="pill warn">разрыв</span><h3 style="margin:12px 0 8px">Нет выбора варианта</h3><p style="color:var(--muted);font-size:16px">У товара одна цена, один остаток, один срок. Нужны офферы, партии в корзине, статусы импорта и честный калькулятор.</p></div>
+    </div>
+  </div>
+  <div class="foot" style="right:510px"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">03</span></div>
+</section>
+
+<!-- ═══ 4. Партнёры РФ ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div style="display:flex;justify-content:space-between;align-items:end">
+    <div><div class="eyebrow"><span class="num">03</span><span class="mono">Россия · волна 1</span></div>
+    <h2>12 партнёров, кому писать первыми</h2></div>
+    <p style="max-width:470px;color:var(--muted);font-size:16px;text-align:right">Открытые дилерские условия и низкий порог входа. Точные проценты у большинства — после запроса по шаблону.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:30px;gap:16px">
+    <div class="card pcard"><span class="dir">Насосы</span><h3>CNP / Aikon</h3><span class="note">350+ дилеров, 3 склада в РФ, открытая политика</span><span class="big">3 склада</span></div>
+    <div class="card pcard"><span class="dir">Насосы</span><h3>Wilo Рус</h3><span class="note">Завод в Ногинске, реестр Минпромторга</span><span class="big">95–100 %</span></div>
+    <div class="card pcard"><span class="dir">Электротехника</span><h3>EKF</h3><span class="note">Субдилер от 300 тыс. ₽/год</span><span class="big">36–57 %</span></div>
+    <div class="card pcard"><span class="dir">Частотники</span><h3>INSTART</h3><span class="note">ПЧ 15 кВт 27–36 тыс. ₽ против нашего INNOVERT 62,3</span><span class="big">−40–55 %</span></div>
+    <div class="card pcard"><span class="dir">Подъёмное</span><h3>ТД ТОР</h3><span class="note">Вход от 50 тыс. ₽, отсрочка</span><span class="big">до 40 %</span></div>
+    <div class="card pcard"><span class="dir">Компрессоры</span><h3>Бежецкий АСО</h3><span class="note">Бонусы, отсрочка, брендирование</span><span class="big">до 40 %</span></div>
+    <div class="card pcard"><span class="dir">Теплообменники</span><h3>Ридан</h3><span class="note">Своя платформа скидок</span><span class="big">до 50 %</span></div>
+    <div class="card pcard"><span class="dir">Очистные</span><h3>ТОПОЛ-ЭКО</h3><span class="note">Агент без договора 5–10 тыс. ₽/шт</span><span class="big">15–25 %</span></div>
+    <div class="card pcard"><span class="dir">Водоподготовка</span><h3>Гейзер</h3><span class="note">Накопительная скидка, Purolite/Clack</span><span class="big">дилер</span></div>
+    <div class="card pcard"><span class="dir">Сварка</span><h3>КЕДР / АВАНГАРД</h3><span class="note">Закрепление клиента, контроль РРЦ</span><span class="big">резерв 7 дн.</span></div>
+    <div class="card pcard"><span class="dir">Арматура, пожарка</span><h3>АДЛ</h3><span class="note">75 дистрибьюторов</span><span class="big">до 15 %</span></div>
+    <div class="card pcard"><span class="dir">Дизель-генераторы</span><h3>Azimut</h3><span class="note">Открытые РРЦ, свой двигатель</span><span class="big">×5 дешевле</span></div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">04</span></div>
+</section>
+
+<!-- ═══ 5. Стоп-лист и цены ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">04</span><span class="mono">Риски витрины</span></div>
+  <h2>Кого не брать и какие цены пересчитать</h2>
+  <div class="cols" style="grid-template-columns:.9fr 1.1fr;margin-top:34px;gap:44px">
+    <div>
+      <span class="mono">Стоп-лист</span>
+      <ul class="clean bad" style="margin-top:8px">
+        <li><b>Grundfos, Ebara</b> — ушли из РФ, дилерства нет</li>
+        <li><b>Насосэнергомаш (Сумы)</b> — санкции, конфискация активов</li>
+        <li><b>SKF из случайных каналов</b> — 30–70 % контрафакта</li>
+        <li><b>promred.ru</b> — конкурент zavod-red: редукторы ставим свои ZR</li>
+        <li><b>Гидросила</b> — санкционный статус не проверен</li>
+        <li><b>Pedrollo, Kaishan, Ekomak</b> через перекупщиков — разброс цен до 50 %, выходить на производителя</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <table>
+        <thead><tr><th>Позиция</th><th>Сайт</th><th>Рынок</th><th>Вывод</th></tr></thead>
+        <tbody>
+          <tr><td>Grundfos CR, NB · Wilo Helix · CNP</td><td>71–187 тыс. ₽</td><td>в 2–6 раз выше</td><td><span class="pill bad">занижено</span></td></tr>
+          <tr><td>Задвижка DN100 PN16 чугун</td><td>19 470 ₽</td><td>6 400–10 400 ₽</td><td><span class="pill bad">завышено</span></td></tr>
+          <tr><td>Манжета 45×65×10 NBR</td><td>140 ₽</td><td>17–24 ₽</td><td><span class="pill bad">завышено</span></td></tr>
+          <tr><td>ПЧ INNOVERT 15 кВт</td><td>62 300 ₽</td><td>INSTART 27–36 тыс.</td><td><span class="pill warn">сменить</span></td></tr>
+          <tr><td>Обратный клапан DN65</td><td>4 200 ₽</td><td>955–23 840 ₽</td><td><span class="pill ok">в рынке</span></td></tr>
+          <tr><td>Подшипник SKF 6205-2RS</td><td>540 ₽</td><td>оригинал не найден</td><td><span class="pill warn">канал?</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">05</span></div>
+</section>
+
+<!-- ═══ 6. Китай: выгодно / нет ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">05</span><span class="mono">Китай</span></div>
+  <h2>Что везти под заказ, а что брать в России</h2>
+  <div class="cols" style="margin-top:32px;gap:28px">
+    <div class="card" style="padding:22px 24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3>Везти из Китая</h3><span class="pill ok">экономия</span></div>
+      <table>
+        <thead><tr><th>Категория</th><th>Пошлина</th><th>Ориентир</th><th>Выгода</th></tr></thead>
+        <tbody>
+          <tr><td><b>Частотники</b></td><td>0 %</td><td>INVT, Inovance</td><td>40–55 %</td></tr>
+          <tr><td><b>Винтовые компрессоры</b></td><td>0 %</td><td>37 кВт $3–4,5 тыс. FOB</td><td>20–40 %</td></tr>
+          <tr><td><b>Мотор-редукторы</b> OEM под ZR</td><td>10 %</td><td>NMRV063 $44–100</td><td>высокая</td></tr>
+          <tr><td><b>Токарные ЧПУ 400 мм</b></td><td>уточн.</td><td>$10–12,5 тыс. vs 2,19 млн ₽</td><td>~55 %*</td></tr>
+          <tr><td><b>Твердосплавные пластины</b></td><td>—</td><td>$3,3–5,5 vs 493–761 ₽</td><td>15–40 %</td></tr>
+          <tr><td><b>Осушители, пылеуловители</b></td><td>0 %</td><td>6 м³/мин ~$600</td><td>в сборке</td></tr>
+        </tbody>
+      </table>
+      <p class="mono" style="margin-top:12px;text-transform:none;letter-spacing:0">* до логистики и пошлин</p>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3>Брать в России</h3><span class="pill bad">без выгоды</span></div>
+      <table>
+        <thead><tr><th>Категория</th><th>Почему</th></tr></thead>
+        <tbody>
+          <tr><td><b>Подшипники</b></td><td>антидемпинг ЕАЭС 31,3–41,5 % + 10 % до 2029 — ZWZ/LYC/HRB у дистрибьюторов РФ</td></tr>
+          <tr><td><b>ДГУ 100 кВт</b></td><td>Weichai FOB ≈ 730–750 тыс. ₽ ≥ Azimut в РФ 623–693 тыс. ₽</td></tr>
+          <tr><td><b>Лазеры 3 кВт</b></td><td>FOB $35–49 тыс. уже в диапазоне РФ; сильная сеть Bodor</td></tr>
+          <tr><td><b>Сварка</b></td><td>Jasic и Riland — те же заводы, что «Сварог» и «КЕДР», уже с EAC</td></tr>
+          <tr><td><b>Коботы, машзрение</b></td><td>разница 10–20 %, критичен сервис; 6+ дистрибьюторов</td></tr>
+          <tr><td><b>Арматура</b></td><td>пошлина 15 %, штучные цены Alibaba выше розницы РФ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">06</span></div>
+</section>
+
+<!-- ═══ 7. Цена под ключ ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">06</span><span class="mono">Экономика ввоза</span></div>
+  <h2>Цена «под ключ»: из чего она складывается</h2>
+  <p class="lead">Пример агента: насос 15 кг, FOB $300, ввоз одной штукой авиа — 72,7 тыс. ₽ без нашей наценки. Сам товар — только треть. Поэтому «Китай» на сайте = сборная партия, где брокер и логистика делятся.</p>
+  <div style="margin-top:34px">
+    <div class="mono" style="margin-bottom:8px">Насос $300 FOB · штучно авиа · 72 676 ₽</div>
+    <div class="bar">
+      <div style="width:34.8%;background:var(--a800)">товар 25 301</div>
+      <div style="width:27.3%;background:var(--a600)">логистика 19 819</div>
+      <div style="width:27.5%;background:var(--bad)">брокер 20 000</div>
+      <div style="width:7.7%;background:#8aa9c6">НДС 5 566</div>
+      <div style="width:1.7%;background:#b7b7ba"></div>
+      <div style="width:1%;background:#98989b"></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--a800)"></i>товар</span><span><i style="background:var(--a600)"></i>логистика</span><span><i style="background:var(--bad)"></i>брокер — делится на партию</span><span><i style="background:#8aa9c6"></i>НДС 22 % — к вычету</span><span><i style="background:#b7b7ba"></i>сбор 1 231</span><span><i style="background:#98989b"></i>платёжный агент 759</span></div>
+  </div>
+  <div class="grid" style="grid-template-columns:1.05fr .95fr;gap:28px;margin-top:34px">
+    <div class="card" style="padding:20px 24px">
+      <span class="mono">Пошлины ЕАЭС по кодам ТН ВЭД</span>
+      <table style="margin-top:8px">
+        <tbody>
+          <tr><td>8413 · насосы</td><td><b>0 %</b></td><td>8414 · компрессоры</td><td><b>0 %</b></td></tr>
+          <tr><td>8504 · частотники</td><td><b>0 %</b></td><td>8501 · двигатели</td><td><b>0 / 5 / 11 %</b></td></tr>
+          <tr><td>8483 · редукторы</td><td><b>10 %</b></td><td>8481 · арматура</td><td><b>15 %</b></td></tr>
+          <tr><td>8482 · подшипники</td><td colspan="3"><b class="acc" style="color:var(--bad)">+31,3–41,5 % антидемпинг до 31.03.2029</b></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:14px;color:var(--muted);margin-top:10px">НДС ввоза 22 % · сбор 1 231–73 860 ₽ · брокер 20–28 тыс. ₽ · декларация ТР ТС 010 — 8–19,5 тыс. ₽</p>
+    </div>
+    <div class="card" style="padding:20px 24px">
+      <span class="mono">Срок от заказа до склада в Москве</span>
+      <div class="bar" style="margin-top:18px;height:40px">
+        <div style="width:30%;background:var(--a800)">производство 7–30</div>
+        <div style="width:55%;background:var(--a600)">ж/д или авто 18–35</div>
+        <div style="width:15%;background:#8aa9c6">таможня 1–5</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:end;margin-top:22px">
+        <div><div style="font-family:var(--h);font-size:64px;font-weight:600;line-height:1;color:var(--a700)">35–70</div><div class="mono">дней на сайте — диапазоном</div></div>
+        <div style="text-align:right;font-size:15px;color:var(--muted)">Контейнер 40HC: $5 500–9 500<br>Авто сборный: $1,5–3,3 / кг<br>Авиа: $2,1–16 / кг, 3–12 дней</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">07</span></div>
+</section>
+
+<!-- ═══ 8. Схема сделки ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">07</span><span class="mono">Схема сделки из Китая</span></div>
+  <h2>Клиент видит одного продавца — риски ввоза у партнёра</h2>
+  <div style="display:grid;grid-template-columns:1fr 150px 1fr 150px 1fr 150px 1fr;align-items:stretch;margin-top:48px">
+    <div class="bp node" style="background:var(--paper)"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><div class="mono">покупатель</div><h3>Завод-клиент</h3><p style="font-size:15px;color:var(--muted);margin-top:6px">Выбирает «под заказ», платит 30 % → 70 %</p></div>
+    <div class="arrow"><svg viewBox="0 0 150 18"><path d="M4 9h136M132 3l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>договор поставки</div>
+    <div class="bp node" style="background:var(--a);color:#fff;border-color:var(--a)"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><div class="mono" style="color:var(--a200)">продавец</div><h3>ПРОМКОНТУР</h3><p style="font-size:15px;color:var(--a200);margin-top:6px">Одна гарантия, УПД, неустойка за просрочку</p></div>
+    <div class="arrow"><svg viewBox="0 0 150 18"><path d="M4 9h136M132 3l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>агентский договор</div>
+    <div class="bp node" style="background:var(--paper)"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><div class="mono">импортёр</div><h3>ВЭД-партнёр</h3><p style="font-size:15px;color:var(--muted);margin-top:6px">ГТД, декларация ЕАЭС, оплата в юанях</p></div>
+    <div class="arrow"><svg viewBox="0 0 150 18"><path d="M4 9h136M132 3l8 6-8 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>ВЭД-контракт</div>
+    <div class="bp node" style="background:var(--paper)"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i><div class="mono">производитель</div><h3>Завод в Китае</h3><p style="font-size:15px;color:var(--muted);margin-top:6px">Через байера: проверка, инспекция 3–5 %</p></div>
+  </div>
+  <div style="margin-top:56px">
+    <span class="mono">Статусы заказа в кабинете</span>
+    <div class="steps">
+      <div><span class="mono">01</span>Предоплата 30 % получена</div>
+      <div><span class="mono">02</span>В производстве</div>
+      <div><span class="mono">03</span>Отгружен с завода, инспекция · 70 %</div>
+      <div><span class="mono">04</span>В пути: ж/д или авто</div>
+      <div><span class="mono">05</span>Таможенное оформление</div>
+      <div><span class="mono">06</span>На складе в Москве</div>
+      <div><span class="mono">07</span>Доставлен клиенту</div>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px">
+    <div class="card" style="padding:18px 22px"><span class="pill bad">нельзя</span><p style="margin-top:10px;font-size:15.5px">Карго: штраф 50–200 % стоимости партии по ст. 16.21 КоАП бьёт по покупателю, нет ГТД и вычета НДС.</p></div>
+    <div class="card" style="padding:18px 22px"><span class="pill">оплата</span><p style="margin-top:10px;font-size:15.5px">Платёжный агент 1,5–5 %: прямые переводы в госбанки КНР проходят в 20–40 % случаев.</p></div>
+    <div class="card" style="padding:18px 22px"><span class="pill warn">риск</span><p style="margin-top:10px;font-size:15.5px">Срывы сроков у 44 % импортёров в 2025 году — срок только диапазоном и с запасом.</p></div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">08</span></div>
+</section>
+
+<!-- ═══ 9. Мокап карточки ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="cols" style="grid-template-columns:1.02fr .98fr;gap:56px;height:100%">
+    <div>
+      <div class="eyebrow"><span class="num">08</span><span class="mono">Функция на сайте · ТЗ</span></div>
+      <h2>«Варианты поставки»<br>в карточке товара</h2>
+      <p class="lead" style="font-size:18px">Образец — ЭТМ iPro и Чип и Дип «Альтернативные предложения», статусы — как у Octopart. У товара массив офферов вместо одной цены.</p>
+      <ul class="clean" style="margin-top:26px">
+        <li><b>Каталог:</b> «из Китая от 71 300 ₽ · 35–60 дн.» и фильтр по сроку</li>
+        <li><b>Корзина:</b> партии по варианту, для Китая 30 % предоплаты, отсрочки нет</li>
+        <li><b>Кабинет:</b> 7 статусов импорта, пересчёт даты и уведомления</li>
+        <li><b>Админка:</b> калькулятор по коду ТН ВЭД, весу и способу доставки</li>
+        <li><b>Правило:</b> вариант «Китай» скрыт, если экономия после ввоза &lt; 15 %</li>
+        <li><b>Быстрый старт:</b> Kaishan, CNP, Supror, Guomao, Dazhong — склад в РФ и завод сразу</li>
+      </ul>
+    </div>
+    <div class="card mock" style="align-self:center">
+      <div class="mono">Насосы · вертикальный многоступенчатый</div>
+      <h3 style="font-size:30px;margin:6px 0 4px">CNP CDLF 32-40</h3>
+      <div style="font-size:14px;color:var(--muted)">32 м³/ч · напор 46 м · 5,5 кВт · AISI 304 · DN65 PN16</div>
+      <div class="mono" style="margin-top:20px">Варианты поставки</div>
+      <div class="offer on"><span class="radio"></span><div><div class="t">Склад в России</div><div class="s">8 шт. · отгрузка 2–4 дня · отсрочка 30 дней · гарантия 24 мес.</div></div><div class="p">96 200 ₽</div></div>
+      <div class="offer"><span class="radio"></span><div><div class="t">Уже в пути · прибытие 10 октября</div><div class="s">4 шт. · без предоплаты · гарантия 24 мес.</div></div><div class="p">82 000 ₽<small>−15 %</small></div></div>
+      <div class="offer"><span class="radio"></span><div><div class="t">Под заказ с завода, Китай</div><div class="s">к 20–27 октября · предоплата 30 % · ГТД и декларация ЕАЭС</div></div><div class="p">71 300 ₽<small>−26 %</small></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:22px">
+        <span style="font-size:14px;color:var(--muted)">Цена с НДС 22 % и доставкой до Тулы</span>
+        <span class="btn">В корзину</span>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">09</span></div>
+</section>
+
+<!-- ═══ 10. Рынок и конкуренты ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">09</span><span class="mono">Рынок · волна 3</span></div>
+  <h2>Где деньги и чем отстроиться</h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr;margin-top:32px;gap:32px">
+    <div>
+      <span class="mono">Порядок запуска направлений</span>
+      <div class="grid" style="gap:14px;margin-top:10px">
+        <div class="card find" style="padding:18px 22px"><div class="n">1</div><div><h3>Электродвигатели</h3><p>Импорт превышает производство в 55,9 раза, Китай — более 90 % ввоза. Замена — Могилёвский «Электродвигатель», Dazhong, Wolong.</p></div></div>
+        <div class="card find" style="padding:18px 22px"><div class="n">2</div><div><h3>Подшипники</h3><p>Рынок ~50–60 млрд ₽ (оценка), импорт 77–80 %. Частые повторные закупки. Минский МПЗ без пошлин, ZWZ через дистрибьюторов РФ.</p></div></div>
+        <div class="card find" style="padding:18px 22px"><div class="n">3</div><div><h3>Арматура и насосы — тендеры</h3><p>Газпром, Росатом, РЖД, Роснефть. Вход на B2B-Center от 2 600 ₽ за процедуру. С 13.07.2026 электротехника и кабель — в защищаемых перечнях.</p></div></div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin-top:14px">Редукторы ZR — рынок 22,7 млрд ₽ (2023), конкуренция ниже, экспертиза уже есть.</p>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <span class="mono">18 площадок-конкурентов · зазоры для ПРОМКОНТУР</span>
+      <ul class="clean" style="margin-top:8px">
+        <li><b>Одна цена с НДС и доставкой от многих поставщиков</b> — нет ни у кого: либо выкуп (ВсеИнструменты, Ozon), либо витрина без корзины (Пульс цен, Промпортал, Supl.biz)</li>
+        <li><b>Публичная отсрочка до 30 дней</b> — системно не встречается</li>
+        <li><b>Подбор по фото шильдика</b> встроенным ИИ — на маркетплейсах РФ не найден</li>
+        <li><b>Прозрачная наценка</b> понятнее ступенчатых комиссий тендерных ЭТП (1 % с капом до 570 тыс. ₽/год)</li>
+        <li><b>Tiu.ru закрылся</b> — простая «аренда витрины» не выживает</li>
+      </ul>
+      <div style="margin-top:14px;font-size:15px"><span class="pill ok">каналы</span>&nbsp; Пульс цен и Промпортал от 15,3 тыс. ₽/год · Фабрикант-Маркет — оплата только с выигранной сделки</div>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">10</span></div>
+</section>
+
+<!-- ═══ 11. Замена брендов и новые партнёры ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">10</span><span class="mono">Ассортимент · волна 3</span></div>
+  <h2>Чем заменить ушедшие бренды и кого добавить</h2>
+  <div class="cols" style="grid-template-columns:1.15fr .85fr;margin-top:30px;gap:30px">
+    <div class="card" style="padding:22px 24px">
+      <span class="mono">Бренд на витрине → легальный путь в 2026</span>
+      <table style="margin-top:8px">
+        <thead><tr><th>Сейчас</th><th>Замена / путь</th><th>Условия</th></tr></thead>
+        <tbody>
+          <tr><td><b>SEW, NORD</b></td><td>Yılmaz Redüktör, ELK, Gamak (Турция) — «Йилмаз Рус»</td><td>офиц., пошлина 0–5 %</td></tr>
+          <tr><td><b>SKF, FAG</b></td><td>двойной листинг: оригинал + Минский МПЗ (КПД М)</td><td>ЕАЭС, без пошлин</td></tr>
+          <tr><td><b>Малые двигатели</b></td><td>Могилёвский «Электродвигатель»</td><td>склады в РФ</td></tr>
+          <tr><td><b>Grundfos, Wilo (средний класс)</b></td><td>Masdaf, Standart Pompa — офиц. дилеры в РФ</td><td>Турция</td></tr>
+          <tr><td><b>Grundfos, Ebara премиум</b></td><td>параллельный импорт через Казахстан с пометкой канала</td><td>+15–30 %</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13.5px;color:var(--muted);margin-top:10px">Параллельный импорт продлён до конца 2026 (приказ Минпромторга № 2701). Турция +5–10 % и 15–30 дней, но банки жёстко фильтруют платежи; ОАЭ +40–50 %. Индийский NBC — репутационный риск.</p>
+    </div>
+    <div>
+      <span class="mono">Новые партнёры РФ с открытыми условиями</span>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px;margin-top:10px">
+        <div class="card pcard" style="min-height:150px"><span class="dir">Электротехника</span><h3>ЭТМ iPRO</h3><span class="note">Открытый REST API: цены, остатки, заказы — единственный на рынке</span><span class="big" style="font-size:28px">API</span></div>
+        <div class="card pcard" style="min-height:150px"><span class="dir">Электротехника</span><h3>КЭАЗ</h3><span class="note">Многоуровневая программа, публичные проценты</span><span class="big" style="font-size:28px">до 50 %</span></div>
+        <div class="card pcard" style="min-height:150px"><span class="dir">Станки</span><h3>Станкоимпорт</h3><span class="note">StankoDealer + квартальные бонусы</span><span class="big" style="font-size:28px">до 50 %</span></div>
+        <div class="card pcard" style="min-height:150px"><span class="dir">Компрессоры</span><h3>ЗИФ</h3><span class="note">Дилерский портал, расширяют сеть</span><span class="big" style="font-size:28px">до 37 %</span></div>
+        <div class="card pcard" style="min-height:150px"><span class="dir">Котлы</span><h3>ЭНТРОРОС</h3><span class="note">Отсрочка до 180 дней</span><span class="big" style="font-size:28px">20–30 %</span></div>
+        <div class="card pcard" style="min-height:150px"><span class="dir">Аспирация</span><h3>Консар</h3><span class="note">Порог договора</span><span class="big" style="font-size:28px">50 тыс. ₽</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">11</span></div>
+</section>
+
+<!-- ═══ 12. Инфраструктура сделки ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="eyebrow"><span class="num">11</span><span class="mono">Запуск сделок · волна 3</span></div>
+  <h2>Кто обеспечит ввоз, оплату, доставку и отсрочку</h2>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:22px;margin-top:32px">
+    <div class="card" style="padding:22px 24px">
+      <span class="pill">Китай</span><h3 style="margin:12px 0 10px">ВЭД-партнёры: шорт-лист</h3>
+      <ul class="clean">
+        <li><b>Global Alians</b> — основной: обе схемы договора, инспекция, 3 склада в Китае</li>
+        <li><b>VED EXPERT</b> — запасной декларант, реестр ФТС № 1335, 24 года</li>
+        <li><b>WhiteRoute</b> — эталон прозрачной сметы для сравнения</li>
+      </ul>
+      <p style="font-size:14px;color:var(--muted);margin-top:12px">Инспекция $100–500 · выкуп 3–5 % · страховка груза 0,3–1 % · аккредитив 0,2–0,5 % + 0,8–2,5 % годовых</p>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <span class="pill">Оплата</span><h3 style="margin:12px 0 10px">Юани без блокировок</h3>
+      <ul class="clean">
+        <li><b>ВТБ</b> — филиал в Шанхае, 0,2–3 %, минимальный риск возврата</li>
+        <li><b>Т-Банк, Точка, Сбер</b> — 0,07–0,45 % и выше</li>
+        <li><b>Платёжные агенты</b> — 1,5–5 % плюс курсовой спред</li>
+      </ul>
+      <p style="font-size:14px;color:var(--muted);margin-top:12px">Сравнивать по итоговому списанию: спред часто прячет комиссию.</p>
+    </div>
+    <div class="card" style="padding:22px 24px">
+      <span class="pill">Россия</span><h3 style="margin:12px 0 10px">Минимальный стек сделки</h3>
+      <ul class="clean">
+        <li><b>Отсрочка</b> — закупочный факторинг: Альфа от 8,5 % годовых, Т-Банк, ВТБ</li>
+        <li><b>Проверка ИНН</b> — DaData от 14 тыс. ₽/год</li>
+        <li><b>ЭДО</b> — СБИС или Диадок, 7–12 ₽ за документ</li>
+        <li><b>Доставка</b> — ApiShip: все ТК одним запросом</li>
+        <li><b>Оплата счёта</b> — СБП для бизнеса, до 1 млн ₽</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bp" style="margin-top:34px;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;background:var(--paper)">
+    <i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i>
+    <div><span class="mono">Поездка за заводами</span><h3 style="margin-top:6px">CIIF Шанхай 12–16 октября + Кантонская ярмарка 15–19 октября 2026</h3></div>
+    <span class="pill ok" style="font-size:14px;padding:6px 14px">совместить в одну поездку</span>
+  </div>
+  <div class="foot"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">12</span></div>
+</section>
+
+<!-- ═══ Финал ═══ -->
+<section class="page">
+  <div class="frame"></div>
+  <div class="duo" style="right:0;top:0;bottom:0;width:430px;background-image:url(../../project/img/warehouse.jpg)"></div>
+  <div style="max-width:1000px">
+    <div class="eyebrow"><span class="num">✓</span><span class="mono">Решения</span></div>
+    <h2>Что нужно от Александра</h2>
+    <div style="margin-top:28px">
+      <div class="q"><span class="n">1</span><div><b>Реквизиты юрлица, телефон и почта</b> — без них не отправить запросы дилерских условий 12 партнёрам.</div></div>
+      <div class="q"><span class="n">2</span><div><b>Разрешение на запросы</b> партнёрам РФ, заводам Китая и ВЭД-агентам — шаблоны писем готовы, отправка только с согласия.</div></div>
+      <div class="q"><span class="n">3</span><div><b>Юрсхема Китая:</b> договор поставки от ПРОМКОНТУР + ВЭД-партнёр (рекомендация) или чистый агент.</div></div>
+      <div class="q"><span class="n">4</span><div><b>Предоплата 30/70 или 50/50</b> и порог показа варианта «Китай» — экономия от 15 %.</div></div>
+      <div class="q"><span class="n">5</span><div><b>Витрина:</b> Grundfos и Ebara — «подбор аналога» или замена на CNP, Wilo, Masdaf; старт с двигателей, подшипников и арматуры.</div></div>
+      <div class="q"><span class="n">6</span><div><b>Поездка в Китай</b> на CIIF и Кантонскую ярмарку в октябре — да или нет.</div></div>
+    </div>
+    <p class="mono" style="margin-top:26px;text-transform:none;letter-spacing:0">Все источники с датами и ссылками — docs/research/partners, china, wave3 в репозитории b2b-marketplace.</p>
+  </div>
+  <div class="foot" style="right:470px"><div class="brand" style="font-size:14px">ПРОМКОНТУР</div><span class="mono">15.09.2026</span></div>
+</section>
+
+</body>
+</html>
