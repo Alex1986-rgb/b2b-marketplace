@@ -132,15 +132,17 @@ for (const g of groups) {
     body += `<div class="partners">`;
     for (const p of list(d.partners)) {
       const ch = p.channel || {};
-      body += `<div class="card pc p${p.priority || 3}"><div class="top"><span class="prio">${esc(P(p))}</span><span class="tpl">${esc((TEMPLATES[p.template] || {}).title || p.template)}</span></div>
-        <h4>${esc(p.company)}</h4><div class="role">${esc(p.role || '')}${list(p.brands).length ? ' · ' + esc(list(p.brands).join(', ')) : ''}</div>
-        <div class="covers">${list(p.covers).map(x => `<span>${esc(x)}</span>`).join('')}</div>
-        ${p.known ? `<p class="k"><b>Известно:</b> ${esc(p.known)}</p>` : ''}
-        <p class="k"><b>Что написать:</b> ${esc(p.hook || '')}</p>
-        ${list(p.ask).length ? `<ul>${list(p.ask).map(q => `<li>${esc(q)}</li>`).join('')}</ul>` : ''}
-        ${p.leverage ? `<p class="k lev"><b>Рычаг:</b> ${esc(p.leverage)}</p>` : ''}
-        ${p.risks ? `<p class="k risk"><b>Проверить:</b> ${esc(p.risks)}</p>` : ''}
-        <div class="ch"><b>${esc(ch.how || '')}</b>${ch.who ? ' · ' + esc(ch.who) : ''}<br>${[ch.email, ch.phone].filter(Boolean).map(esc).join(' · ')}${ch.url ? `<br><span class="url">${esc(ch.url)}</span>` : ''}</div></div>`;
+      body += `<div class="pc p${p.priority || 3}">
+        <div class="c1"><div class="top"><span class="prio">${esc(P(p))}</span><span class="tpl">${esc((TEMPLATES[p.template] || {}).title || p.template)}</span></div>
+          <h4>${esc(p.company)}</h4><div class="role">${esc(p.role || '')}${list(p.brands).length ? ' · ' + esc(list(p.brands).join(', ')) : ''}</div>
+          <div class="covers">${list(p.covers).map(x => `<span>${esc(x)}</span>`).join('')}</div></div>
+        <div class="c2">${p.known ? `<p class="k"><b>Известно:</b> ${esc(p.known)}</p>` : ''}
+          <p class="k"><b>Что написать:</b> ${esc(p.hook || '')}</p>
+          ${p.leverage ? `<p class="k lev"><b>Рычаг:</b> ${esc(p.leverage)}</p>` : ''}
+          ${p.risks ? `<p class="k risk"><b>Проверить:</b> ${esc(p.risks)}</p>` : ''}</div>
+        <div class="c3">${list(p.ask).length ? `<b class="lbl">Спросить</b><ul>${list(p.ask).map(q => `<li>${esc(q)}</li>`).join('')}</ul>` : ''}
+          <div class="ch"><b>${esc(ch.how || '')}</b>${ch.who ? ' · ' + esc(ch.who) : ''}<br>${[ch.email, ch.phone].filter(Boolean).map(esc).join(' · ')}${ch.url ? `<br><span class="url">${esc(ch.url)}</span>` : ''}</div></div>
+      </div>`;
     }
     body += `</div>${c.missing.length ? `<p class="gap">Не покрыто: ${esc(c.missing.join('; '))}</p>` : ''}</article>`;
   }
